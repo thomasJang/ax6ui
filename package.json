@@ -2,10 +2,22 @@
   "name": "ax6ui",
   "version": "0.0.1",
   "description": "ES6 UI Component",
-  "main": "index.js",
+  "main": "",
   "dependencies": {},
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-es2016": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.0.0",
+    "gulp-changed": "^3.1.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-shell": "^0.6.3",
+    "gulp-sourcemaps": "^2.6.0",
+    "node-sass": "^4.5.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,5 +31,7 @@
   "bugs": {
     "url": "https://github.com/chequer-io/ax6ui/issues"
   },
-  "homepage": "https://github.com/chequer-io/ax6ui#readme"
+  "homepage": "https://github.com/chequer-io/ax6ui#readme",
+  "babelrc": false,
+  "babel": {}
 }

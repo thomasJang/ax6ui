@@ -1,4 +1,3 @@
-import _Object$assign from "babel-runtime/core-js/object/assign";
 import * as U from "AX6Util";
 
 var nodeNames = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",
@@ -1973,7 +1972,7 @@ let dom = function (query) {
     return new axdom(query);
 };
 
-module.exports = _Object$assign(dom, {
+module.exports = Object.assign(dom, {
     ready: ready,
     scroll: scroll,
     resize: resize,

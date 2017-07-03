@@ -1,5 +1,3 @@
-import _Object$assign from "babel-runtime/core-js/object/assign";
-import _Object$keys from "babel-runtime/core-js/object/keys";
 const _toString = Object.prototype.toString;
 
 /**
@@ -427,7 +425,7 @@ function isDateFormat(O) {
  */
 function first(O) {
     if (isObject(O)) {
-        var keys = _Object$keys(O);
+        var keys = Object.keys(O);
         var item = {};
         item[keys[0]] = O[keys[0]];
         return item;
@@ -454,7 +452,7 @@ function first(O) {
  */
 function last(O) {
     if (isObject(O)) {
-        var keys = _Object$keys(O);
+        var keys = Object.keys(O);
         var item = {};
         item[keys[keys.length - 1]] = O[keys[keys.length - 1]];
         return item;
@@ -1511,7 +1509,7 @@ function deepCopy(obj) {
             }
             return r;
         } else {
-            return _Object$assign({}, obj);
+            return Object.assign({}, obj);
         }
     }
     return obj;

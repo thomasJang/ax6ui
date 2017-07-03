@@ -13,8 +13,8 @@ const shell = require('gulp-shell');
 const fnObj = {
     paths: {
         src: 'src/',
-        dist_es6: 'dist/',
-        dist_es5: 'dist-ES5/',
+        dist_es6: 'dist/ES6/',
+        dist_es5: 'dist/ES5/',
         scss: 'scss/',
         css: 'css/'
     },
@@ -27,7 +27,7 @@ const fnObj = {
 
 // 걸프 기본 타스크
 gulp.task('default', function () {
-    gulp.watch([fnObj.paths.src + '/**/*.js'], ['dist-ES6']);
+    gulp.watch([fnObj.paths.src + '/**/*.js'], ['dist-ES5', 'dist-ES6']);
 });
 
 // task for ES6
@@ -37,8 +37,22 @@ gulp.task('dist-ES6', function () {
         .pipe(sourcemaps.init())
         .pipe(babel({
             presets: ['es2016'],
-            plugins: ['transform-runtime']
+            //plugins: ['transform-runtime']
         }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(fnObj.paths.dist_es6));
+});
+
+// task for ES5
+gulp.task('dist-ES5', function () {
+    gulp.src([fnObj.paths.src + '*.js'])
+    //.pipe(plumber({errorHandler: fnObj.errorAlert}))
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ["modern-browsers"],
+            "plugins": ["transform-es2015-modules-amd"]
+            //plugins: ['transform-runtime']
+        }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(fnObj.paths.dist_es5));
 });

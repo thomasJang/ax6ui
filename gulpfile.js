@@ -33,10 +33,10 @@ gulp.task('default', function () {
 // task for ES6
 gulp.task('dist-ES6', function () {
     gulp.src([fnObj.paths.src + '*.js'])
-        .pipe(plumber({errorHandler: fnObj.errorAlert}))
+        //.pipe(plumber({errorHandler: fnObj.errorAlert}))
         .pipe(sourcemaps.init())
         .pipe(babel({
-            presets: ['env'],
+            presets: ['es2016'],
             plugins: ['transform-runtime']
         }))
         .pipe(sourcemaps.write('.'))

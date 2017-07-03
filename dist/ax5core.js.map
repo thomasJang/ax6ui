@@ -1,1 +1,0 @@
-{"version":3,"sources":["ax5core.js"],"names":["module","exports","getName"],"mappings":";;AAGAA,OAAOC,OAAP,GAAiB;AACbC,aAAS,mBAAY;AACjB;AACH;AAHY,CAAjB","file":"ax5core.js","sourcesContent":["\n\n\nmodule.exports = {\n    getName: function () {\n        // test\n    }\n};"]}

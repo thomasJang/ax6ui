@@ -34,12 +34,12 @@ gulp.task('default', function () {
 gulp.task('dist-ES6', function () {
     gulp.src([fnObj.paths.src + '*.js'])
         //.pipe(plumber({errorHandler: fnObj.errorAlert}))
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(babel({
-            presets: ['es2016'],
+            //presets: ['es2016'],
             //plugins: ['transform-runtime']
         }))
-        .pipe(sourcemaps.write('.'))
+        //.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(fnObj.paths.dist_es6));
 });
 
@@ -47,12 +47,12 @@ gulp.task('dist-ES6', function () {
 gulp.task('dist-ES5', function () {
     gulp.src([fnObj.paths.src + '*.js'])
     //.pipe(plumber({errorHandler: fnObj.errorAlert}))
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(babel({
-            presets: ["modern-browsers"],
-            "plugins": ["transform-es2015-modules-amd"]
+            presets: ["modern-browsers", "es2015"],
+            //"plugins": ["transform-es2015-modules-amd"]
             //plugins: ['transform-runtime']
         }))
-        .pipe(sourcemaps.write('.'))
+        //.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(fnObj.paths.dist_es5));
 });

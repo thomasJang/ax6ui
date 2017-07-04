@@ -2004,4 +2004,3 @@ module.exports = {
     string: string,
     color: color
 };
-//# sourceMappingURL=AX6Util.js.map

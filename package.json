@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "ES6 UI Component",
   "main": "",
-  "dependencies": {},
+  "dependencies": {
+    "jqlite": "^0.2.42"
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-es2015-modules-amd": "^6.24.1",

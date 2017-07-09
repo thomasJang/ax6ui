@@ -1,11 +1,6 @@
-import _ from 'lodash';
-import './index.scss';
+import info from '../../src/AX6Info';
+import util from '../../src/AX6Util';
 
-function component() {
-    var element = document.createElement('div');
-
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    return element;
-}
-
-document.body.appendChild(component());
+console.log(info.browser);
+console.log(util.left("AXISJ", 3));
+console.log(util.test);

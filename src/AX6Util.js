@@ -2040,5 +2040,6 @@ module.exports = {
     unescapeHtml: unescapeHtml,
 
     string: string,
-    color: color
+    color: color,
+    test: "test"
 };

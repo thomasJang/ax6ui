@@ -3,17 +3,38 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const entry = {
+    index: './src/index.js',
+    mask: './src/mask.js'
+};
+
+let plugins = [
+    new CleanWebpackPlugin(['dist']),
+    new webpack.HotModuleReplacementPlugin()
+];
+
+let menu = [];
+
+for (let k in entry) {
+    menu.push(k + '.html');
+}
+
+for (let k in entry) {
+    plugins.push(new HtmlWebpackPlugin({
+        inject: false,
+        chunks: [k],
+        menu: menu,
+        title: "AX6UI SAMPLE",
+        filename: k + '.html',
+        template: './src/sample.ejs'
+    }));
+}
+
+
+// module.exports
 module.exports = {
-    entry: {
-        app: './src/index.js',
-    },
-    plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new webpack.HotModuleReplacementPlugin(), // Enable HMR
-        new HtmlWebpackPlugin({
-            title: 'Output Management'
-        })
-    ],
+    entry: entry,
+    plugins: plugins,
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'

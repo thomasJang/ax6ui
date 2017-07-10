@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8" />
+        <title><%= htmlWebpackPlugin.options.title || 'Webpack App'%></title>
+
+        <% if (htmlWebpackPlugin.files.favicon) { %>
+        <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>" />
+        <% } %>
+        <% if (htmlWebpackPlugin.options.mobile) { %>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <% } %>
+
+        <% for (var css in htmlWebpackPlugin.files.css) { %>
+        <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" />
+        <% } %>
+    </head>
+    <body>
+
+    <ul>
+        <% for (key in htmlWebpackPlugin.options.menu) { %>
+        <li><a href="<%= htmlWebpackPlugin.options.menu[key] %>"><%= htmlWebpackPlugin.options.menu[key] %></a></li>
+        <% } %>
+    </ul>
+
+    <% for (key in htmlWebpackPlugin.files.chunks) { %>
+    <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
+    <% } %>
+
+    </body>
+</html>

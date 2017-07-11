@@ -20,14 +20,17 @@ for (let k in entry) {
 }
 
 for (let k in entry) {
-    plugins.push(new HtmlWebpackPlugin({
+
+    let obj = {
         inject: false,
         chunks: [k],
         menu: menu,
         title: "AX6UI SAMPLE",
         filename: k + '.html',
         template: './src/sample.ejs'
-    }));
+    };
+
+    plugins.push(new HtmlWebpackPlugin(obj));
 }
 
 
@@ -43,6 +46,10 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 4000
+    },
+    node: {
+        fs: 'empty',
+        child_process: 'empty'
     },
     module: {
         rules:[

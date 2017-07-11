@@ -6,10 +6,6 @@ let el = $('<div>DIV</div>');
 el.css({"background": "#ccc", "padding": "10px"});
 
 
-console.log(info.browser);
-console.log(util.left("AXISJ", 3));
-console.log(util.test);
-
 $(function () {
     $(document.body).append(el);
 });

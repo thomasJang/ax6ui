@@ -1,6 +1,17 @@
 import $ from "jqLite";
 //import info from "../../src/AX6Info";
 import util from "../../src/AX6Util";
+import AX6UICore from "../../src/AX6UICore";
+
+
+var myUI0 = new AX6UICore();
+var myUI1 = new AX6UICore();
+var myUI2 = new AX6UICore();
+console.log(myUI0);
+console.log(myUI1);
+console.log(myUI2);
+
+
 let $el = $('<div id="test-target"></div>');
 
 //$el.append('<p>' + info + '</p>');

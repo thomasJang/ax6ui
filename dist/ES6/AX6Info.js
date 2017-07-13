@@ -194,7 +194,7 @@ let supportTouch = win ? 'ontouchstart' in win || navigator.maxTouchPoints > 0 |
 
 let supportFileApi = win ? win.FileReader && win.File && win.FileList && win.Blob : false;
 
-module.exports = {
+export default {
     errorMsg: errorMsg,
     onerror: onerror,
     eventKeys: eventKeys,

@@ -1,5 +1,8 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var win = window;
 var doc = win ? win.document : null;
 var docElem = win ? win.document.documentElement : null;
@@ -196,7 +199,7 @@ var supportTouch = win ? 'ontouchstart' in win || navigator.maxTouchPoints > 0 |
 
 var supportFileApi = win ? win.FileReader && win.File && win.FileList && win.Blob : false;
 
-module.exports = {
+exports.default = {
     errorMsg: errorMsg,
     onerror: onerror,
     eventKeys: eventKeys,

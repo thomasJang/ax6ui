@@ -1,10 +1,16 @@
 import $ from "jqLite";
-import info from "../../src/AX6Info";
-import util from "../../src/AX6Util";
+import Mask from "../../src/AX6UIMask";
 
 let el = $('<div>DIV</div>');
-el.css({"background": "#ccc", "padding": "10px"});
+let myMask = new Mask();
+myMask.setConfig({
+    zIndex: 1000
+});
 
+el.on("click", function () {
+    console.log(myMask);
+    myMask.open();
+});
 
 $(function () {
     $(document.body).append(el);

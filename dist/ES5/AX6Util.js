@@ -1,8 +1,29 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _AX6Info = require("./AX6Info");
+
+var _AX6Info2 = _interopRequireDefault(_AX6Info);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _toString = Object.prototype.toString;
+var reIsJson = /^(["'](\\.|[^"\\\n\r])*?["']|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/,
+    reMs = /^-ms-/,
+    reSnakeCase = /[\-_]([\da-z])/gi,
+    reCamelCase = /([A-Z])/g,
+    reDot = /\./,
+    reInt = /[-|+]?[\D]/gi,
+    reNotNum = /\D/gi,
+    reMoneySplit = new RegExp('([0-9])([0-9][0-9][0-9][,.])'),
+    reAmp = /&/g,
+    reEq = /=/,
+    reClassNameSplit = /[ ]+/g;
 
 /**
  * Object나 Array의 아이템으로 사용자 함수를 호출합니다.
@@ -163,7 +184,7 @@ function filter(O, _fn) {
  */
 function toJson(O) {
     var jsonString = "";
-    if (AX6Util.isArray(O)) {
+    if (isArray(O)) {
         var i = 0,
             l = O.length;
         jsonString += "[";
@@ -172,7 +193,7 @@ function toJson(O) {
             jsonString += toJson(O[i]);
         }
         jsonString += "]";
-    } else if (AX6Util.isObject(O)) {
+    } else if (isObject(O)) {
         jsonString += "{";
         var jsonObjectBody = [];
         each(O, function (key, value) {
@@ -180,13 +201,13 @@ function toJson(O) {
         });
         jsonString += jsonObjectBody.join(", ");
         jsonString += "}";
-    } else if (AX6Util.isString(O)) {
+    } else if (isString(O)) {
         jsonString = '"' + O + '"';
-    } else if (AX6Util.isNumber(O)) {
+    } else if (isNumber(O)) {
         jsonString = O;
-    } else if (AX6Util.isUndefined(O)) {
+    } else if (isUndefined(O)) {
         jsonString = "undefined";
-    } else if (AX6Util.isFunction(O)) {
+    } else if (isFunction(O)) {
         jsonString = '"{Function}"';
     } else {
         jsonString = O;
@@ -483,7 +504,7 @@ function last(O) {
  * ```
  */
 function setCookie(cn, cv, exdays, opts) {
-    var expire;
+    var expire = void 0;
     if (typeof exdays === "number") {
         expire = new Date();
         expire.setDate(expire.getDate() + exdays);
@@ -649,11 +670,15 @@ function snakeCase(str) {
  * ```
  */
 function number(str, cond) {
-    var result,
+    var result = void 0,
         pair = ('' + str).split(reDot),
-        isMinus = Number(pair[0]) < 0 || pair[0] == "-0",
-        returnValue = 0.0;
+        isMinus = void 0,
+        returnValue = void 0;
+
+    isMinus = Number(pair[0].replace(/,/g, "")) < 0 || pair[0] == "-0";
+    returnValue = 0.0;
     pair[0] = pair[0].replace(reInt, "");
+
     if (pair[1]) {
         pair[1] = pair[1].replace(reNotNum, "");
         returnValue = Number(pair[0] + "." + pair[1]) || 0;
@@ -737,37 +762,6 @@ function toArray(O) {
 }
 
 /**
- * 첫번째 인자에 두번째 인자 아이템을 합쳐줍니다. concat과 같은 역할을 하지만. 인자가 Array타입이 아니어도 됩니다.
- * @method AX6Util.merge
- * @param {Array|ArrayLike} first
- * @param {Array|ArrayLike} second
- * @returns {Array} first
- * @example
- * ```
- *
- * ```
- */
-function merge(first, second) {
-    var l = second.length,
-        i = first.length,
-        j = 0;
-
-    if (typeof l === "number") {
-        for (; j < l; j++) {
-            first[i++] = second[j];
-        }
-    } else {
-        while (second[j] !== undefined) {
-            first[i++] = second[j++];
-        }
-    }
-
-    first.length = i;
-
-    return first;
-}
-
-/**
  * 오브젝트를 파라미터형식으로 또는 파라미터를 오브젝트 형식으로 변환합니다.
  * @method AX6Util.param
  * @param {Object|Array|String} O
@@ -814,7 +808,7 @@ function decode(s) {
 }
 
 function error() {
-    ax5.info.onerror.apply(this, arguments);
+    _AX6Info2.default.onerror.apply(this, arguments);
 }
 
 function localDate(yy, mm, dd, hh, mi, ss) {
@@ -1027,7 +1021,7 @@ function date(d, cond) {
                     fStr = fStr.replace(regS, nS);
                 }
                 if (regDW == "dw") {
-                    fStr = fStr.replace(regDW, info.weekNames[nDW].label);
+                    fStr = fStr.replace(regDW, _AX6Info2.default.weekNames[nDW].label);
                 }
                 return fStr;
             }();
@@ -1962,7 +1956,7 @@ function color(_hexColor) {
     }(_hexColor);
 }
 
-module.exports = {
+exports.default = {
     alert: alert,
     each: each,
     search: search,
@@ -1992,7 +1986,6 @@ module.exports = {
     snakeCase: snakeCase,
     number: number,
     toArray: toArray,
-    merge: merge,
     param: param,
     error: error,
     date: date,

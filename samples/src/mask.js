@@ -8,7 +8,6 @@ myMask.setConfig({
 });
 
 el.on("click", function () {
-    console.log(myMask);
     myMask.open();
 });
 

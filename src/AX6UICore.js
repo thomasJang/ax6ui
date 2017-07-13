@@ -1,19 +1,21 @@
+import jQuery from 'jqLite';
+import _ from 'lodash';
+
+let UI_INSTANCE_ID = 0;
+
 class AX6UICore {
-    constructor() {
-        this.config = {};
+    static getInstanceId() {
+        return UI_INSTANCE_ID++;
+    };
+
+    constructor(config) {
+        this.config = config || {};
         this.instanceId = AX6UICore.getInstanceId();
     }
 
     setConfig(config) {
-        this.config = Object.assign(this.config, config);
+        _.merge(this.config, config);
     }
-
-    static getInstanceId() {
-        if (typeof this.instanceId === "undefined") {
-            this.instanceId = 0;
-        }
-        return this.instanceId++;
-    };
 }
 
 export default AX6UICore;

@@ -1,5 +1,5 @@
 import jQuery from 'jqLite';
-import AX6UICore from './AX6UICore';
+import AX6UICore from "../../src/AX6UICore";
 
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {

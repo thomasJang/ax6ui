@@ -47,6 +47,7 @@ module.exports = {
         compress: true,
         port: 4000
     },
+    devtool: 'inline-source-map',
     node: {
         fs: 'empty',
         child_process: 'empty'

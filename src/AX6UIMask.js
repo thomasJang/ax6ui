@@ -1,6 +1,7 @@
 import jQuery from 'jqLite';
 import _ from 'lodash';
 import AX6UICore from './AX6UICore';
+import mustache from './AX6Mustache';
 
 let CFG;
 const onStateChanged = function (opts, that) {
@@ -15,9 +16,20 @@ const onStateChanged = function (opts, that) {
     that = null;
     return true;
 };
-const getBodyTmpl = function (data) {
-    if (typeof data.templateName === "undefined") data.templateName = "defaultMask";
-    return MASK.tmpl.get.call(this, data.templateName, data);
+const getBodyTmpl = function (data, columnKeys) {
+    const defaultMask = function(columnKeys) {
+        return `
+            <div class="ax-mask {{theme}}" id="{{maskId}}">
+                <div class="ax-mask-bg"></div>
+                <div class="ax-mask-content">
+                    <div class="ax-mask-body">
+                    {{{body}}}
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+    return mustache.render(defaultMask.call(this, columnKeys), data);
 };
 const setBody = function (content) {
     this.maskContent = content;
@@ -60,7 +72,7 @@ class AX6UIMask extends AX6UICore {
                 maskId: maskId,
                 body: this.maskContent,
                 templateName: templateName
-            });
+            }).trim();
 
         jQuery(document.body).append(body);
 
@@ -70,8 +82,8 @@ class AX6UIMask extends AX6UICore {
                 position: _cfg.position || "absolute",
                 left: $target.offset().left,
                 top: $target.offset().top,
-                width: $target.outerWidth(),
-                height: $target.outerHeight()
+                width: $target.width(),
+                height: $target.height()
             };
 
             $target.addClass("ax-masking");
@@ -82,8 +94,8 @@ class AX6UIMask extends AX6UICore {
             }).bind(this));
         }
 
-        if (typeof self.maskConfig.zIndex !== "undefined") {
-            css["z-index"] = self.maskConfig.zIndex;
+        if (typeof _cfg.zIndex !== "undefined") {
+            css["z-index"] = _cfg.zIndex;
         }
 
         this.$mask = $mask = jQuery("#" + maskId);

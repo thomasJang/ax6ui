@@ -1,7 +1,8 @@
-import jQuery from 'jqLite';
+import jQuery from 'jqmin';
 import _ from 'lodash';
 import AX6UICore from './AX6UICore';
 import mustache from './AX6Mustache';
+
 
 let CFG;
 const onStateChanged = function (opts, that) {
@@ -38,7 +39,10 @@ const setBody = function (content) {
 
 class AX6UIMask extends AX6UICore {
     constructor(config) {
-
+        
+        console.log(jQuery(document.body).get(0));
+        
+        
         super({
             theme: '',
             target: jQuery(document.body).get(0),
@@ -77,6 +81,9 @@ class AX6UIMask extends AX6UICore {
         jQuery(document.body).append(body);
 
         // 마스크의 타겟이 html body 가 아니라면
+        
+        console.log(target);
+        
         if (target && target !== jQuery(document.body).get(0)) {
             css = {
                 position: _cfg.position || "absolute",

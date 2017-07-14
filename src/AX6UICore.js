@@ -1,4 +1,4 @@
-import jQuery from 'jqLite';
+import jQuery from 'jqmin';
 import _ from 'lodash';
 
 let UI_INSTANCE_ID = 0;

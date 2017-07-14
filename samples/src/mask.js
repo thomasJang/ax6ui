@@ -1,5 +1,6 @@
-import $ from "jqLite";
+import $ from "jqmin";
 import Mask from "../../src/AX6UIMask";
+import "../../src/scss/AX6UIMask/AX6Mask.scss";
 
 let el = $('<div>DIV</div>');
 let myMask = new Mask();

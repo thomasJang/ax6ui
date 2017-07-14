@@ -4,7 +4,7 @@
   "description": "ES6 UI Component",
   "main": "",
   "dependencies": {
-    "jqlite": "^0.2.42"
+    "jqmin": "^0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

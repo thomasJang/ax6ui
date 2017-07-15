@@ -2,6 +2,9 @@ import info from "./AX6Info";
 
 
 
+/**
+ * @namespace AX6Util
+ */
 
 const _toString = Object.prototype.toString;
 const reIsJson = /^(["'](\\.|[^"\\\n\r])*?["']|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/,
@@ -1164,6 +1167,7 @@ function setDigit(num, length, padder, radix) {
 
 /**
  * 문자열을 지정된 수만큼 반복 합니다.
+ * @method AX6Util.times
  * @param {String} s
  * @param {Number} count
  * @returns {string}

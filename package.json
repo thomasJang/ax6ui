@@ -4,7 +4,8 @@
   "description": "ES6 UI Component",
   "main": "",
   "dependencies": {
-    "jqmin": "^0.1.0"
+    "jqmin": "^0.1.0",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -17,11 +18,14 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.0.0",
     "gulp-changed": "^3.1.0",
+    "gulp-concat": "^2.6.1",
     "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-shell": "^0.6.3",
     "gulp-sourcemaps": "^2.6.0",
+    "gulp-util": "^3.0.8",
     "node-sass": "^4.5.3"
   },
   "scripts": {

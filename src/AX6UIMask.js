@@ -35,8 +35,7 @@ const setBody = function (content) {
 };
 
 /**
- * @class AX6UIMask
- * @classdesc 웹페이지 마스크
+ * @class
  */
 class AX6UIMask extends AX6UICore {
     /**
@@ -68,7 +67,7 @@ class AX6UIMask extends AX6UICore {
     }
 
     /**
-     * @method AX6UIMask.setConfig
+     * @method
      * @param config
      * @param [config.theme]
      * @param [config.target]
@@ -77,7 +76,6 @@ class AX6UIMask extends AX6UICore {
      * @param [config.onClick]
      * @param [config.content]
      */
-
     init(){
         this.onStateChanged = this.config.onStateChanged;
         delete this.config.onStateChanged;
@@ -90,13 +88,17 @@ class AX6UIMask extends AX6UICore {
         this.initOnce();
     }
 
+    /**
+     * @method
+     * @return {AX6UIMask}
+     */
     initOnce(){
         if(this.initialized) return this;
         this.initialized = true;
     }
 
     /**
-     * @method AX6UIMask.open
+     * @method
      * @param options
      * @return {AX6UIMask}
      */
@@ -185,7 +187,7 @@ class AX6UIMask extends AX6UICore {
     }
 
     /**
-     * @method AX6UIMask.close
+     * @method
      * @param delay
      * @return {AX6UIMask}
      */
@@ -217,7 +219,7 @@ class AX6UIMask extends AX6UICore {
     }
 
     /**
-     * @method AX6UIMask.fadeOut
+     * @method
      * @return {AX6UIMask}
      */
     fadeOut(){
@@ -245,13 +247,13 @@ class AX6UIMask extends AX6UICore {
     }
 
     /**
-     * @method AX6UIMask.align
+     * @method
      * @return {AX6UIMask}
      */
     align(){
         if (this.$mask && this.activeConfig && this.activeConfig.target && this.activeConfig.target !== jQuery(document.body).get(0)) {
             try {
-                var css = {
+                let css = {
                     position: this.activeConfig.position || "absolute",
                     left: this.$target.offset().left,
                     top: this.$target.offset().top,

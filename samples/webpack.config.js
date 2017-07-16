@@ -5,7 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const entry = {
     index: './src/index.js',
-    mask: './src/mask.js'
+    mask: './src/mask.js',
+    formatter: './src/formatter.js'
 };
 
 let plugins = [
@@ -54,6 +55,7 @@ module.exports = {
     },
     module: {
         rules:[
+            { test: /\.css$/, use: 'css-loader' },
             {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']

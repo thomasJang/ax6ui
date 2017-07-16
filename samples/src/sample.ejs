@@ -13,10 +13,46 @@
         <% for (var css in htmlWebpackPlugin.files.css) { %>
         <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" />
         <% } %>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     </head>
     <body>
 
-    <ul>
+    <ul id="dropdown1" class="dropdown-content">
+        <% for (key in htmlWebpackPlugin.options.menu) { %>
+        <li><a href="<%= htmlWebpackPlugin.options.menu[key] %>"><%= htmlWebpackPlugin.options.menu[key] %></a></li>
+        <% } %>
+    </ul>
+
+    <nav>
+
+            <div class="nav-wrapper">
+                <ul class="left hide-on-large-only" data-nav-account="">
+                    <li><a href="#" data-activates="slide-out" class="waves-effect waves-light"><i class="large material-icons">menu</i></a></li>
+                </ul>
+                <a href="#!" class="brand-logo" style="padding:0 20px;">AX6UI</a>
+                <ul class="right hide-on-med-and-down">
+
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+
+                </ul>
+            </div>
+
+    </nav>
+
+    <div class="container" style="padding-top: 1em;">
+        <div id="sample-body"></div>
+    </div>
+
+
+    <ul id="slide-out" class="side-nav">
         <% for (key in htmlWebpackPlugin.options.menu) { %>
         <li><a href="<%= htmlWebpackPlugin.options.menu[key] %>"><%= htmlWebpackPlugin.options.menu[key] %></a></li>
         <% } %>
@@ -25,6 +61,22 @@
     <% for (key in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
     <% } %>
+
+    <script>
+        $(document).ready(function () {
+            $('[data-activates="slide-out"]').sideNav();
+            $(".dropdown-button").dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrainWidth: true, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: true, // Displays dropdown below the button
+                alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                stopPropagation: true // Stops event propagation
+            });
+        })
+    </script>
 
     </body>
 </html>

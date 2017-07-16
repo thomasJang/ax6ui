@@ -3,20 +3,6 @@ import $ from "jqmin";
 import util from "../../src/AX6Util";
 import AX6UICore from "../../src/AX6UICore";
 
-
-var myUI0 = new AX6UICore();
-console.log(myUI0);
-
-var myUI1 = new AX6UICore();
-console.log(myUI1);
-
-var myUI2 = new AX6UICore();
-console.log(myUI2);
-
-var myUI3 = new AX6UICore();
-console.log(myUI3);
-
-
 let $el = $('<div id="test-target"></div>');
 //$el.append('<p>' + info + '</p>');
 
@@ -349,4 +335,4 @@ describe('util.number TEST', function () {
 });
 
 
-$(document.body).append($el);
+$("#sample-body").append($el);

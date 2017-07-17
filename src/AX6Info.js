@@ -3,8 +3,7 @@ const doc = (win) ? win.document : null;
 const docElem = (win) ? win.document.documentElement : null;
 
 /**
- * 상수모음
- * @namespace AX6Info
+ * @module AX6Info
  */
 
 /**

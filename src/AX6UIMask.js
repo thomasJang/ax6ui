@@ -50,7 +50,18 @@ class AX6UIMask extends AX6UICore {
      */
     constructor(config) {
         super();
-        
+
+        /**
+         * @member {JSON}
+         * @param config
+         * @param [config.theme]
+         * @param [config.target=document.body]
+         * @param [config.anmateTime=250]
+         * @param [config.onStateChanged]
+         * @param [config.onClick]
+         * @param [config.content]
+         *
+         */
         this.config = {
             theme: '',
             target: jQuery(document.body).get(0),
@@ -59,8 +70,17 @@ class AX6UIMask extends AX6UICore {
         jQuery.extend(true, this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * @member {String}
+         */
         this.maskContent = '';
+        /**
+         * @member {String}
+         */
         this.status = "off";
+        /**
+         * @member {JSON}
+         */
         this.activeConfig = {};
 
         this.init();

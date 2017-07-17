@@ -147,6 +147,16 @@ const bindFormatterTarget = function (opts, optIdx) {
 
     return this;
 };
+const unbindFormatterTarget = function (opts, optIdx) {
+    opts.$input
+        .off('focus.ax6formatter')
+        .off('keydown.ax6formatter')
+        .off('keyup.ax6formatter')
+        .off('blur.ax6formatter');
+
+    return this;
+};
+
 const getQueIdx = function (boundID) {
     if (!U.isString(boundID)) {
         boundID = jQuery(boundID).data("data-formatter");
@@ -203,12 +213,21 @@ class AX6UIFormatter extends AX6UICore {
     constructor(config) {
         super();
 
+        /**
+         * @member {JSON}
+         * @param config
+         * @param [config.animateTime=250]
+         */
         this.config = {
             animateTime: 250
         };
         jQuery.extend(true, this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * @member
+         * @type {Array}
+         */
         this.queue = [];
         this.openTimer = null;
         this.closeTimer = null;
@@ -241,6 +260,7 @@ class AX6UIFormatter extends AX6UICore {
      * @return {AX6UIFormatter}
      */
     bind(opts) {
+        let self = this;
         let formatterConfig = {},
             optIdx;
 
@@ -269,11 +289,12 @@ class AX6UIFormatter extends AX6UICore {
         }
 
         opts.$input = (opts.$target.get(0).tagName == "INPUT") ? opts.$target : opts.$target.find('input[type="text"]');
-        if (!opts.id) opts.id = opts.$input.data("ax5-formatter");
+
+        if (!opts.id) opts.id = opts.$input.data("ax6-formatter");
 
         if (!opts.id) {
-            opts.id = 'ax5-formatter-' + AX6UICore.getInstanceId();
-            opts.$input.data("ax5-formatter", opts.id);
+            opts.id = 'ax6-formatter-' + AX6UICore.getInstanceId();
+            opts.$input.data("ax6-formatter", opts.id);
         }
         optIdx = U.search(this.queue, function () {
             return this.id == opts.id;
@@ -305,6 +326,50 @@ class AX6UIFormatter extends AX6UICore {
         } else {
             formatterEvent.blur.call(this, this.queue[queIdx], queIdx, null, true);
         }
+        return this;
+    }
+
+    /**
+     * @method
+     * @param opts
+     * @return {AX6UIFormatter}
+     */
+    unbind(opts) {
+        let self = this;
+        let optIdx;
+
+        if (!opts.target) {
+            console.log(info.getError("ax6formatter", "401", "unbind"));
+            return this;
+        }
+        opts.$target = jQuery(opts.target);
+
+        if (opts.$target.get(0).tagName == "INPUT") {
+            opts.$input = opts.$target;
+        }
+        else {
+            opts.$input = opts.$target.find('input[type="text"]');
+            if (opts.$input.length > 1) {
+                opts.$input.each(function () {
+                    opts.target = this;
+                    self.unbind(opts);
+                });
+                return this;
+            }
+        }
+
+        opts.$input = (opts.$target.get(0).tagName == "INPUT") ? opts.$target : opts.$target.find('input[type="text"]');
+        opts.id = opts.$input.data("ax6-formatter");
+
+        if (opts.id) {
+            optIdx = U.search(this.queue, function () {
+                return this.id == opts.id;
+            });
+
+            unbindFormatterTarget.call(this, this.queue[optIdx]);
+            this.queue.splice(optIdx, 1);
+        }
+        
         return this;
     }
 }

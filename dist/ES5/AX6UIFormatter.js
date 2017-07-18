@@ -22,9 +22,9 @@ var _AX6Util = require("./AX6Util");
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 
-var _AX6UIFormatterFormatter = require("./AX6UIFormatter-formatter");
+var _AX6UIFormatter_formatter = require("./AX6UIFormatter_formatter");
 
-var _AX6UIFormatterFormatter2 = _interopRequireDefault(_AX6UIFormatterFormatter);
+var _AX6UIFormatter_formatter2 = _interopRequireDefault(_AX6UIFormatter_formatter);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88,8 +88,8 @@ var formatterEvent = {
         }
 
         beforeValue = elem.value;
-        if (opts.pattern in _AX6UIFormatterFormatter2.default) {
-            newValue = _AX6UIFormatterFormatter2.default[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value);
+        if (opts.pattern in _AX6UIFormatter_formatter2.default) {
+            newValue = _AX6UIFormatter_formatter2.default[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value);
         } else {
             newValue = beforeValue;
         }
@@ -107,8 +107,8 @@ var formatterEvent = {
         opts.$input.removeData("__originValue__");
 
         beforeValue = elem.value;
-        if (opts.pattern in _AX6UIFormatterFormatter2.default) {
-            newValue = _AX6UIFormatterFormatter2.default[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value, 'blur');
+        if (opts.pattern in _AX6UIFormatter_formatter2.default) {
+            newValue = _AX6UIFormatter_formatter2.default[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value, 'blur');
         } else {
             newValue = beforeValue;
         }
@@ -143,8 +143,8 @@ var bindFormatterTarget = function bindFormatterTarget(opts, optIdx) {
     opts.patternArgument = matched[1] || "";
 
     // 함수타입
-    if (opts.pattern in _AX6UIFormatterFormatter2.default) {
-        opts.enterableKeyCodes = _AX6UIFormatterFormatter2.default[opts.pattern].getEnterableKeyCodes.call(this, opts, optIdx);
+    if (opts.pattern in _AX6UIFormatter_formatter2.default) {
+        opts.enterableKeyCodes = _AX6UIFormatter_formatter2.default[opts.pattern].getEnterableKeyCodes.call(this, opts, optIdx);
     } else if (opts.pattern in this.config.formatter) {}
 
     opts.$input.off('focus.ax6formatter').on('focus.ax6formatter', formatterEvent.focus.bind(this, this.queue[optIdx], optIdx)).off('keydown.ax6formatter').on('keydown.ax6formatter', formatterEvent.keydown.bind(this, this.queue[optIdx], optIdx)).off('keyup.ax6formatter').on('keyup.ax6formatter', formatterEvent.keyup.bind(this, this.queue[optIdx], optIdx)).off('blur.ax6formatter').on('blur.ax6formatter', formatterEvent.blur.bind(this, this.queue[optIdx], optIdx));

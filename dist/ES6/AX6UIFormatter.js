@@ -2,7 +2,7 @@ import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore";
 import info from "./AX6Info";
 import U from "./AX6Util";
-import FORMATTER from "./AX6UIFormatter-formatter";
+import FORMATTER from "./AX6UIFormatter_formatter";
 
 const setSelectionRange = function (input, pos) {
     if (typeof pos == "undefined") {

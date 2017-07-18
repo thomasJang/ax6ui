@@ -30,7 +30,7 @@ const fnObj = {
 
 // 걸프 기본 타스크
 gulp.task('default', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], function () {
-    gulp.watch([fnObj.paths.src + '/**/*.js'], ['dist-ES5', 'dist-ES6']);
+    return true;
 });
 
 // task for ES6

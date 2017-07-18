@@ -1,7 +1,7 @@
-import jQuery from 'jqmin';
-import _ from 'lodash';
-import AX6UICore from './AX6UICore';
-import mustache from './AX6Mustache';
+import jQuery from "jqmin";
+import _ from "lodash";
+import AX6UICore from "./AX6UICore";
+import mustache from "./AX6Mustache";
 
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
@@ -34,8 +34,7 @@ const setBody = function (content) {
 };
 
 /**
- * @class AX6UIMask
- * @classdesc 웹페이지 마스크
+ * @class
  */
 class AX6UIMask extends AX6UICore {
     /**
@@ -51,6 +50,17 @@ class AX6UIMask extends AX6UICore {
     constructor(config) {
         super();
 
+        /**
+         * @member {JSON}
+         * @param config
+         * @param [config.theme]
+         * @param [config.target=document.body]
+         * @param [config.anmateTime=250]
+         * @param [config.onStateChanged]
+         * @param [config.onClick]
+         * @param [config.content]
+         *
+         */
         this.config = {
             theme: '',
             target: jQuery(document.body).get(0),
@@ -59,15 +69,24 @@ class AX6UIMask extends AX6UICore {
         jQuery.extend(true, this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * @member {String}
+         */
         this.maskContent = '';
+        /**
+         * @member {String}
+         */
         this.status = "off";
+        /**
+         * @member {JSON}
+         */
         this.activeConfig = {};
 
         this.init();
     }
 
     /**
-     * @method AX6UIMask.setConfig
+     * @method
      * @param config
      * @param [config.theme]
      * @param [config.target]
@@ -76,26 +95,29 @@ class AX6UIMask extends AX6UICore {
      * @param [config.onClick]
      * @param [config.content]
      */
-
     init() {
         this.onStateChanged = this.config.onStateChanged;
         delete this.config.onStateChanged;
         this.onClick = this.config.onClick;
         delete this.config.onClick;
 
-        if (this.config.content) setBody.call(this, this.config.content);
+        setBody.call(this, this.config.content || "");
 
         // init 호출 여부
         this.initOnce();
     }
 
+    /**
+     * @method
+     * @return {AX6UIMask}
+     */
     initOnce() {
         if (this.initialized) return this;
         this.initialized = true;
     }
 
     /**
-     * @method AX6UIMask.open
+     * @method
      * @param options
      * @return {AX6UIMask}
      */
@@ -103,7 +125,7 @@ class AX6UIMask extends AX6UICore {
         let self = this;
 
         if (this.status === "on") this.close();
-        if (options && options.content) setBody.call(this, options.content);
+        setBody.call(this, options ? options.content || "" : "");
 
         let _cfg = _.merge({}, this.config, options),
             target = _cfg.target,
@@ -184,7 +206,7 @@ class AX6UIMask extends AX6UICore {
     }
 
     /**
-     * @method AX6UIMask.close
+     * @method
      * @param delay
      * @return {AX6UIMask}
      */
@@ -216,7 +238,7 @@ class AX6UIMask extends AX6UICore {
     }
 
     /**
-     * @method AX6UIMask.fadeOut
+     * @method
      * @return {AX6UIMask}
      */
     fadeOut() {
@@ -243,13 +265,13 @@ class AX6UIMask extends AX6UICore {
     }
 
     /**
-     * @method AX6UIMask.align
+     * @method
      * @return {AX6UIMask}
      */
     align() {
         if (this.$mask && this.activeConfig && this.activeConfig.target && this.activeConfig.target !== jQuery(document.body).get(0)) {
             try {
-                var css = {
+                let css = {
                     position: this.activeConfig.position || "absolute",
                     left: this.$target.offset().left,
                     top: this.$target.offset().top,

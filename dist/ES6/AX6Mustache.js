@@ -4,6 +4,33 @@
  * https://github.com/thomasJang/mustache.js -- imporove some variables
  */
 
+/**
+ * AX6Mustache는 http://github.com/janl/mustache.js에 몇가지 최소한의 기능을 튜닝하여 사용하는 템플릿 엔진입니다.
+ * @namespace AX6Mustache
+ */
+
+/**
+ * @method AX6Mustache.render
+ * @example
+ * ```js
+ * ax5.mustache.render(template, view)
+ *
+ *
+ * //Array @i
+ * //{{#beatles}}
+ * //{{firstName}} {{lastName}} ({{@i}}) ({{@first}})
+ * //{{/beatles}}
+ *
+ * //Object @each
+ * {{#beatles}}
+ *  {{#@each}}
+ *      {{@key}} : {{@value.firstName}} {{@value.lastName}}
+ *  {{/@each}}
+ * {{/beatles}}
+ *
+ * ```
+ */
+
 let AX6 = {};
 
 (function defineMustache(global, factory) {

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -6,19 +6,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jqmin = require('jqmin');
+var _jqmin = require("jqmin");
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
-var _lodash = require('lodash');
+var _lodash = require("lodash");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _AX6UICore2 = require('./AX6UICore');
+var _AX6UICore2 = require("./AX6UICore");
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Mustache = require('./AX6Mustache');
+var _AX6Mustache = require("./AX6Mustache");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
@@ -43,7 +43,7 @@ var onStateChanged = function onStateChanged(opts, that) {
 };
 var getBodyTmpl = function getBodyTmpl(data, columnKeys) {
     var defaultMask = function defaultMask(columnKeys) {
-        return '\n            <div class="ax-mask {{theme}}" id="{{maskId}}">\n                <div class="ax-mask-bg"></div>\n                <div class="ax-mask-content">\n                    <div class="ax-mask-body">\n                    {{{body}}}\n                    </div>\n                </div>\n            </div>\n        ';
+        return "\n            <div class=\"ax-mask {{theme}}\" id=\"{{maskId}}\">\n                <div class=\"ax-mask-bg\"></div>\n                <div class=\"ax-mask-content\">\n                    <div class=\"ax-mask-body\">\n                    {{{body}}}\n                    </div>\n                </div>\n            </div>\n        ";
     };
     return _AX6Mustache2.default.render(defaultMask.call(this, columnKeys), data);
 };
@@ -52,8 +52,7 @@ var setBody = function setBody(content) {
 };
 
 /**
- * @class AX6UIMask
- * @classdesc 웹페이지 마스크
+ * @class
  */
 
 var AX6UIMask = function (_AX6UICore) {
@@ -72,6 +71,17 @@ var AX6UIMask = function (_AX6UICore) {
     function AX6UIMask(config) {
         _classCallCheck(this, AX6UIMask);
 
+        /**
+         * @member {JSON}
+         * @param config
+         * @param [config.theme]
+         * @param [config.target=document.body]
+         * @param [config.anmateTime=250]
+         * @param [config.onStateChanged]
+         * @param [config.onClick]
+         * @param [config.content]
+         *
+         */
         var _this = _possibleConstructorReturn(this, (AX6UIMask.__proto__ || Object.getPrototypeOf(AX6UIMask)).call(this));
 
         _this.config = {
@@ -82,8 +92,17 @@ var AX6UIMask = function (_AX6UICore) {
         _jqmin2.default.extend(true, _this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * @member {String}
+         */
         _this.maskContent = '';
+        /**
+         * @member {String}
+         */
         _this.status = "off";
+        /**
+         * @member {JSON}
+         */
         _this.activeConfig = {};
 
         _this.init();
@@ -91,7 +110,7 @@ var AX6UIMask = function (_AX6UICore) {
     }
 
     /**
-     * @method AX6UIMask.setConfig
+     * @method
      * @param config
      * @param [config.theme]
      * @param [config.target]
@@ -101,39 +120,46 @@ var AX6UIMask = function (_AX6UICore) {
      * @param [config.content]
      */
 
+
     _createClass(AX6UIMask, [{
-        key: 'init',
+        key: "init",
         value: function init() {
             this.onStateChanged = this.config.onStateChanged;
             delete this.config.onStateChanged;
             this.onClick = this.config.onClick;
             delete this.config.onClick;
 
-            if (this.config.content) setBody.call(this, this.config.content);
+            setBody.call(this, this.config.content || "");
 
             // init 호출 여부
             this.initOnce();
         }
+
+        /**
+         * @method
+         * @return {AX6UIMask}
+         */
+
     }, {
-        key: 'initOnce',
+        key: "initOnce",
         value: function initOnce() {
             if (this.initialized) return this;
             this.initialized = true;
         }
 
         /**
-         * @method AX6UIMask.open
+         * @method
          * @param options
          * @return {AX6UIMask}
          */
 
     }, {
-        key: 'open',
+        key: "open",
         value: function open(options) {
             var self = this;
 
             if (this.status === "on") this.close();
-            if (options && options.content) setBody.call(this, options.content);
+            setBody.call(this, options ? options.content || "" : "");
 
             var _cfg = _lodash2.default.merge({}, this.config, options),
                 target = _cfg.target,
@@ -214,13 +240,13 @@ var AX6UIMask = function (_AX6UICore) {
         }
 
         /**
-         * @method AX6UIMask.close
+         * @method
          * @param delay
          * @return {AX6UIMask}
          */
 
     }, {
-        key: 'close',
+        key: "close",
         value: function close(delay) {
             if (this.$mask) {
 
@@ -249,12 +275,12 @@ var AX6UIMask = function (_AX6UICore) {
         }
 
         /**
-         * @method AX6UIMask.fadeOut
+         * @method
          * @return {AX6UIMask}
          */
 
     }, {
-        key: 'fadeOut',
+        key: "fadeOut",
         value: function fadeOut() {
             if (this.$mask) {
                 var _close = function _close() {
@@ -279,12 +305,12 @@ var AX6UIMask = function (_AX6UICore) {
         }
 
         /**
-         * @method AX6UIMask.align
+         * @method
          * @return {AX6UIMask}
          */
 
     }, {
-        key: 'align',
+        key: "align",
         value: function align() {
             if (this.$mask && this.activeConfig && this.activeConfig.target && this.activeConfig.target !== (0, _jqmin2.default)(document.body).get(0)) {
                 try {

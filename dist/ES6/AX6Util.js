@@ -1,5 +1,9 @@
 import info from "./AX6Info";
 
+/**
+ * @module AX6Util
+ */
+
 const _toString = Object.prototype.toString;
 const reIsJson = /^(["'](\\.|[^"\\\n\r])*?["']|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/,
       reMs = /^-ms-/,
@@ -13,22 +17,6 @@ const reIsJson = /^(["'](\\.|[^"\\\n\r])*?["']|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]
       reEq = /=/,
       reClassNameSplit = /[ ]+/g;
 
-/**
- * Object나 Array의 아이템으로 사용자 함수를 호출합니다.
- * @method AX6Util.each
- * @param {Object|Array} O
- * @param {Function} _fn
- * @example
- * ```js
- * var axf = AX6Util;
- * axf.each([0,1,2], function(){
-		 * 	// with this
-		 * });
- * axf.each({a:1, b:2}, function(){
-		 * 	// with this
-		 * });
- * ```
- */
 function each(O, _fn) {
     if (isNothing(O)) return [];
     let key,
@@ -47,39 +35,6 @@ function each(O, _fn) {
     return O;
 }
 
-/**
- * 원본 아이템들을 이용하여 사용자 함수의 리턴값이 참인 아이템의 위치나 키값을 반환합니다.
- * @method AX6Util.search
- * @param {Object|Array} O
- * @param {Function|String|Number} _fn - 함수 또는 값
- * @returns {Number|String}
- * @example
- * ```js
- * var myArray = [0,1,2,3,4,5,6];
- * var myObject = {a:"123","b":"123",c:123};
- *
- * AX6Util.search(myArray,  function(){
-		 *    return this > 3;
-		 * });
- * // 4
- * AX6Util.search(myObject,  function(k, v){
-		 *    return v === 123;
-		 * });
- * // "c"
- * AX6Util.search([1,2,3,4], 3);
- * // 2
- * AX6Util.search([1,2], 4);
- * // -1
- * AX6Util.search(["name","value"], "value");
- * // 1
- * AX6Util.search(["name","value"], "values");
- * // -1
- * AX6Util.search({k1:"name",k2:"value"}, "value2");
- * // -1
- * AX6Util.search({k1:"name",k2:"value"}, "value");
- * // "k2"
- * ```
- */
 function search(O, _fn) {
     if (isNothing(O)) return -1;
     if (isObject(O)) {
@@ -106,29 +61,6 @@ function search(O, _fn) {
     return -1;
 }
 
-/**
- * 배열또는 오브젝트의 각 아이템을 인자로 하는 사용자 함수의 결과가 참인 아이템들의 배열을 반환합니다.
- * @method AX6Util.filter
- * @param {Object|Array} O
- * @param {Function} _fn
- * @returns {Array}
- * @example
- * ```js
- * var aarray = [5,4,3,2,1];
- * result = AX6Util.filter( aarray, function(){
-		 *    return this % 2;
-		 * });
- * console.log(result);
- * // [5, 3, 1]
- *
- * var filObject = {a:1, s:"string", oa:{pickup:true, name:"AXISJ"}, os:{pickup:true, name:"AX5"}};
- * result = AX6Util.filter( filObject, function(){
-		 * 	return this.pickup;
-		 * });
- * console.log( AX6Util.toJson(result) );
- * // [{"pickup": , "name": "AXISJ"}, {"pickup": , "name": "AX5"}]
- * ```
- */
 function filter(O, _fn) {
     if (isNothing(O)) return [];
     let k,
@@ -153,23 +85,6 @@ function filter(O, _fn) {
     return results;
 }
 
-/**
- * Object를 JSONString 으로 반환합니다.
- * @method AX6Util.toJson
- * @param {Object|Array} O
- * @returns {String} JSON
- * @example
- * ```js
- * var ax = AX6Util;
- * var myObject = {
-		 *    a:1, b:"2", c:{axj:"what", arrs:[0,2,"3"]},
-		 *    fn: function(abcdd){
-		 *        return abcdd;
-		 *    }
-		 * };
- * console.log( ax.toJson(myObject) );
- * ```
- */
 function toJson(O) {
     let jsonString = "";
     if (isArray(O)) {
@@ -203,30 +118,6 @@ function toJson(O) {
     return jsonString;
 }
 
-/**
- * 관용의 JSON Parser
- * @method AX6Util.parseJson
- * @param {String} JSONString
- * @param {Boolean} [force] - 강제 적용 여부 (json 문자열 검사를 무시하고 오브젝트 변환을 시도합니다.)
- * @returns {Object}
- * @example
- * ```
- * console.log(AX6Util.parseJson('{"a":1}'));
- * // Object {a: 1}
- * console.log(AX6Util.parseJson("{'a':1, 'b':'b'}"));
- * // Object {a: 1, b: "b"}
- * console.log(AX6Util.parseJson("{'a':1, 'b':function(){return 1;}}", true));
- * // Object {a: 1, b: function}
- * console.log(AX6Util.parseJson("{a:1}"));
- * // Object {a: 1}
- * console.log(AX6Util.parseJson("[1,2,3]"));
- * // [1, 2, 3]
- * console.log(AX6Util.parseJson("['1','2','3']"));
- * // ["1", "2", "3"]
- * console.log(AX6Util.parseJson("[{'a':'99'},'2','3']"));
- * // [Object, "2", "3"]
- * ```
- */
 function parseJson(str, force) {
     if (force || reIsJson.test(str)) {
         try {
@@ -239,20 +130,6 @@ function parseJson(str, force) {
     }
 }
 
-/**
- * 인자의 타입을 반환합니다.
- * @method AX6Util.getType
- * @param {Object|Array|String|Number|Element|Etc} O
- * @returns {String} window|element|object|array|function|string|number|undefined|nodelist
- * @example
- * ```js
- * var axf = AX6Util;
- * var a = 11;
- * var b = "11";
- * console.log( axf.getType(a) );
- * console.log( axf.getType(b) );
- * ```
- */
 function getType(O) {
     let typeName;
     if (O != null && O == O.window) {
@@ -281,119 +158,46 @@ function getType(O) {
     return typeName;
 }
 
-/**
- * 오브젝트가 window 인지 판단합니다.
- * @method AX6Util.isWindow
- * @param {Object} O
- * @returns {Boolean}
- */
 function isWindow(O) {
     return O != null && O == O.window;
 }
 
-/**
- * 오브젝트가 HTML 엘리먼트여부인지 판단합니다.
- * @method AX6Util.isElement
- * @param {Object} O
- * @returns {Boolean}
- */
 function isElement(O) {
     return !!(O && (O.nodeType == 1 || O.nodeType == 11));
 }
 
-/**
- * 오브젝트가 Object인지 판단합니다.
- * @method AX6Util.isObject
- * @param {Object} O
- * @returns {Boolean}
- */
 function isObject(O) {
     return _toString.call(O) == "[object Object]";
 }
 
-/**
- * 오브젝트가 Array인지 판단합니다.
- * @method AX6Util.isArray
- * @param {Object} O
- * @returns {Boolean}
- */
 function isArray(O) {
     return _toString.call(O) == "[object Array]";
 }
 
-/**
- * 오브젝트가 Function인지 판단합니다.
- * @method AX6Util.isFunction
- * @param {Object} O
- * @returns {Boolean}
- */
 function isFunction(O) {
     return typeof O === "function";
 }
 
-/**
- * 오브젝트가 String인지 판단합니다.
- * @method AX6Util.isString
- * @param {Object} O
- * @returns {Boolean}
- */
 function isString(O) {
     return _toString.call(O) == "[object String]";
 }
 
-/**
- * 오브젝트가 Number인지 판단합니다.
- * @method AX6Util.isNumber
- * @param {Object} O
- * @returns {Boolean}
- */
 function isNumber(O) {
     return _toString.call(O) == "[object Number]";
 }
 
-/**
- * 오브젝트가 NodeList인지 판단합니다.
- * @method AX6Util.isNodelist
- * @param {Object} O
- * @returns {Boolean}
- */
 function isNodelist(O) {
     return !!(_toString.call(O) == "[object NodeList]" || typeof O !== "undefined" && O && O[0] && O[0].nodeType == 1);
 }
 
-/**
- * 오브젝트가 undefined인지 판단합니다.
- * @method AX6Util.isUndefined
- * @param {Object} O
- * @returns {Boolean}
- */
 function isUndefined(O) {
     return typeof O === "undefined";
 }
 
-/**
- * 오브젝트가 undefined이거나 null이거나 빈값인지 판단합니다.
- * @method AX6Util.isNothing
- * @param {Object} O
- * @returns {Boolean}
- */
 function isNothing(O) {
     return typeof O === "undefined" || O === null || O === "";
 }
 
-/**
- * 오브젝트가 날자값인지 판단합니다.
- * @method AX6Util.isDate
- * @param {Date} O
- * @returns {Boolean}
- * @example
- * ```js
- * AX6Util.isDate('2016-09-30');
- * // false
- * AX6Util.isDate( new Date('2016-09-30') );
- * // true
- * ```
- */
 function isDate(O) {
     return O instanceof Date && !isNaN(O.valueOf());
 }
@@ -423,19 +227,6 @@ function isDateFormat(O) {
     return result;
 }
 
-/**
- * 오브젝트의 첫번째 아이템을 반환합니다.
- * @method AX6Util.first
- * @param {Object|Array} O
- * @returns {Object}
- * @example
- * ```js
- * AX6Util.first({a:1, b:2});
- * // Object {a: 1}
- * AX6Util.first([1,2,3,4]);
- * // 1
- * ```
- */
 function first(O) {
     if (isObject(O)) {
         let keys = Object.keys(O);
@@ -450,19 +241,6 @@ function first(O) {
     }
 }
 
-/**
- * 오브젝트의 마지막 아이템을 반환합니다.
- * @method AX6Util.last
- * @param {Object|Array} O
- * @returns {Object}
- * @example
- * ```js
- * AX6Util.last({a:1, b:2});
- * // Object {b: 2}
- * AX6Util.last([1,2,3,4]);
- * // 4
- * ```
- */
 function last(O) {
     if (isObject(O)) {
         let keys = Object.keys(O);
@@ -477,20 +255,6 @@ function last(O) {
     }
 }
 
-/**
- * 쿠키를 설정합니다.
- * @method AX6Util.setCookie
- * @param {String} cname - 쿠키이름
- * @param {String} cvalue - 쿠키값
- * @param {Number} [exdays] - 쿠키 유지일수
- * @param {Object} [opts] - path, domain 설정 옵션
- * @example
- * ```js
- * AX6Util.setCookie("jslib", "AX5");
- * AX6Util.setCookie("jslib", "AX5", 3);
- * AX6Util.setCookie("jslib", "AX5", 3, {path:"/", domain:".axisj.com"});
- * ```
- */
 function setCookie(cn, cv, exdays, opts) {
     let expire;
     if (typeof exdays === "number") {
@@ -502,16 +266,6 @@ function setCookie(cn, cv, exdays, opts) {
     opts.path ? "; path=" + opts.path : "", opts.domain ? "; domain=" + opts.domain : "", opts.secure ? "; secure" : ""].join("");
 }
 
-/**
- * 쿠키를 가져옵니다.
- * @method AX6Util.getCookie
- * @param {String} cname
- * @returns {String} cookie value
- * @example
- * ```js
- * AX6Util.getCookie("jslib");
- * ```
- */
 function getCookie(cname) {
     let name = cname + "=";
     let ca = doc.cookie.split(';'),
@@ -525,35 +279,11 @@ function getCookie(cname) {
     return "";
 }
 
-/**
- * jsonString 으로 alert 합니다.
- * @method AX6Util.alert
- * @param {Object|Array|String|Number} O
- * @returns {Object|Array|String|Number} O
- * @example ```js
- * AX6Util.alert({a:1,b:2});
- * AX6Util.alert("정말?");
- * ```
- */
 function alert(O) {
     win.alert(toJson(O));
     return O;
 }
 
-/**
- * 문자열의 특정 문자열까지 잘라주거나 원하는 포지션까지 잘라줍니다.
- * @method AX6Util.left
- * @param {String} str - 문자열
- * @param {String|Number} pos - 찾을 문자열 또는 포지션
- * @returns {String}
- * @example
- * ```js
- * AX6Util.left("abcd.efd", 3);
- * // abc
- * AX6Util.left("abcd.efd", ".");
- * // abcd
- * ```
- */
 function left(str, pos) {
     if (typeof str === "undefined" || typeof pos === "undefined") return "";
     if (isString(pos)) {
@@ -565,20 +295,6 @@ function left(str, pos) {
     }
 }
 
-/**
- * 문자열의 특정 문자열까지 잘라주거나 원하는 포지션까지 잘라줍니다.
- * @method AX6Util.right
- * @param {String} str - 문자열
- * @param {String|Number} pos - 찾을 문자열 또는 포지션
- * @returns {String}
- * @example
- * ```js
- * AX6Util.right("abcd.efd", 3);
- * // efd
- * AX6Util.right("abcd.efd", ".");
- * // efd
- * ```
- */
 function right(str, pos) {
     if (typeof str === "undefined" || typeof pos === "undefined") return "";
     str = '' + str;
@@ -591,71 +307,18 @@ function right(str, pos) {
     }
 }
 
-/**
- * css형 문자열이나 특수문자가 포함된 문자열을 카멜케이스로 바꾸어 반환합니다.
- * @method AX6Util.camelCase
- * @param {String} str
- * @returns {String}
- * @example
- * ```js
- * AX6Util.camelCase("inner-width");
- * AX6Util.camelCase("innerWidth");
- * // innerWidth
- * ```
- */
 function camelCase(str) {
     return str.replace(reMs, "ms-").replace(reSnakeCase, function (all, letter) {
         return letter.toUpperCase();
     });
 }
 
-/**
- * css형 문자열이나 카멜케이스문자열을 스네이크 케이스 문자열로 바꾸어 반환합니다.
- * @method AX6Util.snakeCase
- * @param {String} str
- * @returns {String}
- * @example
- * ```js
- * AX6Util.snakeCase("innerWidth");
- * AX6Util.snakeCase("inner-Width");
- * AX6Util.snakeCase("innerWidth");
- * // inner-width
- * ```
- */
 function snakeCase(str) {
     return camelCase(str).replace(reCamelCase, function (all, letter) {
         return "-" + letter.toLowerCase();
     });
 }
 
-/**
- * 문자열에서 -. 을 제외한 모든 문자열을 제거하고 숫자로 반환합니다. 옵션에 따라 원하는 형식의 숫자로 변환 할 수 도 있습니다.
- * @method AX6Util.number
- * @param {String|Number} str
- * @param {Object} cond - 옵션
- * @returns {String|Number}
- * @example
- * ```js
- * var cond = {
-		 * 	round: {Number|Boolean} - 반올림할 자릿수,
-		 * 	money: {Boolean} - 통화,
-		 * 	abs: {Boolean} - 절대값,
-		 * 	byte: {Boolean} - 바이트
-		 * }
- *
- * console.log(AX6Util.number(123456789.678, {round:1}));
- * console.log(AX6Util.number(123456789.678, {round:1, money:true}));
- * console.log(AX6Util.number(123456789.678, {round:2, byte:true}));
- * console.log(AX6Util.number(-123456789.8888, {abs:true, round:2, money:true}));
- * console.log(AX6Util.number("A-1234~~56789.8~888PX", {abs:true, round:2, money:true}));
- *
- * //123456789.7
- * //123,456,789.7
- * //117.7MB
- * //123,456,789.89
- * //123,456,789.89
- * ```
- */
 function number(str, cond) {
     let result,
         pair = ('' + str).split(reDot),
@@ -732,37 +395,11 @@ function number(str, cond) {
     return result;
 }
 
-/**
- * 배열 비슷한 오브젝트를 배열로 변환해줍니다.
- * @method AX6Util.toArray
- * @param {Object|Elements|Arguments} O
- * @returns {Array}
- * @example
- * ```js
- * AX6Util.toArray(arguments);
- * //
- * ```
- */
 function toArray(O) {
     if (typeof O.length != "undefined") return Array.prototype.slice.call(O);
     return [];
 }
 
-/**
- * 오브젝트를 파라미터형식으로 또는 파라미터를 오브젝트 형식으로 변환합니다.
- * @method AX6Util.param
- * @param {Object|Array|String} O
- * @param {String} [cond] - param|object
- * @returns {Object|String}
- * @example
- * ```
- * AX6Util.param({a:1,b:'1232'}, "param");
- * AX6Util.param("a=1&b=1232", "param");
- * // "a=1&b=1232"
- * AX6Util.param("a=1&b=1232");
- * // {a: "1", b: "1232"}
- * ```
- */
 function param(O, cond) {
     var p;
     if (isString(O) && typeof cond !== "undefined" && cond == "param") {
@@ -814,19 +451,6 @@ function localDate(yy, mm, dd, hh, mi, ss) {
     return utcD;
 }
 
-/**
- * 날짜 형식의 문자열이나 Date객체를 조건에 맞게 처리 한 후 원하는 return 값으로 반환합니다.
- * @method AX6Util.date
- * @param {String|Date} d
- * @param {Object} cond
- * @returns {Date|String}
- * @example
- * ```js
- * AX6Util.date('2013-01-01'); // Tue Jan 01 2013 23:59:00 GMT+0900 (KST)
- * AX6Util.date((new Date()), {add:{d:10}, return:'yyyy/MM/dd'}); // "2015/07/01"
- * AX6Util.date('1919-03-01', {add:{d:10}, return:'yyyy/MM/dd hh:mm:ss'}); // "1919/03/11 23:59:00"
- * ```
- */
 function date(d, cond) {
     let yy,
         mm,
@@ -1018,22 +642,6 @@ function date(d, cond) {
     }
 }
 
-/**
- * 인자인 날짜가 오늘부터 몇일전인지 반환합니다. 또는 인자인 날짜가 가까운 미래에 몇일 후인지 반환합니다.
- * @method AX6Util.dday
- * @param {String|Data} d
- * @param {Object} cond
- * @returns {Number}
- * @example
- * ```js
- * AX6Util.dday('2016-01-29');
- * // 1
- * AX6Util.dday('2016-01-29', {today:'2016-01-28'});
- * // 1
- * AX6Util.dday('1977-03-29', {today:'2016-01-28', age:true});
- * // 39
- * ```
- */
 function dday(d, cond) {
     let memoryDay = date(d),
         DyMilli = 1000 * 60 * 60 * 24,
@@ -1071,17 +679,6 @@ function dday(d, cond) {
     }
 }
 
-/**
- * 인자인 날짜가 몇년 몇월의 몇번째 주차인지 반환합니다.
- * @method AX6Util.weeksOfMonth
- * @param {String|Data} d
- * @returns {Object}
- * @example
- * ```js
- * AX6Util.weeksOfMonth("2015-10-01"); // {year: 2015, month: 10, count: 1}
- * AX6Util.weeksOfMonth("2015-09-19"); // {year: 2015, month: 9, count: 3}
- * ```
- */
 function weeksOfMonth(d) {
     let myDate = date(d);
     return {
@@ -1091,19 +688,6 @@ function weeksOfMonth(d) {
     };
 }
 
-/**
- * 년월에 맞는 날자수를 반환합니다.
- * (new Date()).getMonth() 기준으로 월값을 보냅니다. "2월" 인경우 "1" 을 넘기게 됩니다.
- * @method AX6Util.daysOfMonth
- * @param {Number} y
- * @param {Number} m
- * @returns {Number}
- * @examples
- * ```js
- * AX6Util.daysOfMonth(2015, 11); // 31
- * AX6Util.daysOfMonth(2015, 1); // 28
- * ```
- */
 function daysOfMonth(y, m) {
     if (m == 3 || m == 5 || m == 8 || m == 10) {
         return 30;
@@ -1114,78 +698,14 @@ function daysOfMonth(y, m) {
     }
 }
 
-/**
- * 원하는 횟수 만큼 자릿수 맞춤 문자열을 포함한 문자열을 반환합니다.
- * 문자열 길이보다 작은값을 보내면 무시됩니다.
- * @method AX6Util.setDigit
- * @param {String|Number} num
- * @param {Number} length
- * @param {String} [padder=0]
- * @param {Number} [radix]
- * @returns {String}
- * @example
- * ```
- * AX6Util.setDigit(2016, 6)
- * // "002016"
- * AX6Util.setDigit(2016, 2)
- * // "2016"
- * ```
- */
 function setDigit(num, length, padder, radix) {
     let s = num.toString(radix || 10);
     return times(padder || '0', length - s.length) + s;
 }
 
-/**
- * 문자열을 지정된 수만큼 반복 합니다.
- * @param {String} s
- * @param {Number} count
- * @returns {string}
- * @example
- * ```
- * AX6Util.times(2016, 2)
- * //"20162016"
- * ```
- */
 function times(s, count) {
     return count < 1 ? '' : new Array(count + 1).join(s);
 }
-
-/**
- * 타겟엘리먼트의 부모 엘리멘트 트리에서 원하는 조건의 엘리먼트를 얻습니다.
- * @method AX6Util.findParentNode
- * @param {Element} _target - target element
- * @param {Object|Function} cond - 원하는 element를 찾을 조건
- * @returns {Element}
- * @example
- * ```
- * // cond 속성정의
- * var cond = {
-		 * 	tagname: {String} - 태그명 (ex. a, div, span..),
-		 * 	clazz: {String} - 클래스명
-		 * 	[, 그 외 찾고 싶은 attribute명들]
-		 * };
- * console.log(
- * console.log(
- *    AX6Util.findParentNode(e.target, {tagname:"a", clazz:"ax-menu-handel", "data-custom-attr":"attr_value"})
- * );
- * // cond 함수로 처리하기
- * jQuery('#id').bind("click.app_expand", function(e){
-		 * 	var target = AX6Util.findParentNode(e.target, function(target){
-		 * 		if($(target).hasClass("aside")){
-		 * 			return true;
-		 * 		}
-		 * 		else{
-		 * 			return true;
-		 * 		}
-		 * 	});
-		 * 	//client-aside
-		 * 	if(target.id !== "client-aside"){
-		 * 		// some action
-		 * 	}
-		 * });
- * ```
- */
 
 function findParentNode(_target, cond) {
     if (_target) {
@@ -1245,19 +765,6 @@ function findParentNode(_target, cond) {
     return _target;
 }
 
-/**
- * @method AX6Util.cssNumber
- * @param {String|Number} val
- * @returns {String}
- * @example
- * ```
- * console.log(AX6Util.cssNumber("100px"))
- * console.log(AX6Util.cssNumber("100%"))
- * console.log(AX6Util.cssNumber("100"))
- * console.log(AX6Util.cssNumber(100))
- * console.log(AX6Util.cssNumber("!!100@#"))
- * ```
- */
 function cssNumber(val) {
     let re = /\D?(\d+)([a-zA-Z%]*)/i,
         found = ('' + val).match(re),
@@ -1266,19 +773,6 @@ function cssNumber(val) {
     return found[1] + unit;
 }
 
-/**
- * css string 및 object 를 넘기면 object 및 string 으로 변환되어 리턴됩니다.
- * @method AX6Util.css
- * @param {Object|String} val - CSS String or CSS Object
- * @returns {String|Object}
- * @example
- * ```
- * console.log(AX6Util.css({background: "#ccc", padding: "50px", width: "100px"}));
- * //"background:#ccc;padding:50px;width:100px;"
- * console.log(AX6Util.css('width:100px;padding: 50px; background: #ccc'));
- * // object {width: "100px", padding: "50px", background: "#ccc"}
- * ```
- */
 function css(val) {
     let returns;
     if (isObject(val)) {
@@ -1300,14 +794,6 @@ function css(val) {
     }
 }
 
-/**
- * @method AX6Util.stopEvent
- * @param {Event} e
- * @example
- * ```
- * AX6Util.stopEvent(e);
- * ```
- */
 function stopEvent(e) {
     // 이벤트 중지 구문
     if (!e) e = window.event;
@@ -1325,19 +811,6 @@ function stopEvent(e) {
     // 이벤트 중지 구문 끝
 }
 
-/**
- * @method AX6Util.selectRange
- * @param {Element} el
- * @param {Element} offset
- * @example
- * ```
- * AX6Util.selectRange($("#select-test-0")); // selectAll
- * AX6Util.selectRange($("#select-test-0"), "selectAll"); //selectAll
- * AX6Util.selectRange($("#select-test-0"), "start"); // focus on start
- * AX6Util.selectRange($("#select-test-0"), "end"); // focus on end
- * AX6Util.selectRange($("#select-test-0"), [1, 5]); // select 1~5
- * ```
- */
 const selectRange = function () {
     const processor = {
         'textRange': {
@@ -1424,21 +897,6 @@ const selectRange = function () {
     };
 }();
 
-/**
- * 지정한 시간을 지연시켜 함수를 실행합니다.
- * @method AX6Util.debounce
- * @param {Function} func
- * @param {Number} wait
- * @param {Boolean} immediately
- * @returns {debounced}
- * @example
- * ```js
- * var debounceFn = AX6Util.debounce(function( val ) { console.log(val); }, 300);
- * $(document.body).click(function(){
-         *  debounceFn(new Date());
-         * });
- * ```
- */
 const debounce = function (func, wait, immediately) {
     let timeout, removeTimeout;
     const debounced = function () {
@@ -1471,19 +929,6 @@ const debounce = function (func, wait, immediately) {
     return debounced;
 };
 
-/**
- * @method AX6Util.deepCopy
- * @param {Object} obj
- * @returns {Object}
- * @example
- * ```js
- * var obj = [
- *  {name:"A", child:[{name:"a-1"}]},
- *  {name:"B", child:[{name:"b-1"}], callBack: function(){ console.log('callBack'); }}
- * ];
- * var copiedObj = AX6Util.deepCopy(obj)
- * ```
- */
 function deepCopy(obj) {
     let r, l;
     if (typeof obj == 'object') {
@@ -1501,22 +946,6 @@ function deepCopy(obj) {
     return obj;
 }
 
-/**
- * HTML 문자열을 escape 처리합니다.
- * "&lt;" represents the < sign.
- * "&gt;" represents the > sign.
- * "&amp;" represents the & sign.
- * "&quot; represents the " mark.
- * [Character entity references](https://www.w3.org/TR/html401/charset.html#h-5.3)
- * @method AX6Util.escapeHtml
- * @param {String} s
- * @returns {string}
- * @example
- * ```
- * AX6Util.escapeHtml('HTML <span>string</span> & "escape"')
- * //"HTML &lt;span&gt;string&lt;/span&gt; &amp; &quot;escape&quot;"
- * ```
- */
 function escapeHtml(s) {
     if (_toString.call(s) != "[object String]") return s;
     if (!s) return "";
@@ -1536,18 +965,6 @@ function escapeHtml(s) {
     });
 }
 
-/**
- * HTML 문자열을 unescape 처리합니다.
- * escapeHtml를 참고하세요.
- * @method AX6Util.unescapeHtml
- * @param {String} s
- * @returns {string}
- * @example
- * ```
- * AX6Util.unescapeHtml('HTML &lt;span&gt;string&lt;/span&gt; &amp; &quot;escape&quot;')
- * //"HTML <span>string</span> & "escape""
- * ```
- */
 function unescapeHtml(s) {
     if (_toString.call(s) != "[object String]") return s;
     if (!s) return "";
@@ -1568,27 +985,27 @@ function unescapeHtml(s) {
 }
 
 /**
- * @method AX6Util.string
- * @param {String} tmpl
- * @param {*} args
- * @return {ax5string}
+ * @namespace ax6string
  * @example
  * ```js
- * AX6Util.string("{0} is dead, but {1} is alive! {0} {2}").format("ASP", "ASP.NET");
- * AX6Util.string("{0} is dead, but {1} is alive! {0} {2}").format(["ASP", "ASP.NET"]);
- * AX6Util.stinrg("{0} counts").format(100);
+ * AX6Util.string("{0} is dead").format("A");
+ * AX6Util.string("String").escape();
+ * AX6Util.string("String").unescape();
+ * AX6Util.string("String").encode();
+ * AX6Util.string("String").decode();
+ * AX6Util.string("String").left(1);
+ * AX6Util.string("String").right(1);
+ * AX6Util.string("String").camelCase();
+ * AX6Util.string("String").snakeCase();
  * ```
  */
+
 function string(_string) {
     return new function (_string) {
         this.value = _string;
         this.toString = function () {
             return this.value;
         };
-        /**
-         * @method AX6Util.string.format
-         * @returns {*}
-         */
         this.format = function () {
             let args = [];
             for (let i = 0, l = arguments.length; i < l; i++) {
@@ -1598,77 +1015,33 @@ function string(_string) {
                 return typeof args[number] != 'undefined' ? args[number] : match;
             });
         };
-        /**
-         * @method AX6Util.string.escape
-         * @returns {*}
-         */
         this.escape = function () {
             return escapeHtml(this.value);
         };
-        /**
-         * @method AX6Util.string.unescape
-         * @returns {*}
-         */
         this.unescape = function () {
             return unescapeHtml(this.value);
         };
-        /**
-         * @method AX6Util.string.encode
-         * @returns {*}
-         */
         this.encode = function () {
             return encode(this.value);
         };
-        /**
-         * @method AX6Util.string.decode
-         * @returns {*}
-         */
         this.decode = function () {
             return decode(this.value);
         };
-        /**
-         * @method AX6Util.string.left
-         * @param {String|Number} pos - 찾을 문자열 또는 포지션
-         * @returns {*}
-         */
         this.left = function (_pos) {
             return left(this.value, _pos);
         };
-        /**
-         * @method AX6Util.string.right
-         * @param {String|Number} pos - 찾을 문자열 또는 포지션
-         * @returns {*}
-         */
         this.right = function (_pos) {
             return right(this.value, _pos);
         };
-        /**
-         * @method AX6Util.string.camelCase
-         * @returns {*}
-         */
         this.camelCase = function () {
             return camelCase(this.value);
         };
-        /**
-         * @method AX6Util.string.snakeCase
-         * @returns {*}
-         */
         this.snakeCase = function () {
             return snakeCase(this.value);
         };
     }(_string);
 }
 
-/**
- * @method AX6Util.color
- * @param _hexColor
- * @return {ax5color}
- * @example
- * ```js
- * AX6Util.color("#ff3300").lighten(10).getHexValue()
- * console.log(AX6Util.color("#ff3300").darken(10).getHexValue());
- * ```
- */
 function color(_hexColor) {
 
     const matchers = function () {
@@ -1938,54 +1311,620 @@ function color(_hexColor) {
 }
 
 export default {
-    alert: alert,
-    each: each,
-    search: search,
-    filter: filter,
-    toJson: toJson,
-    parseJson: parseJson,
-    first: first,
-    last: last,
-    deepCopy: deepCopy,
 
+    /**
+     * jsonString 으로 alert 합니다.
+     * @param {Object|Array|String|Number} O
+     * @returns {Object|Array|String|Number} O
+     * @example ```js
+     * AX6Util.alert({a:1,b:2});
+     * AX6Util.alert("정말?");
+     * ```
+     */
+    alert: alert,
+    /**
+     * Object나 Array의 아이템으로 사용자 함수를 호출합니다.
+     * @param {Object|Array} O
+     * @param {Function} _fn
+     * @example
+     * ```js
+     * var axf = AX6Util;
+     * axf.each([0,1,2], function(){
+    * 	// with this
+    * });
+     * axf.each({a:1, b:2}, function(){
+    * 	// with this
+    * });
+     * ```
+     */
+    each: each,
+    /**
+     * 원본 아이템들을 이용하여 사용자 함수의 리턴값이 참인 아이템의 위치나 키값을 반환합니다.
+     * @param {Object|Array} O
+     * @param {Function|String|Number} _fn - 함수 또는 값
+     * @returns {Number|String}
+     * @example
+     * ```js
+     * var myArray = [0,1,2,3,4,5,6];
+     * var myObject = {a:"123","b":"123",c:123};
+     *
+     * AX6Util.search(myArray,  function(){
+    *    return this > 3;
+    * });
+     * // 4
+     * AX6Util.search(myObject,  function(k, v){
+    *    return v === 123;
+    * });
+     * // "c"
+     * AX6Util.search([1,2,3,4], 3);
+     * // 2
+     * AX6Util.search([1,2], 4);
+     * // -1
+     * AX6Util.search(["name","value"], "value");
+     * // 1
+     * AX6Util.search(["name","value"], "values");
+     * // -1
+     * AX6Util.search({k1:"name",k2:"value"}, "value2");
+     * // -1
+     * AX6Util.search({k1:"name",k2:"value"}, "value");
+     * // "k2"
+     * ```
+     */
+    search: search,
+    /**
+     * 배열또는 오브젝트의 각 아이템을 인자로 하는 사용자 함수의 결과가 참인 아이템들의 배열을 반환합니다.
+     * @param {Object|Array} O
+     * @param {Function} _fn
+     * @returns {Array}
+     * @example
+     * ```js
+     * var aarray = [5,4,3,2,1];
+     * result = AX6Util.filter( aarray, function(){
+    *    return this % 2;
+    * });
+     * console.log(result);
+     * // [5, 3, 1]
+     *
+     * var filObject = {a:1, s:"string", oa:{pickup:true, name:"AXISJ"}, os:{pickup:true, name:"AX5"}};
+     * result = AX6Util.filter( filObject, function(){
+    * 	return this.pickup;
+    * });
+     * console.log( AX6Util.toJson(result) );
+     * // [{"pickup": , "name": "AXISJ"}, {"pickup": , "name": "AX5"}]
+     * ```
+     */
+    filter: filter,
+    /**
+     * Object를 JSONString 으로 반환합니다.
+     * @method AX6Util.toJson
+     * @param {Object|Array} O
+     * @returns {String} JSON
+     * @example
+     * ```js
+     * var ax = AX6Util;
+     * var myObject = {
+    *    a:1, b:"2", c:{axj:"what", arrs:[0,2,"3"]},
+    *    fn: function(abcdd){
+    *        return abcdd;
+    *    }
+    * };
+     * console.log( ax.toJson(myObject) );
+     * ```
+     */
+    toJson: toJson,
+    /**
+     * 관용의 JSON Parser
+     * @param {String} JSONString
+     * @param {Boolean} [force] - 강제 적용 여부 (json 문자열 검사를 무시하고 오브젝트 변환을 시도합니다.)
+     * @returns {Object}
+     * @example
+     * ```
+     * console.log(AX6Util.parseJson('{"a":1}'));
+     * // Object {a: 1}
+     * console.log(AX6Util.parseJson("{'a':1, 'b':'b'}"));
+     * // Object {a: 1, b: "b"}
+     * console.log(AX6Util.parseJson("{'a':1, 'b':function(){return 1;}}", true));
+     * // Object {a: 1, b: function}
+     * console.log(AX6Util.parseJson("{a:1}"));
+     * // Object {a: 1}
+     * console.log(AX6Util.parseJson("[1,2,3]"));
+     * // [1, 2, 3]
+     * console.log(AX6Util.parseJson("['1','2','3']"));
+     * // ["1", "2", "3"]
+     * console.log(AX6Util.parseJson("[{'a':'99'},'2','3']"));
+     * // [Object, "2", "3"]
+     * ```
+     */
+    parseJson: parseJson,
+    /**
+     * 오브젝트의 첫번째 아이템을 반환합니다.
+     * @param {Object|Array} O
+     * @returns {Object}
+     * @example
+     * ```js
+     * AX6Util.first({a:1, b:2});
+     * // Object {a: 1}
+     * AX6Util.first([1,2,3,4]);
+     * // 1
+     * ```
+     */
+    first: first,
+    /**
+     * 오브젝트의 마지막 아이템을 반환합니다.
+     * @param {Object|Array} O
+     * @returns {Object}
+     * @example
+     * ```js
+     * AX6Util.last({a:1, b:2});
+     * // Object {b: 2}
+     * AX6Util.last([1,2,3,4]);
+     * // 4
+     * ```
+     */
+    last: last,
+    /**
+     * 문자열의 특정 문자열까지 잘라주거나 원하는 포지션까지 잘라줍니다.
+     * @param {String} str - 문자열
+     * @param {String|Number} pos - 찾을 문자열 또는 포지션
+     * @returns {String}
+     * @example
+     * ```js
+     * AX6Util.left("abcd.efd", 3);
+     * // abc
+     * AX6Util.left("abcd.efd", ".");
+     * // abcd
+     * ```
+     */
     left: left,
+    /**
+     * 문자열의 특정 문자열까지 잘라주거나 원하는 포지션까지 잘라줍니다.
+     * @param {String} str - 문자열
+     * @param {String|Number} pos - 찾을 문자열 또는 포지션
+     * @returns {String}
+     * @example
+     * ```js
+     * AX6Util.right("abcd.efd", 3);
+     * // efd
+     * AX6Util.right("abcd.efd", ".");
+     * // efd
+     * ```
+     */
     right: right,
+    /**
+     * 인자의 타입을 반환합니다.
+     * @param {Object|Array|String|Number|Element|Etc} O
+     * @returns {String} window|element|object|array|function|string|number|undefined|nodelist
+     * @example
+     * ```js
+     * var axf = AX6Util;
+     * var a = 11;
+     * var b = "11";
+     * console.log( axf.getType(a) );
+     * console.log( axf.getType(b) );
+     * ```
+     */
     getType: getType,
+    /**
+     * 오브젝트가 window 인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isWindow: isWindow,
+    /**
+     * 오브젝트가 HTML 엘리먼트여부인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isElement: isElement,
+    /**
+     * 오브젝트가 Object인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isObject: isObject,
+    /**
+     * 오브젝트가 Array인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isArray: isArray,
+    /**
+     * 오브젝트가 Function인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isFunction: isFunction,
+    /**
+     * 오브젝트가 String인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isString: isString,
+    /**
+     * 오브젝트가 Number인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isNumber: isNumber,
+    /**
+     * 오브젝트가 NodeList인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isNodelist: isNodelist,
+    /**
+     * 오브젝트가 undefined인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
     isUndefined: isUndefined,
+    /**
+     * 오브젝트가 undefined이거나 null이거나 빈값인지 판단합니다.
+     * @param {Object} O
+     * @returns {Boolean}
+     */
+    /**
+     * 오브젝트가 날자값인지 판단합니다.
+     * @param {Date} O
+     * @returns {Boolean}
+     * @example
+     * ```js
+     * AX6Util.isDate('2016-09-30');
+     * // false
+     * AX6Util.isDate( new Date('2016-09-30') );
+     * // true
+     * ```
+     */
+    isDate: isDate,
+    /**
+     * 오브젝트가 날짜형 변수인지 판단합니다
+     */
+    isDateFormat: isDateFormat,
     isNothing: isNothing,
+    /**
+     * 쿠키를 설정합니다.
+     * @param {String} cname - 쿠키이름
+     * @param {String} cvalue - 쿠키값
+     * @param {Number} [exdays] - 쿠키 유지일수
+     * @param {Object} [opts] - path, domain 설정 옵션
+     * @example
+     * ```js
+     * AX6Util.setCookie("jslib", "AX5");
+     * AX6Util.setCookie("jslib", "AX5", 3);
+     * AX6Util.setCookie("jslib", "AX5", 3, {path:"/", domain:".axisj.com"});
+     * ```
+     */
     setCookie: setCookie,
+    /**
+     * 쿠키를 가져옵니다.
+     * @param {String} cname
+     * @returns {String} cookie value
+     * @example
+     * ```js
+     * AX6Util.getCookie("jslib");
+     * ```
+     */
     getCookie: getCookie,
+    /**
+     * css형 문자열이나 특수문자가 포함된 문자열을 카멜케이스로 바꾸어 반환합니다.
+     * @param {String} str
+     * @returns {String}
+     * @example
+     * ```js
+     * AX6Util.camelCase("inner-width");
+     * AX6Util.camelCase("innerWidth");
+     * // innerWidth
+     * ```
+     */
     camelCase: camelCase,
+    /**
+     * css형 문자열이나 카멜케이스문자열을 스네이크 케이스 문자열로 바꾸어 반환합니다.
+     * @param {String} str
+     * @returns {String}
+     * @example
+     * ```js
+     * AX6Util.snakeCase("innerWidth");
+     * AX6Util.snakeCase("inner-Width");
+     * AX6Util.snakeCase("innerWidth");
+     * // inner-width
+     * ```
+     */
     snakeCase: snakeCase,
+    /**
+     * 문자열에서 -. 을 제외한 모든 문자열을 제거하고 숫자로 반환합니다. 옵션에 따라 원하는 형식의 숫자로 변환 할 수 도 있습니다.
+     * @param {String|Number} str
+     * @param {Object} cond - 옵션
+     * @returns {String|Number}
+     * @example
+     * ```js
+     * var cond = {
+    * 	round: {Number|Boolean} - 반올림할 자릿수,
+    * 	money: {Boolean} - 통화,
+    * 	abs: {Boolean} - 절대값,
+    * 	byte: {Boolean} - 바이트
+    * }
+     *
+     * console.log(AX6Util.number(123456789.678, {round:1}));
+     * console.log(AX6Util.number(123456789.678, {round:1, money:true}));
+     * console.log(AX6Util.number(123456789.678, {round:2, byte:true}));
+     * console.log(AX6Util.number(-123456789.8888, {abs:true, round:2, money:true}));
+     * console.log(AX6Util.number("A-1234~~56789.8~888PX", {abs:true, round:2, money:true}));
+     *
+     * //123456789.7
+     * //123,456,789.7
+     * //117.7MB
+     * //123,456,789.89
+     * //123,456,789.89
+     * ```
+     */
     number: number,
+    /**
+     * 배열 비슷한 오브젝트를 배열로 변환해줍니다.
+     * @param {Object|Elements|Arguments} O
+     * @returns {Array}
+     * @example
+     * ```js
+     * AX6Util.toArray(arguments);
+     * //
+     * ```
+     */
     toArray: toArray,
+    /**
+     * 오브젝트를 파라미터형식으로 또는 파라미터를 오브젝트 형식으로 변환합니다.
+     * @param {Object|Array|String} O
+     * @param {String} [cond] - param|object
+     * @returns {Object|String}
+     * @example
+     * ```
+     * AX6Util.param({a:1,b:'1232'}, "param");
+     * AX6Util.param("a=1&b=1232", "param");
+     * // "a=1&b=1232"
+     * AX6Util.param("a=1&b=1232");
+     * // {a: "1", b: "1232"}
+     * ```
+     */
     param: param,
     error: error,
+    /**
+     * 날짜 형식의 문자열이나 Date객체를 조건에 맞게 처리 한 후 원하는 return 값으로 반환합니다.
+     * @param {String|Date} d
+     * @param {Object} cond
+     * @returns {Date|String}
+     * @example
+     * ```js
+     * AX6Util.date('2013-01-01'); // Tue Jan 01 2013 23:59:00 GMT+0900 (KST)
+     * AX6Util.date((new Date()), {add:{d:10}, return:'yyyy/MM/dd'}); // "2015/07/01"
+     * AX6Util.date('1919-03-01', {add:{d:10}, return:'yyyy/MM/dd hh:mm:ss'}); // "1919/03/11 23:59:00"
+     * ```
+     */
     date: date,
+    /**
+     * 인자인 날짜가 오늘부터 몇일전인지 반환합니다. 또는 인자인 날짜가 가까운 미래에 몇일 후인지 반환합니다.
+     * @param {String|Data} d
+     * @param {Object} cond
+     * @returns {Number}
+     * @example
+     * ```js
+     * AX6Util.dday('2016-01-29');
+     * // 1
+     * AX6Util.dday('2016-01-29', {today:'2016-01-28'});
+     * // 1
+     * AX6Util.dday('1977-03-29', {today:'2016-01-28', age:true});
+     * // 39
+     * ```
+     */
     dday: dday,
+    /**
+     * 년월에 맞는 날자수를 반환합니다.
+     * (new Date()).getMonth() 기준으로 월값을 보냅니다. "2월" 인경우 "1" 을 넘기게 됩니다.
+     * @param {Number} y
+     * @param {Number} m
+     * @returns {Number}
+     * @examples
+     * ```js
+     * AX6Util.daysOfMonth(2015, 11); // 31
+     * AX6Util.daysOfMonth(2015, 1); // 28
+     * ```
+     */
     daysOfMonth: daysOfMonth,
+    /**
+     * 인자인 날짜가 몇년 몇월의 몇번째 주차인지 반환합니다.
+     * @param {String|Data} d
+     * @returns {Object}
+     * @example
+     * ```js
+     * AX6Util.weeksOfMonth("2015-10-01"); // {year: 2015, month: 10, count: 1}
+     * AX6Util.weeksOfMonth("2015-09-19"); // {year: 2015, month: 9, count: 3}
+     * ```
+     */
     weeksOfMonth: weeksOfMonth,
+    /**
+     * 원하는 횟수 만큼 자릿수 맞춤 문자열을 포함한 문자열을 반환합니다.
+     * 문자열 길이보다 작은값을 보내면 무시됩니다.
+     * @param {String|Number} num
+     * @param {Number} length
+     * @param {String} [padder=0]
+     * @param {Number} [radix]
+     * @returns {String}
+     * @example
+     * ```
+     * AX6Util.setDigit(2016, 6)
+     * // "002016"
+     * AX6Util.setDigit(2016, 2)
+     * // "2016"
+     * ```
+     */
     setDigit: setDigit,
+    /**
+     * 문자열을 지정된 수만큼 반복 합니다.
+     * @param {String} s
+     * @param {Number} count
+     * @returns {string}
+     * @example
+     * ```
+     * AX6Util.times(2016, 2)
+     * //"20162016"
+     * ```
+     */
     times: times,
+    /**
+     * 타겟엘리먼트의 부모 엘리멘트 트리에서 원하는 조건의 엘리먼트를 얻습니다.
+     * @param {Element} _target - target element
+     * @param {Object|Function} cond - 원하는 element를 찾을 조건
+     * @returns {Element}
+     * @example
+     * ```
+     * // cond 속성정의
+     * var cond = {
+    * 	tagname: {String} - 태그명 (ex. a, div, span..),
+    * 	clazz: {String} - 클래스명
+    * 	[, 그 외 찾고 싶은 attribute명들]
+    * };
+     * console.log(
+     * console.log(
+     *    AX6Util.findParentNode(e.target, {tagname:"a", clazz:"ax-menu-handel", "data-custom-attr":"attr_value"})
+     * );
+     * // cond 함수로 처리하기
+     * jQuery('#id').bind("click.app_expand", function(e){
+    * 	var target = AX6Util.findParentNode(e.target, function(target){
+    * 		if($(target).hasClass("aside")){
+    * 			return true;
+    * 		}
+    * 		else{
+    * 			return true;
+    * 		}
+    * 	});
+    * 	//client-aside
+    * 	if(target.id !== "client-aside"){
+    * 		// some action
+    * 	}
+    * });
+     * ```
+     */
     findParentNode: findParentNode,
+    /**
+     * @param {String|Number} val
+     * @returns {String}
+     * @example
+     * ```
+     * console.log(AX6Util.cssNumber("100px"))
+     * console.log(AX6Util.cssNumber("100%"))
+     * console.log(AX6Util.cssNumber("100"))
+     * console.log(AX6Util.cssNumber(100))
+     * console.log(AX6Util.cssNumber("!!100@#"))
+     * ```
+     */
     cssNumber: cssNumber,
+    /**
+     * css string 및 object 를 넘기면 object 및 string 으로 변환되어 리턴됩니다.
+     * @param {Object|String} val - CSS String or CSS Object
+     * @returns {String|Object}
+     * @example
+     * ```
+     * console.log(AX6Util.css({background: "#ccc", padding: "50px", width: "100px"}));
+     * //"background:#ccc;padding:50px;width:100px;"
+     * console.log(AX6Util.css('width:100px;padding: 50px; background: #ccc'));
+     * // object {width: "100px", padding: "50px", background: "#ccc"}
+     * ```
+     */
     css: css,
-    isDate: isDate,
-    isDateFormat: isDateFormat,
+    /**
+     * @param {Event} e
+     * @example
+     * ```
+     * AX6Util.stopEvent(e);
+     * ```
+     */
     stopEvent: stopEvent,
+    /**
+     * @param {Element} el
+     * @param {Element} offset
+     * @example
+     * ```
+     * AX6Util.selectRange($("#select-test-0")); // selectAll
+     * AX6Util.selectRange($("#select-test-0"), "selectAll"); //selectAll
+     * AX6Util.selectRange($("#select-test-0"), "start"); // focus on start
+     * AX6Util.selectRange($("#select-test-0"), "end"); // focus on end
+     * AX6Util.selectRange($("#select-test-0"), [1, 5]); // select 1~5
+     * ```
+     */
     selectRange: selectRange,
+    /**
+     * 지정한 시간을 지연시켜 함수를 실행합니다.
+     * @param {Function} func
+     * @param {Number} wait
+     * @param {Boolean} immediately
+     * @returns {debounced}
+     * @example
+     * ```js
+     * var debounceFn = AX6Util.debounce(function( val ) { console.log(val); }, 300);
+     * $(document.body).click(function(){
+         *  debounceFn(new Date());
+         * });
+     * ```
+     */
     debounce: debounce,
+    /**
+     * @param {Object} obj
+     * @returns {Object}
+     * @example
+     * ```js
+     * var obj = [
+     *  {name:"A", child:[{name:"a-1"}]},
+     *  {name:"B", child:[{name:"b-1"}], callBack: function(){ console.log('callBack'); }}
+     * ];
+     * var copiedObj = AX6Util.deepCopy(obj)
+     * ```
+     */
+    deepCopy: deepCopy,
+    /**
+     * HTML 문자열을 escape 처리합니다.
+     * "&lt;" represents the < sign.
+     * "&gt;" represents the > sign.
+     * "&amp;" represents the & sign.
+     * "&quot; represents the " mark.
+     * [Character entity references](https://www.w3.org/TR/html401/charset.html#h-5.3)
+     * @param {String} s
+     * @returns {string}
+     * @example
+     * ```
+     * AX6Util.escapeHtml('HTML <span>string</span> & "escape"')
+     * //"HTML &lt;span&gt;string&lt;/span&gt; &amp; &quot;escape&quot;"
+     * ```
+     */
     escapeHtml: escapeHtml,
+    /**
+     * HTML 문자열을 unescape 처리합니다.
+     * escapeHtml를 참고하세요.
+     * @param {String} s
+     * @returns {string}
+     * @example
+     * ```
+     * AX6Util.unescapeHtml('HTML &lt;span&gt;string&lt;/span&gt; &amp; &quot;escape&quot;')
+     * //"HTML <span>string</span> & "escape""
+     * ```
+     */
     unescapeHtml: unescapeHtml,
-
+    /**
+     * @param {String} tmpl
+     * @param {*} args
+     * @return {ax6string}
+     * @example
+     * ```js
+     * AX6Util.string("{0} is dead, but {1} is alive! {0} {2}").format("ASP", "ASP.NET");
+     * AX6Util.string("{0} is dead, but {1} is alive! {0} {2}").format(["ASP", "ASP.NET"]);
+     * AX6Util.stinrg("{0} counts").format(100);
+     * ```
+     */
     string: string,
+    /**
+     * @param _hexColor
+     * @return {ax5color}
+     * @example
+     * ```js
+     * AX6Util.color("#ff3300").lighten(10).getHexValue()
+     * console.log(AX6Util.color("#ff3300").darken(10).getHexValue());
+     * ```
+     */
     color: color
 };

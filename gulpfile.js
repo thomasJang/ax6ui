@@ -2,12 +2,15 @@
 
 // 필요한 모듈선언
 const gulp = require('gulp');
+const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const changed = require('gulp-changed');
 const plumber = require('gulp-plumber');
 const notify = require("gulp-notify");
 const babel = require('gulp-babel');
 const shell = require('gulp-shell');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
 
 // 전역 오브젝트 모음
 const fnObj = {
@@ -26,12 +29,12 @@ const fnObj = {
 };
 
 // 걸프 기본 타스크
-gulp.task('default', function () {
+gulp.task('default', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], function () {
     gulp.watch([fnObj.paths.src + '/**/*.js'], ['dist-ES5', 'dist-ES6']);
 });
 
 // task for ES6
-gulp.task('dist-ES6', function () {
+gulp.task('js-ES6', function () {
     gulp.src([fnObj.paths.src + '*.js'])
         //.pipe(plumber({errorHandler: fnObj.errorAlert}))
         //.pipe(sourcemaps.init())
@@ -39,20 +42,50 @@ gulp.task('dist-ES6', function () {
             //presets: ['es2016'],
             //plugins: ['transform-runtime']
         }))
-        //.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(fnObj.paths.dist_es6));
 });
 
 // task for ES5
-gulp.task('dist-ES5', function () {
+gulp.task('js-ES5', function () {
     gulp.src([fnObj.paths.src + '*.js'])
     //.pipe(plumber({errorHandler: fnObj.errorAlert}))
-        //.pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(babel({
             presets: ["modern-browsers", "es2015"],
             //"plugins": ["transform-es2015-modules-amd"]
             //plugins: ['transform-runtime']
         }))
-        //.pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(fnObj.paths.dist_es5))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(gulp.dest(fnObj.paths.dist_es5));
+});
+
+gulp.task('dist-scss-ES5', function () {
+    gulp.src([
+        fnObj.paths.src + '/**/*.scss',
+    ], {base: fnObj.paths.src})
+        .pipe(gulp.dest(fnObj.paths.dist_es5));
+});
+
+gulp.task('scss-ES5', ['dist-scss-ES5'], function () {
+    gulp.src(fnObj.paths.src + '/**/index.scss')
+        .pipe(sass({outputStyle: 'compressed'}))
+        .pipe(gulp.dest(fnObj.paths.dist_es5));
+});
+
+gulp.task('dist-scss-ES6', function () {
+    gulp.src([
+        fnObj.paths.src + '/**/*.scss',
+    ], {base: fnObj.paths.src})
+        .pipe(gulp.dest(fnObj.paths.dist_es6));
+});
+
+gulp.task('scss-ES6', ['dist-scss-ES6'], function () {
+    gulp.src(fnObj.paths.src + '/**/index.scss')
+        .pipe(sass({outputStyle: 'compressed'}))
+        .pipe(gulp.dest(fnObj.paths.dist_es6));
 });

@@ -3,9 +3,13 @@ const doc = win ? win.document : null;
 const docElem = win ? win.document.documentElement : null;
 
 /**
+ * @module AX6Info
+ */
+
+/**
  * 에러 출력메세지 사용자 재 정의
  * @member {Object} AX6Info.onerror
- * @examples
+ * @example
  * ```
  * AX6Info.onerror = function(){
  *  console.log(arguments);
@@ -183,7 +187,7 @@ function getError(className, errorCode, methodName) {
 }
 
 /**
- * 브라우져의 터치 기능 유무를 확인합니다.
+ * 브라우져의 터치 가능 유무를 확인합니다.
  * @method AX6Info.supportTouch
  * @returns {boolean}
  * @example

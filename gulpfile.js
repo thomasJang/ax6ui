@@ -91,13 +91,18 @@ gulp.task('scss-ES6', ['dist-scss-ES6'], function () {
 });
 
 /**
- * npm patch
+ * npm publish
  */
-gulp.task('npm patch', shell.task([
-    'cd dist/ES5',
-    'npm version patch -m "version patch"',
-    'npm publish',
-    'cd ../dist/ES6',
-    'npm version patch -m "version patch"',
-    'npm publish'
+gulp.task('ES5 publish patch', shell.task([
+    'cd dist/ES5 && npm version patch -m "version patch" && npm publish',
+]));
+gulp.task('ES5 publish minor', shell.task([
+    'cd dist/ES5 && npm version minor -m "version patch" && npm publish',
+]));
+
+gulp.task('ES6 publish patch', shell.task([
+    'cd dist/ES6 && npm version patch -m "version patch" && npm publish',
+]));
+gulp.task('ES6 publish minor', shell.task([
+    'cd dist/ES6 && npm version minor -m "version patch" && npm publish',
 ]));

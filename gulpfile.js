@@ -89,3 +89,15 @@ gulp.task('scss-ES6', ['dist-scss-ES6'], function () {
         .pipe(sass({outputStyle: 'compressed'}))
         .pipe(gulp.dest(fnObj.paths.dist_es6));
 });
+
+/**
+ * npm patch
+ */
+gulp.task('npm patch', shell.task([
+    'cd dist/ES5',
+    'npm version patch -m "version patch"',
+    'npm publish',
+    'cd ../dist/ES6',
+    'npm version patch -m "version patch"',
+    'npm publish'
+]));

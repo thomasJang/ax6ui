@@ -1,6 +1,6 @@
 import jQuery from "jqmin";
-import AX6UICore from "./AX6UICore";
-import mustache from "./AX6Mustache";
+import AX6UICore from "./AX6UICore.js";
+import mustache from "./AX6Mustache.js";
 
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
@@ -82,7 +82,7 @@ class AX6UIMask extends AX6UICore {
          */
         this.activeConfig = {};
 
-        this.init();
+        if(typeof config !== "undefined") this.init();
     }
 
     /**
@@ -119,11 +119,19 @@ class AX6UIMask extends AX6UICore {
     /**
      * @method
      * @param options
+     * @param {number} [options.zIndex] - 마스크 엘리먼트의 z-index 값을 정합니다
      * @return {AX6UIMask}
+     * @example
+     * ```js
+     * let myMask = new Mask();
+     * myMask.setConfig({
+     *  zIndex: 1000
+     * });
+     *
+     * myMask.open();
+     * ```
      */
     open(options) {
-        let self = this;
-
         if (this.status === "on") this.close();
         setBody.call(this, (options) ? options.content || "" : "");
 

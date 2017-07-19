@@ -6,7 +6,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const entry = {
     index: './src/index.js',
     mask: './src/mask.js',
-    formatter: './src/formatter.js'
+    formatter: './src/formatter.js',
+    calendar: './src/calendar.js'
 };
 
 let plugins = [

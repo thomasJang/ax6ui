@@ -25,9 +25,9 @@ var _AX6UIFormatter = require("./AX6UIFormatter");
 
 var _AX6UIFormatter2 = _interopRequireDefault(_AX6UIFormatter);
 
-var _AX6UIFormatterFormatter = require("./AX6UIFormatter-formatter");
+var _AX6UIFormatter_formatter = require("./AX6UIFormatter_formatter");
 
-var _AX6UIFormatterFormatter2 = _interopRequireDefault(_AX6UIFormatterFormatter);
+var _AX6UIFormatter_formatter2 = _interopRequireDefault(_AX6UIFormatter_formatter);
 
 var _AX6UIMask = require("./AX6UIMask");
 
@@ -43,7 +43,7 @@ exports.AX6Util = _AX6Util2.default;
 exports.AX6UICore = _AX6UICore2.default;
 exports.AX6Mustache = _AX6Mustache2.default;
 exports.AX6UIFormatter = _AX6UIFormatter2.default;
-exports.AX6UIFormatter_formatter = _AX6UIFormatterFormatter2.default;
+exports.AX6UIFormatter_formatter = _AX6UIFormatter_formatter2.default;
 exports.AX6UIMask = _AX6UIMask2.default;
 exports.default = {
   AX6Info: _AX6Info2.default,
@@ -51,6 +51,6 @@ exports.default = {
   AX6UICore: _AX6UICore2.default,
   AX6Mustache: _AX6Mustache2.default,
   AX6UIFormatter: _AX6UIFormatter2.default,
-  AX6UIFormatter_formatter: _AX6UIFormatterFormatter2.default,
+  AX6UIFormatter_formatter: _AX6UIFormatter_formatter2.default,
   AX6UIMask: _AX6UIMask2.default
 };

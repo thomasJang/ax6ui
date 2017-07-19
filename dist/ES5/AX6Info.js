@@ -54,7 +54,7 @@ var wheelEnm = win && /Firefox/i.test(navigator.userAgent) ? "DOMMouseScroll" : 
 
 var errorMsg = {};
 
-function urlUtil(url, urls) {
+var urlUtil = function urlUtil(url, urls) {
     url = {
         href: win.location.href,
         param: win.location.search,
@@ -73,9 +73,9 @@ function urlUtil(url, urls) {
     url.baseUrl = url.href.substr(0, url.href.indexOf("?")).replace(url.pathname, "");
 
     return url;
-}
+};
 
-function getError(className, errorCode, methodName) {
+var getError = function getError(className, errorCode, methodName) {
     if (errorMsg && errorMsg[className]) {
         return {
             className: className,
@@ -86,7 +86,7 @@ function getError(className, errorCode, methodName) {
     } else {
         return { className: className, errorCode: errorCode, methodName: methodName };
     }
-}
+};
 
 var supportTouch = win ? 'ontouchstart' in win || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 : false;
 

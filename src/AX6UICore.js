@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import jQuery from "jqmin";
 
 let UI_INSTANCE_ID = 0;
 
@@ -17,6 +17,7 @@ class AX6UICore {
     constructor() {
         this.initialized = false;
         this.instanceId = AX6UICore.getInstanceId();
+
     }
 
     /**
@@ -25,7 +26,7 @@ class AX6UICore {
      * @return {AX6UICore}
      */
     setConfig(config) {
-        _.merge(this.config, config);
+        jQuery.extend(this.config, config);
 
         this.init();
         return this;

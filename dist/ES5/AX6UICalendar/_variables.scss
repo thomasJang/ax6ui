@@ -1,0 +1,40 @@
+
+//==============
+//== calendar
+$ax6calendar-control-bg: ($panel-default-heading-bg) !default; // color, (color1, color2), (pos, color1, color2) 모두 사용가능
+$ax6calendar-control-border: 1px solid $panel-default-border !default;
+$ax6calendar-control-border-radius: 5px !default;
+$ax6calendar-control-font-size: ceil(($font-size-base * 1.25)) !default;
+$ax6calendar-control-text-color: $panel-default-text !default;
+$ax6calendar-control-hover-text-color: $brand-primary !default;
+$ax6calendar-control-padding: 0 !default;
+
+$ax6calendar-header-bg: (#FFFFFF, #FFFFFF) !default;
+$ax6calendar-header-border: 0px none !default;
+$ax6calendar-header-padding: 0px 2px !default;
+$ax6calendar-header-font-size: ceil(($font-size-base * 0.8)) !default;
+
+$ax6calendar-body-bg: (#FFFFFF, #FFFFFF) !default;
+$ax6calendar-body-border: 0px none !default;
+$ax6calendar-body-font-size: ceil(($font-size-base * 1)) !default;
+$ax6calendar-body-animation-in: ax6-ui-calendar-fadein !default;
+$ax6calendar-body-animation-out: ax6-ui-calendar-fadeout !default;
+
+$ax6calendar-sun-text-color: #C78B81 !default;
+$ax6calendar-sat-text-color: #32B4DC !default;
+
+$ax6calendar-date-bg: (#FFFFFF, #FFFFFF) !default;
+$ax6calendar-date-text-color: #C3C4C6 !default;
+$ax6calendar-live-bg: (#F0F0F0, #F0F0F0) !default;
+$ax6calendar-live-text-color: #6D6E70 !default;
+$ax6calendar-hover-bg: (#32B4DC, #32B4DC) !default;
+$ax6calendar-hover-text-color: #fff !default;
+$ax6calendar-focus-bg: (#E67241, #E67241) !default;
+$ax6calendar-focus-text-color: #fff !default;
+$ax6calendar-period-bg: (#82d3fa, #82d3fa) !default;
+$ax6calendar-period-text-color: #fff !default;
+
+
+$ax6calendar-item-day-radius: 5px !default;
+$ax6calendar-item-month-radius: 5px !default;
+$ax6calendar-item-year-radius: 5px !default;

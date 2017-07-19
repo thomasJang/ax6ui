@@ -51,7 +51,7 @@ label {
 
 // Override content-box in Normalize (* isn't specific enough)
 input[type="search"] {
-  @include box-sizing(border-box);
+  box-sizing: border-box;
 }
 
 // Position radios and checkboxes better
@@ -580,7 +580,9 @@ input[type="checkbox"] {
 
   // Make form groups behave like rows
   .form-group {
-    @include make-row;
+    margin-left: ceil(($grid-gutter-width / -2));
+    margin-right: floor(($grid-gutter-width / -2));
+    @include clearfix;
   }
 
   // Reset spacing and right align labels, but scope to media queries so that

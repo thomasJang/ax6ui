@@ -1,7 +1,6 @@
 import jQuery from "jqmin";
-import _ from "lodash";
-import AX6UICore from "./AX6UICore";
-import mustache from "./AX6Mustache";
+import AX6UICore from "./AX6UICore.js";
+import mustache from "./AX6Mustache.js";
 
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
@@ -82,7 +81,7 @@ class AX6UIMask extends AX6UICore {
          */
         this.activeConfig = {};
 
-        this.init();
+        if (typeof config !== "undefined") this.init();
     }
 
     /**
@@ -119,15 +118,23 @@ class AX6UIMask extends AX6UICore {
     /**
      * @method
      * @param options
+     * @param {number} [options.zIndex] - 마스크 엘리먼트의 z-index 값을 정합니다
      * @return {AX6UIMask}
+     * @example
+     * ```js
+     * let myMask = new Mask();
+     * myMask.setConfig({
+     *  zIndex: 1000
+     * });
+     *
+     * myMask.open();
+     * ```
      */
     open(options) {
-        let self = this;
-
         if (this.status === "on") this.close();
         setBody.call(this, options ? options.content || "" : "");
 
-        let _cfg = _.merge({}, this.config, options),
+        let _cfg = jQuery.extend(true, this.config, options),
             target = _cfg.target,
             $target = jQuery(target),
             maskId = 'ax-mask-' + this.instanceId,
@@ -158,9 +165,9 @@ class AX6UIMask extends AX6UICore {
 
             // 마스크의 타겟이 html body가 아닌경우 window resize 이벤트를 추적하여 엘리먼트 마스크의 CSS 속성 변경
 
-            jQuery(window).on("resize.ax5mask-" + this.instanceId, function () {
+            jQuery(window).on("resize.ax5mask-" + this.instanceId, e => {
                 this.align();
-            }.bind(this));
+            });
         }
 
         if (typeof _cfg.zIndex !== "undefined") {
@@ -173,13 +180,13 @@ class AX6UIMask extends AX6UICore {
         $mask.css(css);
 
         if (this.onClick) {
-            $mask.on("click", function (e) {
+            $mask.on("click", e => {
                 that = {
-                    self: self,
+                    self: this,
                     state: "open",
                     type: "click"
                 };
-                self.onClick.call(that, that);
+                this.onClick.call(that, that);
             });
         }
 

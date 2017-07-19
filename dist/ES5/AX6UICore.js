@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _lodash = require('lodash');
+var _jqmin = require("jqmin");
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _jqmin2 = _interopRequireDefault(_jqmin);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,7 +22,7 @@ var UI_INSTANCE_ID = 0;
 
 var AX6UICore = function () {
   _createClass(AX6UICore, null, [{
-    key: 'getInstanceId',
+    key: "getInstanceId",
     value: function getInstanceId() {
       return UI_INSTANCE_ID++;
     }
@@ -46,9 +46,9 @@ var AX6UICore = function () {
 
 
   _createClass(AX6UICore, [{
-    key: 'setConfig',
+    key: "setConfig",
     value: function setConfig(config) {
-      _lodash2.default.merge(this.config, config);
+      _jqmin2.default.extend(this.config, config);
 
       this.init();
       return this;
@@ -60,7 +60,7 @@ var AX6UICore = function () {
      */
 
   }, {
-    key: 'init',
+    key: "init",
     value: function init() {
       // 초기화 함수,
 
@@ -73,7 +73,7 @@ var AX6UICore = function () {
      */
 
   }, {
-    key: 'initOnce',
+    key: "initOnce",
     value: function initOnce() {
       // 1회만 호출되어야 하는 초기화 함수
       if (this.initialized) return this;
@@ -86,7 +86,7 @@ var AX6UICore = function () {
      */
 
   }, {
-    key: 'destory',
+    key: "destory",
     value: function destory() {}
   }]);
 

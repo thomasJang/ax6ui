@@ -2,7 +2,121 @@ import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore";
 import info from "./AX6Info";
 import U from "./AX6Util";
+import mustache from "./AX6Mustache";
 
+
+const frameTmpl = function (columnKeys) {
+    return `
+<div class="ax6-ui-calendar {{theme}}" data-calendar-els="root" onselectstart="return false;">
+    {{#control}}
+    <div class="calendar-control" data-calendar-els="control" style="{{controlCSS}}">
+        <a class="date-move-left" data-calendar-move="left" style="{{controlButtonCSS}}">{{{left}}}</a>
+        <div class="date-display" data-calendar-els="control-display" style="{{controlCSS}}"></div>
+        <a class="date-move-right" data-calendar-move="right" style="{{controlButtonCSS}}">{{{right}}}</a>
+    </div>
+    {{/control}}
+    <div class="calendar-body" data-calendar-els="body"></div>
+</div>
+`;
+};
+const dayTmpl = function (columnKeys) {
+    return `
+<table data-calendar-table="day" cellpadding="0" cellspacing="0" style="width:100%;">
+    <thead>
+        <tr>
+        {{#weekNames}}
+            <td class="calendar-col-{{col}}" style="height: {{colHeadHeight}}">
+            {{label}}
+            </td>
+        {{/weekNames}}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {{#list}}    
+            {{#isStartOfWeek}}
+            {{^@first}}
+        </tr>
+        <tr>
+            {{/@first}}
+            {{/isStartOfWeek}}
+            <td class="calendar-col-{{col}}" style="{{itemStyles}}">
+                <a class="calendar-item-day {{addClass}}" data-calendar-item-date="{{thisDate}}">
+                    <span class="addon addon-header"></span>
+                    {{thisDataLabel}}
+                    <span class="addon addon-footer"></span>
+                </a>
+            </td>
+            {{/list}}
+        </tr>
+    </tbody>
+</table>
+`;
+};
+const monthTmpl = function (columnKeys) {
+    return `
+<table data-calendar-table="month" cellpadding="0" cellspacing="0" style="width:100%;">
+    <thead>
+        <tr>
+            <td class="calendar-col-0" colspan="3" style="height: {{colHeadHeight}}">
+            {{colHeadLabel}}
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {{#list}}    
+            {{#isStartOfRow}}
+            {{^@first}}
+        </tr>
+        <tr>
+            {{/@first}}
+            {{/isStartOfRow}}
+            <td class="calendar-col-{{col}}" style="{{itemStyles}}">
+                <a class="calendar-item-month {{addClass}}" data-calendar-item-month="{{thisMonth}}">
+                    <span class="addon"></span>
+                    {{thisMonthLabel}}
+                    <span class="lunar"></span>
+                </a>
+            </td>
+            {{/list}}
+        </tr>
+    </tbody>
+</table>
+`;
+};
+const yearTmpl = function (columnKeys) {
+    return `
+<table data-calendar-table="year" cellpadding="0" cellspacing="0" style="width:100%;">
+    <thead>
+        <tr>
+            <td class="calendar-col-0" colspan="4" style="height: {{colHeadHeight}}">
+            {{colHeadLabel}}
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {{#list}}    
+            {{#isStartOfRow}}
+            {{^@first}}
+        </tr>
+        <tr>
+            {{/@first}}
+            {{/isStartOfRow}}
+            <td class="calendar-col-{{col}}" style="{{itemStyles}}">
+                <a class="calendar-item-year {{addClass}}" data-calendar-item-year="{{thisYear}}">
+                    <span class="addon"></span>
+                    {{thisYearLabel}}
+                    <span class="lunar"></span>
+                </a>
+            </td>
+            {{/list}}
+        </tr>
+    </tbody>
+</table>
+`;
+};
 
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
@@ -15,8 +129,7 @@ const onStateChanged = function (opts, that) {
     that = null;
 };
 const getFrame = function () {
-    var
-        data = jQuery.extend(true, {}, cfg, {
+    let data = jQuery.extend(true, {}, this.config, {
             controlCSS: {},
             controlButtonCSS: {}
         });
@@ -29,15 +142,14 @@ const getFrame = function () {
     data.controlButtonCSS = U.css(data.controlButtonCSS);
 
     try {
-        return CALENDAR.tmpl.get.call(this, "frameTmpl", data);
+        return mustache.render(frameTmpl.call(this), data);
     }
     finally {
         data = null;
     }
 };
 const setDisplay = function () {
-    var
-        myDate = U.date(this.config.displayDate),
+    let myDate = U.date(this.config.displayDate),
         yy = "",
         mm = "",
         yy1, yy2;
@@ -47,7 +159,7 @@ const setDisplay = function () {
             yy = (this.config.control.yearTmpl) ? this.config.control.yearTmpl.replace('%s', myDate.getFullYear()) : myDate.getFullYear();
             mm = (this.config.control.monthTmpl) ? this.config.control.monthTmpl.replace('%s', this.config.lang.months[myDate.getMonth()]) : this.config.lang.months[myDate.getMonth()];
 
-            this.$["control-display"].html((function () {
+            this.$["control-display"].html((() => {
                 if (this.config.control.yearFirst) {
                     return '<span data-calendar-display="year">' + yy + '</span>' +
                         '<span data-calendar-display="month">' + mm + '</span>';
@@ -56,7 +168,6 @@ const setDisplay = function () {
                     return '<span data-calendar-display="month">' + mm + '</span>' +
                         '<span data-calendar-display="year">' + yy + '</span>';
                 }
-
             })());
         }
         else if (this.config.mode == "month" || this.config.mode == "m") {
@@ -70,7 +181,7 @@ const setDisplay = function () {
         }
 
         this.$["control-display"].find('[data-calendar-display]').on(this.config.clickEventName, (function (e) {
-            var target = U.findParentNode(e.target, function (target) {
+            let target = U.findParentNode(e.target, function (target) {
                 if (target.getAttribute("data-calendar-display")) {
                     return true;
                 }
@@ -92,12 +203,11 @@ const setDisplay = function () {
     return this;
 };
 const printDay = function (nowDate) {
-    var
-        dotDate = U.date(nowDate),
+    let dotDate = U.date(nowDate),
         monthStratDate = new Date(dotDate.getFullYear(), dotDate.getMonth(), 1, 12),
         _today = this.config.displayDate,
-        tableStartDate = (function () {
-            var day = monthStratDate.getDay();
+        tableStartDate = (() => {
+            let day = monthStratDate.getDay();
             if (day == 0) day = 7;
             day -= this.config.startOfWeek;
 
@@ -115,8 +225,7 @@ const printDay = function (nowDate) {
         k, _k,
         frameWidth = this.$["body"].width(),
         frameHeight = Math.floor(frameWidth * (6 / 7)), // 1week = 7days, 1month = 6weeks
-        data,
-        tmpl;
+        data;
 
     if (this.config.dimensions.height) {
         frameHeight = U.number(this.config.dimensions.height) - U.number(this.config.dimensions.colHeadHeight);
@@ -127,7 +236,7 @@ const printDay = function (nowDate) {
     itemStyles['padding'] = U.cssNumber(this.config.dimensions.itemPadding);
 
     data = {
-        weekNames: [].concat(ax5.info.weekNames),
+        weekNames: [].concat(info.weekNames),
         list: []
     };
 
@@ -135,7 +244,7 @@ const printDay = function (nowDate) {
         data.weekNames = data.weekNames.concat(data.weekNames.slice(0, this.config.startOfWeek)).splice(this.config.startOfWeek);
     }
 
-    data.weekNames.forEach(function (n) {
+    data.weekNames.forEach((n) => {
         n.colHeadHeight = U.cssNumber(this.config.dimensions.colHeadHeight);
     });
 
@@ -145,8 +254,7 @@ const printDay = function (nowDate) {
         k = 0;
         while (k < 7) {
             _k = (7 + (k - this.config.startOfWeek)) % 7;
-            var
-                thisDate = '' + U.date(loopDate, {"return": this.config.dateFormat}),
+            let thisDate = '' + U.date(loopDate, {"return": this.config.dateFormat}),
                 _date = {
                     'row': i,
                     'col': k,
@@ -154,12 +262,11 @@ const printDay = function (nowDate) {
                     thisDate: '' + thisDate,
                     thisDataLabel: this.config.lang.dayTmpl.replace('%s', loopDate.getDate()),
                     itemStyles: U.css(itemStyles),
-                    addClass: (function () {
-
-                        var classNames = "";
+                    addClass: (() => {
+                        let classNames = "";
 
                         if (this.config.selectable) {
-                            if (self.selectableMap[thisDate]) {
+                            if (this.selectableMap[thisDate]) {
                                 classNames += ( loopDate.getMonth() == thisMonth ) ? " live" : "";
                             }
                             else {
@@ -186,12 +293,12 @@ const printDay = function (nowDate) {
                         return classNames;
                     })()
                     + ' '
-                    + (function () {
-                        return (self.markerMap[thisDate]) ? self.markerMap[thisDate].theme || this.config.defaultMarkerTheme : '';
+                    + (() => {
+                        return (this.markerMap[thisDate]) ? this.markerMap[thisDate].theme || this.config.defaultMarkerTheme : '';
                     })()
                     + ' '
-                    + (function () {
-                        return (self.selectionMap[thisDate]) ? "selected-day" : '';
+                    + (() => {
+                        return (this.selectionMap[thisDate]) ? "selected-day" : '';
                     })()
                 };
             data.list.push(_date);
@@ -204,13 +311,14 @@ const printDay = function (nowDate) {
         }
         i++;
     }
-    tmpl = CALENDAR.tmpl.get.call(this, "dayTmpl", data);
-    this.$["body"].html(tmpl);
-    this.$["body"].find('[data-calendar-item-date]').on(this.config.clickEventName, function (e) {
-        e = e || window.event;
-        onclick.call(self, e, 'date');
-        U.stopEvent(e);
-    });
+
+    this.$["body"]
+        .html(mustache.render(dayTmpl.call(this), data))
+        .find('[data-calendar-item-date]').on(this.config.clickEventName, (e) => {
+            e = e || window.event;
+            onclick.call(this, e, 'date');
+            U.stopEvent(e);
+        });
 
     this.printedDay = {
         start: tableStartDate, end: loopDate
@@ -235,11 +343,9 @@ const printDay = function (nowDate) {
     frameWidth = null;
     frameHeight = null;
     data = null;
-    tmpl = null;
 };
 const printMonth = function (nowDate) {
-    var
-        dotDate = U.date(nowDate),
+    let dotDate = U.date(nowDate),
         nMonth = dotDate.getMonth(),
         itemStyles = {},
         i,
@@ -248,8 +354,7 @@ const printMonth = function (nowDate) {
         tableStartMonth,
         frameWidth = this.$["body"].width(),
         frameHeight = Math.floor(frameWidth * (6 / 7)),
-        data,
-        tmpl;
+        data;
 
     if (this.config.dimensions.height) {
         frameHeight = U.number(this.config.dimensions.height) - U.number(this.config.dimensions.colHeadHeight);
@@ -271,29 +376,28 @@ const printMonth = function (nowDate) {
     while (i < 4) {
         k = 0;
         while (k < 3) {
-            var
-                _month = {
+            let _month = {
                     row: i,
                     col: k,
                     isStartOfRow: (k == 0),
                     thisMonth: dotDate.getFullYear() + '-' + U.setDigit(m + 1, 2) + '-' + U.setDigit(dotDate.getDate(), 2),
                     thisMonthLabel: this.config.lang.months[m],
                     itemStyles: U.css(itemStyles),
-                    addClass: (function () {
+                addClass: (() => {
                         if (this.config.selectable) {
-                            return (self.selectableMap[m]) ? 'live' : 'disable';
+                            return (this.selectableMap[m]) ? 'live' : 'disable';
                         }
                         else {
                             return 'live';
                         }
                     })()
                     + ' '
-                    + (function () {
+                + (() => {
                         return ( m == nMonth ) ? "focus" : "";
                     })()
                     + ' '
-                    + (function () {
-                        return (self.markerMap[m]) ? self.markerMap[m].theme || this.config.defaultMarkerTheme : '';
+                + (() => {
+                    return (this.markerMap[m]) ? this.markerMap[m].theme || this.config.defaultMarkerTheme : '';
                     })()
                 };
             data.list.push(_month);
@@ -303,11 +407,12 @@ const printMonth = function (nowDate) {
         }
         i++;
     }
-    tmpl = CALENDAR.tmpl.get.call(this, "monthTmpl", data);
-    this.$["body"].html(tmpl);
-    this.$["body"].find('[data-calendar-item-month]').on(this.config.clickEventName, function (e) {
+
+    this.$["body"]
+        .html(mustache.render(monthTmpl.call(this), data))
+        .find('[data-calendar-item-month]').on(this.config.clickEventName, (e) => {
         e = e || window.event;
-        onclick.call(self, e, 'month');
+        onclick.call(this, e, 'month');
         U.stopEvent(e);
     });
 
@@ -333,11 +438,9 @@ const printMonth = function (nowDate) {
     frameWidth = null;
     frameHeight = null;
     data = null;
-    tmpl = null;
 };
 const printYear = function (nowDate) {
-    var
-        dotDate = U.date(nowDate),
+    let dotDate = U.date(nowDate),
         nYear = dotDate.getFullYear(),
         itemStyles = {},
         i,
@@ -346,8 +449,7 @@ const printYear = function (nowDate) {
         tableStartYear,
         frameWidth = this.$["body"].width(),
         frameHeight = Math.floor(frameWidth * (6 / 7)),
-        data,
-        tmpl;
+        data;
 
     if (this.config.dimensions.height) {
         frameHeight = U.number(this.config.dimensions.height) - U.number(this.config.dimensions.colHeadHeight);
@@ -369,31 +471,30 @@ const printYear = function (nowDate) {
     while (i < 5) {
         k = 0;
         while (k < 4) {
-            var
-                _year = {
-                    row: i,
-                    col: k,
-                    isStartOfRow: (k == 0),
-                    thisYear: y + '-' + U.setDigit(dotDate.getMonth() + 1, 2) + '-' + U.setDigit(dotDate.getDate(), 2),
-                    thisYearLabel: this.config.lang.yearTmpl.replace('%s', (y)),
-                    itemStyles: U.css(itemStyles),
-                    addClass: (function () {
-                        if (this.config.selectable) {
-                            return (self.selectableMap[y]) ? 'live' : 'disable';
-                        }
-                        else {
-                            return 'live';
-                        }
-                    })()
-                    + ' '
-                    + (function () {
-                        return ( y == nYear ) ? "focus" : "";
-                    })()
-                    + ' '
-                    + (function () {
-                        return (self.selectableMap[y]) ? self.selectableMap[y].theme || this.config.defaultMarkerTheme : '';
-                    })()
-                };
+            let _year = {
+                row: i,
+                col: k,
+                isStartOfRow: (k == 0),
+                thisYear: y + '-' + U.setDigit(dotDate.getMonth() + 1, 2) + '-' + U.setDigit(dotDate.getDate(), 2),
+                thisYearLabel: this.config.lang.yearTmpl.replace('%s', (y)),
+                itemStyles: U.css(itemStyles),
+                addClass: (() => {
+                    if (this.config.selectable) {
+                        return (this.selectableMap[y]) ? 'live' : 'disable';
+                    }
+                    else {
+                        return 'live';
+                    }
+                })()
+                + ' '
+                + (() => {
+                    return ( y == nYear ) ? "focus" : "";
+                })()
+                + ' '
+                + (() => {
+                    return (this.selectableMap[y]) ? this.selectableMap[y].theme || this.config.defaultMarkerTheme : '';
+                })()
+            };
             data.list.push(_year);
             y++;
             k++;
@@ -401,9 +502,10 @@ const printYear = function (nowDate) {
         }
         i++;
     }
-    tmpl = CALENDAR.tmpl.get.call(this, "yearTmpl", data);
-    this.$["body"].html(tmpl);
-    this.$["body"].find('[data-calendar-item-year]').on(this.config.clickEventName, function (e) {
+
+    this.$["body"]
+        .html(mustache.render(yearTmpl.call(this), data))
+        .find('[data-calendar-item-year]').on(this.config.clickEventName, (e) => {
         e = (e || window.event);
         onclick.call(this, e, 'year');
         U.stopEvent(e);
@@ -430,11 +532,9 @@ const printYear = function (nowDate) {
     frameWidth = null;
     frameHeight = null;
     data = null;
-    tmpl = null;
 };
 const onclick = function (e, mode, target, value) {
-    var
-        removed,
+    let removed,
         dt,
         selectable;
 
@@ -449,27 +549,27 @@ const onclick = function (e, mode, target, value) {
 
         dt = U.date(value, {"return": this.config.dateFormat});
         selectable = true;
-        selectableCount = (this.config.multipleSelect) ? (U.isNumber(this.config.multipleSelect)) ? this.config.multipleSelect : 2 : 1;
+        this.selectableCount = (this.config.multipleSelect) ? (U.isNumber(this.config.multipleSelect)) ? this.config.multipleSelect : 2 : 1;
 
         if (this.config.selectable) {
-            if (!self.selectableMap[dt]) selectable = false;
+            if (!this.selectableMap[dt]) selectable = false;
         }
 
         if (mode == "date") {
             if (selectable) {
 
-                if (self.selection.length >= selectableCount) {
-                    removed = self.selection.splice(0, self.selection.length - (selectableCount - 1));
-                    removed.forEach(function (d) {
-                        self.$["body"].find('[data-calendar-item-date="' + U.date(d, {"return": this.config.dateFormat}) + '"]').removeClass("selected-day");
+                if (this.selection.length >= this.selectableCount) {
+                    removed = this.selection.splice(0, this.selection.length - (this.selectableCount - 1));
+                    removed.forEach((d) => {
+                        this.$["body"].find('[data-calendar-item-date="' + U.date(d, {"return": this.config.dateFormat}) + '"]').removeClass("selected-day");
                     });
                 }
 
                 jQuery(target).addClass("selected-day");
-                self.selection.push(value);
+                this.selection.push(value);
 
-                if (self.onClick) {
-                    self.onClick.call({
+                if (this.onClick) {
+                    this.onClick.call({
                         self: this, date: value, target: this.target, dateElement: target
                     });
                 }
@@ -478,49 +578,49 @@ const onclick = function (e, mode, target, value) {
         else if (mode == "month") {
             if (this.config.selectMode == "month") {
                 if (selectable) {
-                    if (self.selection.length >= selectableCount) {
-                        removed = self.selection.splice(0, self.selection.length - (selectableCount - 1));
-                        removed.forEach(function (d) {
-                            self.$["body"].find('[data-calendar-item-month="' + U.date(d, {"return": 'yyyy-MM-dd'}) + '"]').removeClass("selected-month");
+                    if (this.selection.length >= this.selectableCount) {
+                        removed = this.selection.splice(0, this.selection.length - (this.selectableCount - 1));
+                        removed.forEach((d) => {
+                            this.$["body"].find('[data-calendar-item-month="' + U.date(d, {"return": 'yyyy-MM-dd'}) + '"]').removeClass("selected-month");
                         });
                     }
 
                     jQuery(target).addClass("selected-month");
-                    self.selection.push(value);
+                    this.selection.push(value);
 
-                    if (self.onClick) {
-                        self.onClick.call({
+                    if (this.onClick) {
+                        this.onClick.call({
                             self: this, date: value, target: this.target, dateElement: target
                         });
                     }
                 }
             }
             else {
-                self.changeMode("day", value);
+                this.changeMode("day", value);
             }
         }
         else if (mode == "year") {
             if (this.config.selectMode == "year") {
                 if (selectable) {
-                    if (self.selection.length >= selectableCount) {
-                        removed = self.selection.splice(0, self.selection.length - (selectableCount - 1));
-                        removed.forEach(function (d) {
-                            self.$["body"].find('[data-calendar-item-year="' + U.date(d, {"return": 'yyyy-MM-dd'}) + '"]').removeClass("selected-year");
+                    if (this.selection.length >= this.selectableCount) {
+                        removed = this.selection.splice(0, this.selection.length - (this.selectableCount - 1));
+                        removed.forEach((d) => {
+                            this.$["body"].find('[data-calendar-item-year="' + U.date(d, {"return": 'yyyy-MM-dd'}) + '"]').removeClass("selected-year");
                         });
                     }
 
                     jQuery(target).addClass("selected-year");
-                    self.selection.push(value);
+                    this.selection.push(value);
 
-                    if (self.onClick) {
-                        self.onClick.call({
+                    if (this.onClick) {
+                        this.onClick.call({
                             self: this, date: value, target: this.target, dateElement: target
                         });
                     }
                 }
             }
             else {
-                self.changeMode("month", value);
+                this.changeMode("month", value);
             }
         }
     }
@@ -575,7 +675,7 @@ const move = function (e, target, value) {
 const applyMarkerMap = function () {
     setTimeout((function () {
         if (this.config.mode === "day" || this.config.mode === "d") {
-            for (var k in this.markerMap) {
+            for (let k in this.markerMap) {
                 this.$["body"].find('[data-calendar-item-date="' + k + '"]').addClass(this.markerMap[k].theme || this.config.defaultMarkerTheme);
             }
         }
@@ -583,7 +683,7 @@ const applyMarkerMap = function () {
 };
 const applySelectionMap = function () {
     setTimeout((function () {
-        for (var k in this.selectionMap) {
+        for (let k in this.selectionMap) {
             this.$["body"].find('[data-calendar-item-date="' + k + '"]').addClass("selected-day");
         }
     }).bind(this));
@@ -591,7 +691,7 @@ const applySelectionMap = function () {
 const applyPeriodMap = function () {
     setTimeout((function () {
         if (this.config.mode === "day" || this.config.mode === "d") {
-            for (var k in this.periodMap) {
+            for (let k in this.periodMap) {
                 if (this.periodMap[k].label) {
                     this.$["body"].find('[data-calendar-item-date="' + k + '"]').find(".addon-footer").html(this.periodMap[k].label);
                 }
@@ -602,7 +702,7 @@ const applyPeriodMap = function () {
 };
 const clearPeriodMap = function () {
     if (this.config.mode === "day" || this.config.mode === "d") {
-        for (var k in this.periodMap) {
+        for (let k in this.periodMap) {
             this.$["body"].find('[data-calendar-item-date="' + k + '"]').find(".addon-footer").empty();
             this.$["body"].find('[data-calendar-item-date="' + k + '"]').removeClass(this.periodMap[k].theme);
         }
@@ -755,7 +855,7 @@ class AX6UICalendar extends AX6UICore {
         if (mode) this.config.mode = mode;
 
         this.$["body"].removeClass("fadein").addClass("fadeout");
-        setTimeout((function () {
+        setTimeout(() => {
             if (this.config.mode == "day" || this.config.mode == "d") {
                 printDay.call(this, this.config.displayDate);
             }
@@ -766,7 +866,7 @@ class AX6UICalendar extends AX6UICore {
                 printYear.call(this, this.config.displayDate);
             }
             this.$["body"].removeClass("fadeout").addClass("fadein");
-        }).bind(this), this.config.animateTime);
+        }, this.config.animateTime);
 
         return this;
     }
@@ -778,7 +878,7 @@ class AX6UICalendar extends AX6UICore {
             'arr': function (v, map, count) {
                 map = {};
                 if (!U.isArray(v)) return map;
-                self.selection = v = v.splice(0, count);
+                this.selection = v = v.splice(0, count);
                 v.forEach(function (n) {
                     if (U.isDate(n))
                         n = U.date(n, {'return': this.config.dateFormat});
@@ -830,7 +930,7 @@ class AX6UICalendar extends AX6UICore {
                 map = {};
                 if (U.isArray(v)) return map;
                 if (v.range) return map;
-                for (var k in v) {
+                for (let k in v) {
                     map[k] = v[k];
                 }
                 return map;
@@ -842,12 +942,12 @@ class AX6UICalendar extends AX6UICore {
 
                 v.range.forEach(function (n) {
                     if (U.isDateFormat(n.from) && U.isDateFormat(n.to)) {
-                        for (var d = U.date(n.from); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
+                        for (let d = U.date(n.from); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
                             map[U.date(d, {"return": this.config.dateFormat})] = true;
                         }
                     }
                     else {
-                        for (var i = n.from; i <= n.to; i++) {
+                        for (let i = n.from; i <= n.to; i++) {
                             map[i] = true;
                         }
                     }
@@ -889,7 +989,7 @@ class AX6UICalendar extends AX6UICore {
                 map = {};
                 if (U.isArray(v)) return map;
                 if (v.range) return map;
-                for (var k in v) {
+                for (let k in v) {
                     map[k] = v[k];
                 }
 
@@ -903,12 +1003,12 @@ class AX6UICalendar extends AX6UICore {
 
                 v.range.forEach(function (n) {
                     if (U.isDateFormat(n.from) && U.isDateFormat(n.to)) {
-                        for (var d = U.date(n.from); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
+                        for (let d = U.date(n.from); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
                             map[U.date(d, {"return": this.config.dateFormat})] = {theme: n.theme, label: n.label};
                         }
                     }
                     else {
-                        for (var i = n.from; i <= n.to; i++) {
+                        for (let i = n.from; i <= n.to; i++) {
                             map[i] = {theme: n.theme, label: n.label};
                         }
                     }
@@ -946,9 +1046,9 @@ class AX6UICalendar extends AX6UICore {
                 if (U.isArray(v)) return map;
                 if (!v.range) return map;
 
-                v.range.forEach(function (n) {
+                v.range.forEach((n) => {
                     if (U.isDateFormat(n.from) && U.isDateFormat(n.to)) {
-                        for (var d = new Date(U.date(n.from)); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
+                        for (let d = new Date(U.date(n.from)); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
                             if (d.getTime() == U.date(n.from).getTime()) {
                                 map[U.date(d, {"return": this.config.dateFormat})] = {theme: n.theme || this.config.defaultPeriodTheme, label: n.fromLabel};
                             } else if (d.getTime() == U.date(n.to).getTime()) {

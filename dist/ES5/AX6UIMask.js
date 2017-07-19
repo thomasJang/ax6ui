@@ -10,15 +10,11 @@ var _jqmin = require("jqmin");
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
-var _lodash = require("lodash");
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _AX6UICore2 = require("./AX6UICore");
+var _AX6UICore2 = require("./AX6UICore.js");
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Mustache = require("./AX6Mustache");
+var _AX6Mustache = require("./AX6Mustache.js");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
@@ -105,7 +101,7 @@ var AX6UIMask = function (_AX6UICore) {
          */
         _this.activeConfig = {};
 
-        _this.init();
+        if (typeof config !== "undefined") _this.init();
         return _this;
     }
 
@@ -150,18 +146,28 @@ var AX6UIMask = function (_AX6UICore) {
         /**
          * @method
          * @param options
+         * @param {number} [options.zIndex] - 마스크 엘리먼트의 z-index 값을 정합니다
          * @return {AX6UIMask}
+         * @example
+         * ```js
+         * let myMask = new Mask();
+         * myMask.setConfig({
+         *  zIndex: 1000
+         * });
+         *
+         * myMask.open();
+         * ```
          */
 
     }, {
         key: "open",
         value: function open(options) {
-            var self = this;
+            var _this2 = this;
 
             if (this.status === "on") this.close();
             setBody.call(this, options ? options.content || "" : "");
 
-            var _cfg = _lodash2.default.merge({}, this.config, options),
+            var _cfg = _jqmin2.default.extend(true, this.config, options),
                 target = _cfg.target,
                 $target = (0, _jqmin2.default)(target),
                 maskId = 'ax-mask-' + this.instanceId,
@@ -192,9 +198,9 @@ var AX6UIMask = function (_AX6UICore) {
 
                 // 마스크의 타겟이 html body가 아닌경우 window resize 이벤트를 추적하여 엘리먼트 마스크의 CSS 속성 변경
 
-                (0, _jqmin2.default)(window).on("resize.ax5mask-" + this.instanceId, function () {
-                    this.align();
-                }.bind(this));
+                (0, _jqmin2.default)(window).on("resize.ax5mask-" + this.instanceId, function (e) {
+                    _this2.align();
+                });
             }
 
             if (typeof _cfg.zIndex !== "undefined") {
@@ -209,11 +215,11 @@ var AX6UIMask = function (_AX6UICore) {
             if (this.onClick) {
                 $mask.on("click", function (e) {
                     that = {
-                        self: self,
+                        self: _this2,
                         state: "open",
                         type: "click"
                     };
-                    self.onClick.call(that, that);
+                    _this2.onClick.call(that, that);
                 });
             }
 

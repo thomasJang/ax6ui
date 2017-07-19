@@ -49,7 +49,7 @@ let wheelEnm = win && /Firefox/i.test(navigator.userAgent) ? "DOMMouseScroll" : 
 
 let errorMsg = {};
 
-function urlUtil(url, urls) {
+const urlUtil = function (url, urls) {
     url = {
         href: win.location.href,
         param: win.location.search,
@@ -68,9 +68,9 @@ function urlUtil(url, urls) {
     url.baseUrl = url.href.substr(0, url.href.indexOf("?")).replace(url.pathname, "");
 
     return url;
-}
+};
 
-function getError(className, errorCode, methodName) {
+const getError = function (className, errorCode, methodName) {
     if (errorMsg && errorMsg[className]) {
         return {
             className: className,
@@ -81,11 +81,11 @@ function getError(className, errorCode, methodName) {
     } else {
         return { className: className, errorCode: errorCode, methodName: methodName };
     }
-}
+};
 
-let supportTouch = win ? 'ontouchstart' in win || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 : false;
+const supportTouch = win ? 'ontouchstart' in win || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 : false;
 
-let supportFileApi = win ? win.FileReader && win.File && win.FileList && win.Blob : false;
+const supportFileApi = win ? win.FileReader && win.File && win.FileList && win.Blob : false;
 
 /**
  * @module AX6Info

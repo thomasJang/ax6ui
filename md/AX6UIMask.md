@@ -81,10 +81,20 @@
 ### aX6UIMask.open(options) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
 **Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
 
-| Param |
-| --- |
-| options | 
+| Param | Type | Description |
+| --- | --- | --- |
+| options |  |  |
+| [options.zIndex] | <code>number</code> | 마스크 엘리먼트의 z-index 값을 정합니다 |
 
+**Example**  
+```js
+let myMask = new Mask();
+myMask.setConfig({
+ zIndex: 1000
+});
+
+myMask.open();
+```
 <a name="AX6UIMask+close"></a>
 
 ### aX6UIMask.close(delay) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>

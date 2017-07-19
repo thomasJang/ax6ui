@@ -1,7 +1,5 @@
 import info from "./AX6Info";
 
-
-
 /**
  * @module AX6Util
  */

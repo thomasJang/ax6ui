@@ -26,11 +26,12 @@ myMask.setConfig({
 });
 
 myMask.onClick = function () {
+    console.log(this);
     myMask.fadeOut();
 };
 
-$body.on("click", '[data-btn]', function () {
-    let btn = this.getAttribute("data-btn");
+$body.on("click", '[data-btn]', (e) => {
+    let btn = e.currentTarget.getAttribute("data-btn");
     let processor = {
         mask(){
             myMask.open();

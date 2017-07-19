@@ -106,3 +106,7 @@ gulp.task('ES6 publish patch', shell.task([
 gulp.task('ES6 publish minor', shell.task([
     'cd dist/ES6 && npm version minor -m "version patch" && npm publish',
 ]));
+
+gulp.task('samples npm start', shell.task([
+    'cd samples && npm start',
+]));

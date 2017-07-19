@@ -1,8 +1,9 @@
 # ax6ui
 ES6 Javascript UI Component
+ax6ui는 ES6표준 문법 사용이 가능한 JSUI 컴포넌트 입니다. 
+모든 샘플소스 제작환경은 webpack을 이용하였습니다. 제대로된 테스트를 위해서는 webpack이 필요합니다.
 
 # Install
-
 ```
 npm install ax6ui -S
 ```

@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/ax6ui/ax6ui#readme",
   "dependencies": {
-    "jqmin": "^0.1.0",
-    "lodash": "^4.17.4"
+    "jqmin": "^0.1.0"
   }
 }

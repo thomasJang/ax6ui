@@ -2,11 +2,9 @@ const win = window;
 const doc = (win) ? win.document : null;
 const docElem = (win) ? win.document.documentElement : null;
 
-
 const onerror = function () {
     console.error(arguments);
 };
-
 
 let eventKeys = {
     BACKSPACE: 8, TAB: 9,

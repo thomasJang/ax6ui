@@ -1168,7 +1168,7 @@ function color(_hexColor) {
     }
 
     function convertTo255(n) {
-        return AX6Util.number(Math.min(255, Math.max(n, 0)), { 'round': 2 });
+        return number(Math.min(255, Math.max(n, 0)), { 'round': 2 });
     }
 
     function convertToHex(n) {

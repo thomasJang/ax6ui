@@ -94,9 +94,10 @@
             box-sizing: border-box;
             table-layout: fixed;
             border-collapse: collapse;
-            border-spacing: 0px;
-            border: 0px none;
+            border-spacing: 0;
+            border: 0 none;
             thead {
+                border: 0 none;
                 td, th {
                     box-sizing: border-box;
                     vertical-align: middle;
@@ -119,6 +120,7 @@
                 }
             }
             tbody {
+                border: 0 none;
                 td, th {
                     box-sizing: border-box;
                     vertical-align: middle;

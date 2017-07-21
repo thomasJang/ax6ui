@@ -3,6 +3,7 @@ import AX6UICore from "./AX6UICore";
 import info from "./AX6Info";
 import U from "./AX6Util";
 import mustache from "./AX6Mustache";
+import "./AX6UICalendar/index.scss";
 
 const frameTmpl = function (columnKeys) {
     return `
@@ -116,7 +117,6 @@ const yearTmpl = function (columnKeys) {
 </table>
 `;
 };
-
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
         opts.onStateChanged.call(that, that);
@@ -837,7 +837,7 @@ class AX6UICalendar extends AX6UICore {
                 map = {};
                 if (!U.isArray(v)) return map;
                 this.selection = v = v.splice(0, count);
-                v.forEach(function (n) {
+                v.forEach(n => {
                     if (U.isDate(n)) n = U.date(n, { 'return': this.config.dateFormat });
                     map[n] = true;
                 });
@@ -849,7 +849,7 @@ class AX6UICalendar extends AX6UICore {
 
         if (this.config.selection = selection) {
             if (U.isArray(selection)) {
-                result = processor.arr(selection, {}, this.selectableCount);
+                result = processor.arr.call(this, selection, {}, this.selectableCount);
             } else {
                 return this;
             }
@@ -877,7 +877,7 @@ class AX6UICalendar extends AX6UICore {
             'arr': function (v, map) {
                 map = {};
                 if (!U.isArray(v)) return map;
-                v.forEach(function (n) {
+                v.forEach(n => {
                     if (U.isDate(n)) n = U.date(n, { 'return': this.config.dateFormat });
                     map[n] = true;
                 });
@@ -897,7 +897,7 @@ class AX6UICalendar extends AX6UICore {
                 if (U.isArray(v)) return map;
                 if (!v.range) return map;
 
-                v.range.forEach(function (n) {
+                v.range.forEach(n => {
                     if (U.isDateFormat(n.from) && U.isDateFormat(n.to)) {
                         for (let d = U.date(n.from); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
                             map[U.date(d, { "return": this.config.dateFormat })] = true;
@@ -915,16 +915,16 @@ class AX6UICalendar extends AX6UICore {
 
         if (this.config.selectable = selectable) {
             if (U.isArray(selectable)) {
-                result = processor.arr(selectable);
+                result = processor.arr.call(this, selectable);
             } else {
                 for (key in processor) {
                     if (selectable[key]) {
-                        result = processor[key](selectable);
+                        result = processor[key].call(this, selectable);
                         break;
                     }
                 }
                 if (Object.keys(result).length === 0) {
-                    result = processor.obj(selectable);
+                    result = processor.obj.call(this, selectable);
                 }
             }
         }
@@ -957,7 +957,7 @@ class AX6UICalendar extends AX6UICore {
                 if (U.isArray(v)) return map;
                 if (!v.range) return map;
 
-                v.range.forEach(function (n) {
+                v.range.forEach(n => {
                     if (U.isDateFormat(n.from) && U.isDateFormat(n.to)) {
                         for (let d = U.date(n.from); d <= U.date(n.to); d.setDate(d.getDate() + 1)) {
                             map[U.date(d, { "return": this.config.dateFormat })] = { theme: n.theme, label: n.label };
@@ -977,12 +977,12 @@ class AX6UICalendar extends AX6UICore {
         if (this.config.marker = marker) {
             for (key in processor) {
                 if (marker[key]) {
-                    result = processor[key](marker);
+                    result = processor[key].call(this, marker);
                     break;
                 }
             }
             if (Object.keys(result).length === 0) {
-                result = processor.obj(marker);
+                result = processor.obj.call(this, marker);
             }
         }
 
@@ -1027,7 +1027,7 @@ class AX6UICalendar extends AX6UICore {
         }
 
         if (this.config.period = period) {
-            result = processor.range(period);
+            result = processor.range.call(this, period);
         }
 
         this.periodMap = result;

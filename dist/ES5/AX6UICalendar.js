@@ -26,6 +26,8 @@ var _AX6Mustache = require("./AX6Mustache");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
+require("./AX6UICalendar/index.scss");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46,7 +48,6 @@ var monthTmpl = function monthTmpl(columnKeys) {
 var yearTmpl = function yearTmpl(columnKeys) {
     return "\n<table data-calendar-table=\"year\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;\">\n    <thead>\n        <tr>\n            <td class=\"calendar-col-0\" colspan=\"4\" style=\"height: {{colHeadHeight}}\">\n            {{colHeadLabel}}\n            </td>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            {{#list}}    \n            {{#isStartOfRow}}\n            {{^@first}}\n        </tr>\n        <tr>\n            {{/@first}}\n            {{/isStartOfRow}}\n            <td class=\"calendar-col-{{col}}\" style=\"{{itemStyles}}\">\n                <a class=\"calendar-item-year {{addClass}}\" data-calendar-item-year=\"{{thisYear}}\">\n                    <span class=\"addon\"></span>\n                    {{thisYearLabel}}\n                    <span class=\"lunar\"></span>\n                </a>\n            </td>\n            {{/list}}\n        </tr>\n    </tbody>\n</table>\n";
 };
-
 var onStateChanged = function onStateChanged(opts, that) {
     if (opts && opts.onStateChanged) {
         opts.onStateChanged.call(that, that);
@@ -802,11 +803,13 @@ var AX6UICalendar = function (_AX6UICore) {
             var result = {};
             var processor = {
                 'arr': function arr(v, map, count) {
+                    var _this9 = this;
+
                     map = {};
                     if (!_AX6Util2.default.isArray(v)) return map;
                     this.selection = v = v.splice(0, count);
                     v.forEach(function (n) {
-                        if (_AX6Util2.default.isDate(n)) n = _AX6Util2.default.date(n, { 'return': this.config.dateFormat });
+                        if (_AX6Util2.default.isDate(n)) n = _AX6Util2.default.date(n, { 'return': _this9.config.dateFormat });
                         map[n] = true;
                     });
                     return map;
@@ -817,7 +820,7 @@ var AX6UICalendar = function (_AX6UICore) {
 
             if (this.config.selection = selection) {
                 if (_AX6Util2.default.isArray(selection)) {
-                    result = processor.arr(selection, {}, this.selectableCount);
+                    result = processor.arr.call(this, selection, {}, this.selectableCount);
                 } else {
                     return this;
                 }
@@ -845,10 +848,12 @@ var AX6UICalendar = function (_AX6UICore) {
                 result = {};
             var processor = {
                 'arr': function arr(v, map) {
+                    var _this10 = this;
+
                     map = {};
                     if (!_AX6Util2.default.isArray(v)) return map;
                     v.forEach(function (n) {
-                        if (_AX6Util2.default.isDate(n)) n = _AX6Util2.default.date(n, { 'return': this.config.dateFormat });
+                        if (_AX6Util2.default.isDate(n)) n = _AX6Util2.default.date(n, { 'return': _this10.config.dateFormat });
                         map[n] = true;
                     });
                     return map;
@@ -863,6 +868,8 @@ var AX6UICalendar = function (_AX6UICore) {
                     return map;
                 },
                 'range': function range(v, map) {
+                    var _this11 = this;
+
                     map = {};
                     if (_AX6Util2.default.isArray(v)) return map;
                     if (!v.range) return map;
@@ -870,7 +877,7 @@ var AX6UICalendar = function (_AX6UICore) {
                     v.range.forEach(function (n) {
                         if (_AX6Util2.default.isDateFormat(n.from) && _AX6Util2.default.isDateFormat(n.to)) {
                             for (var d = _AX6Util2.default.date(n.from); d <= _AX6Util2.default.date(n.to); d.setDate(d.getDate() + 1)) {
-                                map[_AX6Util2.default.date(d, { "return": this.config.dateFormat })] = true;
+                                map[_AX6Util2.default.date(d, { "return": _this11.config.dateFormat })] = true;
                             }
                         } else {
                             for (var i = n.from; i <= n.to; i++) {
@@ -885,16 +892,16 @@ var AX6UICalendar = function (_AX6UICore) {
 
             if (this.config.selectable = selectable) {
                 if (_AX6Util2.default.isArray(selectable)) {
-                    result = processor.arr(selectable);
+                    result = processor.arr.call(this, selectable);
                 } else {
                     for (key in processor) {
                         if (selectable[key]) {
-                            result = processor[key](selectable);
+                            result = processor[key].call(this, selectable);
                             break;
                         }
                     }
                     if (Object.keys(result).length === 0) {
-                        result = processor.obj(selectable);
+                        result = processor.obj.call(this, selectable);
                     }
                 }
             }
@@ -924,6 +931,8 @@ var AX6UICalendar = function (_AX6UICore) {
                     return map;
                 },
                 'range': function range(v, map) {
+                    var _this12 = this;
+
                     map = {};
                     if (_AX6Util2.default.isArray(v)) return map;
                     if (!v.range) return map;
@@ -931,7 +940,7 @@ var AX6UICalendar = function (_AX6UICore) {
                     v.range.forEach(function (n) {
                         if (_AX6Util2.default.isDateFormat(n.from) && _AX6Util2.default.isDateFormat(n.to)) {
                             for (var d = _AX6Util2.default.date(n.from); d <= _AX6Util2.default.date(n.to); d.setDate(d.getDate() + 1)) {
-                                map[_AX6Util2.default.date(d, { "return": this.config.dateFormat })] = { theme: n.theme, label: n.label };
+                                map[_AX6Util2.default.date(d, { "return": _this12.config.dateFormat })] = { theme: n.theme, label: n.label };
                             }
                         } else {
                             for (var i = n.from; i <= n.to; i++) {
@@ -948,12 +957,12 @@ var AX6UICalendar = function (_AX6UICore) {
             if (this.config.marker = marker) {
                 for (key in processor) {
                     if (marker[key]) {
-                        result = processor[key](marker);
+                        result = processor[key].call(this, marker);
                         break;
                     }
                 }
                 if (Object.keys(result).length === 0) {
-                    result = processor.obj(marker);
+                    result = processor.obj.call(this, marker);
                 }
             }
 
@@ -970,7 +979,7 @@ var AX6UICalendar = function (_AX6UICore) {
                 result = {};
             var processor = {
                 'range': function range(v, map) {
-                    var _this9 = this;
+                    var _this13 = this;
 
                     map = {};
                     if (_AX6Util2.default.isArray(v)) return map;
@@ -980,11 +989,11 @@ var AX6UICalendar = function (_AX6UICore) {
                         if (_AX6Util2.default.isDateFormat(n.from) && _AX6Util2.default.isDateFormat(n.to)) {
                             for (var d = new Date(_AX6Util2.default.date(n.from)); d <= _AX6Util2.default.date(n.to); d.setDate(d.getDate() + 1)) {
                                 if (d.getTime() == _AX6Util2.default.date(n.from).getTime()) {
-                                    map[_AX6Util2.default.date(d, { "return": _this9.config.dateFormat })] = { theme: n.theme || _this9.config.defaultPeriodTheme, label: n.fromLabel };
+                                    map[_AX6Util2.default.date(d, { "return": _this13.config.dateFormat })] = { theme: n.theme || _this13.config.defaultPeriodTheme, label: n.fromLabel };
                                 } else if (d.getTime() == _AX6Util2.default.date(n.to).getTime()) {
-                                    map[_AX6Util2.default.date(d, { "return": _this9.config.dateFormat })] = { theme: n.theme || _this9.config.defaultPeriodTheme, label: n.toLabel };
+                                    map[_AX6Util2.default.date(d, { "return": _this13.config.dateFormat })] = { theme: n.theme || _this13.config.defaultPeriodTheme, label: n.toLabel };
                                 } else {
-                                    map[_AX6Util2.default.date(d, { "return": _this9.config.dateFormat })] = { theme: n.theme || _this9.config.defaultPeriodTheme };
+                                    map[_AX6Util2.default.date(d, { "return": _this13.config.dateFormat })] = { theme: n.theme || _this13.config.defaultPeriodTheme };
                                 }
                             }
                         }
@@ -1001,7 +1010,7 @@ var AX6UICalendar = function (_AX6UICore) {
             }
 
             if (this.config.period = period) {
-                result = processor.range(period);
+                result = processor.range.call(this, period);
             }
 
             this.periodMap = result;

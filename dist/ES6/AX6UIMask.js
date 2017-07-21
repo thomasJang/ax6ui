@@ -41,7 +41,7 @@ class AX6UIMask extends AX6UICore {
      * @param config
      * @param [config.theme]
      * @param [config.target]
-     * @param [config.anmateTime]
+     * @param [config.animateTime]
      * @param [config.onStateChanged]
      * @param [config.onClick]
      * @param [config.content]
@@ -54,7 +54,7 @@ class AX6UIMask extends AX6UICore {
          * @param config
          * @param [config.theme]
          * @param [config.target=document.body]
-         * @param [config.anmateTime=250]
+         * @param [config.animateTime=250]
          * @param [config.onStateChanged]
          * @param [config.onClick]
          * @param [config.content]
@@ -89,7 +89,7 @@ class AX6UIMask extends AX6UICore {
      * @param config
      * @param [config.theme]
      * @param [config.target]
-     * @param [config.anmateTime]
+     * @param [config.animateTime]
      * @param [config.onStateChanged]
      * @param [config.onClick]
      * @param [config.content]

@@ -18,7 +18,7 @@
 | config | 
 | [config.theme] | 
 | [config.target] | 
-| [config.anmateTime] | 
+| [config.animateTime] | 
 | [config.onStateChanged] | 
 | [config.onClick] | 
 | [config.content] | 
@@ -33,7 +33,7 @@
 | config | 
 | [config.theme] | 
 | [config.target] | 
-| [config.anmateTime] | 
+| [config.animateTime] | 
 | [config.onStateChanged] | 
 | [config.onClick] | 
 | [config.content] | 

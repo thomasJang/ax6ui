@@ -680,7 +680,7 @@ class AX6UICalendar extends AX6UICore {
      * @param config
      * @param [config.theme]
      * @param [config.target]
-     * @param [config.anmateTime]
+     * @param [config.animateTime]
      * @param [config.onStateChanged]
      * @param [config.onClick]
      * @param [config.content]
@@ -735,7 +735,7 @@ class AX6UICalendar extends AX6UICore {
      * @param config
      * @param [config.theme]
      * @param [config.target]
-     * @param [config.anmateTime]
+     * @param [config.animateTime]
      * @param [config.onStateChanged]
      * @param [config.onClick]
      * @param [config.content]

@@ -1,19 +1,20 @@
 import $ from "jqmin";
 import U from "../../src/AX6Util";
 import Calendar from "../../src/AX6UICalendar";
-import "../../src/AX6UICalendar/index.scss";
+import "./custom-materialize.scss";
 
 const $body = $("#sample-body");
 let el = `
-<div id="calendar-target-0" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 10px;" class="card"></div>
-<div id="calendar-target-1" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 10px;" class="card"></div>
-<div id="calendar-target-2" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 10px;" class="card"></div>
+<div id="calendar-target-0" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 20px;" class="card"></div>
+<div id="calendar-target-1" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 20px;" class="card"></div>
+<div id="calendar-target-2" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 20px;" class="card"></div>
 `;
 $body.append(el);
 
 
 /////~~~~~~~~~~~~~~~~~~
 let today = new Date();
+
 let myCalendar_0 = new Calendar({
     control: {
         left: '<i class="material-icons">keyboard_arrow_left</i>',

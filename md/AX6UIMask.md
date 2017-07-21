@@ -25,7 +25,7 @@
 | config | 
 | [config.theme] | 
 | [config.target] | 
-| [config.anmateTime] | 
+| [config.animateTime] | 
 | [config.onStateChanged] | 
 | [config.onClick] | 
 | [config.content] | 
@@ -40,7 +40,7 @@
 | config |  | 
 | [config.theme] |  | 
 | [config.target] | <code>document.body</code> | 
-| [config.anmateTime] | <code>250</code> | 
+| [config.animateTime] | <code>250</code> | 
 | [config.onStateChanged] |  | 
 | [config.onClick] |  | 
 | [config.content] |  | 
@@ -67,7 +67,7 @@
 | config | 
 | [config.theme] | 
 | [config.target] | 
-| [config.anmateTime] | 
+| [config.animateTime] | 
 | [config.onStateChanged] | 
 | [config.onClick] | 
 | [config.content] | 

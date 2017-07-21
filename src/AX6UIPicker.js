@@ -3,6 +3,9 @@ import AX6UICore from "./AX6UICore";
 import info from "./AX6Info";
 import U from "./AX6Util";
 import mustache from "./AX6Mustache";
+import Formatter from "./AX6UIFormatter";
+import Calendar from "./AX6UICalendar";
+import "./AX6UIPicker/index.scss";
 
 const pickerTmpl = function (columnKeys) {
     return `
@@ -16,7 +19,7 @@ const pickerTmpl = function (columnKeys) {
             <div class="ax-picker-buttons">
             {{#btns}}
                 {{#@each}}
-                <button data-picker-btn="{{@key}}" class="btn btn-default {{@value.theme}}">{{@value.label}}</button>
+                <button data-picker-btn="{{@key}}" class="{{@value.theme}}">{{@value.label}}</button>
                 {{/@each}}
             {{/btns}}
             </div>
@@ -36,8 +39,7 @@ const onStateChanged = function (item, that) {
     return true;
 };
 const bindPickerTarget = (function () {
-
-    var pickerEvent = {
+    const pickerEvent = {
         'focus': function (queIdx, e) {
             this.open(queIdx);
         },
@@ -45,8 +47,7 @@ const bindPickerTarget = (function () {
             this.open(queIdx);
         }
     };
-
-    var pickerType = {
+    const pickerType = {
         '@fn': function (queIdx, _input) {
             let item = this.queue[queIdx],
                 inputLength = _input.length,
@@ -135,7 +136,7 @@ const bindPickerTarget = (function () {
                     content: {width: contentWidth, margin: contentMargin},
                     inputLength: inputLength || 1
                 },
-                $colorPreview = item.$target.find('[data-ax5picker-color="preview"]');
+                $colorPreview = item.$target.find('[data-ax6picker-color="preview"]');
 
             if ($colorPreview.get(0)) {
                 $colorPreview.css({"background-color": "#" + U.color(_input.val() || "#000000").getHexValue()});
@@ -165,7 +166,7 @@ const bindPickerTarget = (function () {
             input;
 
         if (!item.content) {
-            console.log(ax5.info.getError("ax5picker", "501", "bind"));
+            console.log(info.getError("ax6picker", "501", "bind"));
             return this;
         }
 
@@ -185,18 +186,18 @@ const bindPickerTarget = (function () {
         }
 
         input
-            .unbind('focus.ax5picker')
-            .unbind('click.ax5picker')
-            .bind('focus.ax5picker', pickerEvent.focus.bind(this, queIdx))
-            .bind('click.ax5picker', pickerEvent.click.bind(this, queIdx));
+            .off('focus.ax6picker')
+            .off('click.ax6picker')
+            .on('focus.ax6picker', pickerEvent.focus.bind(this, queIdx))
+            .on('click.ax6picker', pickerEvent.click.bind(this, queIdx));
 
         item.$target
             .find('.input-group-addon')
-            .unbind('click.ax5picker')
-            .bind('click.ax5picker', pickerEvent.click.bind(this, queIdx));
+            .off('click.ax6picker')
+            .on('click.ax6picker', pickerEvent.click.bind(this, queIdx));
 
-        if (item.content.formatter && ax5.ui.formatter) {
-            input.ax5formatter(item.content.formatter);
+        if (item.content.formatter) {
+            this.formatter.bind(jQuery.extend({}, item.content.formatter, {target: input}));
         }
 
         input = null;
@@ -210,8 +211,8 @@ const alignPicker = function (append) {
     if (!this.activePicker) return this;
 
     let _alignPicker = function (item) {
-        var $window = jQuery(window), $body = jQuery(document.body);
-        var pos = {}, positionMargin = 12,
+        let $window = jQuery(window), $body = jQuery(document.body);
+        let pos = {}, positionMargin = 12,
             dim = {}, pickerDim = {},
             pickerDirection;
 
@@ -346,7 +347,7 @@ const onBtnClick = function (e, target) {
     }
 };
 const onBodyKeyup = function (e) {
-    if (e.keyCode == ax5.info.eventKeys.ESC) {
+    if (e.keyCode == info.eventKeys.ESC) {
         this.close();
     }
 };
@@ -355,13 +356,14 @@ const getQueIdx = function (boundID) {
         boundID = jQuery(boundID).data("data-axpicker-id");
     }
     if (!U.isString(boundID)) {
-        console.log(ax5.info.getError("ax5picker", "402", "getQueIdx"));
+        console.log(info.getError("ax6picker", "402", "getQueIdx"));
         return;
     }
     return U.search(this.queue, function () {
         return this.id == boundID;
     });
 };
+
 /**
  * @class
  */
@@ -371,7 +373,7 @@ class AX6UIPicker extends AX6UICore {
      * @param config
      * @param [config.theme]
      * @param [config.target]
-     * @param [config.anmateTime]
+     * @param [config.animateTime]
      * @param [config.onStateChanged]
      * @param [config.onClick]
      * @param [config.content]
@@ -391,14 +393,15 @@ class AX6UIPicker extends AX6UICore {
             calendar: {
                 multipleSelect: false,
                 control: {
-                    left: ax5.def.picker.date_leftArrow || '&#x02190',
-                    yearTmpl: ax5.def.picker.date_yearTmpl || '%s',
-                    monthTmpl: ax5.def.picker.date_monthTmpl || '%s',
-                    right: ax5.def.picker.date_rightArrow || '&#x02192',
+                    left: '&#x02190',
+                    yearTmpl: '%s',
+                    monthTmpl: '%s',
+                    right: '&#x02192',
                     yearFirst: true
                 }
             },
-            palette: {}
+            palette: {},
+            formatter: {}
         };
         jQuery.extend(true, this.config, config);
 
@@ -417,7 +420,7 @@ class AX6UIPicker extends AX6UICore {
      * @param config
      * @param [config.theme]
      * @param [config.target]
-     * @param [config.anmateTime]
+     * @param [config.animateTime]
      * @param [config.onStateChanged]
      * @param [config.onClick]
      * @param [config.content]
@@ -437,6 +440,9 @@ class AX6UIPicker extends AX6UICore {
     initOnce(){
         if(this.initialized) return this;
         this.initialized = true;
+
+        // formatter 인스턴스
+        this.formatter = new Formatter();
     }
 
     bind(item){
@@ -444,19 +450,19 @@ class AX6UIPicker extends AX6UICore {
         item = jQuery.extend(true, pickerConfig, this.config, item);
 
         if (!item.target) {
-            console.log(info.getError("ax5picker", "401", "bind"));
+            console.log(info.getError("ax6picker", "401", "bind"));
             return this;
         }
         item.$target = jQuery(item.target);
 
         if (!item.$target.get(0)) {
-            console.log(info.getError("ax5picker", "401", "bind"));
+            console.log(info.getError("ax6picker", "401", "bind"));
             return this;
         }
 
         if (!item.id) item.id = item.$target.data("data-axpicker-id");
         if (!item.id) {
-            item.id = 'ax5-picker-' + AX6UICore.getInstanceId();
+            item.id = 'ax6-picker-' + AX6UICore.getInstanceId();
             item.$target.data("data-axpicker-id", item.id);
         }
         queIdx = U.search(this.queue, function () {
@@ -492,7 +498,7 @@ class AX6UIPicker extends AX6UICore {
                 if (_inputIndex == 0) {
                     if (values.length > 1 && values[1] !== "") {
                         // 값 검증
-                        diffDay = ax5.util.dday(values[1], {today: values[0]});
+                        diffDay = U.dday(values[1], {today: values[0]});
                         if (diffDay < 0) {
                             // 다음날짜 달력을 변경합니다.
                             nextInputValue = _val;
@@ -504,7 +510,7 @@ class AX6UIPicker extends AX6UICore {
                     }
 
                     if (nextInputValue) {
-                        _item.pickerCalendar[1].ax5uiInstance.setSelection([nextInputValue], false).changeMode("d", nextInputValue);
+                        _item.pickerCalendar[1].calendar.setSelection([nextInputValue], false).changeMode("d", nextInputValue);
                         this.setContentValue(_item.id, 1, nextInputValue);
                     }
 
@@ -514,7 +520,7 @@ class AX6UIPicker extends AX6UICore {
 
                     if (values.length > 1) {
                         // 값 검증
-                        diffDay = ax5.util.dday(values[1], {today: values[0]});
+                        diffDay = U.dday(values[1], {today: values[0]});
                         if (diffDay < 0) {
                             // 다음날짜 달력을 변경합니다.
                             prevInputValue = values[1];
@@ -522,7 +528,7 @@ class AX6UIPicker extends AX6UICore {
                     }
 
                     if (prevInputValue) {
-                        _item.pickerCalendar[0].ax5uiInstance.setSelection([prevInputValue], false).changeMode("d", prevInputValue);
+                        _item.pickerCalendar[0].calendar.setSelection([prevInputValue], false).changeMode("d", prevInputValue);
                         this.setContentValue(_item.id, 0, prevInputValue);
                     }
 
@@ -544,7 +550,7 @@ class AX6UIPicker extends AX6UICore {
             if (!item.disableChangeTrigger) {
                 _input.trigger("change");
             } else {
-                let $colorPreview = item.$target.find('[data-ax5picker-color="preview"]');
+                let $colorPreview = item.$target.find('[data-ax6picker-color="preview"]');
                 if ($colorPreview.get(0)) {
                     $colorPreview.css({"background-color": val});
                 }
@@ -605,6 +611,7 @@ class AX6UIPicker extends AX6UICore {
     }
 
     open(boundID, tryCount){
+        let self = this;
         const pickerContent = {
             '@fn': function (queIdx, callback) {
                 let item = this.queue[queIdx];
@@ -636,13 +643,13 @@ class AX6UIPicker extends AX6UICore {
                     // calendarConfig extend ~
                     let idx = this.getAttribute("data-calendar-target"),
                         dValue = input.get(idx).value,
-                        d = ax5.util.date(dValue),
+                        d = U.date(dValue),
                         dateConvert = {
                             "year"(_d) {
-                                return ax5.util.date(_d, {"return": "yyyy"})
+                                return U.date(_d, {"return": "yyyy"})
                             },
                             "month"(_d){
-                                return ax5.util.date(_d, {"return": "yyyy-MM"})
+                                return U.date(_d, {"return": "yyyy-MM"})
                             },
                             "day"(_d){
                                 return _d
@@ -662,7 +669,7 @@ class AX6UIPicker extends AX6UICore {
                     item.pickerCalendar.push({
                         itemId: item.id,
                         inputIndex: idx,
-                        ax5uiInstance: new ax5.ui.calendar(calendarConfig)
+                        calendar: new Calendar(calendarConfig)
                     });
                 });
 
@@ -681,12 +688,12 @@ class AX6UIPicker extends AX6UICore {
                 item.pickerContent.html(html.join(''));
 
                 // secure-num bind
-                item.pickerContent.find('[data-secure-num-target]').each(function () {
-                    var idx = this.getAttribute("data-secure-num-target"),
+                item.pickerContent.find('[data-secure-num-target]').each((elIdx, el) => {
+                    let idx = el.getAttribute("data-secure-num-target"),
                         po = [];
 
-                    var numArray = (function (a) {
-                        var j, x, i;
+                    let numArray = (function (a) {
+                        let j, x, i;
                         for (i = a.length; i; i -= 1) {
                             j = Math.floor(Math.random() * i);
                             x = a[i - 1];
@@ -696,29 +703,29 @@ class AX6UIPicker extends AX6UICore {
                         return a;
                     })([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
-                    var specialArray = [
+                    let specialArray = [
                         {label: "&#x02190", fn: "back"}, {label: "C", fn: "clear"}
                     ];
 
                     numArray.forEach(function (n) {
                         po.push('<div style="float:left;' + item.content.config.btnWrapStyle + '">');
-                        po.push('<button class="btn btn-default btn-' + item.content.config.btnTheme + '" '
+                        po.push('<button class="' + item.content.config.btnTheme + '" '
                             + 'style="' + item.content.config.btnStyle + '" data-secure-num-value="' + n + '">' + n + '</button>');
                         po.push('</div>');
                     });
                     specialArray.forEach(function (n) {
                         po.push('<div style="float:left;' + item.content.config.btnWrapStyle + '">');
-                        po.push('<button class="btn btn-default btn-' + item.content.config.specialBtnTheme + '" '
+                        po.push('<button class="' + item.content.config.specialBtnTheme + '" '
                             + 'style="' + item.content.config.btnStyle + '" data-secure-num-value="' + n.fn + '">' + n.label + '</button>');
                         po.push('</div>');
                     });
 
                     po.push('<div style="clear:both;"></div>');
 
-                    $(this).html(po.join('')).on("click", '[data-secure-num-value]', function () {
-                        var act = this.getAttribute("data-secure-num-value");
-                        var _input = (item.$target.get(0).tagName.toUpperCase() == "INPUT") ? item.$target : jQuery(item.$target.find('input[type]').get(idx));
-                        var val = _input.val();
+                    $(el).html(po.join('')).on("click", '[data-secure-num-value]', (e) => {
+                        let act = e.currentTarget.getAttribute("data-secure-num-value");
+                        let _input = (item.$target.get(0).tagName.toUpperCase() == "INPUT") ? item.$target : jQuery(item.$target.find('input[type]').get(idx));
+                        let val = _input.val();
 
                         if (act == "back") {
                             _input.val(val.substring(0, val.length - 1));
@@ -731,7 +738,7 @@ class AX6UIPicker extends AX6UICore {
                         }
 
                         onStateChanged.call(this, item, {
-                            self: self,
+                            self: this,
                             state: "changeValue",
                             item: item,
                             value: _input.val()
@@ -740,9 +747,9 @@ class AX6UIPicker extends AX6UICore {
                 });
             },
             'keyboard': function (queIdx) {
-                var item = this.queue[queIdx];
-                var html = [];
-                for (var i = 0; i < item.inputLength; i++) {
+                let item = this.queue[queIdx];
+                let html = [];
+                for (let i = 0; i < item.inputLength; i++) {
                     html.push('<div '
                         + 'style="width:' + U.cssNumber(item.content.width) + ';float:left;" '
                         + 'class="ax-picker-content-box" '
@@ -752,7 +759,7 @@ class AX6UIPicker extends AX6UICore {
                 html.push('<div style="clear:both;"></div>');
                 item.pickerContent.html(html.join(''));
 
-                var keyArray = [
+                let keyArray = [
                     [
                         {value: "`", shiftValue: "~"},
                         {value: "1", shiftValue: "!"},
@@ -797,8 +804,6 @@ class AX6UIPicker extends AX6UICore {
                         {value: "l", shiftValue: "L"},
                         {value: ";", shiftValue: ":"},
                         {value: "'", shiftValue: "\""}
-
-
                     ],
                     [
                         {label: "Shift", fn: "shift"},
@@ -815,17 +820,16 @@ class AX6UIPicker extends AX6UICore {
                         {label: "Close", fn: "close"}
                     ]
                 ];
-                var specialArray = [
+                let specialArray = [
                     {label: "&#x02190", fn: "back"}, {label: "C", fn: "clear"}
                 ];
-
-                var getKeyBoard = function (isShiftKey) {
-                    var po = [];
+                const getKeyBoard = function (isShiftKey) {
+                    let po = [];
                     keyArray.forEach(function (row) {
                         po.push('<div style="display: table;margin:0 auto;">');
                         row.forEach(function (n) {
 
-                            var keyValue, keyLabel, btnWrapStyle, btnTheme, btnStyle;
+                            let keyValue, keyLabel, btnWrapStyle, btnTheme, btnStyle;
                             if (n.fn) {
                                 keyValue = n.fn;
                                 keyLabel = n.label;
@@ -840,7 +844,7 @@ class AX6UIPicker extends AX6UICore {
                             }
 
                             po.push('<div style="display: table-cell;' + btnWrapStyle + '">');
-                            po.push('<button class="btn btn-default btn-' + btnTheme + '" '
+                            po.push('<button class="' + btnTheme + '" '
                                 + 'style="' + btnStyle + '" data-keyboard-value="' + keyValue + '">' + keyLabel + '</button>');
                             po.push('</div>');
                         });
@@ -999,7 +1003,7 @@ class AX6UIPicker extends AX6UICore {
                     html.push('<div '
                         + 'style="padding: 5px;width:' + U.cssNumber(item.content.width) + ';float:left;" '
                         + 'class="ax-picker-content-box" '
-                        + 'data-palette-target="' + i + '" data-ax5palette="ax5picker-' + item.id + '"></div>');
+                        + 'data-palette-target="' + i + '" data-ax5palette="ax6picker-' + item.id + '"></div>');
                     if (i < item.inputLength - 1) html.push('<div style="width:' + item.content.margin + 'px;float:left;height: 5px;"></div>');
                 }
                 html.push('<div style="clear:both;"></div>');
@@ -1007,7 +1011,6 @@ class AX6UIPicker extends AX6UICore {
 
                 // calendar bind
                 item.pickerPalette = [];
-
                 item.pickerContent.find('[data-palette-target]').each(function () {
                     // calendarConfig extend ~
                     let idx = this.getAttribute("data-palette-target"),
@@ -1026,7 +1029,7 @@ class AX6UIPicker extends AX6UICore {
                     item.pickerPalette.push({
                         itemId: item.id,
                         inputIndex: idx,
-                        ax5uiInstance: new ax5.ui.palette(paletteConfig)
+                        palette: new ax5.ui.palette(paletteConfig)
                     });
                 });
 
@@ -1053,7 +1056,7 @@ class AX6UIPicker extends AX6UICore {
             return this;
         }
 
-        this.activePicker = jQuery(PICKER.tmpl.get.call(this, "pickerTmpl", item));
+        this.activePicker = jQuery(mustache.render(pickerTmpl.call(this), item));
         this.activePickerArrow = this.activePicker.find(".ax-picker-arrow");
         this.activePickerQueueIndex = queIdx;
         item.pickerContent = this.activePicker.find('[data-picker-els="content"]');
@@ -1078,22 +1081,20 @@ class AX6UIPicker extends AX6UICore {
 
         alignPicker.call(this, "append");
 
-        jQuery(window).on("resize.ax5picker", (function () {
-            alignPicker.call(this);
-        }).bind(this));
-
-        // bind key event
-        jQuery(window).on("keyup.ax5picker", (function (e) {
-            e = e || window.event;
-            onBodyKeyup.call(this, e);
-            U.stopEvent(e);
-        }).bind(this));
-
-        jQuery(window).on("click.ax5picker", (function (e) {
-            e = e || window.event;
-            onBodyClick.call(this, e);
-            U.stopEvent(e);
-        }).bind(this));
+        jQuery(window)
+            .on("resize.ax6picker", (e) => {
+                alignPicker.call(this);
+            })
+            .on("keyup.ax6picker", (e) => {
+                e = e || window.event;
+                onBodyKeyup.call(this, e);
+                U.stopEvent(e);
+            })
+            .on("click.ax6picker", (e) => {
+                e = e || window.event;
+                onBodyClick.call(this, e);
+                U.stopEvent(e);
+            });
 
         onStateChanged.call(this, item, {
             self: this,
@@ -1111,9 +1112,9 @@ class AX6UIPicker extends AX6UICore {
         item = this.queue[this.activePickerQueueIndex];
 
         this.activePicker.addClass("destroy");
-        jQuery(window).off("resize.ax5picker");
-        jQuery(window).off("click.ax5picker");
-        jQuery(window).off("keyup.ax5picker");
+        jQuery(window).off("resize.ax6picker");
+        jQuery(window).off("click.ax6picker");
+        jQuery(window).off("keyup.ax6picker");
 
         this.closeTimer = setTimeout((function () {
             if (this.activePicker) this.activePicker.remove();

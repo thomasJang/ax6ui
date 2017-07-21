@@ -1,18 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+//const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const entry = {
     index: './src/index.js',
     mask: './src/mask.js',
     formatter: './src/formatter.js',
-    calendar: './src/calendar.js'
+    calendar: './src/calendar.js',
+    picker: './src/picker.js',
+    palette: './src/palette.js'
 };
 
 let plugins = [
-    new CleanWebpackPlugin(['dist']),
-    new webpack.HotModuleReplacementPlugin()
+    //new CleanWebpackPlugin(['dist']),
+    //new webpack.HotModuleReplacementPlugin()
 ];
 
 let menu = [];
@@ -35,6 +37,8 @@ for (let k in entry) {
     plugins.push(new HtmlWebpackPlugin(obj));
 }
 
+
+webpack.logLevel = 'NONE';
 
 // module.exports
 module.exports = {

@@ -34,6 +34,10 @@ var _AX6UICalendar = require("./AX6UICalendar");
 
 var _AX6UICalendar2 = _interopRequireDefault(_AX6UICalendar);
 
+var _AX6UIPalette = require("./AX6UIPalette");
+
+var _AX6UIPalette2 = _interopRequireDefault(_AX6UIPalette);
+
 require("./AX6UIPicker/index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -280,7 +284,7 @@ var alignPicker = function alignPicker(append) {
             return css;
         }();
 
-        (function () {
+        {
             if (pickerDirection == "top" || pickerDirection == "bottom") {
                 if (positionCSS.left < 0) {
                     positionCSS.left = positionMargin;
@@ -290,7 +294,7 @@ var alignPicker = function alignPicker(append) {
                     this.activePickerArrow.css({ left: pos.left + dim.width / 2 - positionCSS.left });
                 }
             }
-        }).call(this);
+        }
 
         this.activePicker.css(positionCSS);
     };
@@ -389,6 +393,25 @@ var AX6UIPicker = function (_AX6UICore) {
     function AX6UIPicker(config) {
         _classCallCheck(this, AX6UIPicker);
 
+        /**
+         * @member {JSON}
+         * @param config
+         * @param [config.theme=default]
+         * @param config.target
+         * @param [config.animateTime=100]
+         * @param [config.calendar]
+         * @param [config.calendar.multipleSelect=false]
+         * @param [config.calendar.control]
+         * @param [config.calendar.control.left='&#x02190']
+         * @param [config.calendar.control.yearTmpl='%s']
+         * @param [config.calendar.control.monthTmpl='%s']
+         * @param [config.calendar.control.right='&#x02192']
+         * @param [config.calendar.control.yearFirst=true]
+         * @param [config.palette={}]
+         * @param [config.formatter={}]
+         * @param [config.onStateChanged]
+         * @param [config.onClick]
+         */
         var _this = _possibleConstructorReturn(this, (AX6UIPicker.__proto__ || Object.getPrototypeOf(AX6UIPicker)).call(this));
 
         _this.config = {
@@ -416,10 +439,25 @@ var AX6UIPicker = function (_AX6UICore) {
         _jqmin2.default.extend(true, _this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * @member {Array}
+         */
         _this.queue = [];
+        /**
+         * @member {Object}
+         */
         _this.activePicker = null;
+        /**
+         * @member {Number}
+         */
         _this.activePickerQueueIndex = -1;
+        /**
+         * @member {Object}
+         */
         _this.openTimer = null;
+        /**
+         * @member {Object}
+         */
         _this.closeTimer = null;
 
         _this.init();
@@ -462,6 +500,48 @@ var AX6UIPicker = function (_AX6UICore) {
             // formatter 인스턴스
             this.formatter = new _AX6UIFormatter2.default();
         }
+
+        /**
+         * @method
+         * @param item
+         * @param {Element} item.target
+         * @param {String} item.direction - top|left|right|bottom|auto
+         * @param {Number} item.contentWidth
+         * @param {Boolean} item.disableChangeTrigger
+         * @param {Function} item.onStateChanged
+         * @param {Object} item.btns
+         * @param {Object} item.content
+         * @param {Number} item.content.width
+         * @param {Number} item.content.margin
+         * @param {String} item.content.type
+         * @param {Object} item.content.config - binded UI config
+         * @param {Object} item.content.formatter
+         * @param {String} item.content.formatter.pattern
+         * @return {AX6UIPicker}
+         * @example
+         * ```js
+         * import $ from "jqmin";
+         * import Picker from "../../src/AX6UIPicker";
+         *
+         * let picker = new Picker();
+         * picker.bind({
+         *     target: $("#color-0"),
+         *     direction: "auto",
+         *     content: {
+         *         width: 250,
+         *         margin: 10,
+         *         type: 'color',
+         *         config: {
+         *
+         *         }
+         *     },
+         *     onStateChanged: function () {
+         *
+         *     }
+         * });
+         * ```
+         */
+
     }, {
         key: "bind",
         value: function bind(item) {
@@ -501,6 +581,16 @@ var AX6UIPicker = function (_AX6UICore) {
             queIdx = null;
             return this;
         }
+
+        /**
+         * @method
+         * @param boundID
+         * @param inputIndex
+         * @param val
+         * @param _option
+         * @return {AX6UIPicker}
+         */
+
     }, {
         key: "setContentValue",
         value: function setContentValue(boundID, inputIndex, val, _option) {
@@ -612,6 +702,14 @@ var AX6UIPicker = function (_AX6UICore) {
             val = null;
             return this;
         }
+
+        /**
+         * @method
+         * @param boundID
+         * @param inputIndex
+         * @return {*}
+         */
+
     }, {
         key: "getContentValue",
         value: function getContentValue(boundID, inputIndex) {
@@ -629,6 +727,14 @@ var AX6UIPicker = function (_AX6UICore) {
             inputIndex = null;
             return this;
         }
+
+        /**
+         * @method
+         * @param boundID
+         * @param tryCount
+         * @return {AX6UIPicker}
+         */
+
     }, {
         key: "open",
         value: function open(boundID, tryCount) {
@@ -961,7 +1067,7 @@ var AX6UIPicker = function (_AX6UICore) {
                         item.pickerPalette.push({
                             itemId: item.id,
                             inputIndex: idx,
-                            palette: new ax5.ui.palette(paletteConfig)
+                            palette: new _AX6UIPalette2.default(paletteConfig)
                         });
                     });
                 }
@@ -1031,6 +1137,14 @@ var AX6UIPicker = function (_AX6UICore) {
 
             return this;
         }
+
+        /**
+         * @method
+         * @param item
+         * @param state
+         * @return {AX6UIPicker}
+         */
+
     }, {
         key: "close",
         value: function close(item, state) {

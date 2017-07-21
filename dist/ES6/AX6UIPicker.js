@@ -5,6 +5,7 @@ import U from "./AX6Util";
 import mustache from "./AX6Mustache";
 import Formatter from "./AX6UIFormatter";
 import Calendar from "./AX6UICalendar";
+import Palette from "./AX6UIPalette";
 import "./AX6UIPicker/index.scss";
 
 const pickerTmpl = function (columnKeys) {
@@ -239,8 +240,8 @@ const alignPicker = function (append) {
             this.activePicker.addClass("direction-" + pickerDirection);
         }
 
-        var positionCSS = function () {
-            var css = { left: 0, top: 0 };
+        let positionCSS = function () {
+            let css = { left: 0, top: 0 };
             switch (pickerDirection) {
                 case "top":
                     css.left = pos.left + dim.width / 2 - pickerDim.width / 2;
@@ -262,7 +263,7 @@ const alignPicker = function (append) {
             return css;
         }();
 
-        (function () {
+        {
             if (pickerDirection == "top" || pickerDirection == "bottom") {
                 if (positionCSS.left < 0) {
                     positionCSS.left = positionMargin;
@@ -272,7 +273,7 @@ const alignPicker = function (append) {
                     this.activePickerArrow.css({ left: pos.left + dim.width / 2 - positionCSS.left });
                 }
             }
-        }).call(this);
+        }
 
         this.activePicker.css(positionCSS);
     };
@@ -368,6 +369,25 @@ class AX6UIPicker extends AX6UICore {
     constructor(config) {
         super();
 
+        /**
+         * @member {JSON}
+         * @param config
+         * @param [config.theme=default]
+         * @param config.target
+         * @param [config.animateTime=100]
+         * @param [config.calendar]
+         * @param [config.calendar.multipleSelect=false]
+         * @param [config.calendar.control]
+         * @param [config.calendar.control.left='&#x02190']
+         * @param [config.calendar.control.yearTmpl='%s']
+         * @param [config.calendar.control.monthTmpl='%s']
+         * @param [config.calendar.control.right='&#x02192']
+         * @param [config.calendar.control.yearFirst=true]
+         * @param [config.palette={}]
+         * @param [config.formatter={}]
+         * @param [config.onStateChanged]
+         * @param [config.onClick]
+         */
         this.config = {
             clickEventName: "click", //(('ontouchstart' in document.documentElement) ? "touchend" : "click"),
             theme: 'default',
@@ -393,10 +413,25 @@ class AX6UIPicker extends AX6UICore {
         jQuery.extend(true, this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * @member {Array}
+         */
         this.queue = [];
+        /**
+         * @member {Object}
+         */
         this.activePicker = null;
+        /**
+         * @member {Number}
+         */
         this.activePickerQueueIndex = -1;
+        /**
+         * @member {Object}
+         */
         this.openTimer = null;
+        /**
+         * @member {Object}
+         */
         this.closeTimer = null;
 
         this.init();
@@ -432,6 +467,46 @@ class AX6UIPicker extends AX6UICore {
         this.formatter = new Formatter();
     }
 
+    /**
+     * @method
+     * @param item
+     * @param {Element} item.target
+     * @param {String} item.direction - top|left|right|bottom|auto
+     * @param {Number} item.contentWidth
+     * @param {Boolean} item.disableChangeTrigger
+     * @param {Function} item.onStateChanged
+     * @param {Object} item.btns
+     * @param {Object} item.content
+     * @param {Number} item.content.width
+     * @param {Number} item.content.margin
+     * @param {String} item.content.type
+     * @param {Object} item.content.config - binded UI config
+     * @param {Object} item.content.formatter
+     * @param {String} item.content.formatter.pattern
+     * @return {AX6UIPicker}
+     * @example
+     * ```js
+     * import $ from "jqmin";
+     * import Picker from "../../src/AX6UIPicker";
+     *
+     * let picker = new Picker();
+     * picker.bind({
+     *     target: $("#color-0"),
+     *     direction: "auto",
+     *     content: {
+     *         width: 250,
+     *         margin: 10,
+     *         type: 'color',
+     *         config: {
+     *
+     *         }
+     *     },
+     *     onStateChanged: function () {
+     *
+     *     }
+     * });
+     * ```
+     */
     bind(item) {
         let pickerConfig = {},
             queIdx;
@@ -470,6 +545,14 @@ class AX6UIPicker extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param boundID
+     * @param inputIndex
+     * @param val
+     * @param _option
+     * @return {AX6UIPicker}
+     */
     setContentValue(boundID, inputIndex, val, _option) {
         const multipleInputProcessor = {
             "date": function (_item, _inputIndex, _val) {
@@ -580,6 +663,12 @@ class AX6UIPicker extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param boundID
+     * @param inputIndex
+     * @return {*}
+     */
     getContentValue(boundID, inputIndex) {
         let queIdx = U.isNumber(boundID) ? boundID : getQueIdx.call(this, boundID),
             item = this.queue[queIdx],
@@ -596,6 +685,12 @@ class AX6UIPicker extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param boundID
+     * @param tryCount
+     * @return {AX6UIPicker}
+     */
     open(boundID, tryCount) {
         let self = this;
         const pickerContent = {
@@ -912,7 +1007,7 @@ class AX6UIPicker extends AX6UICore {
                     item.pickerPalette.push({
                         itemId: item.id,
                         inputIndex: idx,
-                        palette: new ax5.ui.palette(paletteConfig)
+                        palette: new Palette(paletteConfig)
                     });
                 });
             }
@@ -983,6 +1078,12 @@ class AX6UIPicker extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param item
+     * @param state
+     * @return {AX6UIPicker}
+     */
     close(item, state) {
         if (this.closeTimer) clearTimeout(this.closeTimer);
         if (!this.activePicker) return this;

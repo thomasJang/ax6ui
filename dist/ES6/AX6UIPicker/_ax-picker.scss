@@ -177,26 +177,22 @@
 @include keyframes(ax-picker) {
 	0% {
 		opacity: 0.0;
-		//@include transform(scale(0));
-		@include transform(translate(0, -10%));
+		@include transform(translate(0, 0%));
 	}
 	100% {
 		opacity: 1.0;
-		//@include transform(scale(1));
 		@include transform(translate(0, 0));
 	}
 }
 
 @include keyframes(ax-picker-destroy) {
 	from {
-		//@include transform(scale(1));
 		opacity: 1.0;
 		@include transform(translate(0, 0));
 	}
 	to {
-		//@include transform(scale(0.95));
 		opacity: 0.0;
-		@include transform(translate(0, -10%));
+		@include transform(scale(0.8) translate(0, -10%));
 	}
 }
 
@@ -206,7 +202,7 @@
 	@include ax-picker();
 	@include perspective(1000);
 	@include transform-style(preserve-3d);
-	@include animation(ax-picker $ax6picker-easing-time-open);
+	@include animation(ax-picker $ax6picker-easing-time-open $ease-in-cubic forwards);
 	@include transform(translateZ(0));
 	@include transform-origin(center top);
 	/* flip type
@@ -232,7 +228,7 @@
 		@include picker-variant($ax6picker-danger-text, $ax6picker-danger-border-color, $ax6picker-danger-heading-bg);
 	}
 	&.destroy {
-		@include animation(ax-picker-destroy $ax6picker-easing-time-close $ease-in-back forwards);
+		@include animation(ax-picker-destroy $ax6picker-easing-time-close $ease-out-cubic forwards);
 	}
 	&.direction-top {
 		@include transform-origin(center top);

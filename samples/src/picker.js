@@ -266,3 +266,20 @@ picker.bind({
         callback(html);
     }
 });
+
+// 팔렛트
+picker.bind({
+    target: $("#color-0"),
+    direction: "auto",
+    content: {
+        width: 250,
+        margin: 10,
+        type: 'color',
+        config: {
+
+        }
+    },
+    onStateChanged: function () {
+
+    }
+});

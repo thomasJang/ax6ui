@@ -339,6 +339,34 @@ class AX6UIPalette extends AX6UICore {
     constructor(config) {
         super();
 
+        /**
+         * @member {JSON}
+         * @param config
+         * @param config.target
+         * @param [config.theme=default]
+         * @param [config.clickEventName="click"]
+         * @param [config.animateTime=100]
+         * @param [config.colors]
+         * @param [config.colors.preview]
+         * @param [config.colors.preview.width=24]
+         * @param [config.colors.preview,height=24]
+         * @param [config.colors.preview.cellWidth=30]
+         * @param [config.colors.label]
+         * @param [config.colors.label.width=80]
+         * @param [config.colors.slider]
+         * @param [config.colors.slider.trackHeight=8]
+         * @param [config.colors.slider.amount=32]
+         * @param [config.colors.slider.handleWidth=18]
+         * @param [config.colors.slider.handleHeight=18]
+         * @param [config.colors.list]
+         * @param [config.colors.list[].label]
+         * @param [config.colors.list[].value]
+         * @param [config.controls]
+         * @param [config.controls.height=0]
+         * @param [config.columnKeys={}]
+         * @param [config.onStateChanged]
+         * @param [config.onClick]
+         */
         this.config = {
             clickEventName: "click",
             theme: 'default',
@@ -379,8 +407,17 @@ class AX6UIPalette extends AX6UICore {
         jQuery.extend(true, this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * @member {Object}
+         */
         this.$target = null;
+        /**
+         * @member {Object}
+         */
         this.xvar = {};
+        /**
+         * @member {Array}
+         */
         this.colors = [];
 
         this.init();

@@ -18,6 +18,8 @@ var _AX6Mustache = require("./AX6Mustache.js");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
+require("./AX6UIMask/index.scss");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,6 +28,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var getBodyTmpl = function getBodyTmpl(data, columnKeys) {
+    var defaultMask = function defaultMask(columnKeys) {
+        return "\n            <div data-ax6ui-mask=\"\" class=\"{{theme}}\" id=\"{{maskId}}\">\n                <div class=\"ax-mask-bg\"></div>\n                <div class=\"ax-mask-content\">\n                    <div class=\"ax-mask-body\">\n                    {{{body}}}\n                    </div>\n                </div>\n            </div>\n        ";
+    };
+    return _AX6Mustache2.default.render(defaultMask.call(this, columnKeys), data);
+};
 var onStateChanged = function onStateChanged(opts, that) {
     if (opts && opts.onStateChanged) {
         opts.onStateChanged.call(that, that);
@@ -36,12 +44,6 @@ var onStateChanged = function onStateChanged(opts, that) {
     opts = null;
     that = null;
     return true;
-};
-var getBodyTmpl = function getBodyTmpl(data, columnKeys) {
-    var defaultMask = function defaultMask(columnKeys) {
-        return "\n            <div class=\"ax-mask {{theme}}\" id=\"{{maskId}}\">\n                <div class=\"ax-mask-bg\"></div>\n                <div class=\"ax-mask-content\">\n                    <div class=\"ax-mask-body\">\n                    {{{body}}}\n                    </div>\n                </div>\n            </div>\n        ";
-    };
-    return _AX6Mustache2.default.render(defaultMask.call(this, columnKeys), data);
 };
 var setBody = function setBody(content) {
     this.maskContent = content;

@@ -44,6 +44,7 @@
         * [.stopEvent](#module_AX6Util.stopEvent)
         * [.selectRange](#module_AX6Util.selectRange)
         * [.debounce](#module_AX6Util.debounce) ⇒ <code>debounced</code>
+        * [.throttle](#module_AX6Util.throttle) ⇒ <code>throttled</code>
         * [.deepCopy](#module_AX6Util.deepCopy) ⇒ <code>Object</code>
         * [.escapeHtml](#module_AX6Util.escapeHtml) ⇒ <code>string</code>
         * [.unescapeHtml](#module_AX6Util.unescapeHtml) ⇒ <code>string</code>
@@ -771,13 +772,33 @@ AX6Util.selectRange($("#select-test-0"), [1, 5]); // select 1~5
 | --- | --- |
 | func | <code>function</code> | 
 | wait | <code>Number</code> | 
-| immediately | <code>Boolean</code> | 
+| options | <code>Object</code> | 
 
 **Example**  
 ```js
+// https://github.com/lodash/lodash/blob/master/debounce.js
 var debounceFn = AX6Util.debounce(function( val ) { console.log(val); }, 300);
 $(document.body).click(function(){
  debounceFn(new Date());
+});
+```
+<a name="module_AX6Util.throttle"></a>
+
+### AX6Util.throttle ⇒ <code>throttled</code>
+**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+
+| Param |
+| --- |
+| func | 
+| wait | 
+| options | 
+
+**Example**  
+```js
+//https://github.com/lodash/lodash/blob/master/throttle.js
+var throttleFn = AX6Util.throttle(function( val ) { console.log(val); }, 300);
+$(window).scroll(function(){
+     throttleFn(new Date());
 });
 ```
 <a name="module_AX6Util.deepCopy"></a>

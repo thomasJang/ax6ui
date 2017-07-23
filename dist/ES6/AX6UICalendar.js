@@ -7,7 +7,7 @@ import "./AX6UICalendar/index.scss";
 
 const frameTmpl = function (columnKeys) {
     return `
-<div class="ax6-ui-calendar {{theme}}" data-calendar-els="root" onselectstart="return false;">
+<div data-ax6ui-calendar="" class="ax6-ui-calendar {{theme}}" data-calendar-els="root" onselectstart="return false;">
     {{#control}}
     <div class="calendar-control" data-calendar-els="control" style="{{controlCSS}}">
         <a class="date-move-left" data-calendar-move="left" style="{{controlButtonCSS}}">{{{left}}}</a>

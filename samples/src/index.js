@@ -2,6 +2,7 @@ import $ from "jqmin";
 import info from "../../src/AX6Info";
 import util from "../../src/AX6Util";
 import AX6UICore from "../../src/AX6UICore";
+import "./custom-materialize.scss";
 
 let $el = $('<div id="test-target"></div>');
 //$el.append('<p>' + info + '</p>');

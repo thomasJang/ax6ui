@@ -33,7 +33,7 @@ let myCalendar_0 = new Calendar({
     mode: "day",
     selectMode: "day",
     onClick: function () {
-        console.log(myCalendar.getSelection());
+        console.log(myCalendar_0.getSelection());
     },
     onStateChanged: function () {
         console.log(this);

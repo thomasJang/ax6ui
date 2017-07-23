@@ -7,7 +7,7 @@ import "./AX6UIPalette/index.scss";
 
 const frameTmpl = function (columnKeys) {
     return `
-<div data-ax6palette>
+<div data-ax6ui-palette="">
 <div data-ax6palette-container="root">
     <div data-ax6palette-container="colors"></div>
     <div data-ax6palette-container="controls"></div>

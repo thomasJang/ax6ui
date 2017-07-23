@@ -33,7 +33,7 @@
     @include transform(translateZ(0));
 }
 
-.ax-mask {
+[data-ax6ui-mask] {
     box-sizing: border-box;
     *,
     *:before,
@@ -43,8 +43,8 @@
 
     z-index: $ax6mask-z-index;
     position: fixed;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     .ax-mask-bg {

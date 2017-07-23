@@ -9,7 +9,8 @@ const entry = {
     formatter: './src/formatter.js',
     calendar: './src/calendar.js',
     picker: './src/picker.js',
-    palette: './src/palette.js'
+    palette: './src/palette.js',
+    dialog: './src/dialog.js'
 };
 
 let plugins = [

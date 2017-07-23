@@ -1,7 +1,23 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
 import mustache from "./AX6Mustache.js";
+import "./AX6UIMask/index.scss";
 
+const getBodyTmpl = function (data, columnKeys) {
+    const defaultMask = function(columnKeys) {
+        return `
+            <div data-ax6ui-mask="" class="{{theme}}" id="{{maskId}}">
+                <div class="ax-mask-bg"></div>
+                <div class="ax-mask-content">
+                    <div class="ax-mask-body">
+                    {{{body}}}
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+    return mustache.render(defaultMask.call(this, columnKeys), data);
+};
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
         opts.onStateChanged.call(that, that);
@@ -13,21 +29,6 @@ const onStateChanged = function (opts, that) {
     opts = null;
     that = null;
     return true;
-};
-const getBodyTmpl = function (data, columnKeys) {
-    const defaultMask = function(columnKeys) {
-        return `
-            <div class="ax-mask {{theme}}" id="{{maskId}}">
-                <div class="ax-mask-bg"></div>
-                <div class="ax-mask-content">
-                    <div class="ax-mask-body">
-                    {{{body}}}
-                    </div>
-                </div>
-            </div>
-        `;
-    };
-    return mustache.render(defaultMask.call(this, columnKeys), data);
 };
 const setBody = function (content) {
     this.maskContent = content;

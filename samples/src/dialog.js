@@ -20,29 +20,25 @@ $body.on("click", '[data-btn]', (e) => {
     let btn = e.currentTarget.getAttribute("data-btn");
     let processor = {
         alert() {
-            let $btn = jQuery('<a class="waves-effect waves-light btn red">alert close & open</a>');
-            $btn.on("click", function () {
-                dialog.close({callback: function (res) {
-                    console.log("dialog closed");
-                    dialog.alert({
-
-                    });
-                }});
-            });
-
             dialog.alert({
-                msg: "alert test",
+                msg: "alert " + (new Date()),
                 onStateChanged: function (res) {
                     if (res.state == "open") {
-                        $body.append($btn);
+                        //$body.append($btn);
                     }
                     if (res.state == "close") {
-                        $btn.remove();
+                        //$btn.remove();
                     }
                 }
             });
 
+            setTimeout(function () {
+                dialog.close();
+                dialog.alert({
+                    msg: "alert " + (new Date())
+                });
 
+            }, 1000);
         },
         confirm() {
             /*
@@ -67,6 +63,17 @@ $body.on("click", '[data-btn]', (e) => {
                 btns: {
                     Y: {label: "예"},
                     N: {label: "아니오"}
+                }
+            }, function (res) {
+                console.log(res);
+            });
+
+            dialog.confirm({
+                title: "예/아니오",
+                msg: "당신은 개발자 입니까?",
+                btns: {
+                    K: {label: "예"},
+                    S: {label: "아니오"}
                 }
             }, function (res) {
                 console.log(res);

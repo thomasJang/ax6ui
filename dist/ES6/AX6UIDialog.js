@@ -50,8 +50,7 @@ const dialogTmpl = function (columnKeys) {
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
         opts.onStateChanged.call(that, that);
-    }
-    else if (this.onStateChanged) {
+    } else if (this.onStateChanged) {
         this.onStateChanged.call(that, that);
     }
 
@@ -62,21 +61,20 @@ const onStateChanged = function (opts, that) {
 const getContent = function (dialogId, opts) {
     let data = {
         dialogId: dialogId,
-        title: (opts.title || this.config.title || ""),
+        title: opts.title || this.config.title || "",
         msg: (opts.msg || this.config.msg || "").replace(/\n/g, "<br/>"),
         input: opts.input,
         btns: opts.btns,
         '_crlf': function () {
             return this.replace(/\n/g, "<br/>");
         },
-        additionalContent: (function (additionalContent) {
+        additionalContent: function (additionalContent) {
             if (U.isFunction(additionalContent)) {
                 return additionalContent.call(opts);
-            }
-            else {
+            } else {
                 return additionalContent;
             }
-        })(opts.additionalContent)
+        }(opts.additionalContent)
     };
 
     return mustache.render(dialogTmpl.call(this), data);
@@ -84,8 +82,8 @@ const getContent = function (dialogId, opts) {
 const open = function (opts, callback) {
     let pos = {},
         box = {
-            width: opts.width
-        };
+        width: opts.width
+    };
     const throttledResize = U.throttle(function (e) {
         align.call(this, e || window.event);
     }, 30);
@@ -93,9 +91,9 @@ const open = function (opts, callback) {
 
     this.dialogConfig = opts;
     this.activeDialog = jQuery('#' + opts.id);
-    this.activeDialog.css({width: box.width});
+    this.activeDialog.css({ width: box.width });
 
-    if(typeof callback === "undefined"){
+    if (typeof callback === "undefined") {
         callback = opts.callback;
     }
 
@@ -106,8 +104,7 @@ const open = function (opts, callback) {
     if (typeof opts.position === "undefined" || opts.position === "center") {
         pos.top = jQuery(window).height() / 2 - box.height / 2;
         pos.left = jQuery(window).width() / 2 - box.width / 2;
-    }
-    else {
+    } else {
         pos.left = opts.position.left || 0;
         pos.top = opts.position.top || 0;
     }
@@ -119,19 +116,18 @@ const open = function (opts, callback) {
     // bind button event
     if (opts.dialogType === "prompt") {
         this.activeDialog.find("[data-dialog-prompt]").get(0).focus();
-    }
-    else {
+    } else {
         this.activeDialog.find("[data-dialog-btn]").get(0).focus();
     }
 
-    this.activeDialog.find("[data-dialog-btn]").on(this.config.clickEventName, (function (e) {
+    this.activeDialog.find("[data-dialog-btn]").on(this.config.clickEventName, function (e) {
         btnOnClick.call(this, e || window.event, opts, callback);
-    }).bind(this));
+    }.bind(this));
 
     // bind key event
-    jQuery(window).on("keydown.ax6dialog", (function (e) {
+    jQuery(window).on("keydown.ax6dialog", function (e) {
         onKeyup.call(this, e || window.event, opts, callback);
-    }).bind(this));
+    }.bind(this));
     jQuery(window).on("resize.ax6dialog", throttledResize.bind(this));
 
     onStateChanged.call(this, opts, {
@@ -152,16 +148,15 @@ const align = function (e) {
     if (!this.activeDialog) return this;
     let opts = this.dialogConfig,
         box = {
-            width: opts.width,
-            height: opts.height
-        };
+        width: opts.width,
+        height: opts.height
+    };
 
     //- position 정렬
     if (typeof opts.position === "undefined" || opts.position === "center") {
         box.top = window.innerHeight / 2 - box.height / 2;
         box.left = window.innerWidth / 2 - box.width / 2;
-    }
-    else {
+    } else {
         box.left = opts.position.left || 0;
         box.top = opts.position.top || 0;
     }
@@ -207,16 +202,13 @@ const btnOnClick = function (e, opts, callback, target, k) {
         }
         if (opts.btns[k].onClick) {
             opts.btns[k].onClick.call(that, that);
-        }
-        else if (opts.dialogType === "alert") {
+        } else if (opts.dialogType === "alert") {
             if (callback) callback.call(that, that);
-            this.close({doNotCallback: true});
-        }
-        else if (opts.dialogType === "confirm") {
+            this.close({ doNotCallback: true });
+        } else if (opts.dialogType === "confirm") {
             if (callback) callback.call(that, that);
-            this.close({doNotCallback: true});
-        }
-        else if (opts.dialogType === "prompt") {
+            this.close({ doNotCallback: true });
+        } else if (opts.dialogType === "prompt") {
             if (k === 'ok') {
                 if (emptyKey) {
                     this.activeDialog.find('[data-dialog-prompt="' + emptyKey + '"]').get(0).focus();
@@ -224,7 +216,7 @@ const btnOnClick = function (e, opts, callback, target, k) {
                 }
             }
             if (callback) callback.call(that, that);
-            this.close({doNotCallback: true});
+            this.close({ doNotCallback: true });
         }
     }
 
@@ -263,7 +255,7 @@ const onKeyup = function (e, opts, callback, target, k) {
                 return false;
             }
             if (callback) callback.call(that, that);
-            this.close({doNotCallback: true});
+            this.close({ doNotCallback: true });
         }
     }
 
@@ -374,28 +366,28 @@ class AX6UIDialog extends AX6UICore {
             opts = {
                 title: this.config.title,
                 msg: ""
-            }
+            };
         } else if (U.isString(opts)) {
             opts = {
                 title: this.config.title,
                 msg: opts
-            }
+            };
         }
 
         opts = jQuery.extend(true, {}, this.config, opts);
         opts.dialogType = "alert";
-        opts.theme = (opts.theme || "");
+        opts.theme = opts.theme || "";
         opts.callback = callback;
 
         if (typeof opts.btns === "undefined") {
             opts.btns = {
-                ok: {label: opts.lang["ok"], theme: opts.theme}
+                ok: { label: opts.lang["ok"], theme: opts.theme }
             };
         }
 
         if (this.activeDialog) {
             this.queue.push(opts);
-        }else{
+        } else {
             open.call(this, opts, callback);
         }
     }
@@ -442,29 +434,29 @@ class AX6UIDialog extends AX6UICore {
             opts = {
                 title: this.config.title,
                 msg: ""
-            }
+            };
         } else if (U.isString(opts)) {
             opts = {
                 title: this.config.title,
                 msg: opts
-            }
+            };
         }
 
         opts = jQuery.extend(true, {}, this.config, opts);
         opts.dialogType = "confirm";
-        opts.theme = (opts.theme || this.config.theme || "");
+        opts.theme = opts.theme || this.config.theme || "";
         opts.callback = callback;
 
         if (typeof opts.btns === "undefined") {
             opts.btns = {
-                ok: {label: opts.lang["ok"], theme: opts.theme},
-                cancel: {label: opts.lang["cancel"]}
+                ok: { label: opts.lang["ok"], theme: opts.theme },
+                cancel: { label: opts.lang["cancel"] }
             };
         }
 
         if (this.activeDialog) {
             this.queue.push(opts);
-        }else{
+        } else {
             open.call(this, opts, callback);
         }
 
@@ -500,35 +492,35 @@ class AX6UIDialog extends AX6UICore {
             opts = {
                 title: this.config.title,
                 msg: ""
-            }
+            };
         } else if (U.isString(opts)) {
             opts = {
                 title: this.config.title,
                 msg: opts
-            }
+            };
         }
 
         opts = jQuery.extend(true, {}, this.config, opts);
 
         opts.dialogType = "prompt";
-        opts.theme = (opts.theme || this.config.theme || "");
+        opts.theme = opts.theme || this.config.theme || "";
         opts.callback = callback;
 
         if (typeof opts.input === "undefined") {
             opts.input = {
-                value: {label: ""}
+                value: { label: "" }
             };
         }
         if (typeof opts.btns === "undefined") {
             opts.btns = {
-                ok: {label: opts.lang["ok"], theme: opts.theme},
-                cancel: {label: opts.lang["cancel"]}
+                ok: { label: opts.lang["ok"], theme: opts.theme },
+                cancel: { label: opts.lang["cancel"] }
             };
         }
 
         if (this.activeDialog) {
             this.queue.push(opts);
-        }else{
+        } else {
             open.call(this, opts, callback);
         }
 
@@ -559,7 +551,7 @@ class AX6UIDialog extends AX6UICore {
             jQuery(window).off("keydown.ax6dialog");
             jQuery(window).off("resize.ax6dialog");
 
-            setTimeout((function () {
+            setTimeout(function () {
                 if (this.activeDialog) {
                     this.activeDialog.remove();
                     this.activeDialog = null;
@@ -579,19 +571,18 @@ class AX6UIDialog extends AX6UICore {
 
                 if (opts && opts.onStateChanged) {
                     opts.onStateChanged.call(that, that);
-                }
-                else if (this.onStateChanged) {
+                } else if (this.onStateChanged) {
                     this.onStateChanged.call(that, that);
                 }
 
                 //console.log(this.queue);
-                if(this.queue && this.queue.length) {
+                if (this.queue && this.queue.length) {
                     open.call(this, this.queue.shift());
                 }
 
                 opts = null;
                 that = null;
-            }).bind(this), this.config.animateTime);
+            }.bind(this), this.config.animateTime);
         }
         return this;
     }

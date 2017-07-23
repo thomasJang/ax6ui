@@ -21,7 +21,7 @@ $body.on("click", '[data-btn]', (e) => {
     let processor = {
         alert() {
             dialog.alert({
-                msg: "alert " + (new Date()),
+                msg: "alert " + (new Date() + " close 1s later"),
                 onStateChanged: function (res) {
                     if (res.state == "open") {
                         //$body.append($btn);

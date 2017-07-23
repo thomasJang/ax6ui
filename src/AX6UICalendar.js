@@ -313,7 +313,7 @@ const printDay = function (nowDate) {
 
     this.$["body"]
         .html(mustache.render(dayTmpl.call(this), data))
-        .find('[data-calendar-item-date]').on(this.config.clickEventName, (e) => {
+        .on(this.config.clickEventName, '[data-calendar-item-date]', (e) => {
             e = e || window.event;
             onclick.call(this, e, 'date');
             U.stopEvent(e);
@@ -409,11 +409,11 @@ const printMonth = function (nowDate) {
 
     this.$["body"]
         .html(mustache.render(monthTmpl.call(this), data))
-        .find('[data-calendar-item-month]').on(this.config.clickEventName, (e) => {
-        e = e || window.event;
-        onclick.call(this, e, 'month');
-        U.stopEvent(e);
-    });
+        .on(this.config.clickEventName, '[data-calendar-item-month]', (e) => {
+            e = e || window.event;
+            onclick.call(this, e, 'month');
+            U.stopEvent(e);
+        });
 
     this.printedDay = {
         start: dotDate.getFullYear() + '-' + U.setDigit(tableStartMonth + 1, 2),
@@ -853,7 +853,10 @@ class AX6UICalendar extends AX6UICore {
         if (typeof changeDate != "undefined") this.config.displayDate = changeDate;
         if (mode) this.config.mode = mode;
 
-        this.$["body"].removeClass("fadein").addClass("fadeout");
+        this.$["body"]
+            .removeClass("fadein")
+            .addClass("fadeout");
+
         setTimeout(() => {
             if (this.config.mode == "day" || this.config.mode == "d") {
                 printDay.call(this, this.config.displayDate);

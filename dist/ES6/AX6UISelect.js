@@ -110,16 +110,14 @@ const optionsTmpl = function (columnKeys) {
 const onStateChanged = function (item, that) {
     if (item && item.onStateChanged) {
         item.onStateChanged.call(that, that);
-    }
-    else if (this.onStateChanged) {
+    } else if (this.onStateChanged) {
         this.onStateChanged.call(that, that);
     }
 
     if (that.state == "changeValue") {
         if (item && item.onChange) {
             item.onChange.call(that, that);
-        }
-        else if (this.onChange) {
+        } else if (this.onChange) {
             this.onChange.call(that, that);
         }
     }
@@ -129,7 +127,8 @@ const onStateChanged = function (item, that) {
     return true;
 };
 const alignSelectDisplay = function () {
-    let i = this.queue.length, w;
+    let i = this.queue.length,
+        w;
     while (i--) {
         if (this.queue[i].$display) {
             w = Math.max(this.queue[i].$select.outerWidth(), U.number(this.queue[i].minWidth));
@@ -152,8 +151,10 @@ const alignSelectOptionGroup = function (append) {
     if (!this.activeSelectOptionGroup) return this;
 
     let item = this.queue[this.activeSelectQueueIndex],
-        pos = {}, positionMargin = 0,
-        dim = {}, pickerDim = {},
+        pos = {},
+        positionMargin = 0,
+        dim = {},
+        pickerDim = {},
         pickerDirection;
 
     if (append) jQuery(document.body).append(this.activeSelectOptionGroup);
@@ -185,42 +186,39 @@ const alignSelectOptionGroup = function (append) {
     }
     // todo : 표현할 공간이 없다면..
     if (append) {
-        this.activeSelectOptionGroup
-            .addClass("direction-" + pickerDirection);
+        this.activeSelectOptionGroup.addClass("direction-" + pickerDirection);
     }
-    this.activeSelectOptionGroup
-        .css((function () {
-            if (pickerDirection == "top") {
-                if (pos.top + dim.height + pickerDim.height + positionMargin > pickerDim.winHeight) {
+    this.activeSelectOptionGroup.css(function () {
+        if (pickerDirection == "top") {
+            if (pos.top + dim.height + pickerDim.height + positionMargin > pickerDim.winHeight) {
 
-                    var newTop = pos.top + dim.height / 2 - pickerDim.height / 2;
-                    if (newTop + pickerDim.height + positionMargin > pickerDim.winHeight) {
-                        newTop = 0;
-                    }
-                    if (newTop < 0) {
-                        newTop = 0;
-                    }
-
-                    return {
-                        left: pos.left,
-                        top: newTop,
-                        width: dim.width
-                    }
+                var newTop = pos.top + dim.height / 2 - pickerDim.height / 2;
+                if (newTop + pickerDim.height + positionMargin > pickerDim.winHeight) {
+                    newTop = 0;
                 }
+                if (newTop < 0) {
+                    newTop = 0;
+                }
+
                 return {
                     left: pos.left,
-                    top: pos.top + dim.height + 1,
+                    top: newTop,
                     width: dim.width
-                }
+                };
             }
-            else if (pickerDirection == "bottom") {
-                return {
-                    left: pos.left,
-                    top: pos.top - pickerDim.height - 1,
-                    width: dim.width
-                }
-            }
-        }).call(this));
+            return {
+                left: pos.left,
+                top: pos.top + dim.height + 1,
+                width: dim.width
+            };
+        } else if (pickerDirection == "bottom") {
+            return {
+                left: pos.left,
+                top: pos.top - pickerDim.height - 1,
+                width: dim.width
+            };
+        }
+    }.call(this));
 };
 const onBodyClick = function (e, target) {
     if (!this.activeSelectOptionGroup) return this;
@@ -232,8 +230,7 @@ const onBodyClick = function (e, target) {
         if (target.getAttribute("data-option-value") || target.getAttribute("data-option-value") == "") {
             clickEl = "optionItem";
             return true;
-        }
-        else if (item.$target.get(0) == target) {
+        } else if (item.$target.get(0) == target) {
             clickEl = "display";
             return true;
         }
@@ -242,8 +239,7 @@ const onBodyClick = function (e, target) {
     if (!target) {
         this.close();
         return this;
-    }
-    else if (clickEl === "optionItem") {
+    } else if (clickEl === "optionItem") {
         this.val(item.id, {
             index: {
                 gindex: target.getAttribute("data-option-group-index"),
@@ -253,8 +249,7 @@ const onBodyClick = function (e, target) {
         item.$select.trigger("change");
         item.$display.focus();
         if (!item.multiple) this.close();
-    }
-    else {
+    } else {
         //open and display click
         //console.log(this.instanceId);
     }
@@ -264,9 +259,9 @@ const onBodyClick = function (e, target) {
 const onBodyKeyup = function (e) {
     if (e.keyCode == info.eventKeys.ESC) {
         this.close();
-    }
-    else if (e.which == info.eventKeys.RETURN) {
-        if (this.queue[this.activeSelectQueueIndex].optionFocusIndex > -1) { // 아이템에 포커스가 활성화 된 후, 마우스 이벤트 이면 무시
+    } else if (e.which == info.eventKeys.RETURN) {
+        if (this.queue[this.activeSelectQueueIndex].optionFocusIndex > -1) {
+            // 아이템에 포커스가 활성화 된 후, 마우스 이벤트 이면 무시
             let $option = this.activeSelectOptionGroup.find('[data-option-focus-index="' + this.queue[this.activeSelectQueueIndex].optionFocusIndex + '"]');
             this.val(this.queue[this.activeSelectQueueIndex].id, {
                 index: {
@@ -289,50 +284,48 @@ const getLabel = function (queIdx) {
         item.selected.forEach(function (n) {
             if (n.selected) labels.push(n[item.columnKeys.optionText]);
         });
-    }
-    else {
+    } else {
         if (!item.multiple && item.options && item.options[0]) {
             if (item.options[0].optgroup) {
                 labels[0] = item.options[0].options[0][item.columnKeys.optionText];
-            }
-            else {
+            } else {
                 labels[0] = item.options[0][item.columnKeys.optionText];
             }
-        }
-        else {
+        } else {
             labels[0] = item.lang.noSelected;
         }
     }
 
-    return (function () {
+    return function () {
         if (item.multiple && labels.length > 1) {
             let data = {
                 label: labels[0],
                 length: labels.length - 1
             };
             return mustache.render(item.lang.multipleLabel, data);
-        }
-        else {
+        } else {
             return labels[0];
         }
-    })();
+    }();
 };
 const syncLabel = function (queIdx) {
-    this.queue[queIdx].$displayLabel
-        .html(getLabel.call(this, queIdx));
+    this.queue[queIdx].$displayLabel.html(getLabel.call(this, queIdx));
 };
 const focusWord = function (queIdx, searchWord) {
-    let options = [], i = -1, l = this.queue[queIdx].indexedOptions.length - 1, n;
+    let options = [],
+        i = -1,
+        l = this.queue[queIdx].indexedOptions.length - 1,
+        n;
     if (searchWord) {
         while (l - i++) {
             n = this.queue[queIdx].indexedOptions[i];
             if (('' + n.value).toLowerCase() == searchWord.toLowerCase()) {
-                options = [{'@findex': n['@findex'], optionsSort: 0}];
+                options = [{ '@findex': n['@findex'], optionsSort: 0 }];
                 break;
             } else {
                 let sort = ('' + n.value).toLowerCase().search(searchWord.toLowerCase());
                 if (sort > -1) {
-                    options.push({'@findex': n['@findex'], optionsSort: sort});
+                    options.push({ '@findex': n['@findex'], optionsSort: sort });
                     if (options.length > 2) break;
                 }
                 sort = null;
@@ -348,8 +341,7 @@ const focusWord = function (queIdx, searchWord) {
 
     try {
         return options;
-    }
-    finally {
+    } finally {
         options = null;
         i = null;
         l = null;
@@ -357,37 +349,27 @@ const focusWord = function (queIdx, searchWord) {
     }
 };
 const focusMove = function (queIdx, direction, findex) {
-    let _focusIndex,
-        _prevFocusIndex,
-        focusOptionEl,
-        optionGroupScrollContainer;
+    let _focusIndex, _prevFocusIndex, focusOptionEl, optionGroupScrollContainer;
 
     if (this.activeSelectOptionGroup && this.queue[queIdx].options && this.queue[queIdx].options.length > 0) {
 
         if (typeof findex !== "undefined") {
-            _focusIndex = findex
-        }
-        else {
-            _prevFocusIndex = (this.queue[queIdx].optionFocusIndex == -1) ? this.queue[queIdx].optionSelectedIndex || -1 : this.queue[queIdx].optionFocusIndex;
+            _focusIndex = findex;
+        } else {
+            _prevFocusIndex = this.queue[queIdx].optionFocusIndex == -1 ? this.queue[queIdx].optionSelectedIndex || -1 : this.queue[queIdx].optionFocusIndex;
             if (_prevFocusIndex == -1) {
-                _focusIndex = (direction > 0) ? 0 : this.queue[queIdx].optionItemLength - 1;
-            }
-            else {
+                _focusIndex = direction > 0 ? 0 : this.queue[queIdx].optionItemLength - 1;
+            } else {
                 _focusIndex = _prevFocusIndex + direction;
-                if (_focusIndex < 0) _focusIndex = 0;
-                else if (_focusIndex > this.queue[queIdx].optionItemLength - 1) _focusIndex = this.queue[queIdx].optionItemLength - 1;
+                if (_focusIndex < 0) _focusIndex = 0;else if (_focusIndex > this.queue[queIdx].optionItemLength - 1) _focusIndex = this.queue[queIdx].optionItemLength - 1;
             }
         }
 
         this.queue[queIdx].optionFocusIndex = _focusIndex;
 
-        this.activeSelectOptionGroup
-            .find('[data-option-focus-index]')
-            .removeClass("hover");
+        this.activeSelectOptionGroup.find('[data-option-focus-index]').removeClass("hover");
 
-        focusOptionEl = this.activeSelectOptionGroup
-            .find('[data-option-focus-index="' + _focusIndex + '"]')
-            .addClass("hover");
+        focusOptionEl = this.activeSelectOptionGroup.find('[data-option-focus-index="' + _focusIndex + '"]').addClass("hover");
 
         optionGroupScrollContainer = this.activeSelectOptionGroup.find('[data-els="content"]');
 
@@ -398,8 +380,7 @@ const focusMove = function (queIdx, direction, findex) {
 
         if (optionGroupScrollContainerHeight + optionGroupScrollContainerScrollTop < focusOptionElTop + focusOptionElHeight) {
             optionGroupScrollContainer.scrollTop(focusOptionElTop + focusOptionElHeight - optionGroupScrollContainerHeight);
-        }
-        else if (optionGroupScrollContainerScrollTop > focusOptionElTop) {
+        } else if (optionGroupScrollContainerScrollTop > focusOptionElTop) {
             optionGroupScrollContainer.scrollTop(focusOptionElTop);
         }
         // optionGroup scroll check
@@ -416,15 +397,14 @@ const bindSelectTarget = function (queIdx) {
             });
 
             if (target) {
-                this.val(queIdx, {clear: true});
-            }
-            else {
+                this.val(queIdx, { clear: true });
+            } else {
                 if (this.activeSelectQueueIndex == queIdx) {
-                    if (this.queue[queIdx].optionFocusIndex == -1) { // 아이템에 포커스가 활성화 된 후, 마우스 이벤트 이면 무시
+                    if (this.queue[queIdx].optionFocusIndex == -1) {
+                        // 아이템에 포커스가 활성화 된 후, 마우스 이벤트 이면 무시
                         this.close();
                     }
-                }
-                else {
+                } else {
                     this.open(queIdx);
                     U.stopEvent(e);
                 }
@@ -433,8 +413,7 @@ const bindSelectTarget = function (queIdx) {
         'keyUp': function (queIdx, e) {
             if (e.which == info.eventKeys.SPACE) {
                 selectEvent.click.call(this, queIdx, e);
-            }
-            else if (!ctrlKeys[e.which]) {
+            } else if (!ctrlKeys[e.which]) {
                 // 사용자 입력이 뜸해지면 찾고 검색 값 제거...
                 U.debounce(function (searchWord, queIdx) {
                     focusWord.call(this, queIdx, searchWord);
@@ -446,26 +425,24 @@ const bindSelectTarget = function (queIdx) {
             if (e.which == info.eventKeys.DOWN) {
                 focusMove.call(this, queIdx, 1);
                 U.stopEvent(e);
-            }
-            else if (e.which == info.eventKeys.UP) {
+            } else if (e.which == info.eventKeys.UP) {
                 focusMove.call(this, queIdx, -1);
                 U.stopEvent(e);
             }
         },
-        'blur': function (queIdx, e) {
-
-        },
+        'blur': function (queIdx, e) {},
         'selectChange': function (queIdx, e) {
             this.val(queIdx, this.queue[queIdx].$select.val(), true);
         }
     };
 
-    let item = this.queue[queIdx], data = {};
+    let item = this.queue[queIdx],
+        data = {};
 
     // find selected
     item.selected = [];
     if (!item.options) item.options = [];
-    item.options.forEach((n) => {
+    item.options.forEach(n => {
         if (n[this.config.columnKeys.optionSelected]) item.selected.push(jQuery.extend({}, n));
     });
 
@@ -486,18 +463,15 @@ const bindSelectTarget = function (queIdx) {
         if (item.$target.find("select").get(0)) {
             item.$select = item.$target.find("select");
             // select 속성만 변경
-            item.$select
-                .attr("tabindex", "-1")
-                .attr("class", "form-control " + data.formSize);
+            item.$select.attr("tabindex", "-1").attr("class", "form-control " + data.formSize);
             if (data.name) {
                 item.$select.attr("name", "name");
             }
             if (data.multiple) {
                 item.$select.attr("multiple", "multiple");
             }
-        }
-        else {
-            item.$select =  jQuery(mustache.render(selectTmpl.call(this), data));
+        } else {
+            item.$select = jQuery(mustache.render(selectTmpl.call(this), data));
             item.$target.append(item.$select);
             // select append
         }
@@ -508,32 +482,18 @@ const bindSelectTarget = function (queIdx) {
 
         alignSelectDisplay.call(this);
 
-        item.$displayInput
-            .off("blur.ax6select")
-            .on("blur.ax6select", selectEvent.blur.bind(this, queIdx))
-            .off('keyup.ax6select')
-            .on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx))
-            .off("keydown.ax6select")
-            .on("keydown.ax6select", selectEvent.keyDown.bind(this, queIdx));
-    }
-    else {
-        item.$displayLabel
-            .html(getLabel.call(this, queIdx));
+        item.$displayInput.off("blur.ax6select").on("blur.ax6select", selectEvent.blur.bind(this, queIdx)).off('keyup.ax6select').on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx)).off("keydown.ax6select").on("keydown.ax6select", selectEvent.keyDown.bind(this, queIdx));
+    } else {
+        item.$displayLabel.html(getLabel.call(this, queIdx));
         item.options = syncSelectOptions.call(this, queIdx, item.options);
 
         alignSelectDisplay.call(this);
     }
 
-    item.$display
-        .off('click.ax6select')
-        .on('click.ax6select', selectEvent.click.bind(this, queIdx))
-        .off('keyup.ax6select')
-        .on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx));
+    item.$display.off('click.ax6select').on('click.ax6select', selectEvent.click.bind(this, queIdx)).off('keyup.ax6select').on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx));
 
     // select 태그에 대한 change 이벤트 감시
-    item.$select
-        .off('change.ax6select')
-        .on('change.ax6select', selectEvent.selectChange.bind(this, queIdx));
+    item.$select.off('change.ax6select').on('change.ax6select', selectEvent.selectChange.bind(this, queIdx));
 
     data = null;
     item = null;
@@ -545,15 +505,16 @@ const syncSelectOptions = function (queIdx, options) {
     const setSelected = function (queIdx, O) {
         if (!O) {
             this.queue[queIdx].selected = [];
-        }
-        else {
-            if (this.queue[queIdx].multiple) this.queue[queIdx].selected.push(jQuery.extend({}, O));
-            else this.queue[queIdx].selected[0] = jQuery.extend({}, O);
+        } else {
+            if (this.queue[queIdx].multiple) this.queue[queIdx].selected.push(jQuery.extend({}, O));else this.queue[queIdx].selected[0] = jQuery.extend({}, O);
         }
     };
 
     let item = this.queue[queIdx],
-        po, elementOptions, newOptions, focusIndex = 0;
+        po,
+        elementOptions,
+        newOptions,
+        focusIndex = 0;
 
     setSelected.call(this, queIdx, false); // item.selected 초기화
 
@@ -570,9 +531,7 @@ const syncSelectOptions = function (queIdx, options) {
                 O.options.forEach((OO, OOIndex) => {
                     OO['@index'] = OOIndex;
                     OO['@findex'] = focusIndex;
-                    po.push('<option value="' + OO[item.columnKeys.optionValue] + '" '
-                        + (OO[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>'
-                        + OO[item.columnKeys.optionText] + '</option>');
+                    po.push('<option value="' + OO[item.columnKeys.optionValue] + '" ' + (OO[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>' + OO[item.columnKeys.optionText] + '</option>');
                     if (OO[item.columnKeys.optionSelected]) {
                         setSelected.call(this, queIdx, OO);
                     }
@@ -582,13 +541,10 @@ const syncSelectOptions = function (queIdx, options) {
                     });
                     focusIndex++;
                 });
-            }
-            else {
+            } else {
                 O['@index'] = OIndex;
                 O['@findex'] = focusIndex;
-                po.push('<option value="' + O[item.columnKeys.optionValue] + '" '
-                    + (O[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>'
-                    + O[item.columnKeys.optionText] + '</option>');
+                po.push('<option value="' + O[item.columnKeys.optionValue] + '" ' + (O[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>' + O[item.columnKeys.optionText] + '</option>');
                 if (O[item.columnKeys.optionSelected]) {
                     setSelected.call(this, queIdx, O);
                 }
@@ -601,8 +557,7 @@ const syncSelectOptions = function (queIdx, options) {
         });
         item.optionItemLength = focusIndex;
         item.$select.html(po.join(''));
-    }
-    else {
+    } else {
         /// select > options 태그로 스크립트 options를 만들어주는 역할
         elementOptions = U.toArray(item.$select.get(0).options);
         // select option 스크립트 생성
@@ -628,8 +583,7 @@ const syncSelectOptions = function (queIdx, options) {
         if (item.options[0].optgroup) {
             item.options[0].options[0][item.columnKeys.optionSelected] = true;
             item.selected.push(jQuery.extend({}, item.options[0].options[0]));
-        }
-        else {
+        } else {
             item.options[0][item.columnKeys.optionSelected] = true;
             item.selected.push(jQuery.extend({}, item.options[0]));
         }
@@ -685,7 +639,6 @@ let ctrlKeys = {
     //"106" : "NUMPAD_MULTIPLY",
     //"109" : "NUMPAD_SUBTRACT"
 };
-
 
 /**
  * @class
@@ -837,8 +790,7 @@ class AX6UISelect extends AX6UICore {
         if (queIdx === -1) {
             this.queue.push(item);
             bindSelectTarget.call(this, this.queue.length - 1);
-        }
-        else {
+        } else {
             this.queue[queIdx].selected = [];
             this.queue[queIdx].options = item.options;
             this.queue[queIdx] = jQuery.extend(true, {}, this.queue[queIdx], item);
@@ -847,7 +799,7 @@ class AX6UISelect extends AX6UICore {
 
         queIdx = null;
         return this;
-    };
+    }
 
     /**
      * @method
@@ -881,9 +833,7 @@ class AX6UISelect extends AX6UICore {
                         }
                     })(item, O);
 
-
-                    item.$displayLabel
-                        .html(getLabel.call(this, this.activeSelectQueueIndex));
+                    item.$displayLabel.html(getLabel.call(this, this.activeSelectQueueIndex));
                     item.options = syncSelectOptions.call(this, this.activeSelectQueueIndex, O.options);
 
                     alignSelectDisplay.call(this);
@@ -904,9 +854,11 @@ class AX6UISelect extends AX6UICore {
         /**
          * open select from the outside
          */
-        let queIdx = (U.isNumber(boundID)) ? boundID : getQueIdx.call(this, boundID),
+        let queIdx = U.isNumber(boundID) ? boundID : getQueIdx.call(this, boundID),
             item = this.queue[queIdx],
-            data = {}, focusTop, selectedOptionEl;
+            data = {},
+            focusTop,
+            selectedOptionEl;
 
         if (item.$display.attr("disabled")) return this;
 
@@ -918,9 +870,9 @@ class AX6UISelect extends AX6UICore {
 
             if (tryCount > 2) return this;
             this.close();
-            this.openTimer = setTimeout((function () {
+            this.openTimer = setTimeout(function () {
                 this.open(queIdx, (tryCount || 0) + 1);
-            }).bind(this), this.config.animateTime);
+            }.bind(this), this.config.animateTime);
 
             return this;
         }
@@ -966,22 +918,21 @@ class AX6UISelect extends AX6UICore {
         // 1밀리세컨 지연후 포커스 처리. input에 포커스가 되므로 input value로 options를 검색 할 수 있게 됩니다.
         item.$displayInput.val('');
 
-        setTimeout((function () {
+        setTimeout(function () {
             item.$displayInput.trigger("focus");
 
-            jQuery(window).on("keyup.ax6select-" + this.instanceId, (function (e) {
+            jQuery(window).on("keyup.ax6select-" + this.instanceId, function (e) {
                 e = e || window.event;
                 onBodyKeyup.call(this, e);
                 U.stopEvent(e);
-            }).bind(this));
+            }.bind(this));
 
-            jQuery(window).on("click.ax6select-" + this.instanceId, (function (e) {
+            jQuery(window).on("click.ax6select-" + this.instanceId, function (e) {
                 e = e || window.event;
                 onBodyClick.call(this, e);
                 U.stopEvent(e);
-            }).bind(this));
-
-        }).bind(this), 300);
+            }.bind(this));
+        }.bind(this), 300);
 
         onStateChanged.call(this, item, {
             self: this,
@@ -1009,7 +960,7 @@ class AX6UISelect extends AX6UICore {
     update(_item) {
         this.bind(_item);
         return this;
-    };
+    }
 
     /**
      * @method
@@ -1035,108 +986,96 @@ class AX6UISelect extends AX6UICore {
      */
     val(boundID, value, selected, internal) {
         const getSelected = function (_item, o, selected) {
-                if (typeof selected === "undefined") {
-                    return (_item.multiple) ? !o : true;
+            if (typeof selected === "undefined") {
+                return _item.multiple ? !o : true;
+            } else {
+                return selected;
+            }
+        },
+              clearSelected = function (queIdx) {
+            this.queue[queIdx].options.forEach(n => {
+                if (n.optgroup) {
+                    n.options.forEach(nn => {
+                        nn.selected = false;
+                    });
                 } else {
-                    return selected;
+                    n.selected = false;
                 }
+            });
+        },
+              processor = {
+            'index': function (queIdx, value, selected) {
+                // 클래스 내부에서 호출된 형태, 그런 이유로 옵션그룹에 대한 상태를 변경 하고 있다.
+                let item = this.queue[queIdx];
+
+                if (U.isString(value.index.gindex)) {
+                    item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected] = getSelected(item, item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected], selected);
+                    this.activeSelectOptionGroup.find('[data-option-group-index="' + value.index.gindex + '"][data-option-index="' + value.index.index + '"]').attr("data-option-selected", item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected].toString());
+                } else {
+                    item.options[value.index.index][item.columnKeys.optionSelected] = getSelected(item, item.options[value.index.index][item.columnKeys.optionSelected], selected);
+                    this.activeSelectOptionGroup.find('[data-option-index="' + value.index.index + '"]').attr("data-option-selected", item.options[value.index.index][item.columnKeys.optionSelected].toString());
+                }
+
+                syncSelectOptions.call(this, queIdx, item.options);
+                syncLabel.call(this, queIdx);
+                alignSelectOptionGroup.call(this);
             },
-            clearSelected = function (queIdx) {
-                this.queue[queIdx].options.forEach(n => {
-                    if (n.optgroup) {
-                        n.options.forEach(nn => {
-                            nn.selected = false;
-                        });
-                    }
-                    else {
-                        n.selected = false;
+            'arr': function (queIdx, values, selected) {
+                values.forEach(value => {
+                    if (U.isString(value) || U.isNumber(value)) {
+                        processor.value.call(this, queIdx, value, selected);
+                    } else {
+                        for (let key in processor) {
+                            if (value[key]) {
+                                processor[key].call(this, queIdx, value, selected);
+                                break;
+                            }
+                        }
                     }
                 });
             },
-            processor = {
-                'index': function (queIdx, value, selected) {
-                    // 클래스 내부에서 호출된 형태, 그런 이유로 옵션그룹에 대한 상태를 변경 하고 있다.
-                    let item = this.queue[queIdx];
-
-                    if (U.isString(value.index.gindex)) {
-                        item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected] = getSelected(item, item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected], selected);
-                        this.activeSelectOptionGroup
-                            .find('[data-option-group-index="' + value.index.gindex + '"][data-option-index="' + value.index.index + '"]')
-                            .attr("data-option-selected", item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected].toString());
-                    }
-                    else {
-                        item.options[value.index.index][item.columnKeys.optionSelected] = getSelected(item, item.options[value.index.index][item.columnKeys.optionSelected], selected);
-                        this.activeSelectOptionGroup
-                            .find('[data-option-index="' + value.index.index + '"]')
-                            .attr("data-option-selected", item.options[value.index.index][item.columnKeys.optionSelected].toString());
-
-                    }
-
-                    syncSelectOptions.call(this, queIdx, item.options);
-                    syncLabel.call(this, queIdx);
-                    alignSelectOptionGroup.call(this);
-                },
-                'arr': function (queIdx, values, selected) {
-                    values.forEach(value => {
-                        if (U.isString(value) || U.isNumber(value)) {
-                            processor.value.call(this, queIdx, value, selected);
-                        }
-                        else {
-                            for (let key in processor) {
-                                if (value[key]) {
-                                    processor[key].call(this, queIdx, value, selected);
-                                    break;
-                                }
-                            }
-                        }
-                    });
-                },
-                'value': function (queIdx, value, selected) {
-                    let item = this.queue[queIdx],
-                        optionIndex = U.search(item.options, function () {
-                            return this[item.columnKeys.optionValue] == value;
-                        });
-                    if (optionIndex > -1) {
-                        item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
-                    }
-                    else {
-                        console.log(info.getError("ax6select", "501", "val"));
-                        return;
-                    }
-
-                    syncSelectOptions.call(this, queIdx, item.options);
-                    syncLabel.call(this, queIdx);
-                },
-                'text': function (queIdx, value, selected) {
-                    let item = this.queue[queIdx],
-                        optionIndex = U.search(item.options, function () {
-                            return this[item.columnKeys.optionText] == value;
-                        });
-                    if (optionIndex > -1) {
-                        item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
-                    }
-                    else {
-                        console.log(info.getError("ax6select", "501", "val"));
-                        return;
-                    }
-
-                    syncSelectOptions.call(this, queIdx, item.options);
-                    syncLabel.call(this, queIdx);
-                },
-                'clear': function (queIdx) {
-                    clearSelected.call(this, queIdx);
-                    syncSelectOptions.call(this, queIdx, this.queue[queIdx].options);
-                    syncLabel.call(this, queIdx);
-
-                    if (this.activeSelectOptionGroup) {
-                        this.activeSelectOptionGroup
-                            .find('[data-option-index]')
-                            .attr("data-option-selected", "false");
-                    }
+            'value': function (queIdx, value, selected) {
+                let item = this.queue[queIdx],
+                    optionIndex = U.search(item.options, function () {
+                    return this[item.columnKeys.optionValue] == value;
+                });
+                if (optionIndex > -1) {
+                    item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
+                } else {
+                    console.log(info.getError("ax6select", "501", "val"));
+                    return;
                 }
-            };
 
-        let queIdx = (U.isNumber(boundID)) ? boundID : getQueIdx.call(this, boundID);
+                syncSelectOptions.call(this, queIdx, item.options);
+                syncLabel.call(this, queIdx);
+            },
+            'text': function (queIdx, value, selected) {
+                let item = this.queue[queIdx],
+                    optionIndex = U.search(item.options, function () {
+                    return this[item.columnKeys.optionText] == value;
+                });
+                if (optionIndex > -1) {
+                    item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
+                } else {
+                    console.log(info.getError("ax6select", "501", "val"));
+                    return;
+                }
+
+                syncSelectOptions.call(this, queIdx, item.options);
+                syncLabel.call(this, queIdx);
+            },
+            'clear': function (queIdx) {
+                clearSelected.call(this, queIdx);
+                syncSelectOptions.call(this, queIdx, this.queue[queIdx].options);
+                syncLabel.call(this, queIdx);
+
+                if (this.activeSelectOptionGroup) {
+                    this.activeSelectOptionGroup.find('[data-option-index]').attr("data-option-selected", "false");
+                }
+            }
+        };
+
+        let queIdx = U.isNumber(boundID) ? boundID : getQueIdx.call(this, boundID);
         if (!this.queue[queIdx]) {
             return this;
         }
@@ -1146,18 +1085,14 @@ class AX6UISelect extends AX6UICore {
 
         if (typeof value == "undefined") {
             return this.queue[queIdx].selected;
-        }
-        else if (U.isArray(value)) {
+        } else if (U.isArray(value)) {
             processor.arr.call(this, queIdx, value, selected);
-        }
-        else if (U.isString(value) || U.isNumber(value)) {
+        } else if (U.isString(value) || U.isNumber(value)) {
             processor.value.call(this, queIdx, value, selected);
-        }
-        else {
+        } else {
             if (value === null) {
                 processor.clear.call(this, queIdx);
-            }
-            else {
+            } else {
                 for (var key in processor) {
                     if (value[key]) {
                         processor[key].call(this, queIdx, value, selected);
@@ -1171,7 +1106,7 @@ class AX6UISelect extends AX6UICore {
             onStateChanged.call(this, this.queue[queIdx], {
                 self: this,
                 item: this.queue[queIdx],
-                state: (internal) ? "changeValue" : "setValue",
+                state: internal ? "changeValue" : "setValue",
                 value: this.queue[queIdx].selected,
                 internal: internal
             });
@@ -1198,10 +1133,7 @@ class AX6UISelect extends AX6UICore {
 
         this.activeSelectOptionGroup.addClass("destroy");
 
-        jQuery(window)
-            .off("resize.ax6select-" + this.instanceId)
-            .off("click.ax6select-" + this.instanceId)
-            .off("keyup.ax6select-" + this.instanceId);
+        jQuery(window).off("resize.ax6select-" + this.instanceId).off("click.ax6select-" + this.instanceId).off("keyup.ax6select-" + this.instanceId);
 
         this.closeTimer = setTimeout(() => {
             if (this.activeSelectOptionGroup) this.activeSelectOptionGroup.remove();
@@ -1224,7 +1156,7 @@ class AX6UISelect extends AX6UICore {
         }, this.config.animateTime);
         this.waitOptionsCallback = null;
         return this;
-    };
+    }
 
     /**
      * @method
@@ -1242,7 +1174,7 @@ class AX6UISelect extends AX6UICore {
         });
 
         return this;
-    };
+    }
 
     /**
      * @method
@@ -1260,8 +1192,7 @@ class AX6UISelect extends AX6UICore {
         });
 
         return this;
-    };
-
+    }
 }
 
 export default AX6UISelect;

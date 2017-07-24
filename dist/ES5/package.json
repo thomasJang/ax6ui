@@ -1,6 +1,6 @@
 {
   "name": "ax6ui-es5",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "ES6 UI Component for ES5",
   "main": "index.js",
   "directories": {

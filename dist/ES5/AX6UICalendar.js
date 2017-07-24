@@ -241,7 +241,7 @@ var printDay = function printDay(nowDate) {
         i++;
     }
 
-    this.$["body"].html(_AX6Mustache2.default.render(dayTmpl.call(this), data)).find('[data-calendar-item-date]').on(this.config.clickEventName, function (e) {
+    this.$["body"].html(_AX6Mustache2.default.render(dayTmpl.call(this), data)).on(this.config.clickEventName, '[data-calendar-item-date]', function (e) {
         e = e || window.event;
         onclick.call(_this2, e, 'date');
         _AX6Util2.default.stopEvent(e);
@@ -332,7 +332,7 @@ var printMonth = function printMonth(nowDate) {
         i++;
     }
 
-    this.$["body"].html(_AX6Mustache2.default.render(monthTmpl.call(this), data)).find('[data-calendar-item-month]').on(this.config.clickEventName, function (e) {
+    this.$["body"].html(_AX6Mustache2.default.render(monthTmpl.call(this), data)).on(this.config.clickEventName, '[data-calendar-item-month]', function (e) {
         e = e || window.event;
         onclick.call(_this3, e, 'month');
         _AX6Util2.default.stopEvent(e);
@@ -783,6 +783,7 @@ var AX6UICalendar = function (_AX6UICore) {
             if (mode) this.config.mode = mode;
 
             this.$["body"].removeClass("fadein").addClass("fadeout");
+
             setTimeout(function () {
                 if (_this8.config.mode == "day" || _this8.config.mode == "d") {
                     printDay.call(_this8, _this8.config.displayDate);

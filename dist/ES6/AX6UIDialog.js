@@ -111,24 +111,15 @@ const open = function (opts, callback) {
     if (this.config.zIndex) {
         pos["z-index"] = this.config.zIndex;
     }
-    this.activeDialog.css(pos);
 
-    // bind button event
-    if (opts.dialogType === "prompt") {
-        this.activeDialog.find("[data-dialog-prompt]").get(0).focus();
-    } else {
-        this.activeDialog.find("[data-dialog-btn]").get(0).focus();
-    }
-
-    this.activeDialog.find("[data-dialog-btn]").on(this.config.clickEventName, function (e) {
+    this.activeDialog.css(pos).on(opts.clickEventName, "[data-dialog-btn]", e => {
         btnOnClick.call(this, e || window.event, opts, callback);
-    }.bind(this));
+    }).find(opts.dialogType === "prompt" ? "[data-dialog-prompt]" : "[data-dialog-btn]").trigger("focus");
 
     // bind key event
-    jQuery(window).on("keydown.ax6dialog", function (e) {
+    jQuery(window).on("keydown.ax6dialog", e => {
         onKeyup.call(this, e || window.event, opts, callback);
-    }.bind(this));
-    jQuery(window).on("resize.ax6dialog", throttledResize.bind(this));
+    }).on("resize.ax6dialog", throttledResize.bind(this));
 
     onStateChanged.call(this, opts, {
         self: this,
@@ -309,6 +300,10 @@ class AX6UIDialog extends AX6UICore {
         jQuery.extend(true, this.config, config);
 
         // 멤버 변수 초기화
+        /**
+         * dialog가 열려있는 상태에서 다시 open이 되면 queue에 보관 하였다가 close후 open
+         * @member {Array}
+         */
         this.queue = [];
         /**
          * @member {Object}
@@ -319,7 +314,7 @@ class AX6UIDialog extends AX6UICore {
          */
         this.autoCloseTimer = null;
 
-        if (typeof config !== "undefined") this.init();
+        this.init();
     }
 
     /**
@@ -374,10 +369,10 @@ class AX6UIDialog extends AX6UICore {
             };
         }
 
-        opts = jQuery.extend(true, {}, this.config, opts);
-        opts.dialogType = "alert";
-        opts.theme = opts.theme || "";
-        opts.callback = callback;
+        opts = jQuery.extend(true, {}, this.config, opts, {
+            dialogType: "alert",
+            callback: callback
+        });
 
         if (typeof opts.btns === "undefined") {
             opts.btns = {
@@ -442,10 +437,10 @@ class AX6UIDialog extends AX6UICore {
             };
         }
 
-        opts = jQuery.extend(true, {}, this.config, opts);
-        opts.dialogType = "confirm";
-        opts.theme = opts.theme || this.config.theme || "";
-        opts.callback = callback;
+        opts = jQuery.extend(true, {}, this.config, opts, {
+            dialogType: "confirm",
+            callback: callback
+        });
 
         if (typeof opts.btns === "undefined") {
             opts.btns = {
@@ -500,11 +495,10 @@ class AX6UIDialog extends AX6UICore {
             };
         }
 
-        opts = jQuery.extend(true, {}, this.config, opts);
-
-        opts.dialogType = "prompt";
-        opts.theme = opts.theme || this.config.theme || "";
-        opts.callback = callback;
+        opts = jQuery.extend(true, {}, this.config, opts, {
+            dialogType: "prompt",
+            callback: callback
+        });
 
         if (typeof opts.input === "undefined") {
             opts.input = {
@@ -548,8 +542,7 @@ class AX6UIDialog extends AX6UICore {
             opts = this.dialogConfig;
 
             this.activeDialog.addClass("destroy");
-            jQuery(window).off("keydown.ax6dialog");
-            jQuery(window).off("resize.ax6dialog");
+            jQuery(window).off("keydown.ax6dialog").off("resize.ax6dialog");
 
             setTimeout(function () {
                 if (this.activeDialog) {
@@ -575,7 +568,7 @@ class AX6UIDialog extends AX6UICore {
                     this.onStateChanged.call(that, that);
                 }
 
-                //console.log(this.queue);
+                // 열려야 할 큐가 남아 있다면 큐아이템으로 다시 open
                 if (this.queue && this.queue.length) {
                     open.call(this, this.queue.shift());
                 }

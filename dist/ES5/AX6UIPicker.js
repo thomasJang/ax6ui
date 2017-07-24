@@ -740,7 +740,6 @@ var AX6UIPicker = function (_AX6UICore) {
         value: function open(boundID, tryCount) {
             var _this3 = this;
 
-            var self = this;
             var pickerContent = {
                 '@fn': function fn(queIdx, callback) {
                     var item = this.queue[queIdx];
@@ -1072,7 +1071,12 @@ var AX6UIPicker = function (_AX6UICore) {
                     });
                 }
             };
+            // throttledResize
+            var throttledResize = _AX6Util2.default.throttle(function (e) {
+                alignPicker.call(this, e || window.event);
+            }, 30);
 
+            var self = this;
             var queIdx = _AX6Util2.default.isNumber(boundID) ? boundID : getQueIdx.call(this, boundID),
                 item = this.queue[queIdx];
 
@@ -1117,9 +1121,7 @@ var AX6UIPicker = function (_AX6UICore) {
 
             alignPicker.call(this, "append");
 
-            (0, _jqmin2.default)(window).on("resize.ax6picker", function (e) {
-                alignPicker.call(_this3);
-            }).on("keyup.ax6picker", function (e) {
+            (0, _jqmin2.default)(window).on("resize.ax6picker", throttledResize.bind(this)).on("keyup.ax6picker", function (e) {
                 e = e || window.event;
                 onBodyKeyup.call(_this3, e);
                 _AX6Util2.default.stopEvent(e);

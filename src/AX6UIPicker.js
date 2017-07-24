@@ -469,7 +469,6 @@ class AX6UIPicker extends AX6UICore {
 
     /**
      * @method
-     * @return {AX6UIMask}
      */
     initOnce(){
         if(this.initialized) return this;
@@ -1128,10 +1127,6 @@ class AX6UIPicker extends AX6UICore {
 
             },
         };
-        // throttledResize
-        const throttledResize = U.throttle(function (e) {
-            alignPicker.call(this, e || window.event);
-        }, 30);
 
         let self = this;
         let queIdx = (U.isNumber(boundID)) ? boundID : getQueIdx.call(this, boundID),
@@ -1180,7 +1175,9 @@ class AX6UIPicker extends AX6UICore {
         alignPicker.call(this, "append");
 
         jQuery(window)
-            .on("resize.ax6picker", throttledResize.bind(this))
+            .on("resize.ax6picker", U.throttle(function (e) {
+                alignPicker.call(this, e || window.event);
+            }, 100).bind(this))
             .on("keyup.ax6picker", (e) => {
                 e = e || window.event;
                 onBodyKeyup.call(this, e);

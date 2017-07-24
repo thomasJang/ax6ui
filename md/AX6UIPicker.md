@@ -12,7 +12,7 @@
     * [.openTimer](#AX6UIPicker+openTimer) : <code>Object</code>
     * [.closeTimer](#AX6UIPicker+closeTimer) : <code>Object</code>
     * [.init(config)](#AX6UIPicker+init)
-    * [.initOnce()](#AX6UIPicker+initOnce) ⇒ <code>AX6UIMask</code>
+    * [.initOnce()](#AX6UIPicker+initOnce)
     * [.bind(item)](#AX6UIPicker+bind) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
     * [.setContentValue(boundID, inputIndex, val, _option)](#AX6UIPicker+setContentValue) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
     * [.getContentValue(boundID, inputIndex)](#AX6UIPicker+getContentValue) ⇒ <code>\*</code>
@@ -94,7 +94,7 @@
 
 <a name="AX6UIPicker+initOnce"></a>
 
-### aX6UIPicker.initOnce() ⇒ <code>AX6UIMask</code>
+### aX6UIPicker.initOnce()
 **Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 <a name="AX6UIPicker+bind"></a>
 

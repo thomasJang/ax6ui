@@ -1,5 +1,6 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
+import U from "./AX6Util";
 import mustache from "./AX6Mustache.js";
 import "./AX6UIMask/index.scss";
 
@@ -109,7 +110,6 @@ class AX6UIMask extends AX6UICore {
 
     /**
      * @method
-     * @return {AX6UIMask}
      */
     initOnce() {
         if (this.initialized) return this;
@@ -165,10 +165,9 @@ class AX6UIMask extends AX6UICore {
             $target.addClass("ax-masking");
 
             // 마스크의 타겟이 html body가 아닌경우 window resize 이벤트를 추적하여 엘리먼트 마스크의 CSS 속성 변경
-
-            jQuery(window).on("resize.ax5mask-" + this.instanceId, e => {
+            jQuery(window).on("resize.ax5mask-" + this.instanceId, U.throttle(function (e) {
                 this.align();
-            });
+            }, 100).bind(this));
         }
 
         if (typeof _cfg.zIndex !== "undefined") {

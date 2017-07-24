@@ -10,7 +10,7 @@
     * [.activeDialog](#AX6UIDialog+activeDialog) : <code>Object</code>
     * [.autoCloseTimer](#AX6UIDialog+autoCloseTimer) : <code>Object</code>
     * [.init(config)](#AX6UIDialog+init)
-    * [.initOnce()](#AX6UIDialog+initOnce) ⇒ <code>AX6UIMask</code>
+    * [.initOnce()](#AX6UIDialog+initOnce)
     * [.alert(opts, callback, tryCount)](#AX6UIDialog+alert) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
     * [.confirm(opts, callback, tryCount)](#AX6UIDialog+confirm) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
     * [.prompt(opts, callback, tryCount)](#AX6UIDialog+prompt) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
@@ -68,7 +68,7 @@ dialog가 열려있는 상태에서 다시 open이 되면 queue에 보관 하였
 
 <a name="AX6UIDialog+initOnce"></a>
 
-### aX6UIDialog.initOnce() ⇒ <code>AX6UIMask</code>
+### aX6UIDialog.initOnce()
 **Kind**: instance method of <code>[AX6UIDialog](#AX6UIDialog)</code>  
 <a name="AX6UIDialog+alert"></a>
 

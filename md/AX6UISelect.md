@@ -15,7 +15,7 @@
     * [.keyUpTimer](#AX6UISelect+keyUpTimer) : <code>Object</code>
     * [.xvar](#AX6UISelect+xvar) : <code>Object</code>
     * [.init(config)](#AX6UISelect+init)
-    * [.initOnce()](#AX6UISelect+initOnce) ⇒ <code>AX6UIMask</code>
+    * [.initOnce()](#AX6UISelect+initOnce)
     * [.bind(item)](#AX6UISelect+bind) ⇒ <code>[AX6UISelect](#AX6UISelect)</code>
     * [.open(boundID, tryCount)](#AX6UISelect+open) ⇒ <code>[AX6UISelect](#AX6UISelect)</code>
     * [.update(_item)](#AX6UISelect+update) ⇒ <code>[AX6UISelect](#AX6UISelect)</code>
@@ -98,7 +98,7 @@ bind를 통해 연결된 select가 저장되는 변수
 
 <a name="AX6UISelect+initOnce"></a>
 
-### aX6UISelect.initOnce() ⇒ <code>AX6UIMask</code>
+### aX6UISelect.initOnce()
 **Kind**: instance method of <code>[AX6UISelect](#AX6UISelect)</code>  
 <a name="AX6UISelect+bind"></a>
 

@@ -836,7 +836,6 @@ class AX6UICalendar extends AX6UICore {
 
     /**
      * @method
-     * @return {AX6UIMask}
      */
     initOnce(){
         if(this.initialized) return this;

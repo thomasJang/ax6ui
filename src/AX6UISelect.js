@@ -8,8 +8,8 @@ import "./AX6UISelect/index.scss";
 const $window = jQuery(window);
 const displayTmpl = function (columnKeys) {
     return `
-<a {{^tabIndex}}href="#ax6select-{{id}}" {{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}}class="form-control {{formSize}} ax6select-display {{theme}}" 
-data-ax6ui-select-display="{{id}}" data-ax6ui-select-instance="{{instanceId}}">
+<a {{^tabIndex}}href="#ax6select-{{id}}" {{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}}class="ax6select-display {{theme}}" 
+data-ax6ui-select-display="{{id}}" data-ax6ui-select-instance="{{instanceId}}" style="height: {{height}}px;">
     <div class="ax6select-display-table" data-els="display-table">
         <div data-ax6ui-select-display="label">{{label}}</div>
         <div data-ax6ui-select-display="addon"> 
@@ -27,13 +27,13 @@ data-ax6ui-select-display="{{id}}" data-ax6ui-select-instance="{{instanceId}}">
         </div>
     </div>
     <input type="text" tabindex="-1" data-ax6ui-select-display="input" 
-    style="position:absolute;z-index:0;left:0px;top:0px;font-size:1px;opacity: 0;width:1px;border: 0px none;color : transparent;text-indent: -9999em;" />
+    style="position:absolute;z-index:0;left:0px;top:0px;font-size:1px;opacity: 0;width:1px;height:1px;border: 0 none;color : transparent;text-indent: -9999em;" />
 </a>
 `;
 };
 const selectTmpl = function (columnKeys) {
     return `
-<select tabindex="-1" class="" name="{{name}}" {{#multiple}}multiple="multiple"{{/multiple}}></select>
+<select tabindex="-1" class="" name="{{name}}" {{#multiple}}multiple="multiple"{{/multiple}} style="height: {{height}}px;"></select>
 `;
 };
 const optionGroupTmpl = function (columnKeys) {
@@ -478,9 +478,11 @@ const bindSelectTarget = function (queIdx) {
         data.tabIndex = item.tabIndex;
         data.multiple = item.multiple;
         data.reset = item.reset;
+        data.height = item.height;
         data.label = getLabel.call(this, queIdx);
 
         item.$display = jQuery(mustache.render(displayTmpl.call(this), data));
+        //item.$display.css({height: item.height});
         item.$displayLabel = item.$display.find('[data-ax6ui-select-display="label"]');
 
         if (item.$target.find("select").get(0)) {
@@ -488,7 +490,8 @@ const bindSelectTarget = function (queIdx) {
             // select 속성만 변경
             item.$select
                 .attr("tabindex", "-1")
-                .attr("class", "form-control " + data.formSize);
+                .css({height: data.height});
+
             if (data.name) {
                 item.$select.attr("name", "name");
             }
@@ -716,6 +719,7 @@ class AX6UISelect extends AX6UICore {
         this.config = {
             theme: 'default',
             animateTime: 100,
+            height: 34,
             lang: {
                 noSelected: '',
                 noOptions: 'no options',
@@ -784,7 +788,6 @@ class AX6UISelect extends AX6UICore {
 
     /**
      * @method
-     * @return {AX6UIMask}
      */
     initOnce() {
         if (this.initialized) return this;

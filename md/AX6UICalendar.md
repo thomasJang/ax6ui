@@ -6,7 +6,7 @@
 * [AX6UICalendar](#AX6UICalendar)
     * [new AX6UICalendar(config)](#new_AX6UICalendar_new)
     * [.init(config)](#AX6UICalendar+init)
-    * [.initOnce()](#AX6UICalendar+initOnce) ⇒ <code>AX6UIMask</code>
+    * [.initOnce()](#AX6UICalendar+initOnce)
     * [.changeMode(mode, changeDate)](#AX6UICalendar+changeMode) ⇒ <code>[AX6UICalendar](#AX6UICalendar)</code>
 
 <a name="new_AX6UICalendar_new"></a>
@@ -40,7 +40,7 @@
 
 <a name="AX6UICalendar+initOnce"></a>
 
-### aX6UICalendar.initOnce() ⇒ <code>AX6UIMask</code>
+### aX6UICalendar.initOnce()
 **Kind**: instance method of <code>[AX6UICalendar](#AX6UICalendar)</code>  
 <a name="AX6UICalendar+changeMode"></a>
 

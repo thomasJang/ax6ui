@@ -10,7 +10,7 @@
     * [.status](#AX6UIMask+status) : <code>String</code>
     * [.activeConfig](#AX6UIMask+activeConfig) : <code>JSON</code>
     * [.init(config)](#AX6UIMask+init)
-    * [.initOnce()](#AX6UIMask+initOnce) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
+    * [.initOnce()](#AX6UIMask+initOnce)
     * [.open(options)](#AX6UIMask+open) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
     * [.close(delay)](#AX6UIMask+close) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
     * [.fadeOut()](#AX6UIMask+fadeOut) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
@@ -74,7 +74,7 @@
 
 <a name="AX6UIMask+initOnce"></a>
 
-### aX6UIMask.initOnce() ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
+### aX6UIMask.initOnce()
 **Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
 <a name="AX6UIMask+open"></a>
 

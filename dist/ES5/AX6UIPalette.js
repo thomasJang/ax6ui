@@ -470,7 +470,6 @@ var AX6UIPalette = function (_AX6UICore) {
 
         /**
          * @method
-         * @return {AX6UIMask}
          */
 
     }, {

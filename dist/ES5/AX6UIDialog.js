@@ -335,7 +335,6 @@ var AX6UIDialog = function (_AX6UICore) {
 
         /**
          * @method
-         * @return {AX6UIMask}
          */
 
     }, {

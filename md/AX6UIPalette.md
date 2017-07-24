@@ -10,7 +10,7 @@
     * [.xvar](#AX6UIPalette+xvar) : <code>Object</code>
     * [.colors](#AX6UIPalette+colors) : <code>Array</code>
     * [.init(config)](#AX6UIPalette+init)
-    * [.initOnce()](#AX6UIPalette+initOnce) ⇒ <code>AX6UIMask</code>
+    * [.initOnce()](#AX6UIPalette+initOnce)
     * [.repaint()](#AX6UIPalette+repaint) ⇒ <code>[AX6UIPalette](#AX6UIPalette)</code>
     * [.setSelectedColor(selectedColor)](#AX6UIPalette+setSelectedColor) ⇒ <code>[AX6UIPalette](#AX6UIPalette)</code>
 
@@ -151,7 +151,7 @@ myPalette = new Palette({
 
 <a name="AX6UIPalette+initOnce"></a>
 
-### aX6UIPalette.initOnce() ⇒ <code>AX6UIMask</code>
+### aX6UIPalette.initOnce()
 **Kind**: instance method of <code>[AX6UIPalette](#AX6UIPalette)</code>  
 <a name="AX6UIPalette+repaint"></a>
 

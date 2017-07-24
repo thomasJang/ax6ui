@@ -38,10 +38,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var $window = (0, _jqmin2.default)(window);
 var displayTmpl = function displayTmpl(columnKeys) {
-    return "\n<a {{^tabIndex}}href=\"#ax6select-{{id}}\" {{/tabIndex}}{{#tabIndex}}tabindex=\"{{tabIndex}}\" {{/tabIndex}}class=\"form-control {{formSize}} ax6select-display {{theme}}\" \ndata-ax6ui-select-display=\"{{id}}\" data-ax6ui-select-instance=\"{{instanceId}}\">\n    <div class=\"ax6select-display-table\" data-els=\"display-table\">\n        <div data-ax6ui-select-display=\"label\">{{label}}</div>\n        <div data-ax6ui-select-display=\"addon\"> \n            {{#multiple}}{{#reset}}\n            <span class=\"addon-icon-reset\" data-selected-clear=\"true\">{{{.}}}</span>\n            {{/reset}}{{/multiple}}\n            {{#icons}}\n            <span class=\"addon-icon-closed\">{{clesed}}</span>\n            <span class=\"addon-icon-opened\">{{opened}}</span>\n            {{/icons}}\n            {{^icons}}\n            <span class=\"addon-icon-closed\"><span class=\"addon-icon-arrow\"></span></span>\n            <span class=\"addon-icon-opened\"><span class=\"addon-icon-arrow\"></span></span>\n            {{/icons}}\n        </div>\n    </div>\n    <input type=\"text\" tabindex=\"-1\" data-ax6ui-select-display=\"input\" \n    style=\"position:absolute;z-index:0;left:0px;top:0px;font-size:1px;opacity: 0;width:1px;border: 0px none;color : transparent;text-indent: -9999em;\" />\n</a>\n";
+    return "\n<a {{^tabIndex}}href=\"#ax6select-{{id}}\" {{/tabIndex}}{{#tabIndex}}tabindex=\"{{tabIndex}}\" {{/tabIndex}}class=\"ax6select-display {{theme}}\" \ndata-ax6ui-select-display=\"{{id}}\" data-ax6ui-select-instance=\"{{instanceId}}\" style=\"height: {{height}}px;\">\n    <div class=\"ax6select-display-table\" data-els=\"display-table\">\n        <div data-ax6ui-select-display=\"label\">{{label}}</div>\n        <div data-ax6ui-select-display=\"addon\"> \n            {{#multiple}}{{#reset}}\n            <span class=\"addon-icon-reset\" data-selected-clear=\"true\">{{{.}}}</span>\n            {{/reset}}{{/multiple}}\n            {{#icons}}\n            <span class=\"addon-icon-closed\">{{clesed}}</span>\n            <span class=\"addon-icon-opened\">{{opened}}</span>\n            {{/icons}}\n            {{^icons}}\n            <span class=\"addon-icon-closed\"><span class=\"addon-icon-arrow\"></span></span>\n            <span class=\"addon-icon-opened\"><span class=\"addon-icon-arrow\"></span></span>\n            {{/icons}}\n        </div>\n    </div>\n    <input type=\"text\" tabindex=\"-1\" data-ax6ui-select-display=\"input\" \n    style=\"position:absolute;z-index:0;left:0px;top:0px;font-size:1px;opacity: 0;width:1px;height:1px;border: 0 none;color : transparent;text-indent: -9999em;\" />\n</a>\n";
 };
 var selectTmpl = function selectTmpl(columnKeys) {
-    return "\n<select tabindex=\"-1\" class=\"\" name=\"{{name}}\" {{#multiple}}multiple=\"multiple\"{{/multiple}}></select>\n";
+    return "\n<select tabindex=\"-1\" class=\"\" name=\"{{name}}\" {{#multiple}}multiple=\"multiple\"{{/multiple}} style=\"height: {{height}}px;\"></select>\n";
 };
 var optionGroupTmpl = function optionGroupTmpl(columnKeys) {
     return "\n<div class=\"ax6select-option-group {{theme}}\" data-ax6ui-select-option-group=\"{{id}}\">\n    <div class=\"ax-select-body\">\n        <div class=\"ax-select-option-group-content\" data-els=\"content\"></div>\n    </div>\n    <div class=\"ax-select-arrow\"></div> \n</div>\n";
@@ -402,15 +402,18 @@ var bindSelectTarget = function bindSelectTarget(queIdx) {
         data.tabIndex = item.tabIndex;
         data.multiple = item.multiple;
         data.reset = item.reset;
+        data.height = item.height;
         data.label = getLabel.call(this, queIdx);
 
         item.$display = (0, _jqmin2.default)(_AX6Mustache2.default.render(displayTmpl.call(this), data));
+        //item.$display.css({height: item.height});
         item.$displayLabel = item.$display.find('[data-ax6ui-select-display="label"]');
 
         if (item.$target.find("select").get(0)) {
             item.$select = item.$target.find("select");
             // select 속성만 변경
-            item.$select.attr("tabindex", "-1").attr("class", "form-control " + data.formSize);
+            item.$select.attr("tabindex", "-1").css({ height: data.height });
+
             if (data.name) {
                 item.$select.attr("name", "name");
             }
@@ -623,6 +626,7 @@ var AX6UISelect = function (_AX6UICore) {
         _this3.config = {
             theme: 'default',
             animateTime: 100,
+            height: 34,
             lang: {
                 noSelected: '',
                 noOptions: 'no options',
@@ -696,7 +700,6 @@ var AX6UISelect = function (_AX6UICore) {
 
         /**
          * @method
-         * @return {AX6UIMask}
          */
 
     }, {

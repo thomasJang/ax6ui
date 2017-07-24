@@ -14,6 +14,10 @@ var _AX6UICore2 = require("./AX6UICore.js");
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
+var _AX6Util = require("./AX6Util");
+
+var _AX6Util2 = _interopRequireDefault(_AX6Util);
+
 var _AX6Mustache = require("./AX6Mustache.js");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
@@ -135,7 +139,6 @@ var AX6UIMask = function (_AX6UICore) {
 
         /**
          * @method
-         * @return {AX6UIMask}
          */
 
     }, {
@@ -199,10 +202,9 @@ var AX6UIMask = function (_AX6UICore) {
                 $target.addClass("ax-masking");
 
                 // 마스크의 타겟이 html body가 아닌경우 window resize 이벤트를 추적하여 엘리먼트 마스크의 CSS 속성 변경
-
-                (0, _jqmin2.default)(window).on("resize.ax5mask-" + this.instanceId, function (e) {
-                    _this2.align();
-                });
+                (0, _jqmin2.default)(window).on("resize.ax5mask-" + this.instanceId, _AX6Util2.default.throttle(function (e) {
+                    this.align();
+                }, 100).bind(this));
             }
 
             if (typeof _cfg.zIndex !== "undefined") {

@@ -326,7 +326,7 @@ class AX6UIDialog extends AX6UICore {
          */
         this.autoCloseTimer = null;
 
-        if (typeof config !== "undefined") this.init();
+        this.init();
     }
 
     /**

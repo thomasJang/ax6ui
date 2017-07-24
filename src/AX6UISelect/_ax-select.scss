@@ -1,90 +1,51 @@
-/// override bootstrap.form-control
-@mixin input-size($parent, $input-height) {
-    [dtat-ax6ui-select] {
-        .ax6select-display#{$parent} {
-            height: $input-height;
-        }
-        select[multiple]#{$parent} {
-            height: $input-height;
-        }
-    }
-}
-
-[dtat-ax6ui-select] select[multiple].form-control {
-    height: $input-height-base;
-}
-
-@include input-size('.input-sm', $input-height-small);
-@include input-size('.input-lg', $input-height-large);
-
-.form-group-sm {
-    [dtat-ax6ui-select] {
-        select[multiple].form-control {
-            height: $input-height-small;
-        }
-    }
-
-}
-
-.form-group-lg {
-    [dtat-ax6ui-select] {
-        select[multiple].form-control {
-            height: $input-height-large;
-        }
-    }
-}
-
-.form-inline {
-    @media (min-width: $screen-sm-min) {
-        // Inline-block all the things for "inline"
-        [dtat-ax6ui-select] {
-            display: inline-block;
-        }
-    }
-}
-
-// select group
-[dtat-ax6ui-select] {
-    position: relative;
-    overflow: visible;
-    display: block;
-    box-sizing: border-box;
-    *,
-    *:before,
-    *:after {
-        box-sizing: border-box;
-    }
-    margin: 0;
-
-    select {
-        z-index: 1;
-        position: absolute;
-        opacity: 0;
-        user-select: none;
-    }
-}
+// themes
+$base-colors: (
+        default: $ax6select-default-base-color,
+        primary: $ax6select-primary-base-color,
+        success: $ax6select-success-base-color,
+        info: $ax6select-info-base-color,
+        warning: $ax6select-warning-base-color,
+        danger: $ax6select-danger-base-color
+);
+$theme-colors: (
+        default: $ax6select-default-theme-color,
+        primary: $ax6select-primary-theme-color,
+        success: $ax6select-success-theme-color,
+        info: $ax6select-info-theme-color,
+        warning: $ax6select-warning-theme-color,
+        danger: $ax6select-danger-theme-color
+);
+$hover-types: (
+        default: $ax6select-default-hover-type,
+        primary: $ax6select-primary-hover-type,
+        success: $ax6select-success-hover-type,
+        info: $ax6select-info-hover-type,
+        warning: $ax6select-warning-hover-type,
+        danger: $ax6select-danger-hover-type
+);
 
 @include keyframes(ax-select-option-group) {
     from {
-        @include transform(translateY(-10%));
+        @include transform(scale(1, 0));
         opacity: 0;
     }
     to {
-        @include transform(translateY(0%));
+        @include transform(scale(1, 1));
         opacity: 1;
     }
 }
 
 @include keyframes(ax-select-option-group-destroy) {
     from {
-        @include transform(translateY(0%) scaleY(1.0));
+        @include transform(scale(1, 1));
         opacity: 1;
     }
     to {
-        @include transform(translateY(0%) scaleY(0.0));
+        @include transform(scale(1, 0));
         opacity: 0;
     }
 }
+
 
 @mixin ax6select-display-theme($base-color, $back-color, $theme-color) {
     &:hover, &:active, &:focus, &[data-select-option-group-opened] {
@@ -95,10 +56,10 @@
             text-decoration: none;
 
             .ax6select-display-table {
-                [dtat-ax6ui-select-display="label"] {
+                [data-ax6ui-select-display="label"] {
 
                 }
-                [dtat-ax6ui-select-display="addon"] {
+                [data-ax6ui-select-display="addon"] {
                     .addon-icon-closed {
                         .addon-icon-arrow {
                             border-top-color: $base-color;
@@ -123,7 +84,6 @@
     color: $base-color;
 
     .ax-select-body {
-
         .ax-select-option-group-content {
             .ax-select-option-item {
                 &:hover, &.hover {
@@ -186,28 +146,24 @@
                 }
             }
             .ax-select-option-group {
-
                 .ax-select-option-item-holder {
-
                     .ax-select-option-group-label {
                         background: #eee;
                     }
                 }
             }
         }
-
         .ax-select-option-group-buttons {
             border-top: 1px solid;
             border-color: $theme-color;
         }
     }
-
     &:hover {
 
     }
 }
 
-@mixin ax6select-option-group-size($padding, $font-size) {
+@mixin ax6select-option-group($padding, $font-size) {
     .ax-select-body {
         padding: $ax6select-option-group-body-padding;
         $ax6select-option-item-height: $font-size + 5;
@@ -321,37 +277,33 @@
     }
 }
 
-// themes
-$base-colors: (
-        default: $ax6select-default-base-color,
-        primary: $ax6select-primary-base-color,
-        success: $ax6select-success-base-color,
-        info: $ax6select-info-base-color,
-        warning: $ax6select-warning-base-color,
-        danger: $ax6select-danger-base-color
-);
-$theme-colors: (
-        default: $ax6select-default-theme-color,
-        primary: $ax6select-primary-theme-color,
-        success: $ax6select-success-theme-color,
-        info: $ax6select-info-theme-color,
-        warning: $ax6select-warning-theme-color,
-        danger: $ax6select-danger-theme-color
-);
-$hover-types: (
-        default: $ax6select-default-hover-type,
-        primary: $ax6select-primary-hover-type,
-        success: $ax6select-success-hover-type,
-        info: $ax6select-info-hover-type,
-        warning: $ax6select-warning-hover-type,
-        danger: $ax6select-danger-hover-type
-);
+
+// select group
+[data-ax6ui-select] {
+    position: relative;
+    overflow: visible;
+    display: block;
+    box-sizing: border-box;
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    margin: 0;
+    select {
+        z-index: 1;
+        position: absolute;
+        opacity: 0;
+        user-select: none;
+    }
+}
 
 /// select-display
 .ax6select-display {
     position: relative;
     z-index: 2;
-    padding: 0px;
+    padding: 0;
 
     display: block;
     height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
@@ -378,14 +330,14 @@ $hover-types: (
         border-collapse: collapse;
         user-select: none;
 
-        [dtat-ax6ui-select-display="label"] {
+        [data-ax6ui-select-display="label"] {
             display: table-cell;
             vertical-align: middle;
             padding: $ax6select-label-padding;
             color: $ax6select-label-color;
             white-space: nowrap;
         }
-        [dtat-ax6ui-select-display="addon"] {
+        [data-ax6ui-select-display="addon"] {
             display: table-cell;
             vertical-align: middle;
             width: $ax6select-addon-icon-height * 2 + $ax6select-addon-icon-padding-right;
@@ -438,7 +390,7 @@ $hover-types: (
     &[data-select-option-group-opened] {
         @include box-shadow(inset 1px 1px 3px rgba(0, 0, 0, 0.2));
         background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-        .ax6select-display-table [dtat-ax6ui-select-display="addon"] {
+        .ax6select-display-table [data-ax6ui-select-display="addon"] {
             .addon-icon-reset {
                 display: block;
                 position: absolute;
@@ -460,16 +412,6 @@ $hover-types: (
             @include ax6select-display-theme(map_get($base-colors, nth($theme, 1)), $ax6select-option-group-bg, map_get($theme-colors, nth($theme, 1)));
         }
     }
-
-    &.input-xs {
-
-    }
-    &.input-sm {
-
-    }
-    &.input-lg {
-
-    }
 }
 
 /// select-option-group
@@ -484,7 +426,7 @@ $hover-types: (
     border: $ax6select-option-group-inner-border;
     overflow: hidden;
     @include ax-background($ax6select-option-group-bg);
-    @include animation(ax-select-option-group $ax6select-option-group-easing-time-open ease-out);
+    @include animation(ax-select-option-group $ax6select-option-group-easing-time-open $ease-out-back forwards);
     @include transform(translateZ(0));
     @include transform-origin(center top);
 
@@ -504,44 +446,5 @@ $hover-types: (
         }
     }
 
-    @include ax6select-option-group-size($ax6select-option-item-padding, $ax6select-option-item-font-size);
-    &.ax6select-option-group-lg {
-        @include ax6select-option-group-size($ax6select-option-item-padding-lg, $ax6select-option-item-font-size-lg);
-    }
-    &.ax6select-option-group-sm {
-        @include ax6select-option-group-size($ax6select-option-item-padding-sm, $ax6select-option-item-font-size-sm);
-    }
-    &.ax6select-option-group-xs {
-        @include ax6select-option-group-size($ax6select-option-item-padding-xs, $ax6select-option-item-font-size-xs);
-    }
-}
-
-
-/// suport input-group
-.input-group {
-    [dtat-ax6ui-select] {
-        display: table-cell;
-
-        select {
-            z-index: 1;
-            position: absolute;
-            opacity: 0;
-            user-select: none;
-        }
-        .ax6select-display {
-            @extend .ax6select-display;
-        }
-        &:first-child{
-            .ax6select-display {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-        }
-        &:last-child{
-            .ax6select-display {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-        }
-    }
+    @include ax6select-option-group($ax6select-option-item-padding, $ax6select-option-item-font-size);
 }

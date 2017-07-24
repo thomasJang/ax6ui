@@ -10,7 +10,8 @@ const entry = {
     calendar: './src/calendar.js',
     picker: './src/picker.js',
     palette: './src/palette.js',
-    dialog: './src/dialog.js'
+    dialog: './src/dialog.js',
+    select: './src/select.js'
 };
 
 let plugins = [

@@ -543,8 +543,8 @@ const bindSelectTarget = function (queIdx) {
     return this;
 };
 
-const syncSelectOptions = (function () {
-    let setSelected = function (queIdx, O) {
+const syncSelectOptions = function (queIdx, options) {
+    const setSelected = function (queIdx, O) {
         if (!O) {
             this.queue[queIdx].selected = [];
         }
@@ -554,96 +554,95 @@ const syncSelectOptions = (function () {
         }
     };
 
-    return function (queIdx, options) {
-        let item = this.queue[queIdx],
-            po, elementOptions, newOptions, focusIndex = 0;
+    let item = this.queue[queIdx],
+        po, elementOptions, newOptions, focusIndex = 0;
 
-        setSelected.call(this, queIdx, false); // item.selected 초기화
+    setSelected.call(this, queIdx, false); // item.selected 초기화
 
-        if (options) {
-            item.options = options;
-            item.indexedOptions = [];
+    if (options) {
+        item.options = options;
+        item.indexedOptions = [];
 
-            // select options 태그 생성
-            po = [];
-            item.options.forEach(function (O, OIndex) {
-                if (O.optgroup) {
+        // select options 태그 생성
+        po = [];
+        item.options.forEach((O, OIndex) => {
+            if (O.optgroup) {
 
-                    O['@gindex'] = OIndex;
-                    O.options.forEach(function (OO, OOIndex) {
-                        OO['@index'] = OOIndex;
-                        OO['@findex'] = focusIndex;
-                        po.push('<option value="' + OO[item.columnKeys.optionValue] + '" '
-                            + (OO[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>'
-                            + OO[item.columnKeys.optionText] + '</option>');
-                        if (OO[item.columnKeys.optionSelected]) {
-                            setSelected.call(self, queIdx, OO);
-                        }
-
-                        item.indexedOptions.push({
-                            '@findex': focusIndex, value: OO[item.columnKeys.optionValue], text: OO[item.columnKeys.optionText]
-                        });
-                        focusIndex++;
-                    });
-                }
-                else {
-                    O['@index'] = OIndex;
-                    O['@findex'] = focusIndex;
-                    po.push('<option value="' + O[item.columnKeys.optionValue] + '" '
-                        + (O[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>'
-                        + O[item.columnKeys.optionText] + '</option>');
-                    if (O[item.columnKeys.optionSelected]) {
-                        setSelected.call(self, queIdx, O);
+                O['@gindex'] = OIndex;
+                O.options.forEach((OO, OOIndex) => {
+                    OO['@index'] = OOIndex;
+                    OO['@findex'] = focusIndex;
+                    po.push('<option value="' + OO[item.columnKeys.optionValue] + '" '
+                        + (OO[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>'
+                        + OO[item.columnKeys.optionText] + '</option>');
+                    if (OO[item.columnKeys.optionSelected]) {
+                        setSelected.call(this, queIdx, OO);
                     }
 
                     item.indexedOptions.push({
-                        '@findex': focusIndex, value: O[item.columnKeys.optionValue], text: O[item.columnKeys.optionText]
+                        '@findex': focusIndex, value: OO[item.columnKeys.optionValue], text: OO[item.columnKeys.optionText]
                     });
                     focusIndex++;
-                }
-            });
-            item.optionItemLength = focusIndex;
-            item.$select.html(po.join(''));
-        }
-        else {
-            /// select > options 태그로 스크립트 options를 만들어주는 역할
-            elementOptions = U.toArray(item.$select.get(0).options);
-            // select option 스크립트 생성
-            newOptions = [];
-            elementOptions.forEach(function (O, OIndex) {
-                var option = {};
-                //if (O.value != "") {
-                option[item.columnKeys.optionValue] = O.value;
-                option[item.columnKeys.optionText] = O.text;
-                option[item.columnKeys.optionSelected] = O.selected;
-                option['@index'] = OIndex;
-                option['@findex'] = OIndex;
-                if (O.selected) setSelected.call(self, queIdx, option);
-                newOptions.push(option);
-                //}
-                option = null;
-            });
-            item.options = newOptions;
-            item.indexedOptions = newOptions;
-        }
-
-        if (!item.multiple && item.selected.length == 0 && item.options && item.options[0]) {
-            if (item.options[0].optgroup) {
-                item.options[0].options[0][item.columnKeys.optionSelected] = true;
-                item.selected.push(jQuery.extend({}, item.options[0].options[0]));
+                });
             }
             else {
-                item.options[0][item.columnKeys.optionSelected] = true;
-                item.selected.push(jQuery.extend({}, item.options[0]));
-            }
-        }
+                O['@index'] = OIndex;
+                O['@findex'] = focusIndex;
+                po.push('<option value="' + O[item.columnKeys.optionValue] + '" '
+                    + (O[item.columnKeys.optionSelected] ? ' selected="selected"' : '') + '>'
+                    + O[item.columnKeys.optionText] + '</option>');
+                if (O[item.columnKeys.optionSelected]) {
+                    setSelected.call(this, queIdx, O);
+                }
 
-        po = null;
-        elementOptions = null;
-        newOptions = null;
-        return item.options;
+                item.indexedOptions.push({
+                    '@findex': focusIndex, value: O[item.columnKeys.optionValue], text: O[item.columnKeys.optionText]
+                });
+                focusIndex++;
+            }
+        });
+        item.optionItemLength = focusIndex;
+        item.$select.html(po.join(''));
     }
-})();
+    else {
+        /// select > options 태그로 스크립트 options를 만들어주는 역할
+        elementOptions = U.toArray(item.$select.get(0).options);
+        // select option 스크립트 생성
+        newOptions = [];
+        elementOptions.forEach((O, OIndex) => {
+            let option = {};
+
+            option[item.columnKeys.optionValue] = O.value;
+            option[item.columnKeys.optionText] = O.text;
+            option[item.columnKeys.optionSelected] = O.selected;
+            option['@index'] = OIndex;
+            option['@findex'] = OIndex;
+            if (O.selected) setSelected.call(this, queIdx, option);
+            newOptions.push(option);
+
+            option = null;
+        });
+        item.options = newOptions;
+        item.indexedOptions = newOptions;
+    }
+
+    if (!item.multiple && item.selected.length == 0 && item.options && item.options[0]) {
+        if (item.options[0].optgroup) {
+            item.options[0].options[0][item.columnKeys.optionSelected] = true;
+            item.selected.push(jQuery.extend({}, item.options[0].options[0]));
+        }
+        else {
+            item.options[0][item.columnKeys.optionSelected] = true;
+            item.selected.push(jQuery.extend({}, item.options[0]));
+        }
+    }
+
+    po = null;
+    elementOptions = null;
+    newOptions = null;
+    return item.options;
+};
+
 const getQueIdx = function (boundID) {
     if (!U.isString(boundID)) {
         boundID = jQuery(boundID).data("data-ax6ui-select-id");
@@ -1015,9 +1014,9 @@ class AX6UISelect extends AX6UICore {
                 }
             },
             clearSelected = function (queIdx) {
-                this.queue[queIdx].options.forEach(function (n) {
+                this.queue[queIdx].options.forEach(n => {
                     if (n.optgroup) {
-                        n.options.forEach(function (nn) {
+                        n.options.forEach(nn => {
                             nn.selected = false;
                         });
                     }
@@ -1031,27 +1030,15 @@ class AX6UISelect extends AX6UICore {
                     // 클래스 내부에서 호출된 형태, 그런 이유로 옵션그룹에 대한 상태를 변경 하고 있다.
                     let item = this.queue[queIdx];
 
-                    /*
-                     if (U.isArray(value.index)) {
-                     value.index.forEach(function (n) {
-                     item.options[n][item.columnKeys.optionSelected] = getSelected(item, item.options[n][item.columnKeys.optionSelected], selected);
-                     self.activeSelectOptionGroup
-                     .find('[data-option-index="' + n + '"]')
-                     .attr("data-option-selected", item.options[n][item.columnKeys.optionSelected].toString());
-                     });
-                     }
-                     else {
-                     }
-                     */
                     if (U.isString(value.index.gindex)) {
                         item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected] = getSelected(item, item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected], selected);
-                        self.activeSelectOptionGroup
+                        this.activeSelectOptionGroup
                             .find('[data-option-group-index="' + value.index.gindex + '"][data-option-index="' + value.index.index + '"]')
                             .attr("data-option-selected", item.options[value.index.gindex].options[value.index.index][item.columnKeys.optionSelected].toString());
                     }
                     else {
                         item.options[value.index.index][item.columnKeys.optionSelected] = getSelected(item, item.options[value.index.index][item.columnKeys.optionSelected], selected);
-                        self.activeSelectOptionGroup
+                        this.activeSelectOptionGroup
                             .find('[data-option-index="' + value.index.index + '"]')
                             .attr("data-option-selected", item.options[value.index.index][item.columnKeys.optionSelected].toString());
 
@@ -1067,7 +1054,7 @@ class AX6UISelect extends AX6UICore {
                             processor.value.call(self, queIdx, value, selected);
                         }
                         else {
-                            for (var key in processor) {
+                            for (let key in processor) {
                                 if (value[key]) {
                                     processor[key].call(self, queIdx, value, selected);
                                     break;

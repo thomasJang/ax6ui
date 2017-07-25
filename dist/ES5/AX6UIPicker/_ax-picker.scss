@@ -198,7 +198,7 @@
 
 // mixins --------------------------------------------- end
 
-[ax6-ui-picker] {
+[data-ax6ui-picker] {
 	@include ax-picker();
 	@include perspective(1000);
 	@include transform-style(preserve-3d);

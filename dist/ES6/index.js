@@ -5,6 +5,11 @@ import AX6UICore from "./AX6UICore";
 import AX6UIFormatter from "./AX6UIFormatter";
 import AX6UIFormatter_formatter from "./AX6UIFormatter_formatter";
 import AX6UIMask from "./AX6UIMask";
+import AX6UIPalette from "./AX6UIPalette";
+import AX6UIDialog from "./AX6UIDialog";
+import AX6UIPicker from "./AX6UIPicker";
+import AX6UICalendar from "./AX6UICalendar";
+import AX6UISelect from "./AX6UISelect";
 
 /**
  * @module AX6UI
@@ -79,7 +84,27 @@ AX6UIFormatter_formatter,
  * import { AX6UIMask } from "ax6ui";
  * ```
  */
-AX6UIMask };
+AX6UIMask,
+/**
+ * AX6UI.AX6UIPalette
+ */
+AX6UIPalette,
+/**
+ * AX6UI.AX6UIDialog
+ */
+AX6UIDialog,
+/**
+ * AX6UI.AX6UIPicker
+ */
+AX6UIPicker,
+/**
+ * AX6UI.AX6UICalendar
+ */
+AX6UICalendar,
+/**
+ * AX6UI.AX6UISelect
+ */
+AX6UISelect };
 
 export default {
   AX6Info,
@@ -88,5 +113,10 @@ export default {
   AX6Mustache,
   AX6UIFormatter,
   AX6UIFormatter_formatter,
-  AX6UIMask
+  AX6UIMask,
+  AX6UIPalette,
+  AX6UIDialog,
+  AX6UIPicker,
+  AX6UICalendar,
+  AX6UISelect
 };

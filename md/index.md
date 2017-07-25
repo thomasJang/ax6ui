@@ -10,6 +10,11 @@
     * [.AX6UIFormatter](#module_AX6UI.AX6UIFormatter)
     * [.AX6UIFormatter_formatter](#module_AX6UI.AX6UIFormatter_formatter)
     * [.AX6UIMask](#module_AX6UI.AX6UIMask)
+    * [.AX6UIPalette](#module_AX6UI.AX6UIPalette)
+    * [.AX6UIDialog](#module_AX6UI.AX6UIDialog)
+    * [.AX6UIPicker](#module_AX6UI.AX6UIPicker)
+    * [.AX6UICalendar](#module_AX6UI.AX6UICalendar)
+    * [.AX6UISelect](#module_AX6UI.AX6UISelect)
 
 <a name="module_AX6UI.AX6Info"></a>
 
@@ -95,3 +100,33 @@ import AX6UIMask from "ax6ui/AX6UIMask";
 // or
 import { AX6UIMask } from "ax6ui";
 ```
+<a name="module_AX6UI.AX6UIPalette"></a>
+
+### AX6UI.AX6UIPalette
+AX6UI.AX6UIPalette
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UIDialog"></a>
+
+### AX6UI.AX6UIDialog
+AX6UI.AX6UIDialog
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UIPicker"></a>
+
+### AX6UI.AX6UIPicker
+AX6UI.AX6UIPicker
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UICalendar"></a>
+
+### AX6UI.AX6UICalendar
+AX6UI.AX6UICalendar
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UISelect"></a>
+
+### AX6UI.AX6UISelect
+AX6UI.AX6UISelect
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  

@@ -106,7 +106,7 @@ var setDisplay = function setDisplay() {
             this.$["control-display"].html(yy1 + ' ~ ' + yy2);
         }
 
-        this.$["control-display"].find('[data-calendar-display]').on(this.config.clickEventName, function (e) {
+        this.$["control-display"].off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-display]', function (e) {
             var target = _AX6Util2.default.findParentNode(e.target, function (target) {
                 if (target.getAttribute("data-calendar-display")) {
                     return true;
@@ -241,7 +241,7 @@ var printDay = function printDay(nowDate) {
         i++;
     }
 
-    this.$["body"].html(_AX6Mustache2.default.render(dayTmpl.call(this), data)).on(this.config.clickEventName, '[data-calendar-item-date]', function (e) {
+    this.$["body"].html(_AX6Mustache2.default.render(dayTmpl.call(this), data)).off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-item-date]', function (e) {
         e = e || window.event;
         onclick.call(_this2, e, 'date');
         _AX6Util2.default.stopEvent(e);
@@ -332,7 +332,7 @@ var printMonth = function printMonth(nowDate) {
         i++;
     }
 
-    this.$["body"].html(_AX6Mustache2.default.render(monthTmpl.call(this), data)).on(this.config.clickEventName, '[data-calendar-item-month]', function (e) {
+    this.$["body"].html(_AX6Mustache2.default.render(monthTmpl.call(this), data)).off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-item-month]', function (e) {
         e = e || window.event;
         onclick.call(_this3, e, 'month');
         _AX6Util2.default.stopEvent(e);
@@ -422,7 +422,7 @@ var printYear = function printYear(nowDate) {
         i++;
     }
 
-    this.$["body"].html(_AX6Mustache2.default.render(yearTmpl.call(this), data)).find('[data-calendar-item-year]').on(this.config.clickEventName, function (e) {
+    this.$["body"].html(_AX6Mustache2.default.render(yearTmpl.call(this), data)).off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-item-year]', function (e) {
         e = e || window.event;
         onclick.call(_this4, e, 'year');
         _AX6Util2.default.stopEvent(e);

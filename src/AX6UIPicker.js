@@ -10,7 +10,7 @@ import "./AX6UIPicker/index.scss";
 
 const pickerTmpl = function (columnKeys) {
     return `
-<div data-ax5picker="" class="{{theme}}" id="{{id}}" data-picker-els="root" {{#zIndex}}style="z-index:{{zIndex}};"{{/zIndex}}>
+<div data-ax6ui-picker="" class="{{theme}}" id="{{id}}" data-picker-els="root" {{#zIndex}}style="z-index:{{zIndex}};"{{/zIndex}}>
     {{#title}}
         <div class="ax-picker-heading">{{title}}</div>
     {{/title}}

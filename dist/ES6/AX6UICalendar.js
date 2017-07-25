@@ -173,7 +173,7 @@ const setDisplay = function () {
             this.$["control-display"].html(yy1 + ' ~ ' + yy2);
         }
 
-        this.$["control-display"].find('[data-calendar-display]').on(this.config.clickEventName, function (e) {
+        this.$["control-display"].off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-display]', function (e) {
             let target = U.findParentNode(e.target, function (target) {
                 if (target.getAttribute("data-calendar-display")) {
                     return true;
@@ -301,7 +301,7 @@ const printDay = function (nowDate) {
         i++;
     }
 
-    this.$["body"].html(mustache.render(dayTmpl.call(this), data)).on(this.config.clickEventName, '[data-calendar-item-date]', e => {
+    this.$["body"].html(mustache.render(dayTmpl.call(this), data)).off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-item-date]', e => {
         e = e || window.event;
         onclick.call(this, e, 'date');
         U.stopEvent(e);
@@ -390,7 +390,7 @@ const printMonth = function (nowDate) {
         i++;
     }
 
-    this.$["body"].html(mustache.render(monthTmpl.call(this), data)).on(this.config.clickEventName, '[data-calendar-item-month]', e => {
+    this.$["body"].html(mustache.render(monthTmpl.call(this), data)).off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-item-month]', e => {
         e = e || window.event;
         onclick.call(this, e, 'month');
         U.stopEvent(e);
@@ -478,7 +478,7 @@ const printYear = function (nowDate) {
         i++;
     }
 
-    this.$["body"].html(mustache.render(yearTmpl.call(this), data)).find('[data-calendar-item-year]').on(this.config.clickEventName, e => {
+    this.$["body"].html(mustache.render(yearTmpl.call(this), data)).off(this.config.clickEventName).on(this.config.clickEventName, '[data-calendar-item-year]', e => {
         e = e || window.event;
         onclick.call(this, e, 'year');
         U.stopEvent(e);

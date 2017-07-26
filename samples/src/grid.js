@@ -14,7 +14,7 @@ $body.append(el);
 let grid = new Grid();
 
 grid.setConfig({
-    target: $('[data-ax6ui-grid="first-grid"]'),
+    target: $body.find('[data-ax6ui-grid="first-grid"]'),
     columns: [
         {key: "a", label: "field A"},
         {key: "b", label: "field B"},

@@ -75,17 +75,17 @@ const init = function () {
     // 헤더 초기화
     const self = this;
 
-    this.$["container"]["header"].on("click", '[data-ax5grid-column-attr]', function (e) {
-        let key = this.getAttribute("data-ax5grid-column-key"),
-            colIndex = this.getAttribute("data-ax5grid-column-colindex"),
-            //rowIndex = this.getAttribute("data-ax5grid-column-rowindex"),
+    this.$["container"]["header"].on("click", '[data-ax6grid-column-attr]', function (e) {
+        let key = this.getAttribute("data-ax6grid-column-key"),
+            colIndex = this.getAttribute("data-ax6grid-column-colindex"),
+            //rowIndex = this.getAttribute("data-ax6grid-column-rowindex"),
             col = self.colGroup[colIndex];
 
         if (key === "__checkbox_header__") {
-            let selected = this.getAttribute("data-ax5grid-selected");
+            let selected = this.getAttribute("data-ax6grid-selected");
             selected = (U.isNothing(selected)) ? true : (selected !== "true");
 
-            $(this).attr("data-ax5grid-selected", selected);
+            $(this).attr("data-ax6grid-selected", selected);
             self.selectAll({selected: selected});
 
             selected = null;
@@ -105,8 +105,8 @@ const init = function () {
         col = null;
     });
     this.$["container"]["header"]
-        .on("mousedown", '[data-ax5grid-column-resizer]', function (e) {
-            let colIndex = this.getAttribute("data-ax5grid-column-resizer");
+        .on("mousedown", '[data-ax6grid-column-resizer]', function (e) {
+            let colIndex = this.getAttribute("data-ax6grid-column-resizer");
 
             self.xvar.mousePosition = UTIL.getMousePosition(e);
             columnResizerEvent.on.call(self, this, Number(colIndex));
@@ -216,14 +216,14 @@ const repaint = function (_reset) {
                 var cellHeight = cfg.header.columnHeight * col.rowspan - cfg.header.columnBorderWidth;
                 var colAlign = headerAlign || col.align;
                 SS.push('<td ',
-                    'data-ax5grid-column-attr="' + (col.columnAttr || "default") + '" ',
-                    'data-ax5grid-column-row="' + tri + '" ',
-                    'data-ax5grid-column-col="' + ci + '" ',
+                    'data-ax6grid-column-attr="' + (col.columnAttr || "default") + '" ',
+                    'data-ax6grid-column-row="' + tri + '" ',
+                    'data-ax6grid-column-col="' + ci + '" ',
                     (function () {
-                        return (typeof col.key !== "undefined") ? 'data-ax5grid-column-key="' + col.key + '" ' : '';
+                        return (typeof col.key !== "undefined") ? 'data-ax6grid-column-key="' + col.key + '" ' : '';
                     })(),
-                    'data-ax5grid-column-colindex="' + col.colIndex + '" ',
-                    'data-ax5grid-column-rowindex="' + col.rowIndex + '" ',
+                    'data-ax6grid-column-colindex="' + col.colIndex + '" ',
+                    'data-ax6grid-column-rowindex="' + col.rowIndex + '" ',
                     'colspan="' + col.colspan + '" ',
                     'rowspan="' + col.rowspan + '" ',
                     'class="' + (function (_col) {
@@ -246,29 +246,29 @@ const repaint = function (_reset) {
 
                 SS.push((function () {
                     var lineHeight = (cfg.header.columnHeight - cfg.header.columnPadding * 2 - cfg.header.columnBorderWidth);
-                    return '<span data-ax5grid-cellHolder="" ' +
-                        ((colAlign) ? 'data-ax5grid-text-align="' + colAlign + '"' : '') +
+                    return '<span data-ax6grid-cellHolder="" ' +
+                        ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
                         ' style="height: ' + (cfg.header.columnHeight - cfg.header.columnBorderWidth) + 'px;line-height: ' + lineHeight + 'px;">';
                 })(), (function () {
                     var _SS = "";
 
                     if (!U.isNothing(col.key) && !U.isNothing(col.colIndex) && (cfg.sortable === true || col.sortable === true) && col.sortable !== false) {
-                        _SS += '<span data-ax5grid-column-sort="' + col.colIndex + '" data-ax5grid-column-sort-order="' + (colGroup[col.colIndex].sort || "") + '" />';
+                        _SS += '<span data-ax6grid-column-sort="' + col.colIndex + '" data-ax6grid-column-sort-order="' + (colGroup[col.colIndex].sort || "") + '" />';
                     }
                     return _SS;
                 })(), getFieldValue.call(this, col), '</span>');
 
                 if (!U.isNothing(col.colIndex)) {
                     if (cfg.enableFilter) {
-                        SS.push('<span data-ax5grid-column-filter="' + col.colIndex + '" data-ax5grid-column-filter-value=""  />');
+                        SS.push('<span data-ax6grid-column-filter="' + col.colIndex + '" data-ax6grid-column-filter-value=""  />');
                     }
                 }
 
                 SS.push('</td>');
             }
             SS.push('<td ',
-                'data-ax5grid-column-row="null" ',
-                'data-ax5grid-column-col="null" ',
+                'data-ax6grid-column-row="null" ',
+                'data-ax6grid-column-col="null" ',
                 'style="height: ' + (cfg.header.columnHeight) + 'px;min-height: 1px;" ',
                 '></td>');
             SS.push('</tr>');
@@ -287,7 +287,7 @@ const repaint = function (_reset) {
                 if (!U.isNothing(col.colIndex)) {
                     //_colGroup[cgi]._width
                     resizerLeft += col._width;
-                    AS.push('<div data-ax5grid-column-resizer="' + col.colIndex + '" style="height:' + resizerHeight + 'px;left: ' + (resizerLeft - 4) + 'px;"  />');
+                    AS.push('<div data-ax6grid-column-resizer="' + col.colIndex + '" style="height:' + resizerHeight + 'px;left: ' + (resizerLeft - 4) + 'px;"  />');
                 }
             }
             _elTarget.append(AS);

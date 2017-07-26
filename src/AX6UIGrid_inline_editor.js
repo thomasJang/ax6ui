@@ -12,7 +12,7 @@ const edit_text = {
                 attributesText += ` ${k}='${_editor.attributes[k]}'`;
             }
         }
-        return `<input type="text" data-ax5grid-editor="text" value="${_value}" ${attributesText}>`;
+        return `<input type="text" data-ax6grid-editor="text" value="${_value}" ${attributesText}>`;
     },
     init: function (_root, _columnKey, _editor, _$parent, _value) {
         var $el;
@@ -38,7 +38,7 @@ const edit_money = {
                 attributesText += ` ${k}='${_editor.attributes[k]}'`;
             }
         }
-        return '<input type="text" data-ax5grid-editor="money" value="' + _value + '" ' + attributesText + '" />';
+        return '<input type="text" data-ax6grid-editor="money" value="' + _value + '" ' + attributesText + '" />';
     },
     init: function (_root, _columnKey, _editor, _$parent, _value) {
         let $el;
@@ -68,7 +68,7 @@ const edit_number = {
                 attributesText += ` ${k}='${_editor.attributes[k]}'`;
             }
         }
-        return '<input type="text" data-ax5grid-editor="number" value="' + _value + '" ' + attributesText + '" />';
+        return '<input type="text" data-ax6grid-editor="number" value="' + _value + '" ' + attributesText + '" />';
     },
     init: function (_root, _columnKey, _editor, _$parent, _value) {
         var $el;
@@ -92,7 +92,7 @@ const edit_date = {
     useReturnToSave: true,
     editMode: "popup",
     getHtml: function (_root, _columnKey, _editor, _value) {
-        return '<input type="text" data-ax5grid-editor="calendar" value="' + _value + '" >';
+        return '<input type="text" data-ax6grid-editor="calendar" value="' + _value + '" >';
     },
     init: function (_root, _columnKey, _editor, _$parent, _value) {
         var $el;
@@ -114,7 +114,7 @@ const edit_date = {
             },
             onStateChanged: function () {
                 if (this.state == "open") {
-                    this.self.activePicker.attr("data-ax5grid-inline-edit-picker", "date");
+                    this.self.activePicker.attr("data-ax6grid-inline-edit-picker", "date");
                 } else if (this.state == "close") {
                     GRID.body.inlineEdit.deActive.call(self, "RETURN", _columnKey);
                 }
@@ -163,7 +163,7 @@ const edit_select = {
             options: eConfig.options,
             onStateChanged: function () {
                 if (this.state == "open") {
-                    this.self.activeSelectOptionGroup.attr("data-ax5grid-inline-edit-picker", "select");
+                    this.self.activeSelectOptionGroup.attr("data-ax6grid-inline-edit-picker", "select");
                 } else if (this.state == "changeValue") {
                     GRID.body.inlineEdit.deActive.call(self, "RETURN", _columnKey, this.value[0][eConfig.columnKeys.optionValue]);
                 } else if (this.state == "close") {
@@ -196,7 +196,7 @@ const edit_checkbox = {
         jQuery.extend(true, eConfig, _editor.config);
         eConfig.marginTop = (lineHeight - eConfig.height) / 2;
 
-        return '<div data-ax5grid-editor="checkbox" data-ax5grid-checked="' + checked + '" style="height:' + eConfig.height + 'px;width:' + eConfig.height + 'px;margin-top:' + eConfig.marginTop + 'px;"></div>';
+        return '<div data-ax6grid-editor="checkbox" data-ax6grid-checked="' + checked + '" style="height:' + eConfig.height + 'px;width:' + eConfig.height + 'px;margin-top:' + eConfig.marginTop + 'px;"></div>';
     }
 };
 
@@ -205,7 +205,7 @@ const edit_textarea = {
     editMode: "popup",
     _getHtml: function (_root, _columnKey, _editor, _value) {
         // init 에서 사용하게 될 HTML 태그를 만들어 줍니다.
-        return `<div data-ax5grid-editor="textarea"></div>`;
+        return `<div data-ax6grid-editor="textarea"></div>`;
     },
     _bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
         // 위치와 크기를 구합니다.
@@ -217,7 +217,7 @@ const edit_textarea = {
         let buttonHeight = 30;
 
         // 새로운 엘리먼트 생성
-        let $newDiv = jQuery(`<div data-ax5grid-popup="textarea" style="z-index: 9999;">
+        let $newDiv = jQuery(`<div data-ax6grid-popup="textarea" style="z-index: 9999;">
     <textarea style="width:100%;height:${editorHeight-buttonHeight}px;" class="form-control">${_value}</textarea>
     <div style="height:${buttonHeight}px;padding:5px;text-align: right;">
         <button class="btn btn-default">OK</button>

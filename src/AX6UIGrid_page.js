@@ -87,8 +87,8 @@ const navigationUpdate = function () {
         }
 
         this.$["page"]["navigation"].html(GRID.tmpl.get("page_navigation", page));
-        this.$["page"]["navigation"].find("[data-ax5grid-page-move]").on("click", function () {
-            onclickPageMove.call(self, this.getAttribute("data-ax5grid-page-move"));
+        this.$["page"]["navigation"].find("[data-ax6grid-page-move]").on("click", function () {
+            onclickPageMove.call(self, this.getAttribute("data-ax6grid-page-move"));
         });
 
     } else {

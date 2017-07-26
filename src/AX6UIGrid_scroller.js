@@ -416,7 +416,7 @@ const init = function () {
 
     this.$["scroller"]["vertical"]
         .on("click", (function (e) {
-            if (e.target.getAttribute("data-ax5grid-scroller") == "vertical") {
+            if (e.target.getAttribute("data-ax6grid-scroller") == "vertical") {
                 scrollBarMover.click.call(this, this.$["scroller"]["vertical"], this.$["scroller"]["vertical-bar"], "vertical", e);
             }
         }).bind(this));
@@ -433,7 +433,7 @@ const init = function () {
 
     this.$["scroller"]["horizontal"]
         .on("click", (function (e) {
-            if (e.target.getAttribute("data-ax5grid-scroller") == "horizontal") {
+            if (e.target.getAttribute("data-ax6grid-scroller") == "horizontal") {
                 scrollBarMover.click.call(this, this.$["scroller"]["horizontal"], this.$["scroller"]["horizontal-bar"], "horizontal", e);
             }
         }).bind(this));
@@ -460,7 +460,7 @@ const init = function () {
 
     if (info.supportTouch) {
         this.$["container"]["body"]
-            .on("touchstart", '[data-ax5grid-panel]', function (e) {
+            .on("touchstart", '[data-ax6grid-panel]', function (e) {
                 self.xvar.mousePosition = UTIL.getMousePosition(e);
                 scrollContentMover.on.call(self);
             });

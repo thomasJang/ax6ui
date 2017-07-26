@@ -81,7 +81,7 @@ const columnSelect = {
             .attr('data-ax5grid-column-selected', "true");
 
         if (this.isInlineEditing) {
-            GRID.body.inlineEdit.deActive.call(this, "RETURN");
+            inlineEdit.deActive.call(this, "RETURN");
         }
     },
     update: function (column) {
@@ -286,7 +286,7 @@ const updateRowStateAll = function (_states, _data) {
         cfg = this.config,
         processor = {
             "selected": function (_dindex) {
-                GRID.body.repaint.call(this, true);
+                repaint.call(this, true);
             }
         };
 
@@ -413,7 +413,7 @@ const init = function () {
 
                     let editor = self.colGroup[_column.colIndex].editor;
                     if (U.isObject(editor)) {
-                        GRID.body.inlineEdit.active.call(self, self.focusedColumn, e, value);
+                        inlineEdit.active.call(self, self.focusedColumn, e, value);
                     } else {
                         // 더블클릭 실행
                         if (self.config.body.onDBLClick) {
@@ -563,7 +563,7 @@ const init = function () {
 
 const resetFrozenColumn = function () {
     let cfg = this.config,
-        dividedBodyRowObj = GRID.util.divideTableByFrozenColumnIndex(this.bodyRowTable, this.xvar.frozenColumnIndex);
+        dividedBodyRowObj = UTIL.divideTableByFrozenColumnIndex(this.bodyRowTable, this.xvar.frozenColumnIndex);
 
 
     this.asideBodyRowData = (function (dataTable) {
@@ -608,7 +608,7 @@ const resetFrozenColumn = function () {
     this.bodyRowData = dividedBodyRowObj.rightData;
 
     if (cfg.body.grouping) {
-        let dividedBodyGroupingObj = GRID.util.divideTableByFrozenColumnIndex(this.bodyGroupingTable, this.xvar.frozenColumnIndex);
+        let dividedBodyGroupingObj = UTIL.divideTableByFrozenColumnIndex(this.bodyGroupingTable, this.xvar.frozenColumnIndex);
         this.asideBodyGroupingData = (function (dataTable) {
             let data = {rows: []};
             for (let i = 0, l = dataTable.rows.length; i < l; i++) {
@@ -646,13 +646,13 @@ const resetFrozenColumn = function () {
         }).call(this, this.bodyGroupingTable);
         this.leftBodyGroupingData = dividedBodyGroupingObj.leftData;
         this.bodyGroupingData = dividedBodyGroupingObj.rightData;
-        this.bodyGroupingMap = GRID.util.makeBodyRowMap.call(this, this.bodyGroupingTable);
+        this.bodyGroupingMap = UTIL.makeBodyRowMap.call(this, this.bodyGroupingTable);
     }
 
     this.leftFootSumData = {};
     this.footSumData = {};
     if (this.config.footSum) {
-        let dividedFootSumObj = GRID.util.divideTableByFrozenColumnIndex(this.footSumTable, this.xvar.frozenColumnIndex);
+        let dividedFootSumObj = UTIL.divideTableByFrozenColumnIndex(this.footSumTable, this.xvar.frozenColumnIndex);
         this.leftFootSumData = dividedFootSumObj.leftData;
         this.footSumData = dividedFootSumObj.rightData;
     }
@@ -957,13 +957,13 @@ const repaint = function (_reset) {
     // bodyRowData 수정 : 페인트 컬럼 포지션이 달라지므로
     if (nopaintLeftColumnsWidth || nopaintRightColumnsWidth) {
         headerColGroup = [].concat(headerColGroup).splice(paintStartColumnIndex - this.xvar.frozenColumnIndex, paintEndColumnIndex - paintStartColumnIndex + 1 + this.xvar.frozenColumnIndex);
-        bodyRowData = GRID.util.getTableByStartEndColumnIndex(bodyRowData, paintStartColumnIndex, paintEndColumnIndex);
+        bodyRowData = UTIL.getTableByStartEndColumnIndex(bodyRowData, paintStartColumnIndex, paintEndColumnIndex);
 
         if (cfg.body.grouping) {
-            bodyGroupingData = GRID.util.getTableByStartEndColumnIndex(bodyGroupingData, paintStartColumnIndex, paintEndColumnIndex);
+            bodyGroupingData = UTIL.getTableByStartEndColumnIndex(bodyGroupingData, paintStartColumnIndex, paintEndColumnIndex);
         }
         if (cfg.footSum) {
-            footSumData = GRID.util.getTableByStartEndColumnIndex(footSumData, paintStartColumnIndex, paintEndColumnIndex);
+            footSumData = UTIL.getTableByStartEndColumnIndex(footSumData, paintStartColumnIndex, paintEndColumnIndex);
         }
         if (this.xvar.paintStartColumnIndex !== paintStartColumnIndex || this.xvar.paintEndColumnIndex !== paintEndColumnIndex) {
             this.needToPaintSum = true;
@@ -1471,7 +1471,7 @@ const repaintCell = function (_panelName, _dindex, _doindex, _rowIndex, _colInde
             colGroup.forEach(function (col) {
                 if (col.key == updateColumnKey) {
                     let rowIndex = col.rowIndex, colIndex = col.colIndex,
-                        panelName = GRID.util.findPanelByColumnIndex.call(self, _dindex, colIndex, rowIndex).panelName,
+                        panelName = UTIL.findPanelByColumnIndex.call(self, _dindex, colIndex, rowIndex).panelName,
                         updateWithCell = self.$["panel"][panelName]
                             .find('[data-ax5grid-tr-data-index="' + _dindex + '"]')
                             .find('[data-ax5grid-column-rowindex="' + rowIndex + '"][data-ax5grid-column-colindex="' + colIndex + '"]')
@@ -1502,10 +1502,10 @@ const repaintCell = function (_panelName, _dindex, _doindex, _rowIndex, _colInde
     if (this.xvar.nopaintLeftColumnsWidth || this.xvar.nopaintRightColumnsWidth) {
         headerColGroup = [].concat(headerColGroup).splice(this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex - this.xvar.paintStartColumnIndex + 1);
         if (cfg.body.grouping) {
-            bodyGroupingData = GRID.util.getTableByStartEndColumnIndex(bodyGroupingData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
+            bodyGroupingData = UTIL.getTableByStartEndColumnIndex(bodyGroupingData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
         }
         if (cfg.footSum) {
-            footSumData = GRID.util.getTableByStartEndColumnIndex(footSumData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
+            footSumData = UTIL.getTableByStartEndColumnIndex(footSumData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
         }
     }
 
@@ -2069,7 +2069,7 @@ const scrollTo = function (css, opts) {
         for (var key in this.inlineEditing) {
             //if(this.inlineEditing[key].editor.type === "select") {}
             // 인라인 에디팅 인데 스크롤 이벤트가 발생하면 디액티브 처리
-            GRID.body.inlineEdit.deActive.call(this, "ESC", key);
+            inlineEdit.deActive.call(this, "ESC", key);
         }
     }
 
@@ -2175,7 +2175,7 @@ const moveFocus = function (_position) {
                 while_i++;
             }
 
-            nPanelInfo = GRID.util.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+            nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
 
             // if mergeCells
             if (this.config.body.mergeCells && this.list.length) {
@@ -2193,7 +2193,7 @@ const moveFocus = function (_position) {
                         break;
                     }
                 }
-                nPanelInfo = GRID.util.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+                nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
             }
 
             focusedColumn.panelName = nPanelInfo.panelName;
@@ -2299,7 +2299,7 @@ const moveFocus = function (_position) {
                 }
             }
 
-            nPanelInfo = GRID.util.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+            nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
 
             // if mergeCells
             if (this.config.body.mergeCells && this.list.length && focusedColumn.dindex > 1) {
@@ -2313,7 +2313,7 @@ const moveFocus = function (_position) {
                         break;
                     }
                 }
-                nPanelInfo = GRID.util.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+                nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
             }
 
             focusedColumn.panelName = nPanelInfo.panelName;
@@ -2418,7 +2418,7 @@ const moveFocus = function (_position) {
                 while_i++;
             }
 
-            let nPanelInfo = GRID.util.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+            let nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
             focusedColumn.panelName = nPanelInfo.panelName;
 
             // 포커스 컬럼의 위치에 따라 스크롤 처리.
@@ -2615,7 +2615,7 @@ const inlineEdit = {
             "RETURN"(_dindex, _doindex, _column, _newValue) {
                 if (GRID.data.setValue.call(this, _dindex, _doindex, _column.key, _newValue)) {
                     action["__clear"].call(this);
-                    GRID.body.repaintCell.call(this, panelName, _dindex, _doindex, rowIndex, colIndex, _newValue);
+                    repaintCell.call(this, panelName, _dindex, _doindex, rowIndex, colIndex, _newValue);
                 } else {
                     action["__clear"].call(this);
                 }
@@ -2704,7 +2704,7 @@ const inlineEdit = {
                                 }
                             }
                         } else {
-                            GRID.body.inlineEdit.active.call(this, this.focusedColumn, null, value);
+                            inlineEdit.active.call(this, this.focusedColumn, null, value);
                         }
                     }
                 }

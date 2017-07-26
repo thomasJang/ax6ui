@@ -2,6 +2,7 @@ import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
 import info from "./AX6Info";
+import mustache from "./AX6Mustache";
 
 import DATA from "./AX6UIGrid_data";
 import HEADER from "./AX6UIGrid_header";
@@ -31,7 +32,7 @@ const initGrid = function () {
         instanceId: this.id
     };
 
-    this.$target.html(TMPL.get("main", data));
+    this.$target.html(mustache.render(TMPL.main.call(this), data));
 
     // 그리드 패널 프레임의 각 엘리먼트를 캐쉬합시다.
     this.$ = {
@@ -133,7 +134,7 @@ const onResetColumns = function () {
 };
 const resetColGroupWidth = function () {
     /// !! 그리드 target의 크기가 변경되면 이 함수를 호출하려 this.colGroup의 _width 값을 재 계산 하여야 함. [tom]
-    let CT_WIDTH = this.$["container"]["root"].width() - (function () {
+    let CT_WIDTH = this.$["container"]["root"].width() - (() => {
             let width = 0;
             if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
             if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
@@ -211,13 +212,13 @@ const alignGrid = function (_isFirst) {
         CT_HEIGHT = this.$["container"]["root"].height(),
         CT_INNER_WIDTH = CT_WIDTH,
         CT_INNER_HEIGHT = CT_HEIGHT,
-        asidePanelWidth = this.config.asidePanelWidth = (function () {
+        asidePanelWidth = this.config.asidePanelWidth = (() => {
             let width = 0;
             if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
             if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
             return width;
         })(),
-        frozenPanelWidth = this.config.frozenPanelWidth = (function (colGroup, endIndex) {
+        frozenPanelWidth = this.config.frozenPanelWidth = ((colGroup, endIndex) => {
             let width = 0;
             for (let i = 0, l = endIndex; i < l; i++) {
                 width += colGroup[i]._width;
@@ -228,19 +229,15 @@ const alignGrid = function (_isFirst) {
 
     // todo : 우측 함계컬럼 너비 계산
     let rightPanelWidth = 0,
-        frozenRowHeight = (function (bodyTrHeight) {
-            return this.config.frozenRowIndex * bodyTrHeight;
-        })(this.xvar.bodyTrHeight),
-        footSumHeight = (function (bodyTrHeight) {
-            return this.footSumColumns.length * bodyTrHeight;
-        }).call(this, this.xvar.bodyTrHeight),
+        frozenRowHeight = this.config.frozenRowIndex * this.xvar.bodyTrHeight,
+        footSumHeight = this.footSumColumns.length * this.xvar.bodyTrHeight,
         headerHeight = (this.config.header.display) ? this.headerTable.rows.length * this.config.header.columnHeight : 0,
         pageHeight = (this.config.page.display) ? this.config.page.height : 0;
 
-    (function () {
+    {
         verticalScrollerWidth = ((CT_HEIGHT - headerHeight - pageHeight - footSumHeight) < this.list.length * this.xvar.bodyTrHeight) ? this.config.scroller.size : 0;
         // 남은 너비가 colGroup의 너비보다 넓을때. 수평 스크롤 활성화.
-        horizontalScrollerHeight = (function () {
+        horizontalScrollerHeight = (() => {
             let totalColGroupWidth = 0;
             // aside 빼고 너비
             // 수직 스크롤이 있으면 또 빼고 비교
@@ -249,12 +246,12 @@ const alignGrid = function (_isFirst) {
                 totalColGroupWidth += this.colGroup[i]._width;
             }
             return (totalColGroupWidth > bodyWidth) ? this.config.scroller.size : 0;
-        }).call(this);
+        })();
 
         if (horizontalScrollerHeight > 0) {
             verticalScrollerWidth = ((CT_HEIGHT - headerHeight - pageHeight - footSumHeight - horizontalScrollerHeight) < this.list.length * this.xvar.bodyTrHeight) ? this.config.scroller.size : 0;
         }
-    }).call(this);
+    }
 
     // 수평 너비 결정
     CT_INNER_WIDTH = CT_WIDTH - verticalScrollerWidth;
@@ -263,8 +260,10 @@ const alignGrid = function (_isFirst) {
 
     bodyHeight = CT_INNER_HEIGHT - headerHeight;
 
-    let panelDisplayProcess = function (panel, vPosition, hPosition, containerType) {
-        let css = {},
+    const panelDisplayProcess = function (panel, vPosition, hPosition, containerType) {
+        let css = {
+                display: "block"
+            },
             isHide = false;
 
         switch (hPosition) {
@@ -304,7 +303,7 @@ const alignGrid = function (_isFirst) {
         }
 
         if (isHide) {
-            panel.hide();
+            panel.css({display: "none"});
             // 프로세스 중지
             return this;
         }
@@ -345,16 +344,18 @@ const alignGrid = function (_isFirst) {
         }
 
         if (isHide) {
-            panel.hide();
+            panel.css({display: "none"});
             // 프로세스 중지
             return this;
         }
 
-        panel.show().css(css);
+        panel.css(css);
         return this;
     };
-    let scrollerDisplayProcess = function (panel, scrollerWidth, scrollerHeight, containerType) {
-        let css = {},
+    const scrollerDisplayProcess = function (panel, scrollerWidth, scrollerHeight, containerType) {
+        let css = {
+                display: "block"
+            },
             isHide = false;
 
         switch (containerType) {
@@ -389,12 +390,12 @@ const alignGrid = function (_isFirst) {
         }
 
         if (isHide) {
-            panel.hide();
+            panel.css({display: "none"});
             // 프로세스 중지
             return this;
         }
 
-        panel.show().css(css);
+        panel.css(css);
     };
 
     this.$["container"]["header"].css({height: headerHeight});
@@ -823,16 +824,16 @@ class AX6UIGrid extends AX6UICore {
                 if (U.isObject(data) && !data.error) {
                     this.config = jQuery.extend(true, {}, this.config, data);
                 }
-            }).call(this, U.parseJson(this.$target.attr("data-ax6grid-config"), true));
+            }).call(this, U.parseJson(this.$target.attr("data-ax6ui-grid-config"), true));
 
             if (!this.config.height) {
                 this.config._height = this.$target.height();
             }
 
-            if (!this.id) this.id = this.$target.data("data-ax6grid-id");
+            if (!this.id) this.id = this.$target.data("ax6ui-grid-id");
             if (!this.id) {
-                this.id = 'ax6grid-' + this.instanceId;
-                this.$target.data("data-ax6grid-id", this.id);
+                this.id = 'ax6ui-grid-' + this.instanceId;
+                this.$target.data("ax6ui-grid-id", this.id);
             }
 
             DATA.init.call(this);

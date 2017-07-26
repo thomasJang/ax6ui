@@ -1,5 +1,7 @@
 import jQuery from "jqmin";
 import U from "./AX6Util";
+import UTIL from "./AX6UIGrid_util";
+import BODY from "./AX6UIGrid_body";
 
 const columnResizerEvent = {
     "on": function (_columnResizer, _colIndex) {
@@ -14,8 +16,8 @@ const columnResizerEvent = {
         };
 
         jQuery(document.body)
-            .bind(GRID.util.ENM["mousemove"] + ".ax5grid-" + this.instanceId, function (e) {
-                var mouseObj = GRID.util.getMousePosition(e);
+            .on(UTIL.ENM["mousemove"] + ".ax5grid-" + this.instanceId, function (e) {
+                var mouseObj = UTIL.getMousePosition(e);
                 self.xvar.__da = mouseObj.clientX - self.xvar.mousePosition.clientX;
 
                 if (resizeRange.min > self.xvar.__da) {
@@ -32,11 +34,11 @@ const columnResizerEvent = {
                     left: columnResizerPositionLeft + self.xvar.__da - gridTargetOffsetLeft
                 });
             })
-            .bind(GRID.util.ENM["mouseup"] + ".ax5grid-" + this.instanceId, function (e) {
+            .on(UTIL.ENM["mouseup"] + ".ax5grid-" + this.instanceId, function (e) {
                 columnResizerEvent.off.call(self);
                 U.stopEvent(e);
             })
-            .bind("mouseleave.ax5grid-" + this.instanceId, function (e) {
+            .on("mouseleave.ax5grid-" + this.instanceId, function (e) {
                 columnResizerEvent.off.call(self);
                 U.stopEvent(e);
             });
@@ -58,9 +60,9 @@ const columnResizerEvent = {
         }
 
         jQuery(document.body)
-            .unbind(GRID.util.ENM["mousemove"] + ".ax5grid-" + this.instanceId)
-            .unbind(GRID.util.ENM["mouseup"] + ".ax5grid-" + this.instanceId)
-            .unbind("mouseleave.ax5grid-" + this.instanceId);
+            .off(UTIL.ENM["mousemove"] + ".ax5grid-" + this.instanceId)
+            .off(UTIL.ENM["mouseup"] + ".ax5grid-" + this.instanceId)
+            .off("mouseleave.ax5grid-" + this.instanceId);
 
         jQuery(document.body)
             .removeAttr('unselectable')
@@ -96,7 +98,7 @@ const init = function () {
             }
         }
 
-        GRID.body.blur.call(self);
+        BODY.blur.call(self);
 
         key = null;
         colIndex = null;
@@ -106,7 +108,7 @@ const init = function () {
         .on("mousedown", '[data-ax5grid-column-resizer]', function (e) {
             let colIndex = this.getAttribute("data-ax5grid-column-resizer");
 
-            self.xvar.mousePosition = GRID.util.getMousePosition(e);
+            self.xvar.mousePosition = UTIL.getMousePosition(e);
             columnResizerEvent.on.call(self, this, Number(colIndex));
             U.stopEvent(e);
 
@@ -122,7 +124,7 @@ const init = function () {
 
 const resetFrozenColumn = function () {
     let cfg = this.config,
-        dividedHeaderObj = GRID.util.divideTableByFrozenColumnIndex(this.headerTable, this.xvar.frozenColumnIndex);
+        dividedHeaderObj = UTIL.divideTableByFrozenColumnIndex(this.headerTable, this.xvar.frozenColumnIndex);
 
     this.asideHeaderData = (function (dataTable) {
         let colGroup = [];
@@ -370,7 +372,7 @@ const applySortStatus = function (_sortInfo) {
 
 const select = function (_options) {
     GRID.data.select.call(this, dindex, _options && _options.selected);
-    GRID.body.updateRowState.call(this, ["selected"], dindex);
+    BODY.updateRowState.call(this, ["selected"], dindex);
 };
 
 const getExcelString = function () {

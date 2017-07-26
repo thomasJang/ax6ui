@@ -11,7 +11,8 @@ const entry = {
     picker: './src/picker.js',
     palette: './src/palette.js',
     dialog: './src/dialog.js',
-    select: './src/select.js'
+    select: './src/select.js',
+    grid: './src/grid.js'
 };
 
 let plugins = [

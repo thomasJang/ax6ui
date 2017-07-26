@@ -1,6 +1,6 @@
 import jQuery from "jqmin";
 import U from "./AX6Util";
-
+import PAGE from "./AX6UIGrid_page";
 
 const init = function () {
 
@@ -252,7 +252,7 @@ const set = function (data) {
     this.xvar.frozenRowIndex = (this.config.frozenRowIndex > this.list.length) ? this.list.length : this.config.frozenRowIndex;
     this.xvar.paintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
     this.xvar.virtualPaintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
-    GRID.page.navigationUpdate.call(this);
+    PAGE.navigationUpdate.call(this);
 
     if (this.config.body.grouping) {
 
@@ -359,7 +359,7 @@ const add = function (_row, _dindex, _options) {
     this.xvar.frozenRowIndex = (this.config.frozenRowIndex > this.list.length) ? this.list.length : this.config.frozenRowIndex;
     this.xvar.paintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
     this.xvar.virtualPaintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
-    GRID.page.navigationUpdate.call(this);
+    PAGE.navigationUpdate.call(this);
     return this;
 };
 
@@ -457,7 +457,7 @@ const remove = function (_dindex) {
     this.xvar.frozenRowIndex = (this.config.frozenRowIndex > this.list.length) ? this.list.length : this.config.frozenRowIndex;
     this.xvar.paintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
     this.xvar.virtualPaintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
-    GRID.page.navigationUpdate.call(this);
+    PAGE.navigationUpdate.call(this);
     return this;
 };
 
@@ -580,7 +580,7 @@ const deleteRow = function (_dindex) {
     this.xvar.frozenRowIndex = (this.config.frozenRowIndex > this.list.length) ? this.list.length : this.config.frozenRowIndex;
     this.xvar.paintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
     this.xvar.virtualPaintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
-    GRID.page.navigationUpdate.call(this);
+    PAGE.navigationUpdate.call(this);
     return this;
 };
 
@@ -855,7 +855,7 @@ const sort = function (_sortInfo, _list, _options) {
         this.xvar.frozenRowIndex = (this.config.frozenRowIndex > this.list.length) ? this.list.length : this.config.frozenRowIndex;
         this.xvar.paintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
         this.xvar.virtualPaintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
-        GRID.page.navigationUpdate.call(this);
+        PAGE.navigationUpdate.call(this);
         return this;
     }
 };
@@ -874,7 +874,7 @@ const append = function (_list, _callback) {
     }
 
     this.appendProgress = true;
-    GRID.page.statusUpdate.call(this);
+    PAGE.statusUpdate.call(this);
 
     if (this.appendDebouncer) {
         if (self.appendDebounceTimes < this.config.debounceTime / 10) {
@@ -914,7 +914,7 @@ const appendIdle = function () {
     this.xvar.frozenRowIndex = (this.config.frozenRowIndex > this.list.length) ? this.list.length : this.config.frozenRowIndex;
     this.xvar.paintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
     this.xvar.virtualPaintStartRowIndex = undefined; // 스크롤 포지션 저장변수 초기화
-    GRID.page.navigationUpdate.call(this);
+    PAGE.navigationUpdate.call(this);
 };
 
 const toggleCollapse = function (_dindex, _doindx, _collapse) {

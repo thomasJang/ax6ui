@@ -26,3 +26,7 @@ grid.setConfig({
         {key: "h", label: "field H"}
     ]
 });
+
+grid.setData([
+    {a: "test"}
+]);

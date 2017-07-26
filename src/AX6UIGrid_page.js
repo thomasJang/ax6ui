@@ -1,6 +1,7 @@
 import jQuery from "jqmin";
 import U from "./AX6Util";
-
+import mustache from "./AX6Mustache";
+import TMPL from "./AX6UIGrid_tmpl";
 
 const onclickPageMove = function (_act) {
     var callback = function (_pageNo) {
@@ -109,13 +110,13 @@ const statusUpdate = function () {
         toRowIndex = totalElements;
     }
 
-    this.$["page"]["status"].html(GRID.tmpl.get("page_status", {
-        fromRowIndex: U.number(fromRowIndex + 1, {"money": true}),
-        toRowIndex: U.number(toRowIndex, {"money": true}),
-        totalElements: U.number(totalElements, {"money": true}),
-        dataRowCount: (totalElements !== this.xvar.dataRealRowCount) ? U.number(this.xvar.dataRealRowCount, {"money": true}) : false,
-        progress: (this.appendProgress) ? this.config.appendProgressIcon : ""
-    }));
+    this.$["page"]["status"].html(mustache.render(TMPL.page_status.call(this), {
+            fromRowIndex: U.number(fromRowIndex + 1, {"money": true}),
+            toRowIndex: U.number(toRowIndex, {"money": true}),
+            totalElements: U.number(totalElements, {"money": true}),
+            dataRowCount: (totalElements !== this.xvar.dataRealRowCount) ? U.number(this.xvar.dataRealRowCount, {"money": true}) : false,
+            progress: (this.appendProgress) ? this.config.appendProgressIcon : ""
+        }));
 };
 
 export default {

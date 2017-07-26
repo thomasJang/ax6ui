@@ -1,6 +1,9 @@
 import jQuery from "jqmin";
 import U from "./AX6Util";
 import UTIL from "./AX6UIGrid_util";
+import DATA from "./AX6UIGrid_data";
+import PAGE from "./AX6UIGrid_page";
+
 import INLINE_EDITOR from "./AX6UIGrid_inline_editor";
 import COLLECTOR from "./AX6UIGrid_collector";
 import FORMATTER from "./AX6UIGrid_formatter";
@@ -319,7 +322,7 @@ const init = function () {
                         };
 
                     if (column.editor && column.editor.type == "checkbox") { // todo : GRID.inlineEditor에서 처리 할수 있도록 구문 변경 필요.
-                        let value = GRID.data.getValue.call(self, _column.dindex, _column.doindex, column.key),
+                        let value = DATA.getValue.call(self, _column.dindex, _column.doindex, column.key),
                             checked, newValue;
 
                         if (column.editor.config && column.editor.config.trueValue) {
@@ -332,7 +335,7 @@ const init = function () {
                             newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
                         }
 
-                        GRID.data.setValue.call(self, _column.dindex, _column.doindex, column.key, newValue);
+                        DATA.setValue.call(self, _column.dindex, _column.doindex, column.key, newValue);
 
                         updateRowState.call(self, ["cellChecked"], _column.dindex, _column.doindex, {
                             key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
@@ -352,10 +355,10 @@ const init = function () {
 
                     if (!self.config.multipleSelect && self.selectedDataIndexs[0] !== _column.doindex) {
                         updateRowState.call(self, ["selectedClear"]);
-                        GRID.data.clearSelect.call(self);
+                        DATA.clearSelect.call(self);
                     }
 
-                    GRID.data.select.call(self, _column.dindex, _column.doindex, undefined, {
+                    DATA.select.call(self, _column.dindex, _column.doindex, undefined, {
                         internalCall: true
                     });
                     updateRowState.call(self, ["selected"], _column.dindex, _column.doindex);
@@ -407,7 +410,7 @@ const init = function () {
                     let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex], value = "";
                     if (column) {
                         if (!self.list[dindex].__isGrouping) {
-                            value = GRID.data.getValue.call(self, dindex, doindex, column.key);
+                            value = DATA.getValue.call(self, dindex, doindex, column.key);
                         }
                     }
 
@@ -679,7 +682,7 @@ const getFieldValue = function (_list, _item, _index, _col, _value, _returnPlain
                 return false;
             })(_col.editor)) { // editor가 inline타입이라면
 
-            _value = _value || GRID.data.getValue.call(this, _index, _item.__origin_index__, _key);
+            _value = _value || DATA.getValue.call(this, _index, _item.__origin_index__, _key);
 
             if (U.isFunction(_col.editor.disabled)) {
                 if (_col.editor.disabled.call({
@@ -701,7 +704,7 @@ const getFieldValue = function (_list, _item, _index, _col, _value, _returnPlain
             "formatter": function () {
                 let that = {
                     key: _key,
-                    value: _value || GRID.data.getValue.call(this, _index, _item.__origin_index__, _key),
+                    value: _value || DATA.getValue.call(this, _index, _item.__origin_index__, _key),
                     dindex: _index,
                     item: _item,
                     list: _list
@@ -719,7 +722,7 @@ const getFieldValue = function (_list, _item, _index, _col, _value, _returnPlain
                     returnValue = _value;
                 } else {
                     if (/[\.\[\]]/.test(_key)) {
-                        _value = GRID.data.getValue.call(this, _index, _item.__origin_index__, _key);
+                        _value = DATA.getValue.call(this, _index, _item.__origin_index__, _key);
                     }else{
                         _value = _item[_key];
                     }
@@ -1449,7 +1452,7 @@ const repaint = function (_reset) {
     this.xvar.dataRowCount = list.length;
     this.needToPaintSum = false;
 
-    GRID.page.statusUpdate.call(this);
+    PAGE.statusUpdate.call(this);
 };
 
 const repaintCell = function (_panelName, _dindex, _doindex, _rowIndex, _colIndex, _newValue) {
@@ -2526,7 +2529,7 @@ const inlineEdit = {
                         newValue = checked = (_initValue == false || _initValue == "false" || _initValue < "1") ? "true" : "false";
                     }
 
-                    GRID.data.setValue.call(self, dindex, doindex, col.key, newValue);
+                    DATA.setValue.call(self, dindex, doindex, col.key, newValue);
                     updateRowState.call(self, ["cellChecked"], dindex, doindex, {
                         key: col.key, rowIndex: rowIndex, colIndex: colIndex,
                         editorConfig: col.editor.config, checked: checked
@@ -2553,7 +2556,7 @@ const inlineEdit = {
         }
         if (this.isInlineEditing) {
 
-            let originalValue = GRID.data.getValue.call(self, dindex, doindex, col.key),
+            let originalValue = DATA.getValue.call(self, dindex, doindex, col.key),
                 initValue = (function (__value, __editor) {
                     if (U.isNothing(__value)) {
                         __value = U.isNothing(originalValue) ? "" : originalValue;
@@ -2613,7 +2616,7 @@ const inlineEdit = {
                 action["__clear"].call(this);
             },
             "RETURN"(_dindex, _doindex, _column, _newValue) {
-                if (GRID.data.setValue.call(this, _dindex, _doindex, _column.key, _newValue)) {
+                if (DATA.setValue.call(this, _dindex, _doindex, _column.key, _newValue)) {
                     action["__clear"].call(this);
                     repaintCell.call(this, panelName, _dindex, _doindex, rowIndex, colIndex, _newValue);
                 } else {
@@ -2669,7 +2672,7 @@ const inlineEdit = {
 
                         if (column) {
                             if (!this.list[dindex].__isGrouping) {
-                                value = GRID.data.getValue.call(this, dindex, doindex, column.key);
+                                value = DATA.getValue.call(this, dindex, doindex, column.key);
                             }
                         }
 
@@ -2679,7 +2682,7 @@ const inlineEdit = {
                             }
                             else {
                                 if (column.editor && column.editor.type == "checkbox") {
-                                    value = GRID.data.getValue.call(this, dindex, doindex, column.key);
+                                    value = DATA.getValue.call(this, dindex, doindex, column.key);
 
                                     let checked, newValue;
                                     if (column.editor.config && column.editor.config.trueValue) {
@@ -2696,7 +2699,7 @@ const inlineEdit = {
                                         newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
                                     }
 
-                                    GRID.data.setValue.call(this, dindex, doindex, column.key, newValue);
+                                    DATA.setValue.call(this, dindex, doindex, column.key, newValue);
                                     updateRowState.call(this, ["cellChecked"], dindex, doindex, {
                                         key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
                                         editorConfig: column.editor.config, checked: checked
@@ -2799,8 +2802,8 @@ const getExcelString = function () {
 };
 
 const toggleCollapse = function (_dindex, _doindex, _collapse) {
-    if (GRID.data.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
-        this.proxyList = GRID.data.getProxyList.call(this, this.list);
+    if (DATA.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
+        this.proxyList = DATA.getProxyList.call(this, this.list);
         repaint.call(this);
     }
 };

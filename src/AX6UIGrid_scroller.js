@@ -1,6 +1,9 @@
 import jQuery from "jqmin";
 import U from "./AX6Util";
-
+import info from "./AX6Info";
+import UTIL from "./AX6UIGrid_util";
+import HEADER from "./AX6UIGrid_header";
+import BODY from "./AX6UIGrid_body";
 
 const convertScrollPosition = {
     "vertical": function (css, _var) {
@@ -55,7 +58,7 @@ const convertScrollBarPosition = {
                 horizontalScrollBarWidth: _var.horizontalScrollBarWidth
             });
 
-            GRID.body.scrollTo.call(self, scrollPositon);
+            BODY.scrollTo.call(self, scrollPositon);
         }
 
         return -top
@@ -81,8 +84,8 @@ const convertScrollBarPosition = {
                 horizontalScrollBarWidth: _var.horizontalScrollBarWidth
             });
 
-            GRID.header.scrollTo.call(self, scrollPositon);
-            GRID.body.scrollTo.call(self, scrollPositon);
+            HEADER.scrollTo.call(self, scrollPositon);
+            BODY.scrollTo.call(self, scrollPositon);
         }
 
         return -left
@@ -115,7 +118,7 @@ const scrollBarMover = {
             horizontalScrollBarWidth = self.$["scroller"]["horizontal-bar"].outerWidth(),
             getScrollerPosition = {
                 "vertical": function (e) {
-                    let mouseObj = GRID.util.getMousePosition(e);
+                    let mouseObj = UTIL.getMousePosition(e);
                     // track을 벗어 나지 안도록 범위 체크
                     let newTop = mouseObj.clientY - trackOffset.top;
                     if (newTop < 0) {
@@ -127,7 +130,7 @@ const scrollBarMover = {
                     return {top: newTop};
                 },
                 "horizontal": function (e) {
-                    let mouseObj = GRID.util.getMousePosition(e);
+                    let mouseObj = UTIL.getMousePosition(e);
                     // track을 벗어 나지 안도록 범위 체크
                     let newLeft = mouseObj.clientX - trackOffset.left;
                     if (newLeft < 0) {
@@ -153,8 +156,8 @@ const scrollBarMover = {
             verticalScrollBarHeight: verticalScrollBarHeight,
             horizontalScrollBarWidth: horizontalScrollBarWidth
         });
-        if (type === "horizontal") GRID.header.scrollTo.call(self, scrollPositon);
-        GRID.body.scrollTo.call(self, scrollPositon);
+        if (type === "horizontal") HEADER.scrollTo.call(self, scrollPositon);
+        BODY.scrollTo.call(self, scrollPositon);
 
         scrollPositon = null;
     },
@@ -179,7 +182,7 @@ const scrollBarMover = {
 
             getScrollerPosition = {
                 "vertical": function (e) {
-                    var mouseObj = GRID.util.getMousePosition(e);
+                    var mouseObj = UTIL.getMousePosition(e);
                     self.xvar.__da = mouseObj.clientY - self.xvar.mousePosition.clientY;
                     // track을 벗어 나지 안도록 범위 체크
                     var newTop = barOffset.top + self.xvar.__da;
@@ -192,7 +195,7 @@ const scrollBarMover = {
                     return {top: newTop};
                 },
                 "horizontal": function (e) {
-                    var mouseObj = GRID.util.getMousePosition(e);
+                    var mouseObj = UTIL.getMousePosition(e);
                     self.xvar.__da = mouseObj.clientX - self.xvar.mousePosition.clientX;
                     // track을 벗어 나지 안도록 범위 체크
                     var newLeft = barOffset.left + self.xvar.__da;
@@ -209,7 +212,7 @@ const scrollBarMover = {
         self.xvar.__da = 0; // 이동량 변수 초기화 (계산이 잘못 될까바)
 
         jQuery(document.body)
-            .bind(GRID.util.ENM["mousemove"] + ".ax5grid-" + this.instanceId, function (e) {
+            .bind(UTIL.ENM["mousemove"] + ".ax5grid-" + this.instanceId, function (e) {
                 let css = getScrollerPosition[type](e);
                 bar.css(css);
 
@@ -224,11 +227,11 @@ const scrollBarMover = {
                     horizontalScrollBarWidth: horizontalScrollBarWidth
                 });
 
-                if (type === "horizontal") GRID.header.scrollTo.call(self, scrollPositon);
+                if (type === "horizontal") HEADER.scrollTo.call(self, scrollPositon);
 
-                GRID.body.scrollTo.call(self, scrollPositon);
+                BODY.scrollTo.call(self, scrollPositon);
             })
-            .bind(GRID.util.ENM["mouseup"] + ".ax5grid-" + this.instanceId, function (e) {
+            .bind(UTIL.ENM["mouseup"] + ".ax5grid-" + this.instanceId, function (e) {
                 scrollBarMover.off.call(self);
             })
             .bind("mouseleave.ax5grid-" + this.instanceId, function (e) {
@@ -244,8 +247,8 @@ const scrollBarMover = {
         GRID.scroller.moveout_timer = (new Date()).getTime();
 
         jQuery(document.body)
-            .unbind(GRID.util.ENM["mousemove"] + ".ax5grid-" + this.instanceId)
-            .unbind(GRID.util.ENM["mouseup"] + ".ax5grid-" + this.instanceId)
+            .unbind(UTIL.ENM["mousemove"] + ".ax5grid-" + this.instanceId)
+            .unbind(UTIL.ENM["mouseup"] + ".ax5grid-" + this.instanceId)
             .unbind("mouseleave.ax5grid-" + this.instanceId);
 
         jQuery(document.body)
@@ -299,8 +302,8 @@ const scrollContentMover = {
             if (delta.x == 0) _left_is_end = true;
         }
 
-        GRID.header.scrollTo.call(self, {left: newLeft});
-        GRID.body.scrollTo.call(self, {left: newLeft, top: newTop}, {
+        HEADER.scrollTo.call(self, {left: newLeft});
+        BODY.scrollTo.call(self, {left: newLeft, top: newTop}, {
             callback: function () {
                 resize.call(self);
             }
@@ -316,7 +319,7 @@ const scrollContentMover = {
             _content_height = self.xvar.scrollContentHeight,
             _content_width = self.xvar.scrollContentWidth,
             getContentPosition = function (e) {
-                let mouseObj = GRID.util.getMousePosition(e), newLeft, newTop;
+                let mouseObj = UTIL.getMousePosition(e), newLeft, newTop;
 
                 self.xvar.__x_da = mouseObj.clientX - self.xvar.mousePosition.clientX;
                 self.xvar.__y_da = mouseObj.clientY - self.xvar.mousePosition.clientY;
@@ -354,8 +357,8 @@ const scrollContentMover = {
                 let css = getContentPosition(e);
 
                 resize.call(self);
-                GRID.header.scrollTo.call(self, {left: css.left});
-                GRID.body.scrollTo.call(self, css, {noRepaint: "noRepaint"});
+                HEADER.scrollTo.call(self, {left: css.left});
+                BODY.scrollTo.call(self, css, {noRepaint: "noRepaint"});
                 U.stopEvent(e.originalEvent);
                 self.xvar.touchmoved = true;
             })
@@ -364,8 +367,8 @@ const scrollContentMover = {
                     let css = getContentPosition(e);
 
                     resize.call(self);
-                    GRID.header.scrollTo.call(self, {left: css.left});
-                    GRID.body.scrollTo.call(self, css);
+                    HEADER.scrollTo.call(self, {left: css.left});
+                    BODY.scrollTo.call(self, css);
                     U.stopEvent(e.originalEvent);
                     scrollContentMover.off.call(self);
                 }
@@ -402,8 +405,8 @@ const init = function () {
     }
 
     this.$["scroller"]["vertical-bar"]
-        .on(GRID.util.ENM["mousedown"], (function (e) {
-            this.xvar.mousePosition = GRID.util.getMousePosition(e);
+        .on(UTIL.ENM["mousedown"], (function (e) {
+            this.xvar.mousePosition = UTIL.getMousePosition(e);
             scrollBarMover.on.call(this, this.$["scroller"]["vertical"], this.$["scroller"]["vertical-bar"], "vertical", e);
         }).bind(this))
         .on("dragstart", function (e) {
@@ -419,8 +422,8 @@ const init = function () {
         }).bind(this));
 
     this.$["scroller"]["horizontal-bar"]
-        .on(GRID.util.ENM["mousedown"], (function (e) {
-            this.xvar.mousePosition = GRID.util.getMousePosition(e);
+        .on(UTIL.ENM["mousedown"], (function (e) {
+            this.xvar.mousePosition = UTIL.getMousePosition(e);
             scrollBarMover.on.call(this, this.$["scroller"]["horizontal"], this.$["scroller"]["horizontal-bar"], "horizontal", e);
         }).bind(this))
         .on("dragstart", function (e) {
@@ -455,10 +458,10 @@ const init = function () {
         }
     }).bind(this));
 
-    if (ax5.info.supportTouch) {
+    if (info.supportTouch) {
         this.$["container"]["body"]
             .on("touchstart", '[data-ax5grid-panel]', function (e) {
-                self.xvar.mousePosition = GRID.util.getMousePosition(e);
+                self.xvar.mousePosition = UTIL.getMousePosition(e);
                 scrollContentMover.on.call(self);
             });
     }

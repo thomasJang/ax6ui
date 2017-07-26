@@ -78,9 +78,6 @@ var open = function open(opts, callback) {
         box = {
         width: opts.width
     };
-    var throttledResize = _AX6Util2.default.throttle(function (e) {
-        align.call(this, e || window.event);
-    }, 30);
     (0, _jqmin2.default)(document.body).append(getContent.call(this, opts.id, opts));
 
     this.dialogConfig = opts;
@@ -113,7 +110,9 @@ var open = function open(opts, callback) {
     // bind key event
     (0, _jqmin2.default)(window).on("keydown.ax6dialog", function (e) {
         onKeyup.call(_this, e || window.event, opts, callback);
-    }).on("resize.ax6dialog", throttledResize.bind(this));
+    }).on("resize.ax6dialog", _AX6Util2.default.throttle(function (e) {
+        align.call(this, e || window.event);
+    }, 30).bind(this));
 
     onStateChanged.call(this, opts, {
         self: this,

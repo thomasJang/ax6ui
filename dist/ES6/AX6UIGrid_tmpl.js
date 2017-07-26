@@ -57,7 +57,7 @@ const main = function () {
         </div>`;
 };
 
-const page_navigation = function(){
+const page_navigation = function () {
     return `<div data-ax6grid-page-navigation="holder">
             {{#hasPage}}
             <div data-ax6grid-page-navigation="cell">    
@@ -77,10 +77,9 @@ const page_navigation = function(){
         </div>`;
 };
 
-const page_status = function(){
+const page_status = function () {
     return `<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}} of {{totalElements}}{{#dataRowCount}} ({{dataRowCount}}){{/dataRowCount}}</span>`;
 };
-
 
 export default {
     "main": main,

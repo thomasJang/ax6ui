@@ -1,54 +1,67 @@
-import jQuery from "jqmin";
-import BODY from "./AX6UIGrid_body";
+"use strict";
 
-const edit_text = {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jqmin = require("jqmin");
+
+var _jqmin2 = _interopRequireDefault(_jqmin);
+
+var _AX6UIGrid_body = require("./AX6UIGrid_body");
+
+var _AX6UIGrid_body2 = _interopRequireDefault(_AX6UIGrid_body);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var edit_text = {
     useReturnToSave: true,
     editMode: "popup",
-    getHtml: function (_root, _columnKey, _editor, _value) {
-        if(typeof _editor.attributes !== "undefined"){
-            var attributesText  = "";
-            for (var k in _editor.attributes){
-                attributesText += ` ${k}='${_editor.attributes[k]}'`;
+    getHtml: function getHtml(_root, _columnKey, _editor, _value) {
+        if (typeof _editor.attributes !== "undefined") {
+            var attributesText = "";
+            for (var k in _editor.attributes) {
+                attributesText += " " + k + "='" + _editor.attributes[k] + "'";
             }
         }
-        return `<input type="text" data-ax6grid-editor="text" value="${_value}" ${attributesText}>`;
+        return "<input type=\"text\" data-ax6grid-editor=\"text\" value=\"" + _value + "\" " + attributesText + ">";
     },
-    init: function (_root, _columnKey, _editor, _$parent, _value) {
+    init: function init(_root, _columnKey, _editor, _$parent, _value) {
         var $el;
-        _$parent.append($el = jQuery(this.getHtml(_root, _columnKey, _editor, _value)));
+        _$parent.append($el = (0, _jqmin2.default)(this.getHtml(_root, _columnKey, _editor, _value)));
         this.bindUI(_root, _columnKey, $el, _editor, _$parent, _value);
         $el.on("blur", function () {
-            BODY.inlineEdit.deActive.call(_root, "RETURN", _columnKey);
+            _AX6UIGrid_body2.default.inlineEdit.deActive.call(_root, "RETURN", _columnKey);
         });
         return $el;
     },
-    bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
+    bindUI: function bindUI(_root, _columnKey, _$el, _editor, _$parent, _value) {
         _$el.focus().select();
     }
 };
 
-const edit_money = {
+var edit_money = {
     useReturnToSave: true,
     editMode: "popup",
-    getHtml: function (_root, _columnKey, _editor, _value) {
-        let attributesText = "";
-        if(typeof _editor.attributes !== "undefined"){
-            for (let k in _editor.attributes){
-                attributesText += ` ${k}='${_editor.attributes[k]}'`;
+    getHtml: function getHtml(_root, _columnKey, _editor, _value) {
+        var attributesText = "";
+        if (typeof _editor.attributes !== "undefined") {
+            for (var k in _editor.attributes) {
+                attributesText += " " + k + "='" + _editor.attributes[k] + "'";
             }
         }
         return '<input type="text" data-ax6grid-editor="money" value="' + _value + '" ' + attributesText + '" />';
     },
-    init: function (_root, _columnKey, _editor, _$parent, _value) {
-        let $el;
-        _$parent.append($el = jQuery(this.getHtml(_root, _columnKey, _editor, _value)));
+    init: function init(_root, _columnKey, _editor, _$parent, _value) {
+        var $el = void 0;
+        _$parent.append($el = (0, _jqmin2.default)(this.getHtml(_root, _columnKey, _editor, _value)));
         this.bindUI(_root, _columnKey, $el, _editor, _$parent, _value);
         $el.on("blur", function () {
-            BODY.inlineEdit.deActive.call(_root, "RETURN", _columnKey);
+            _AX6UIGrid_body2.default.inlineEdit.deActive.call(_root, "RETURN", _columnKey);
         });
         return $el;
     },
-    bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
+    bindUI: function bindUI(_root, _columnKey, _$el, _editor, _$parent, _value) {
         _$el.data("binded-ax5ui", "ax5formater");
         _$el.ax5formatter($.extend(true, {
             pattern: "money"
@@ -57,28 +70,28 @@ const edit_money = {
     }
 };
 
-const edit_number = {
+var edit_number = {
     useReturnToSave: true,
     editMode: "popup",
-    getHtml: function (_root, _columnKey, _editor, _value) {
-        let attributesText = "";
-        if(typeof _editor.attributes !== "undefined"){
-            for (let k in _editor.attributes){
-                attributesText += ` ${k}='${_editor.attributes[k]}'`;
+    getHtml: function getHtml(_root, _columnKey, _editor, _value) {
+        var attributesText = "";
+        if (typeof _editor.attributes !== "undefined") {
+            for (var k in _editor.attributes) {
+                attributesText += " " + k + "='" + _editor.attributes[k] + "'";
             }
         }
         return '<input type="text" data-ax6grid-editor="number" value="' + _value + '" ' + attributesText + '" />';
     },
-    init: function (_root, _columnKey, _editor, _$parent, _value) {
+    init: function init(_root, _columnKey, _editor, _$parent, _value) {
         var $el;
-        _$parent.append($el = jQuery(this.getHtml(_root, _columnKey, _editor, _value)));
+        _$parent.append($el = (0, _jqmin2.default)(this.getHtml(_root, _columnKey, _editor, _value)));
         this.bindUI(_root, _columnKey, $el, _editor, _$parent, _value);
         $el.on("blur", function () {
-            BODY.inlineEdit.deActive.call(_root, "RETURN", _columnKey);
+            _AX6UIGrid_body2.default.inlineEdit.deActive.call(_root, "RETURN", _columnKey);
         });
         return $el;
     },
-    bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
+    bindUI: function bindUI(_root, _columnKey, _$el, _editor, _$parent, _value) {
         _$el.data("binded-ax5ui", "ax5formater");
         _$el.ax5formatter($.extend(true, {
             pattern: "number"
@@ -87,19 +100,19 @@ const edit_number = {
     }
 };
 
-const edit_date = {
+var edit_date = {
     useReturnToSave: true,
     editMode: "popup",
-    getHtml: function (_root, _columnKey, _editor, _value) {
+    getHtml: function getHtml(_root, _columnKey, _editor, _value) {
         return '<input type="text" data-ax6grid-editor="calendar" value="' + _value + '" >';
     },
-    init: function (_root, _columnKey, _editor, _$parent, _value) {
+    init: function init(_root, _columnKey, _editor, _$parent, _value) {
         var $el;
-        _$parent.append($el = jQuery(this.getHtml(_root, _columnKey, _editor, _value)));
+        _$parent.append($el = (0, _jqmin2.default)(this.getHtml(_root, _columnKey, _editor, _value)));
         this.bindUI(_root, _columnKey, $el, _editor, _$parent, _value);
         return $el;
     },
-    bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
+    bindUI: function bindUI(_root, _columnKey, _$el, _editor, _$parent, _value) {
         var self = _root;
         _$el.data("binded-ax5ui", "ax5picker");
 
@@ -111,11 +124,11 @@ const edit_date = {
                     pattern: 'date'
                 }
             },
-            onStateChanged: function () {
+            onStateChanged: function onStateChanged() {
                 if (this.state == "open") {
                     this.self.activePicker.attr("data-ax6grid-inline-edit-picker", "date");
                 } else if (this.state == "close") {
-                    BODY.inlineEdit.deActive.call(self, "RETURN", _columnKey);
+                    _AX6UIGrid_body2.default.inlineEdit.deActive.call(self, "RETURN", _columnKey);
                 }
             }
         }, _editor.config));
@@ -124,23 +137,23 @@ const edit_date = {
     }
 };
 
-const edit_select = {
+var edit_select = {
     useReturnToSave: false,
     editMode: "popup",
-    getHtml: function (_root, _columnKey, _editor, _value) {
+    getHtml: function getHtml(_root, _columnKey, _editor, _value) {
         var po = [];
         po.push('<div data-ax5select="ax5grid-editor" data-ax5select-config="{}">');
         po.push('</div>');
 
         return po.join('');
     },
-    init: function (_root, _columnKey, _editor, _$parent, _value) {
+    init: function init(_root, _columnKey, _editor, _$parent, _value) {
         var $el;
-        _$parent.append($el = jQuery(this.getHtml(_root, _columnKey, _editor, _value)));
+        _$parent.append($el = (0, _jqmin2.default)(this.getHtml(_root, _columnKey, _editor, _value)));
         this.bindUI(_root, _columnKey, $el, _editor, _$parent, _value);
         return $el;
     },
-    bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
+    bindUI: function bindUI(_root, _columnKey, _$el, _editor, _$parent, _value) {
         var eConfig = {
             columnKeys: {
                 optionValue: "value",
@@ -148,7 +161,7 @@ const edit_select = {
                 optionSelected: "selected"
             }
         };
-        jQuery.extend(true, eConfig, _editor.config);
+        _jqmin2.default.extend(true, eConfig, _editor.config);
 
         eConfig.options.forEach(function (n) {
             if (n[eConfig.columnKeys.optionValue] == _value) n[eConfig.columnKeys.optionSelected] = true;
@@ -160,13 +173,13 @@ const edit_select = {
             direction: "auto",
             columnKeys: eConfig.columnKeys,
             options: eConfig.options,
-            onStateChanged: function () {
+            onStateChanged: function onStateChanged() {
                 if (this.state == "open") {
                     this.self.activeSelectOptionGroup.attr("data-ax6grid-inline-edit-picker", "select");
                 } else if (this.state == "changeValue") {
-                    BODY.inlineEdit.deActive.call(self, "RETURN", _columnKey, this.value[0][eConfig.columnKeys.optionValue]);
+                    _AX6UIGrid_body2.default.inlineEdit.deActive.call(self, "RETURN", _columnKey, this.value[0][eConfig.columnKeys.optionValue]);
                 } else if (this.state == "close") {
-                    BODY.inlineEdit.deActive.call(self, "ESC", _columnKey);
+                    _AX6UIGrid_body2.default.inlineEdit.deActive.call(self, "ESC", _columnKey);
                 }
             }
         }, _editor.config));
@@ -176,53 +189,48 @@ const edit_select = {
     }
 };
 
-const edit_checkbox = {
+var edit_checkbox = {
     editMode: "inline",
-    getHtml: function (_root, _editor, _value) {
+    getHtml: function getHtml(_root, _editor, _value) {
 
-        var lineHeight = (_root.config.body.columnHeight - _root.config.body.columnPadding * 2 - _root.config.body.columnBorderWidth);
+        var lineHeight = _root.config.body.columnHeight - _root.config.body.columnPadding * 2 - _root.config.body.columnBorderWidth;
         var checked;
         if (_editor.config && _editor.config.trueValue) {
-            checked = (_value == _editor.config.trueValue) ? "true" : "false";
+            checked = _value == _editor.config.trueValue ? "true" : "false";
         } else {
-            checked = (_value == false || _value == "false" || _value < "1") ? "false" : "true";
+            checked = _value == false || _value == "false" || _value < "1" ? "false" : "true";
         }
 
         var eConfig = {
             marginTop: 2,
             height: lineHeight - 4
         };
-        jQuery.extend(true, eConfig, _editor.config);
+        _jqmin2.default.extend(true, eConfig, _editor.config);
         eConfig.marginTop = (lineHeight - eConfig.height) / 2;
 
         return '<div data-ax6grid-editor="checkbox" data-ax6grid-checked="' + checked + '" style="height:' + eConfig.height + 'px;width:' + eConfig.height + 'px;margin-top:' + eConfig.marginTop + 'px;"></div>';
     }
 };
 
-const edit_textarea = {
+var edit_textarea = {
     useReturnToSave: false,
     editMode: "popup",
-    _getHtml: function (_root, _columnKey, _editor, _value) {
+    _getHtml: function _getHtml(_root, _columnKey, _editor, _value) {
         // init 에서 사용하게 될 HTML 태그를 만들어 줍니다.
-        return `<div data-ax6grid-editor="textarea"></div>`;
+        return "<div data-ax6grid-editor=\"textarea\"></div>";
     },
-    _bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
+    _bindUI: function _bindUI(_root, _columnKey, _$el, _editor, _$parent, _value) {
         // 위치와 크기를 구합니다.
-        let offset = _$el.offset();
-        let box = {
+        var offset = _$el.offset();
+        var box = {
             width: _$el.width()
         };
-        let editorHeight = 150;
-        let buttonHeight = 30;
+        var editorHeight = 150;
+        var buttonHeight = 30;
 
         // 새로운 엘리먼트 생성
-        let $newDiv = jQuery(`<div data-ax6grid-popup="textarea" style="z-index: 9999;">
-    <textarea style="width:100%;height:${editorHeight-buttonHeight}px;" class="form-control">${_value}</textarea>
-    <div style="height:${buttonHeight}px;padding:5px;text-align: right;">
-        <button class="btn btn-default">OK</button>
-    </div>
-</div>`);
-        let $newTextarea = $newDiv.find("textarea");
+        var $newDiv = (0, _jqmin2.default)("<div data-ax6grid-popup=\"textarea\" style=\"z-index: 9999;\">\n    <textarea style=\"width:100%;height:" + (editorHeight - buttonHeight) + "px;\" class=\"form-control\">" + _value + "</textarea>\n    <div style=\"height:" + buttonHeight + "px;padding:5px;text-align: right;\">\n        <button class=\"btn btn-default\">OK</button>\n    </div>\n</div>");
+        var $newTextarea = $newDiv.find("textarea");
         // 엘리먼트에 CSS 적용
         $newDiv.css({
             position: "absolute",
@@ -234,17 +242,17 @@ const edit_textarea = {
         $newDiv.find("textarea");
 
         // 새로운 엘리먼트를 document.body에 append
-        jQuery(document.body).append($newDiv);
+        (0, _jqmin2.default)(document.body).append($newDiv);
         $newTextarea.focus().select();
 
         $newTextarea.on("blur", function (e) {
-            BODY.inlineEdit.deActive.call(_root, "RETURN", _columnKey, this.value);
+            _AX6UIGrid_body2.default.inlineEdit.deActive.call(_root, "RETURN", _columnKey, this.value);
             $newDiv.remove();
             ax5.util.stopEvent(e.originalEvent);
         });
         $newTextarea.on("keydown", function (e) {
-            if(e.which == ax5.info.eventKeys.ESC){
-                BODY.inlineEdit.deActive.call(_root, "ESC", _columnKey);
+            if (e.which == ax5.info.eventKeys.ESC) {
+                _AX6UIGrid_body2.default.inlineEdit.deActive.call(_root, "ESC", _columnKey);
                 $newDiv.remove();
                 ax5.util.stopEvent(e.originalEvent);
             }
@@ -256,7 +264,7 @@ const edit_textarea = {
         /// BODY.inlineEdit.deActive.call(_root, "ESC", _columnKey);
     },
 
-    init: function (_root, _columnKey, _editor, _$parent, _value) {
+    init: function init(_root, _columnKey, _editor, _$parent, _value) {
         // 인라인 에디팅 활성화 시작
         /**
          * _root : gridInstance
@@ -265,18 +273,18 @@ const edit_textarea = {
          * _$parent : 셀
          * _value : 값
          */
-        let $el;
-        _$parent.append($el = jQuery(this._getHtml(_root, _columnKey, _editor, _value)));
+        var $el = void 0;
+        _$parent.append($el = (0, _jqmin2.default)(this._getHtml(_root, _columnKey, _editor, _value)));
         // 셀에 HTML 컨텐츠 추가
 
         this._bindUI(_root, _columnKey, $el, _editor, _$parent, _value);
         // 이벤트 바인딩
 
         return $el;
-    },
+    }
 };
 
-export default {
+exports.default = {
     "text": edit_text,
     "money": edit_money,
     "number": edit_number,

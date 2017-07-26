@@ -36,9 +36,8 @@ const onclickPageMove = function (_act) {
 
     if (_act in processor) {
         processor[_act].call(this);
-    }
-    else {
-        callback.call(this, _act-1);
+    } else {
+        callback.call(this, _act - 1);
     }
 };
 
@@ -54,12 +53,14 @@ const navigationUpdate = function () {
             firstIcon: this.config.page.firstIcon,
             prevIcon: this.config.page.prevIcon || "«",
             nextIcon: this.config.page.nextIcon || "»",
-            lastIcon: this.config.page.lastIcon,
+            lastIcon: this.config.page.lastIcon
         };
         let navigationItemCount = this.config.page.navigationItemCount;
 
-        page["@paging"] = (function () {
-            let returns = [], startI, endI;
+        page["@paging"] = function () {
+            let returns = [],
+                startI,
+                endI;
 
             startI = page.currentPage - Math.floor(navigationItemCount / 2);
             if (startI < 0) startI = 0;
@@ -70,18 +71,18 @@ const navigationUpdate = function () {
                 endI = startI + navigationItemCount;
             }
 
-            if(endI - startI < navigationItemCount){
+            if (endI - startI < navigationItemCount) {
                 startI = endI - navigationItemCount;
             }
             if (startI < 0) startI = 0;
 
             for (let p = startI, l = endI; p < l; p++) {
-                returns.push({'pageNo': (p + 1), 'selected': page.currentPage == p});
+                returns.push({ 'pageNo': p + 1, 'selected': page.currentPage == p });
             }
             return returns;
-        })();
+        }();
 
-        if(page["@paging"].length > 0){
+        if (page["@paging"].length > 0) {
             page.hasPage = true;
         }
 
@@ -89,14 +90,13 @@ const navigationUpdate = function () {
         this.$["page"]["navigation"].find("[data-ax6grid-page-move]").on("click", function () {
             onclickPageMove.call(self, this.getAttribute("data-ax6grid-page-move"));
         });
-
     } else {
         this.$["page"]["navigation"].empty();
     }
 };
 
 const statusUpdate = function () {
-    if(!this.config.page.statusDisplay){
+    if (!this.config.page.statusDisplay) {
         return;
     }
 
@@ -110,12 +110,12 @@ const statusUpdate = function () {
     }
 
     this.$["page"]["status"].html(mustache.render(TMPL.page_status.call(this), {
-            fromRowIndex: U.number(fromRowIndex + 1, {"money": true}),
-            toRowIndex: U.number(toRowIndex, {"money": true}),
-            totalElements: U.number(totalElements, {"money": true}),
-            dataRowCount: (totalElements !== this.xvar.dataRealRowCount) ? U.number(this.xvar.dataRealRowCount, {"money": true}) : false,
-            progress: (this.appendProgress) ? this.config.appendProgressIcon : ""
-        }));
+        fromRowIndex: U.number(fromRowIndex + 1, { "money": true }),
+        toRowIndex: U.number(toRowIndex, { "money": true }),
+        totalElements: U.number(totalElements, { "money": true }),
+        dataRowCount: totalElements !== this.xvar.dataRealRowCount ? U.number(this.xvar.dataRealRowCount, { "money": true }) : false,
+        progress: this.appendProgress ? this.config.appendProgressIcon : ""
+    }));
 };
 
 export default {

@@ -14,7 +14,6 @@ import UTIL from "./AX6UIGrid_util";
 
 import "./AX6UIGrid/index.scss";
 
-
 const ctrlKeys = {
     "33": "KEY_PAGEUP",
     "34": "KEY_PAGEDOWN",
@@ -90,7 +89,7 @@ const initGrid = function () {
         }
     };
 
-    this.$["container"]["root"].css({height: this.config.height || this.config._height});
+    this.$["container"]["root"].css({ height: this.config.height || this.config._height });
 
     return this;
 };
@@ -135,15 +134,18 @@ const onResetColumns = function () {
 const resetColGroupWidth = function () {
     /// !! 그리드 target의 크기가 변경되면 이 함수를 호출하려 this.colGroup의 _width 값을 재 계산 하여야 함. [tom]
     let CT_WIDTH = this.$["container"]["root"].width() - (() => {
-            let width = 0;
-            if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
-            if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
-            width += this.config.scroller.size;
-            return width;
-        })(),
-        totalWidth = 0, computedWidth, autoWidthColgroupIndexs = [],
+        let width = 0;
+        if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
+        if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
+        width += this.config.scroller.size;
+        return width;
+    })(),
+        totalWidth = 0,
+        computedWidth,
+        autoWidthColgroupIndexs = [],
         colGroup = this.colGroup,
-        i, l;
+        i,
+        l;
 
     for (i = 0, l = colGroup.length; i < l; i++) {
         if (U.isNumber(colGroup[i].width)) {
@@ -177,7 +179,7 @@ const initBodyGroup = function (_grouping) {
             columns: grouping.columns
         };
         this.bodyGroupingTable = UTIL.makeBodyGroupingTable.call(this, this.bodyGrouping.columns);
-        this.sortInfo = (function () {
+        this.sortInfo = function () {
             let sortInfo = {};
             for (let k = 0, kl = this.bodyGrouping.by.length; k < kl; k++) {
                 sortInfo[this.bodyGrouping.by[k]] = {
@@ -193,7 +195,7 @@ const initBodyGroup = function (_grouping) {
                 }
             }
             return sortInfo;
-        }).call(this);
+        }.call(this);
     } else {
         this.config.body.grouping = false;
     }
@@ -205,7 +207,7 @@ const alignGrid = function (_isFirst) {
     }
 
     if (!this.config.height) {
-        this.$["container"]["root"].css({height: this.config._height = this.$target.height()});
+        this.$["container"]["root"].css({ height: this.config._height = this.$target.height() });
     }
 
     let CT_WIDTH = this.$["container"]["root"].width(),
@@ -213,29 +215,31 @@ const alignGrid = function (_isFirst) {
         CT_INNER_WIDTH = CT_WIDTH,
         CT_INNER_HEIGHT = CT_HEIGHT,
         asidePanelWidth = this.config.asidePanelWidth = (() => {
-            let width = 0;
-            if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
-            if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
-            return width;
-        })(),
+        let width = 0;
+        if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
+        if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
+        return width;
+    })(),
         frozenPanelWidth = this.config.frozenPanelWidth = ((colGroup, endIndex) => {
-            let width = 0;
-            for (let i = 0, l = endIndex; i < l; i++) {
-                width += colGroup[i]._width;
-            }
-            return width;
-        })(this.colGroup, this.config.frozenColumnIndex),
-        verticalScrollerWidth, horizontalScrollerHeight, bodyHeight;
+        let width = 0;
+        for (let i = 0, l = endIndex; i < l; i++) {
+            width += colGroup[i]._width;
+        }
+        return width;
+    })(this.colGroup, this.config.frozenColumnIndex),
+        verticalScrollerWidth,
+        horizontalScrollerHeight,
+        bodyHeight;
 
     // todo : 우측 함계컬럼 너비 계산
     let rightPanelWidth = 0,
         frozenRowHeight = this.config.frozenRowIndex * this.xvar.bodyTrHeight,
         footSumHeight = this.footSumColumns.length * this.xvar.bodyTrHeight,
-        headerHeight = (this.config.header.display) ? this.headerTable.rows.length * this.config.header.columnHeight : 0,
-        pageHeight = (this.config.page.display) ? this.config.page.height : 0;
+        headerHeight = this.config.header.display ? this.headerTable.rows.length * this.config.header.columnHeight : 0,
+        pageHeight = this.config.page.display ? this.config.page.height : 0;
 
     {
-        verticalScrollerWidth = ((CT_HEIGHT - headerHeight - pageHeight - footSumHeight) < this.list.length * this.xvar.bodyTrHeight) ? this.config.scroller.size : 0;
+        verticalScrollerWidth = CT_HEIGHT - headerHeight - pageHeight - footSumHeight < this.list.length * this.xvar.bodyTrHeight ? this.config.scroller.size : 0;
         // 남은 너비가 colGroup의 너비보다 넓을때. 수평 스크롤 활성화.
         horizontalScrollerHeight = (() => {
             let totalColGroupWidth = 0;
@@ -245,11 +249,11 @@ const alignGrid = function (_isFirst) {
             for (let i = 0, l = this.colGroup.length; i < l; i++) {
                 totalColGroupWidth += this.colGroup[i]._width;
             }
-            return (totalColGroupWidth > bodyWidth) ? this.config.scroller.size : 0;
+            return totalColGroupWidth > bodyWidth ? this.config.scroller.size : 0;
         })();
 
         if (horizontalScrollerHeight > 0) {
-            verticalScrollerWidth = ((CT_HEIGHT - headerHeight - pageHeight - footSumHeight - horizontalScrollerHeight) < this.list.length * this.xvar.bodyTrHeight) ? this.config.scroller.size : 0;
+            verticalScrollerWidth = CT_HEIGHT - headerHeight - pageHeight - footSumHeight - horizontalScrollerHeight < this.list.length * this.xvar.bodyTrHeight ? this.config.scroller.size : 0;
         }
     }
 
@@ -262,8 +266,8 @@ const alignGrid = function (_isFirst) {
 
     const panelDisplayProcess = function (panel, vPosition, hPosition, containerType) {
         let css = {
-                display: "block"
-            },
+            display: "block"
+        },
             isHide = false;
 
         switch (hPosition) {
@@ -286,9 +290,7 @@ const alignGrid = function (_isFirst) {
             case "right":
                 if (!this.config.rightSum) {
                     isHide = true;
-                } else {
-
-                }
+                } else {}
                 break;
             default:
                 if (containerType !== "page") {
@@ -303,7 +305,7 @@ const alignGrid = function (_isFirst) {
         }
 
         if (isHide) {
-            panel.css({display: "none"});
+            panel.css({ display: "none" });
             // 프로세스 중지
             return this;
         }
@@ -339,12 +341,11 @@ const alignGrid = function (_isFirst) {
                 isHide = true;
             } else {
                 css["height"] = pageHeight;
-
             }
         }
 
         if (isHide) {
-            panel.css({display: "none"});
+            panel.css({ display: "none" });
             // 프로세스 중지
             return this;
         }
@@ -354,8 +355,8 @@ const alignGrid = function (_isFirst) {
     };
     const scrollerDisplayProcess = function (panel, scrollerWidth, scrollerHeight, containerType) {
         let css = {
-                display: "block"
-            },
+            display: "block"
+        },
             isHide = false;
 
         switch (containerType) {
@@ -390,7 +391,7 @@ const alignGrid = function (_isFirst) {
         }
 
         if (isHide) {
-            panel.css({display: "none"});
+            panel.css({ display: "none" });
             // 프로세스 중지
             return this;
         }
@@ -398,8 +399,8 @@ const alignGrid = function (_isFirst) {
         panel.css(css);
     };
 
-    this.$["container"]["header"].css({height: headerHeight});
-    this.$["container"]["body"].css({height: bodyHeight});
+    this.$["container"]["header"].css({ height: headerHeight });
+    this.$["container"]["body"].css({ height: bodyHeight });
 
     // 각 패널들의 크기 표시여부를 결정합니다
     panelDisplayProcess.call(this, this.$["panel"]["aside-header"], "", "aside", "header");
@@ -422,7 +423,6 @@ const alignGrid = function (_isFirst) {
     panelDisplayProcess.call(this, this.$["panel"]["bottom-body"], "bottom", "", "body");
     panelDisplayProcess.call(this, this.$["panel"]["bottom-right-body"], "bottom", "right", "body");
 
-
     scrollerDisplayProcess.call(this, this.$["scroller"]["vertical"], verticalScrollerWidth, horizontalScrollerHeight, "vertical");
     scrollerDisplayProcess.call(this, this.$["scroller"]["horizontal"], verticalScrollerWidth, horizontalScrollerHeight, "horizontal");
     scrollerDisplayProcess.call(this, this.$["scroller"]["corner"], verticalScrollerWidth, horizontalScrollerHeight, "corner");
@@ -441,7 +441,7 @@ const sortColumns = function (_sortInfo) {
     HEADER.repaint.call(this);
 
     if (U.isFunction(this.config.remoteSort)) {
-        let that = {sortInfo: []};
+        let that = { sortInfo: [] };
         for (let k in _sortInfo) {
             that.sortInfo.push({
                 key: k,
@@ -455,28 +455,14 @@ const sortColumns = function (_sortInfo) {
         this.config.remoteSort.call(that, that);
     } else {
         if (this.config.body.grouping) {
-            this.list = DATA.initData.call(this,
-                DATA.sort.call(this,
-                    _sortInfo,
-                    DATA.clearGroupingData.call(this,
-                        this.list
-                    )
-                )
-            );
-        }
-        else {
-            this.list = DATA.sort.call(this, _sortInfo,
-                DATA.clearGroupingData.call(this,
-                    this.list
-                ),
-                {resetLineNumber: true}
-            );
+            this.list = DATA.initData.call(this, DATA.sort.call(this, _sortInfo, DATA.clearGroupingData.call(this, this.list)));
+        } else {
+            this.list = DATA.sort.call(this, _sortInfo, DATA.clearGroupingData.call(this, this.list), { resetLineNumber: true });
         }
         BODY.repaint.call(this, true);
         SCROLLER.resize.call(this);
     }
 };
-
 
 /**
  * @class
@@ -659,7 +645,7 @@ class AX6UIGrid extends AX6UICore {
                     parentHash: "__hp__",
                     selfHash: "__hs__",
                     children: "__children__",
-                    depth: "__depth__",
+                    depth: "__depth__"
                 }
             }
         };
@@ -839,9 +825,10 @@ class AX6UIGrid extends AX6UICore {
 
             DATA.init.call(this);
 
-            if (this.config.tree.use) { // 트리라면
+            if (this.config.tree.use) {
+                // 트리라면
                 this.sortInfo = {};
-                this.sortInfo[this.config.tree.columnKeys.selfHash] = {orderBy: "asc", seq: 0, fixed: true};
+                this.sortInfo[this.config.tree.columnKeys.selfHash] = { orderBy: "asc", seq: 0, fixed: true };
             }
 
             ///========
@@ -875,66 +862,60 @@ class AX6UIGrid extends AX6UICore {
             SCROLLER.init.call(this);
             SCROLLER.resize.call(this);
 
-            jQuery(window)
-                .on("resize.ax6grid-" + this.id, U.throttle(function (e) {
-                    alignGrid.call(this);
-                    SCROLLER.resize.call(this);
-                    BODY.repaint.call(this);  // window resize시 repaint 함수 호출
-                }, 30).bind(this))
-                .on("keydown.ax6grid-" + this.instanceId, (e) => {
-                    if (this.focused) {
-                        if (this.isInlineEditing) {
-                            if (e.which == info.eventKeys.ESC) {
-                                this.keyDown("ESC", e.originalEvent);
-                            }
-                            else if (e.which == info.eventKeys.RETURN) {
-                                this.keyDown("RETURN", e.originalEvent);
-                            }
-                            else if (e.which == info.eventKeys.TAB) {
-                                this.keyDown("TAB", e.originalEvent);
-                                U.stopEvent(e);
-                            }
-                            else if (e.which == info.eventKeys.UP) {
-                                this.keyDown("RETURN", {shiftKey: true});
-                            }
-                            else if (e.which == info.eventKeys.DOWN) {
-                                this.keyDown("RETURN", {});
-                            }
+            jQuery(window).on("resize.ax6grid-" + this.id, U.throttle(function (e) {
+                alignGrid.call(this);
+                SCROLLER.resize.call(this);
+                BODY.repaint.call(this); // window resize시 repaint 함수 호출
+            }, 30).bind(this)).on("keydown.ax6grid-" + this.instanceId, e => {
+                if (this.focused) {
+                    if (this.isInlineEditing) {
+                        if (e.which == info.eventKeys.ESC) {
+                            this.keyDown("ESC", e.originalEvent);
+                        } else if (e.which == info.eventKeys.RETURN) {
+                            this.keyDown("RETURN", e.originalEvent);
+                        } else if (e.which == info.eventKeys.TAB) {
+                            this.keyDown("TAB", e.originalEvent);
+                            U.stopEvent(e);
+                        } else if (e.which == info.eventKeys.UP) {
+                            this.keyDown("RETURN", { shiftKey: true });
+                        } else if (e.which == info.eventKeys.DOWN) {
+                            this.keyDown("RETURN", {});
                         }
-                        else {
-                            if (e.metaKey || e.ctrlKey) {
-                                if (e.which == 67) { // c
-                                    self.copySelect();
+                    } else {
+                        if (e.metaKey || e.ctrlKey) {
+                            if (e.which == 67) {
+                                // c
+                                self.copySelect();
+                            }
+                        } else {
+                            if (ctrlKeys[e.which]) {
+                                this.keyDown(ctrlKeys[e.which], e.originalEvent); // 키다운 이벤트 호출
+                                U.stopEvent(e);
+                            } else if (e.which == info.eventKeys.ESC) {
+                                if (this.focused) {
+                                    BODY.blur.call(self);
                                 }
-                            } else {
-                                if (ctrlKeys[e.which]) {
-                                    this.keyDown(ctrlKeys[e.which], e.originalEvent); // 키다운 이벤트 호출
-                                    U.stopEvent(e);
-                                } else if (e.which == info.eventKeys.ESC) {
-                                    if (this.focused) {
-                                        BODY.blur.call(self);
-                                    }
-                                } else if (e.which == info.eventKeys.RETURN || e.which == info.eventKeys.SPACE) {
-                                    this.keyDown("RETURN", e.originalEvent);
-                                } else if (e.which == info.eventKeys.TAB) {
-                                    //self.keyDown("RETURN", e.originalEvent);
-                                    U.stopEvent(e);
-                                } else if (Object.keys(this.focusedColumn).length) {
-                                    this.keyDown("INLINE_EDIT", e.originalEvent);
-                                }
+                            } else if (e.which == info.eventKeys.RETURN || e.which == info.eventKeys.SPACE) {
+                                this.keyDown("RETURN", e.originalEvent);
+                            } else if (e.which == info.eventKeys.TAB) {
+                                //self.keyDown("RETURN", e.originalEvent);
+                                U.stopEvent(e);
+                            } else if (Object.keys(this.focusedColumn).length) {
+                                this.keyDown("INLINE_EDIT", e.originalEvent);
                             }
                         }
                     }
-                });
+                }
+            });
 
-            jQuery(document.body).on("click.ax6grid-" + this.id, (e) => {
+            jQuery(document.body).on("click.ax6grid-" + this.id, e => {
                 let isPickerClick = false,
                     target = U.findParentNode(e.target, function (_target) {
-                        if (isPickerClick = _target.getAttribute("data-ax6grid-inline-edit-picker")) {
-                            return true;
-                        }
-                        return _target.getAttribute("data-ax6grid-container") === "root";
-                    });
+                    if (isPickerClick = _target.getAttribute("data-ax6grid-inline-edit-picker")) {
+                        return true;
+                    }
+                    return _target.getAttribute("data-ax6grid-container") === "root";
+                });
 
                 if (target && target.getAttribute("data-ax6grid-instance") === this.id) {
                     this.focused = true;
@@ -943,7 +924,6 @@ class AX6UIGrid extends AX6UICore {
                     BODY.blur.call(this);
                 }
             });
-
 
             // 그리드 레이아웃이 모든 준비를 마친시점에 onLoad존재 여부를 확인하고 호출하여 줍니다.
             setTimeout(() => {
@@ -964,7 +944,7 @@ class AX6UIGrid extends AX6UICore {
         this.initialized = true;
     }
 
-    align(){
+    align() {
         if (alignGrid.call(this)) {
             BODY.repaint.call(this);
             SCROLLER.resize.call(this);
@@ -972,7 +952,7 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
-    keyDown(_act, _data){
+    keyDown(_act, _data) {
         const processor = {
             "KEY_UP": function () {
                 BODY.moveFocus.call(this, "UP");
@@ -1006,13 +986,13 @@ class AX6UIGrid extends AX6UICore {
                 for (var columnKey in this.inlineEditing) {
                     activeEditLength++;
 
-                    if(!BODY.inlineEdit.keydown.call(this, "RETURN", columnKey)){
+                    if (!BODY.inlineEdit.keydown.call(this, "RETURN", columnKey)) {
                         return false;
                         U.stopEvent(_e);
                     }
                     // next focus
                     if (activeEditLength == 1) {
-                        if (BODY.moveFocus.call(this, (_e.shiftKey) ? "UP" : "DOWN")) {
+                        if (BODY.moveFocus.call(this, _e.shiftKey ? "UP" : "DOWN")) {
                             BODY.inlineEdit.keydown.call(this, "RETURN");
                         }
                     }
@@ -1020,9 +1000,7 @@ class AX6UIGrid extends AX6UICore {
                 if (activeEditLength == 0) {
                     BODY.inlineEdit.keydown.call(this, "RETURN");
                     U.stopEvent(_e);
-                } else {
-
-                }
+                } else {}
             },
             "TAB": function (_e) {
 
@@ -1030,11 +1008,11 @@ class AX6UIGrid extends AX6UICore {
                 for (var columnKey in this.inlineEditing) {
                     activeEditLength++;
 
-                    BODY.inlineEdit.keydown.call(this, "RETURN", columnKey, {moveFocus: true});
+                    BODY.inlineEdit.keydown.call(this, "RETURN", columnKey, { moveFocus: true });
                     // next focus
                     if (activeEditLength == 1) {
-                        if (BODY.moveFocus.call(this, (_e.shiftKey) ? "LEFT" : "RIGHT")) {
-                            BODY.inlineEdit.keydown.call(this, "RETURN", undefined, {moveFocus: true});
+                        if (BODY.moveFocus.call(this, _e.shiftKey ? "LEFT" : "RIGHT")) {
+                            BODY.inlineEdit.keydown.call(this, "RETURN", undefined, { moveFocus: true });
                         }
                     }
                 }
@@ -1044,11 +1022,15 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
-    copySelect(){
+    copySelect() {
         let copysuccess,
             $clipBoard = this.$["form"]["clipboard"],
-            copyTextArray = [], copyText = "",
-            _rowIndex, _colIndex, _dindex, _di = 0;
+            copyTextArray = [],
+            copyText = "",
+            _rowIndex,
+            _colIndex,
+            _dindex,
+            _di = 0;
 
         for (let c in this.selectedColumn) {
             let _column = this.selectedColumn[c];
@@ -1098,8 +1080,8 @@ class AX6UIGrid extends AX6UICore {
         return copysuccess;
     }
 
-    setData(_data){
-        let isFirstPaint = (typeof this.xvar.paintStartRowIndex === "undefined");
+    setData(_data) {
+        let isFirstPaint = typeof this.xvar.paintStartRowIndex === "undefined";
 
         DATA.set.call(this, _data);
         alignGrid.call(this);
@@ -1107,65 +1089,65 @@ class AX6UIGrid extends AX6UICore {
         SCROLLER.resize.call(this);
         PAGE.navigationUpdate.call(this);
 
-        if (!isFirstPaint) BODY.scrollTo.call(this, {top: 0});
+        if (!isFirstPaint) BODY.scrollTo.call(this, { top: 0 });
 
         isFirstPaint = null;
         return this;
     }
 
-    getList(_type){
+    getList(_type) {
         return DATA.getList.call(this, _type);
     }
 
-    setHeight(_height){
+    setHeight(_height) {
         if (_height == "100%") {
             _height = this.$target.offsetParent().innerHeight();
         }
-        this.$target.css({height: _height});
-        this.$["container"]["root"].css({height: _height});
+        this.$target.css({ height: _height });
+        this.$["container"]["root"].css({ height: _height });
         alignGrid.call(this);
         BODY.repaint.call(this, "reset");
         SCROLLER.resize.call(this);
         return this;
     }
 
-    addRow(_row, _dindex, _options){
+    addRow(_row, _dindex, _options) {
         DATA.add.call(this, _row, _dindex, _options);
         alignGrid.call(this);
         BODY.repaint.call(this, "reset");
-        if(_options && _options.focus) {
+        if (_options && _options.focus) {
             BODY.moveFocus.call(this, _options.focus);
         }
         SCROLLER.resize.call(this);
         return this;
     }
 
-    appendToList(_list){
-        DATA.append.call(this, _list, (function () {
+    appendToList(_list) {
+        DATA.append.call(this, _list, function () {
             alignGrid.call(this);
             BODY.repaint.call(this);
             SCROLLER.resize.call(this);
-        }).bind(this));
+        }.bind(this));
         return this;
     }
 
-    removeRow(_dindex){
+    removeRow(_dindex) {
         DATA.remove.call(this, _dindex);
         alignGrid.call(this);
         BODY.repaint.call(this, "reset");
-        BODY.moveFocus.call(this, (this.config.body.grouping) ? "START" : "END");
+        BODY.moveFocus.call(this, this.config.body.grouping ? "START" : "END");
         SCROLLER.resize.call(this);
         return this;
     }
 
-    updateRow(_row, _dindex){
+    updateRow(_row, _dindex) {
         DATA.update.call(this, _row, _dindex);
         // todo : mergeCells 옵션에 따라 예외처리
         BODY.repaintRow.call(this, _dindex);
         return this;
     }
 
-    updateChildRows(_dindex, _updateData, _options){
+    updateChildRows(_dindex, _updateData, _options) {
         DATA.updateChild.call(this, _dindex, _updateData, _options);
         this.xvar.paintStartRowIndex = undefined;
         this.xvar.paintStartColumnIndex = undefined;
@@ -1173,7 +1155,7 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
-    deleteRow(_dindex){
+    deleteRow(_dindex) {
         DATA.deleteRow.call(this, _dindex);
         alignGrid.call(this);
         BODY.repaint.call(this, "reset");
@@ -1283,8 +1265,8 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
-    getColumnSortInfo(){
-        let that = {sortInfo: []};
+    getColumnSortInfo() {
+        let that = { sortInfo: [] };
         for (let k in this.sortInfo) {
             that.sortInfo.push({
                 key: k,
@@ -1336,7 +1318,7 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
-    clearSelect(){
+    clearSelect() {
         BODY.updateRowState.call(this, ["selectedClear"]);
         DATA.clearSelect.call(this);
         return this;
@@ -1348,7 +1330,7 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
-    exportExcel(_fileName){
+    exportExcel(_fileName) {
         let table = [];
         table.push('<table border="1">');
         table.push(HEADER.getExcelString.call(this));
@@ -1357,8 +1339,7 @@ class AX6UIGrid extends AX6UICore {
 
         if (typeof _fileName === "undefined") {
             return table.join('');
-        }
-        else {
+        } else {
             EXCEL.export.call(this, [table.join('')], _fileName);
         }
 
@@ -1374,10 +1355,9 @@ class AX6UIGrid extends AX6UICore {
                 break;
             }
             if (focusedColumn) {
-                this.select(focusedColumn.dindex, {selectedClear: true});
+                this.select(focusedColumn.dindex, { selectedClear: true });
             }
-        }
-        else {
+        } else {
             if (typeof this.selectedDataIndexs[0] === "undefined") {
                 this.select(0);
             } else {
@@ -1385,22 +1365,22 @@ class AX6UIGrid extends AX6UICore {
                 const processor = {
                     "UP": function () {
                         if (selectedIndex > 0) {
-                            this.select(selectedIndex - 1, {selectedClear: true});
+                            this.select(selectedIndex - 1, { selectedClear: true });
                             BODY.moveFocus.call(this, selectedIndex - 1);
                         }
                     },
                     "DOWN": function () {
                         if (selectedIndex < this.list.length - 1) {
-                            this.select(selectedIndex + 1, {selectedClear: true});
+                            this.select(selectedIndex + 1, { selectedClear: true });
                             BODY.moveFocus.call(this, selectedIndex + 1);
                         }
                     },
                     "HOME": function () {
-                        this.select(0, {selectedClear: true});
+                        this.select(0, { selectedClear: true });
                         BODY.moveFocus.call(this, 0);
                     },
                     "END": function () {
-                        this.select(this.list.length - 1, {selectedClear: true});
+                        this.select(this.list.length - 1, { selectedClear: true });
                         BODY.moveFocus.call(this, this.list.length - 1);
                     }
                 };
@@ -1413,7 +1393,7 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
-    destroy(){
+    destroy() {
         this.$target.empty();
         this.list = [];
 

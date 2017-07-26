@@ -86,9 +86,6 @@ const open = function (opts, callback) {
         box = {
             width: opts.width
         };
-    const throttledResize = U.throttle(function (e) {
-        align.call(this, e || window.event);
-    }, 30);
     jQuery(document.body).append(getContent.call(this, opts.id, opts));
 
     this.dialogConfig = opts;
@@ -127,7 +124,9 @@ const open = function (opts, callback) {
         .on("keydown.ax6dialog", (e) => {
             onKeyup.call(this, e || window.event, opts, callback);
         })
-        .on("resize.ax6dialog", throttledResize.bind(this));
+        .on("resize.ax6dialog", U.throttle(function (e) {
+            align.call(this, e || window.event);
+        }, 30).bind(this));
 
     onStateChanged.call(this, opts, {
         self: this,

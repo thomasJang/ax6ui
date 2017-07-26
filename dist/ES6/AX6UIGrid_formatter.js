@@ -13,7 +13,7 @@ const money = function () {
             arrNumber[0] = arrNumber[0].replace(regExpPattern, '$1,$2');
         } while (regExpPattern.test(arrNumber[0]));
 
-        return (arrNumber.length > 1) ? arrNumber[0] + U.left(arrNumber[1], 2) : arrNumber[0].split('.')[0];
+        return arrNumber.length > 1 ? arrNumber[0] + U.left(arrNumber[1], 2) : arrNumber[0].split('.')[0];
     } else {
         return "";
     }

@@ -13,24 +13,26 @@ const getExcelTmpl = function () {
 };
 
 const tableToExcel = function (table, fileName) {
-    let link, a, output,
+    let link,
+        a,
+        output,
         tables = [].concat(table);
 
     output = ax5.mustache.render(getExcelTmpl(), {
-        worksheet: (function () {
+        worksheet: function () {
             var arr = [];
             tables.forEach(function (t, ti) {
-                arr.push({name: "Sheet" + (ti + 1)});
+                arr.push({ name: "Sheet" + (ti + 1) });
             });
             return arr;
-        })(),
-        tables: (function () {
+        }(),
+        tables: function () {
             var arr = [];
             tables.forEach(function (t, ti) {
-                arr.push({body: t});
+                arr.push({ body: t });
             });
             return arr;
-        })()
+        }()
     });
 
     let isChrome = navigator.userAgent.indexOf("Chrome") > -1,
@@ -40,17 +42,15 @@ const tableToExcel = function (table, fileName) {
     let blob1, blankWindow, $iframe, iframe, anchor;
 
     if (navigator.msSaveOrOpenBlob) {
-        blob1 = new Blob([output], {type: "text/html"});
+        blob1 = new Blob([output], { type: "text/html" });
         window.navigator.msSaveOrOpenBlob(blob1, fileName);
-    }
-    else if (isSafari) {
+    } else if (isSafari) {
         // 사파리는 지원이 안되므로 그냥 테이블을 클립보드에 복사처리
         //tables
         blankWindow = window.open('about:blank', this.id + '-excel-export', 'width=600,height=400');
         blankWindow.document.write(output);
         blankWindow = null;
-    }
-    else {
+    } else {
         if (isIE && typeof Blob === "undefined") {
             //otherwise use the iframe and save
             //requires a blank iframe on page called txtArea1
@@ -66,9 +66,7 @@ const tableToExcel = function (table, fileName) {
             $iframe.remove();
         } else {
             // Attempt to use an alternative method
-            anchor = document.body.appendChild(
-                document.createElement("a")
-            );
+            anchor = document.body.appendChild(document.createElement("a"));
 
             // If the [download] attribute is supported, try to use it
             if ("download" in anchor) {

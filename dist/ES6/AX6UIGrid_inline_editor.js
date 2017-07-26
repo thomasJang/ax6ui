@@ -5,9 +5,9 @@ const edit_text = {
     useReturnToSave: true,
     editMode: "popup",
     getHtml: function (_root, _columnKey, _editor, _value) {
-        if(typeof _editor.attributes !== "undefined"){
-            var attributesText  = "";
-            for (var k in _editor.attributes){
+        if (typeof _editor.attributes !== "undefined") {
+            var attributesText = "";
+            for (var k in _editor.attributes) {
                 attributesText += ` ${k}='${_editor.attributes[k]}'`;
             }
         }
@@ -32,8 +32,8 @@ const edit_money = {
     editMode: "popup",
     getHtml: function (_root, _columnKey, _editor, _value) {
         let attributesText = "";
-        if(typeof _editor.attributes !== "undefined"){
-            for (let k in _editor.attributes){
+        if (typeof _editor.attributes !== "undefined") {
+            for (let k in _editor.attributes) {
                 attributesText += ` ${k}='${_editor.attributes[k]}'`;
             }
         }
@@ -62,8 +62,8 @@ const edit_number = {
     editMode: "popup",
     getHtml: function (_root, _columnKey, _editor, _value) {
         let attributesText = "";
-        if(typeof _editor.attributes !== "undefined"){
-            for (let k in _editor.attributes){
+        if (typeof _editor.attributes !== "undefined") {
+            for (let k in _editor.attributes) {
                 attributesText += ` ${k}='${_editor.attributes[k]}'`;
             }
         }
@@ -180,12 +180,12 @@ const edit_checkbox = {
     editMode: "inline",
     getHtml: function (_root, _editor, _value) {
 
-        var lineHeight = (_root.config.body.columnHeight - _root.config.body.columnPadding * 2 - _root.config.body.columnBorderWidth);
+        var lineHeight = _root.config.body.columnHeight - _root.config.body.columnPadding * 2 - _root.config.body.columnBorderWidth;
         var checked;
         if (_editor.config && _editor.config.trueValue) {
-            checked = (_value == _editor.config.trueValue) ? "true" : "false";
+            checked = _value == _editor.config.trueValue ? "true" : "false";
         } else {
-            checked = (_value == false || _value == "false" || _value < "1") ? "false" : "true";
+            checked = _value == false || _value == "false" || _value < "1" ? "false" : "true";
         }
 
         var eConfig = {
@@ -217,7 +217,7 @@ const edit_textarea = {
 
         // 새로운 엘리먼트 생성
         let $newDiv = jQuery(`<div data-ax6grid-popup="textarea" style="z-index: 9999;">
-    <textarea style="width:100%;height:${editorHeight-buttonHeight}px;" class="form-control">${_value}</textarea>
+    <textarea style="width:100%;height:${editorHeight - buttonHeight}px;" class="form-control">${_value}</textarea>
     <div style="height:${buttonHeight}px;padding:5px;text-align: right;">
         <button class="btn btn-default">OK</button>
     </div>
@@ -243,7 +243,7 @@ const edit_textarea = {
             ax5.util.stopEvent(e.originalEvent);
         });
         $newTextarea.on("keydown", function (e) {
-            if(e.which == ax5.info.eventKeys.ESC){
+            if (e.which == ax5.info.eventKeys.ESC) {
                 BODY.inlineEdit.deActive.call(_root, "ESC", _columnKey);
                 $newDiv.remove();
                 ax5.util.stopEvent(e.originalEvent);
@@ -273,7 +273,7 @@ const edit_textarea = {
         // 이벤트 바인딩
 
         return $el;
-    },
+    }
 };
 
 export default {

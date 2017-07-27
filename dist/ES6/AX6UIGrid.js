@@ -14,7 +14,9 @@ import UTIL from "./AX6UIGrid_util";
 
 import "./AX6UIGrid/index.scss";
 
-const ctrlKeys = {
+let formatter = {};
+let collector = {};
+let ctrlKeys = {
     "33": "KEY_PAGEUP",
     "34": "KEY_PAGEDOWN",
     "35": "KEY_END",
@@ -24,6 +26,8 @@ const ctrlKeys = {
     "39": "KEY_RIGHT",
     "40": "KEY_DOWN"
 };
+let tmpl = {};
+
 const initGrid = function () {
     // 그리드 템플릿에 전달하고자 하는 데이터를 정리합시다.
 
@@ -31,7 +35,7 @@ const initGrid = function () {
         instanceId: this.id
     };
 
-    this.$target.html(mustache.render(TMPL.main.call(this), data));
+    this.$target.html(mustache.render(this.__tmpl.main.call(this), data));
 
     // 그리드 패널 프레임의 각 엘리먼트를 캐쉬합시다.
     this.$ = {
@@ -94,6 +98,7 @@ const initGrid = function () {
     return this;
 };
 const initColumns = function (_columns) {
+    if (!U.isArray(_columns)) _columns = [];
     this.columns = U.deepCopy(_columns);
     this.headerTable = UTIL.makeHeaderTable.call(this, this.columns);
     this.xvar.frozenColumnIndex = this.config.frozenColumnIndex || 0;
@@ -468,6 +473,51 @@ const sortColumns = function (_sortInfo) {
  * @class
  */
 class AX6UIGrid extends AX6UICore {
+
+    /**
+     * @static
+     * @param _formatter
+     */
+    static setFormatter(_formatter) {
+        return formatter = Object.assign(formatter, _formatter);
+    }
+
+    /**
+     * @static
+     * @return {{}}
+     */
+    static getFormatter() {
+        return formatter || {};
+    }
+
+    /**
+     * @static
+     * @param _collector
+     */
+    static setCollector(_collector) {
+        return collector = Object.assign(collector, _collector);
+    }
+
+    /**
+     * @static
+     * @return {{}}
+     */
+    static getCollector() {
+        return collector || {};
+    }
+
+    /**
+     * @static
+     * @param _tmpl
+     */
+    static setTmpl(_tmpl) {
+        return tmpl = Object.assign(tmpl, _tmpl);
+    }
+
+    static getTmpl() {
+        return tmpl || {};
+    }
+
     /**
      * @constructor
      * @param config
@@ -558,7 +608,6 @@ class AX6UIGrid extends AX6UICore {
          * @param {String} [config.tree.columnKeys.selfHash="__hs__"]
          * @param {String} [config.tree.columnKeys.children="__children__"]
          * @param {String} [config.tree.columnKeys.depth="__depth__"]
-         *
          */
         this.config = {
             theme: 'default',
@@ -695,13 +744,31 @@ class AX6UIGrid extends AX6UICore {
         this.selectedDataIndexs = [];
         this.deletedList = [];
 
+        /**
+         * @member {Object}
+         */
         this.sortInfo = {}; // 그리드의 헤더 정렬 정보
         this.focused = false;
+        /**
+         * @member {Object}
+         */
         this.focusedColumn = {}; // 그리드 바디의 포커스된 셀 정보
+        /**
+         * @member {Object}
+         */
         this.selectedColumn = {}; // 그리드 바디의 선택된 셀 정보
         this.isInlineEditing = false;
+        /**
+         * @member {Object}
+         */
         this.inlineEditing = {};
+        /**
+         * @member {Object}
+         */
         this.listIndexMap = {}; // tree데이터 사용시 데이터 인덱싱 맵
+        /**
+         * @member {Object}
+         */
         this.contextMenu = null; // contentMenu 의 인스턴스
 
         // header
@@ -782,6 +849,20 @@ class AX6UIGrid extends AX6UICore {
          * @member {Boolean}
          */
         this.needToPaintSum = true; // 데이터 셋이 변경되어 summary 변경 필요여부
+
+        /**
+         * 사용자 정의 formatter. AX6UIGrid.setFormatter 를 이용하여 확장
+         * @member
+         */
+        this.customFormatter = AX6UIGrid.getFormatter();
+
+        /**
+         * 사용자 정의 collector. AX6UIGrid.setCollector 를 이용하여 확장
+         * @member
+         */
+        this.customCollector = AX6UIGrid.getCollector();
+
+        this.__tmpl = Object.assign(TMPL, AX6UIGrid.getTmpl());
 
         if (typeof config !== "undefined") this.init();
 
@@ -944,6 +1025,11 @@ class AX6UIGrid extends AX6UICore {
         this.initialized = true;
     }
 
+    /**
+     * 그리드의 각 패널들의 크기를 변경된 설정에 맞추어 다시 그림
+     * @method
+     * @return {AX6UIGrid}
+     */
     align() {
         if (alignGrid.call(this)) {
             BODY.repaint.call(this);
@@ -952,6 +1038,13 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * 그리드에 키보드 액션을 전달
+     * @method
+     * @param _act
+     * @param _data
+     * @return {AX6UIGrid}
+     */
     keyDown(_act, _data) {
         const processor = {
             "KEY_UP": function () {
@@ -1022,6 +1115,11 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * 선택된 셀을 클립보드에 복사합니다
+     * @method
+     * @return {*}
+     */
     copySelect() {
         let copysuccess,
             $clipBoard = this.$["form"]["clipboard"],
@@ -1080,6 +1178,30 @@ class AX6UIGrid extends AX6UICore {
         return copysuccess;
     }
 
+    /**
+     * @method
+     * @param _data
+     * @return {AX6UIGrid}
+     * @example
+     * ```js
+     * import {AX6UIGrid as Grid} from "ax6ui";
+     *
+     * let grid = new Grid({target: el});
+     * grid.setData([
+     *  {name: "Thomas"}
+     * ]);
+     *
+     * grid.setData({
+     *  list: [],
+     *  page: {
+     *      currentPage: 0,
+     *      pageSize: 50,
+     *      totalElements: 500,
+     *      totalPages: 100
+     *  }
+     * });
+     * ```
+     */
     setData(_data) {
         let isFirstPaint = typeof this.xvar.paintStartRowIndex === "undefined";
 
@@ -1095,10 +1217,35 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param _type
+     * @return {*}
+     * @example
+     * ```js
+     * import {AX6UIGrid as Grid} from "ax6ui";
+     * let grid = new Grid({target: el});
+     * grid.setData([]);
+     *
+     * grid.getList(); // return all
+     * grid.getList("selected");
+     * grid.getList("modified");
+     * grid.getList("deleted");
+     * ```
+     */
     getList(_type) {
         return DATA.getList.call(this, _type);
     }
 
+    /**
+     * @method
+     * @param _height
+     * @return {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.setHeight(height);
+     * ```
+     */
     setHeight(_height) {
         if (_height == "100%") {
             _height = this.$target.offsetParent().innerHeight();
@@ -1111,6 +1258,22 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param _row
+     * @param {Number|String} [_dindex="last"]
+     * @param _options
+     * @param {Boolean} [_options.sort]
+     * @param {Number|String} [_options.focus] - HOME|END|[dindex]
+     * @return {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.addRow($.extend({}, {...}), "first");
+     * grid.addRow($.extend({}, {...}), "last", {focus: "END"});
+     * grid.addRow($.extend({}, {...}), "last", {focus: "HOME"});
+     * grid.addRow($.extend({}, {...}), "last", {focus: 10});
+     * ```
+     */
     addRow(_row, _dindex, _options) {
         DATA.add.call(this, _row, _dindex, _options);
         alignGrid.call(this);
@@ -1122,6 +1285,16 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param _list
+     * @return {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.appendToList([{},{},{}]);
+     * grid.appendToList([{},{},{}]);
+     * ```
+     */
     appendToList(_list) {
         DATA.append.call(this, _list, function () {
             alignGrid.call(this);
@@ -1131,6 +1304,19 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Number|String} [_dindex=last]
+     * @return {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.removeRow();
+     * grid.removeRow("first");
+     * grid.removeRow("last");
+     * grid.removeRow(1);
+     * grid.removeRow("selected");
+     * ```
+     */
     removeRow(_dindex) {
         DATA.remove.call(this, _dindex);
         alignGrid.call(this);
@@ -1140,6 +1326,16 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param _row
+     * @param _dindex
+     * @return {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.updateRow({price: 100, amount: 100, cost: 10000}, 1);
+     * ```
+     */
     updateRow(_row, _dindex) {
         DATA.update.call(this, _row, _dindex);
         // todo : mergeCells 옵션에 따라 예외처리
@@ -1147,6 +1343,26 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Number} _dindex
+     * @param {Object} _updateData
+     * @param {Object} [_options]
+     * @param {Function} [_options.filter]
+     * @returns {AX6UIGrid}
+     * @example
+     * ```js
+     * onDataChanged: function () {
+     *      this.self.updateChildRows(this.dindex, {isChecked: this.item.isChecked});
+     * }
+     *
+     * onDataChanged: function () {
+     *      this.self.updateChildRows(this.dindex, {isChecked: this.item.isChecked}, {filter: function(){
+     *          return this.item.type == "A";
+     *      });
+     * }
+     * ```
+     */
     updateChildRows(_dindex, _updateData, _options) {
         DATA.updateChild.call(this, _dindex, _updateData, _options);
         this.xvar.paintStartRowIndex = undefined;
@@ -1155,6 +1371,18 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Number|String} _dindex
+     * @returns {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.deleteRow("first");
+     * grid.deleteRow("last");
+     * grid.deleteRow(1);
+     * grid.deleteRow("selected");
+     * ```
+     */
     deleteRow(_dindex) {
         DATA.deleteRow.call(this, _dindex);
         alignGrid.call(this);
@@ -1164,6 +1392,17 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param _dindex
+     * @param _key
+     * @param _value
+     * @returns {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.setValue(0, "price", 100);
+     * ```
+     */
     setValue(_dindex, _key, _value) {
         let doindex;
 
@@ -1189,6 +1428,12 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Object} _column
+     * @param {Number|String} [_cindex=last]
+     * @returns {AX6UIGrid}
+     */
     addColumn(_column, _cindex) {
         const processor = {
             "first": function (_column) {
@@ -1219,6 +1464,11 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Number|String} [_cindex=last]
+     * @returns {AX6UIGrid}
+     */
     removeColumn(_cindex) {
         const processor = {
             "first": function (_cindex) {
@@ -1242,6 +1492,12 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Object} _column
+     * @param {Number} _cindex
+     * @returns {AX6UIGrid}
+     */
     updateColumn(_column, _cindex) {
         if (!U.isNumber(_cindex)) {
             throw 'invalid argument _cindex';
@@ -1252,6 +1508,12 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Number} _width
+     * @param {Number} _cindex
+     * @returns {AX6UIGrid}
+     */
     setColumnWidth(_width, _cindex) {
         this.colGroup[this.xvar.columnResizerIndex]._width = _width;
         this.needToPaintSum = true;
@@ -1265,6 +1527,10 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @returns {Object} sortInfo
+     */
     getColumnSortInfo() {
         let that = { sortInfo: [] };
         for (let k in this.sortInfo) {
@@ -1280,6 +1546,18 @@ class AX6UIGrid extends AX6UICore {
         return that.sortInfo;
     }
 
+    /**
+     * @method
+     * @param {Object} _sortInfo
+     * @param {Object} _sortInfo.key
+     * @param {Number} _sortInfo.key.seq - seq of sortOrder
+     * @param {String} _sortInfo.key.orderBy - "desc"|"asc"
+     * @returns {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.setColumnSort({a:{seq:0, orderBy:"desc"}, b:{seq:1, orderBy:"asc"}});
+     * ```
+     */
     setColumnSort(_sortInfo) {
         if (typeof _sortInfo !== "undefined") {
             this.sortInfo = _sortInfo;
@@ -1290,6 +1568,24 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {Number|Object} _selectObject
+     * @param {Number} _selectObject.index - index of row
+     * @param {Number} _selectObject.rowIndex - rowIndex of columns
+     * @param {Number} _selectObject.conIndex - colIndex of columns
+     * @param {Object} _options
+     * @param {Boolean} _options.selectedClear
+     * @param {Boolean} _options.selected
+     * @returns {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.select(0);
+     * grid.select(0, {selected: true});
+     * grid.select(0, {selected: false});
+     * grid.select(0, {selectedClear: true});
+     * ```
+     */
     select(_selectObject, _options) {
         if (U.isNumber(_selectObject)) {
             let dindex = _selectObject;
@@ -1308,28 +1604,71 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param _dindex
+     * @return {AX6UIGrid}
+     */
     clickBody(_dindex) {
         BODY.click.call(this, _dindex);
         return this;
     }
 
+    /**
+     * @method
+     * @param _dindex
+     * @return {AX6UIGrid}
+     */
     DBLClickBody(_dindex) {
         BODY.dblClick.call(this, _dindex);
         return this;
     }
 
+    /**
+     * @method
+     * @return {AX6UIGrid}
+     */
     clearSelect() {
         BODY.updateRowState.call(this, ["selectedClear"]);
         DATA.clearSelect.call(this);
         return this;
     }
 
+    /**
+     * @method
+     * @param {Object} _options
+     * @param {Boolean} _options.selected
+     * @param {Function} _options.filter
+     * @returns {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.selectAll();
+     * grid.selectAll({selected: true});
+     * grid.selectAll({selected: false});
+     * grid.selectAll({filter: function(){
+     *      return this["b"] == "A01";
+     * });
+     * grid.selectAll({selected: true, filter: function(){
+     *      return this["b"] == "A01";
+     * });
+     * ```
+     */
     selectAll(_options) {
         DATA.selectAll.call(this, _options && _options.selected, _options);
         BODY.updateRowStateAll.call(this, ["selected"]);
         return this;
     }
 
+    /**
+     * @method
+     * @param {String} _fileName
+     * @returns {AX6UIGrid|String}
+     * @example
+     * ```js
+     * grid.exportExcel("grid-to-excel.xls");
+     * console.log(grid.exportExcel());
+     * ```
+     */
     exportExcel(_fileName) {
         let table = [];
         table.push('<table border="1">');
@@ -1346,6 +1685,18 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @param {String|Number} _pos - UP, DOWN, LEFT, RIGHT, HOME, END
+     * @returns {AX6UIGrid}
+     * @example
+     * ```js
+     * grid.focus("UP");
+     * grid.focus("DOWN");
+     * grid.focus("HOME");
+     * grid.focus("END");
+     * ```
+     */
     focus(_pos) {
 
         if (BODY.moveFocus.call(this, _pos)) {
@@ -1393,6 +1744,10 @@ class AX6UIGrid extends AX6UICore {
         return this;
     }
 
+    /**
+     * @method
+     * @return {null}
+     */
     destroy() {
         this.$target.empty();
         this.list = [];

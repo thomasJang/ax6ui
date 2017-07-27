@@ -29,6 +29,7 @@
     "webpack-dev-server": "^2.5.1"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "chai": "^4.0.2",
     "jqmin": "^0.1.0",
     "mocha": "^3.4.2"

@@ -1,9 +1,8 @@
 import U from "./AX6Util";
 import mustache from "./AX6Mustache";
-import TMPL from "./AX6UIGrid_tmpl";
 
 const onclickPageMove = function (_act) {
-    var callback = function (_pageNo) {
+    const callback = function (_pageNo) {
         if (this.page.currentPage != _pageNo) {
             this.page.selectPage = _pageNo;
             if (this.config.page.onChange) {
@@ -15,17 +14,17 @@ const onclickPageMove = function (_act) {
             }
         }
     };
-    var processor = {
+    const processor = {
         "first": function () {
             callback.call(this, 0);
         },
         "prev": function () {
-            var pageNo = this.page.currentPage - 1;
+            let pageNo = this.page.currentPage - 1;
             if (pageNo < 0) pageNo = 0;
             callback.call(this, pageNo);
         },
         "next": function () {
-            var pageNo = this.page.currentPage + 1;
+            let pageNo = this.page.currentPage + 1;
             if (pageNo > this.page.totalPages - 1) pageNo = this.page.totalPages - 1;
             callback.call(this, pageNo);
         },
@@ -86,7 +85,7 @@ const navigationUpdate = function () {
             page.hasPage = true;
         }
 
-        this.$["page"]["navigation"].html(mustache.render(TMPL.page_navigation.call(this), page));
+        this.$["page"]["navigation"].html(mustache.render(this.__tmpl.page_navigation.call(this), page));
         this.$["page"]["navigation"].find("[data-ax6grid-page-move]").on("click", function () {
             onclickPageMove.call(self, this.getAttribute("data-ax6grid-page-move"));
         });
@@ -102,18 +101,18 @@ const statusUpdate = function () {
 
     let fromRowIndex = this.xvar.virtualPaintStartRowIndex;
     let toRowIndex = this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount;
-    //var totalElements = (this.page && this.page.totalElements) ? this.page.totalElements : this.xvar.dataRowCount;
-    let totalElements = this.xvar.dataRowCount;
+    let totalElements = this.page && this.page.totalElements ? this.page.totalElements : false;
 
     if (toRowIndex > totalElements) {
         toRowIndex = totalElements;
     }
 
-    this.$["page"]["status"].html(mustache.render(TMPL.page_status.call(this), {
+    this.$["page"]["status"].html(mustache.render(this.__tmpl.page_status.call(this), {
         fromRowIndex: U.number(fromRowIndex + 1, { "money": true }),
         toRowIndex: U.number(toRowIndex, { "money": true }),
-        totalElements: U.number(totalElements, { "money": true }),
-        dataRowCount: totalElements !== this.xvar.dataRealRowCount ? U.number(this.xvar.dataRealRowCount, { "money": true }) : false,
+        totalElements: totalElements ? U.number(totalElements, { "money": true }) : false,
+        dataRealRowCount: this.xvar.dataRowCount !== this.xvar.dataRealRowCount ? U.number(this.xvar.dataRealRowCount, { "money": true }) : false,
+        dataRowCount: U.number(this.xvar.dataRowCount, { "money": true }),
         progress: this.appendProgress ? this.config.appendProgressIcon : ""
     }));
 };

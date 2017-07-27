@@ -12,10 +12,6 @@ var _AX6Mustache = require("./AX6Mustache");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
-var _AX6UIGrid_tmpl = require("./AX6UIGrid_tmpl");
-
-var _AX6UIGrid_tmpl2 = _interopRequireDefault(_AX6UIGrid_tmpl);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var onclickPageMove = function onclickPageMove(_act) {
@@ -102,7 +98,7 @@ var navigationUpdate = function navigationUpdate() {
             page.hasPage = true;
         }
 
-        this.$["page"]["navigation"].html(_AX6Mustache2.default.render(_AX6UIGrid_tmpl2.default.page_navigation.call(this), page));
+        this.$["page"]["navigation"].html(_AX6Mustache2.default.render(this.__tmpl.page_navigation.call(this), page));
         this.$["page"]["navigation"].find("[data-ax6grid-page-move]").on("click", function () {
             onclickPageMove.call(self, this.getAttribute("data-ax6grid-page-move"));
         });
@@ -118,18 +114,18 @@ var statusUpdate = function statusUpdate() {
 
     var fromRowIndex = this.xvar.virtualPaintStartRowIndex;
     var toRowIndex = this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount;
-    //var totalElements = (this.page && this.page.totalElements) ? this.page.totalElements : this.xvar.dataRowCount;
-    var totalElements = this.xvar.dataRowCount;
+    var totalElements = this.page && this.page.totalElements ? this.page.totalElements : false;
 
     if (toRowIndex > totalElements) {
         toRowIndex = totalElements;
     }
 
-    this.$["page"]["status"].html(_AX6Mustache2.default.render(_AX6UIGrid_tmpl2.default.page_status.call(this), {
+    this.$["page"]["status"].html(_AX6Mustache2.default.render(this.__tmpl.page_status.call(this), {
         fromRowIndex: _AX6Util2.default.number(fromRowIndex + 1, { "money": true }),
         toRowIndex: _AX6Util2.default.number(toRowIndex, { "money": true }),
-        totalElements: _AX6Util2.default.number(totalElements, { "money": true }),
-        dataRowCount: totalElements !== this.xvar.dataRealRowCount ? _AX6Util2.default.number(this.xvar.dataRealRowCount, { "money": true }) : false,
+        totalElements: totalElements ? _AX6Util2.default.number(totalElements, { "money": true }) : false,
+        dataRealRowCount: this.xvar.dataRowCount !== this.xvar.dataRealRowCount ? _AX6Util2.default.number(this.xvar.dataRealRowCount, { "money": true }) : false,
+        dataRowCount: _AX6Util2.default.number(this.xvar.dataRowCount, { "money": true }),
         progress: this.appendProgress ? this.config.appendProgressIcon : ""
     }));
 };

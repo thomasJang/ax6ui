@@ -9,7 +9,7 @@ class AX6UICore {
 
     static getInstanceId() {
         return UI_INSTANCE_ID++;
-    };
+    }
 
     /**
      * @constructor

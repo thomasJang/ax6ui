@@ -26,11 +26,13 @@ var AX6UICore = function () {
     value: function getInstanceId() {
       return UI_INSTANCE_ID++;
     }
+
+    /**
+     * @constructor
+     */
+
   }]);
 
-  /**
-   * @constructor
-   */
   function AX6UICore() {
     _classCallCheck(this, AX6UICore);
 

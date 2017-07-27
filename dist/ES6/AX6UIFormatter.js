@@ -4,6 +4,7 @@ import info from "./AX6Info";
 import U from "./AX6Util";
 import FORMATTER from "./AX6UIFormatter_formatter";
 
+let formatter = {};
 const setSelectionRange = function (input, pos) {
     if (typeof pos == "undefined") {
         pos = input.value.length;
@@ -58,7 +59,9 @@ const formatterEvent = {
         }
 
         beforeValue = elem.value;
-        if (opts.pattern in FORMATTER) {
+        if (opts.pattern in this.customFormatter) {
+            newValue = this.customFormatter[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value);
+        } else if (opts.pattern in FORMATTER) {
             newValue = FORMATTER[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value);
         } else {
             newValue = beforeValue;
@@ -77,7 +80,9 @@ const formatterEvent = {
         opts.$input.removeData("__originValue__");
 
         beforeValue = elem.value;
-        if (opts.pattern in FORMATTER) {
+        if (opts.pattern in this.customFormatter) {
+            newValue = this.customFormatter[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value, 'blur');
+        } else if (opts.pattern in FORMATTER) {
             newValue = FORMATTER[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value, 'blur');
         } else {
             newValue = beforeValue;
@@ -113,9 +118,11 @@ const bindFormatterTarget = function (opts, optIdx) {
     opts.patternArgument = matched[1] || "";
 
     // 함수타입
-    if (opts.pattern in FORMATTER) {
+    if (opts.pattern in this.customFormatter) {
+        opts.enterableKeyCodes = this.customFormatter[opts.pattern].getEnterableKeyCodes.call(this, opts, optIdx);
+    } else if (opts.pattern in FORMATTER) {
         opts.enterableKeyCodes = FORMATTER[opts.pattern].getEnterableKeyCodes.call(this, opts, optIdx);
-    } else if (opts.pattern in this.config.formatter) {}
+    }
 
     opts.$input.off('focus.ax6formatter').on('focus.ax6formatter', formatterEvent.focus.bind(this, this.queue[optIdx], optIdx)).off('keydown.ax6formatter').on('keydown.ax6formatter', formatterEvent.keydown.bind(this, this.queue[optIdx], optIdx)).off('keyup.ax6formatter').on('keyup.ax6formatter', formatterEvent.keyup.bind(this, this.queue[optIdx], optIdx)).off('blur.ax6formatter').on('blur.ax6formatter', formatterEvent.blur.bind(this, this.queue[optIdx], optIdx));
 
@@ -232,9 +239,11 @@ class AX6UIFormatter extends AX6UICore {
      * @return {AX6UIFormatter}
      */
     bind(opts) {
-        let self = this;
         let formatterConfig = {},
             optIdx;
+
+        // 사용자 포메터 체크
+        this.customFormatter = AX6UIFormatter.getFormatter();
 
         jQuery.extend(true, formatterConfig, this.config);
         if (opts) jQuery.extend(true, formatterConfig, opts);
@@ -340,6 +349,22 @@ class AX6UIFormatter extends AX6UICore {
         }
 
         return this;
+    }
+
+    /**
+     * @static
+     * @param _formatter
+     */
+    static setFormatter(_formatter) {
+        formatter = _formatter;
+    }
+
+    /**
+     * @static
+     * @return {{}}
+     */
+    static getFormatter() {
+        return formatter || {};
     }
 }
 

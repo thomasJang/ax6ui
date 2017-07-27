@@ -691,11 +691,9 @@ const getFieldValue = function (_list, _item, _index, _col, _value, _returnPlain
                     item: _item,
                     list: _list
                 };
-                if (U.isFunction(_col.formatter)) {
-                    return _col.formatter.call(that);
-                } else {
-                    return FORMATTER[_col.formatter].call(that);
-                }
+
+                let caller = U.isFunction(_col.formatter) ? _col.formatter : this.customFormatter[_col.formatter] || FORMATTER[_col.formatter];
+                return caller ? caller.call(that) : that.value;
             },
             "default": function () {
                 let returnValue = "";
@@ -750,6 +748,7 @@ const getFieldValue = function (_list, _item, _index, _col, _value, _returnPlain
 const getGroupingValue = function (_item, _index, _col) {
     let value,
         that,
+        caller,
         _key = _col.key,
         _label = _col.label;
 
@@ -776,20 +775,11 @@ const getGroupingValue = function (_item, _index, _col) {
                 key: _key,
                 list: _item.__groupingList
             };
-            if (U.isFunction(_col.collector)) {
-                value = _col.collector.call(that);
-            } else {
-                value = COLLECTOR[_col.collector].call(that);
-            }
-            _item[_col.colIndex] = value;
-
+            _item[_col.colIndex] = value = (U.isFunction(_col.collector) ? _col.collector : this.customCollector[_col.collector] || COLLECTOR[_col.collector]).call(that);
             if (_col.formatter) {
                 that.value = value;
-                if (U.isFunction(_col.formatter)) {
-                    return _col.formatter.call(that);
-                } else {
-                    return FORMATTER[_col.formatter].call(that);
-                }
+                caller = U.isFunction(_col.formatter) ? _col.formatter : this.customFormatter[_col.formatter] || FORMATTER[_col.formatter];
+                return caller ? caller.call(that) : value;
             } else {
                 return value;
             }
@@ -812,22 +802,12 @@ const getSumFieldValue = function (_list, _col) {
             let that = {
                 key: _key,
                 list: _list
-            },
-                value;
-
-            if (U.isFunction(_col.collector)) {
-                value = _col.collector.call(that);
-            } else {
-                value = COLLECTOR[_col.collector].call(that);
-            }
+            };
+            let value = (U.isFunction(_col.collector) ? _col.collector : this.customCollector[_col.collector] || COLLECTOR[_col.collector]).call(that);
+            that.value = value;
 
             if (_col.formatter) {
-                that.value = value;
-                if (U.isFunction(_col.formatter)) {
-                    return _col.formatter.call(that);
-                } else {
-                    return FORMATTER[_col.formatter].call(that);
-                }
+                return (U.isFunction(_col.formatter) ? _col.formatter : this.config.formatter[_col.formatter] || FORMATTER[_col.formatter]).call(that);
             } else {
                 return value;
             }

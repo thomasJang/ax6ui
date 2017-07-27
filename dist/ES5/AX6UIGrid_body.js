@@ -728,11 +728,9 @@ var getFieldValue = function getFieldValue(_list, _item, _index, _col, _value, _
                     item: _item,
                     list: _list
                 };
-                if (_AX6Util2.default.isFunction(_col.formatter)) {
-                    return _col.formatter.call(that);
-                } else {
-                    return _AX6UIGrid_formatter2.default[_col.formatter].call(that);
-                }
+
+                var caller = _AX6Util2.default.isFunction(_col.formatter) ? _col.formatter : this.customFormatter[_col.formatter] || _AX6UIGrid_formatter2.default[_col.formatter];
+                return caller ? caller.call(that) : that.value;
             },
             "default": function _default() {
                 var returnValue = "";
@@ -787,6 +785,7 @@ var getFieldValue = function getFieldValue(_list, _item, _index, _col, _value, _
 var getGroupingValue = function getGroupingValue(_item, _index, _col) {
     var value = void 0,
         that = void 0,
+        caller = void 0,
         _key = _col.key,
         _label = _col.label;
 
@@ -813,20 +812,11 @@ var getGroupingValue = function getGroupingValue(_item, _index, _col) {
                 key: _key,
                 list: _item.__groupingList
             };
-            if (_AX6Util2.default.isFunction(_col.collector)) {
-                value = _col.collector.call(that);
-            } else {
-                value = _AX6UIGrid_collector2.default[_col.collector].call(that);
-            }
-            _item[_col.colIndex] = value;
-
+            _item[_col.colIndex] = value = (_AX6Util2.default.isFunction(_col.collector) ? _col.collector : this.customCollector[_col.collector] || _AX6UIGrid_collector2.default[_col.collector]).call(that);
             if (_col.formatter) {
                 that.value = value;
-                if (_AX6Util2.default.isFunction(_col.formatter)) {
-                    return _col.formatter.call(that);
-                } else {
-                    return _AX6UIGrid_formatter2.default[_col.formatter].call(that);
-                }
+                caller = _AX6Util2.default.isFunction(_col.formatter) ? _col.formatter : this.customFormatter[_col.formatter] || _AX6UIGrid_formatter2.default[_col.formatter];
+                return caller ? caller.call(that) : value;
             } else {
                 return value;
             }
@@ -849,22 +839,12 @@ var getSumFieldValue = function getSumFieldValue(_list, _col) {
             var that = {
                 key: _key,
                 list: _list
-            },
-                value = void 0;
-
-            if (_AX6Util2.default.isFunction(_col.collector)) {
-                value = _col.collector.call(that);
-            } else {
-                value = _AX6UIGrid_collector2.default[_col.collector].call(that);
-            }
+            };
+            var value = (_AX6Util2.default.isFunction(_col.collector) ? _col.collector : this.customCollector[_col.collector] || _AX6UIGrid_collector2.default[_col.collector]).call(that);
+            that.value = value;
 
             if (_col.formatter) {
-                that.value = value;
-                if (_AX6Util2.default.isFunction(_col.formatter)) {
-                    return _col.formatter.call(that);
-                } else {
-                    return _AX6UIGrid_formatter2.default[_col.formatter].call(that);
-                }
+                return (_AX6Util2.default.isFunction(_col.formatter) ? _col.formatter : this.config.formatter[_col.formatter] || _AX6UIGrid_formatter2.default[_col.formatter]).call(that);
             } else {
                 return value;
             }

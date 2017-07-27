@@ -64,6 +64,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var formatter = {};
+var collector = {};
 var ctrlKeys = {
     "33": "KEY_PAGEUP",
     "34": "KEY_PAGEDOWN",
@@ -74,6 +76,8 @@ var ctrlKeys = {
     "39": "KEY_RIGHT",
     "40": "KEY_DOWN"
 };
+var tmpl = {};
+
 var initGrid = function initGrid() {
     // 그리드 템플릿에 전달하고자 하는 데이터를 정리합시다.
 
@@ -81,7 +85,7 @@ var initGrid = function initGrid() {
         instanceId: this.id
     };
 
-    this.$target.html(_AX6Mustache2.default.render(_AX6UIGrid_tmpl2.default.main.call(this), data));
+    this.$target.html(_AX6Mustache2.default.render(this.__tmpl.main.call(this), data));
 
     // 그리드 패널 프레임의 각 엘리먼트를 캐쉬합시다.
     this.$ = {
@@ -144,6 +148,7 @@ var initGrid = function initGrid() {
     return this;
 };
 var initColumns = function initColumns(_columns) {
+    if (!_AX6Util2.default.isArray(_columns)) _columns = [];
     this.columns = _AX6Util2.default.deepCopy(_columns);
     this.headerTable = _AX6UIGrid_util2.default.makeHeaderTable.call(this, this.columns);
     this.xvar.frozenColumnIndex = this.config.frozenColumnIndex || 0;
@@ -525,10 +530,74 @@ var sortColumns = function sortColumns(_sortInfo) {
 var AX6UIGrid = function (_AX6UICore) {
     _inherits(AX6UIGrid, _AX6UICore);
 
-    /**
-     * @constructor
-     * @param config
-     */
+    _createClass(AX6UIGrid, null, [{
+        key: "setFormatter",
+
+
+        /**
+         * @static
+         * @param _formatter
+         */
+        value: function setFormatter(_formatter) {
+            return formatter = Object.assign(formatter, _formatter);
+        }
+
+        /**
+         * @static
+         * @return {{}}
+         */
+
+    }, {
+        key: "getFormatter",
+        value: function getFormatter() {
+            return formatter || {};
+        }
+
+        /**
+         * @static
+         * @param _collector
+         */
+
+    }, {
+        key: "setCollector",
+        value: function setCollector(_collector) {
+            return collector = Object.assign(collector, _collector);
+        }
+
+        /**
+         * @static
+         * @return {{}}
+         */
+
+    }, {
+        key: "getCollector",
+        value: function getCollector() {
+            return collector || {};
+        }
+
+        /**
+         * @static
+         * @param _tmpl
+         */
+
+    }, {
+        key: "setTmpl",
+        value: function setTmpl(_tmpl) {
+            return tmpl = Object.assign(tmpl, _tmpl);
+        }
+    }, {
+        key: "getTmpl",
+        value: function getTmpl() {
+            return tmpl || {};
+        }
+
+        /**
+         * @constructor
+         * @param config
+         */
+
+    }]);
+
     function AX6UIGrid(config) {
         var _ret;
 
@@ -617,7 +686,6 @@ var AX6UIGrid = function (_AX6UICore) {
          * @param {String} [config.tree.columnKeys.selfHash="__hs__"]
          * @param {String} [config.tree.columnKeys.children="__children__"]
          * @param {String} [config.tree.columnKeys.depth="__depth__"]
-         *
          */
         var _this3 = _possibleConstructorReturn(this, (AX6UIGrid.__proto__ || Object.getPrototypeOf(AX6UIGrid)).call(this));
 
@@ -756,13 +824,31 @@ var AX6UIGrid = function (_AX6UICore) {
         _this3.selectedDataIndexs = [];
         _this3.deletedList = [];
 
+        /**
+         * @member {Object}
+         */
         _this3.sortInfo = {}; // 그리드의 헤더 정렬 정보
         _this3.focused = false;
+        /**
+         * @member {Object}
+         */
         _this3.focusedColumn = {}; // 그리드 바디의 포커스된 셀 정보
+        /**
+         * @member {Object}
+         */
         _this3.selectedColumn = {}; // 그리드 바디의 선택된 셀 정보
         _this3.isInlineEditing = false;
+        /**
+         * @member {Object}
+         */
         _this3.inlineEditing = {};
+        /**
+         * @member {Object}
+         */
         _this3.listIndexMap = {}; // tree데이터 사용시 데이터 인덱싱 맵
+        /**
+         * @member {Object}
+         */
         _this3.contextMenu = null; // contentMenu 의 인스턴스
 
         // header
@@ -843,6 +929,20 @@ var AX6UIGrid = function (_AX6UICore) {
          * @member {Boolean}
          */
         _this3.needToPaintSum = true; // 데이터 셋이 변경되어 summary 변경 필요여부
+
+        /**
+         * 사용자 정의 formatter. AX6UIGrid.setFormatter 를 이용하여 확장
+         * @member
+         */
+        _this3.customFormatter = AX6UIGrid.getFormatter();
+
+        /**
+         * 사용자 정의 collector. AX6UIGrid.setCollector 를 이용하여 확장
+         * @member
+         */
+        _this3.customCollector = AX6UIGrid.getCollector();
+
+        _this3.__tmpl = Object.assign(_AX6UIGrid_tmpl2.default, AX6UIGrid.getTmpl());
 
         if (typeof config !== "undefined") _this3.init();
 
@@ -1013,6 +1113,13 @@ var AX6UIGrid = function (_AX6UICore) {
             if (this.initialized) return this;
             this.initialized = true;
         }
+
+        /**
+         * 그리드의 각 패널들의 크기를 변경된 설정에 맞추어 다시 그림
+         * @method
+         * @return {AX6UIGrid}
+         */
+
     }, {
         key: "align",
         value: function align() {
@@ -1022,6 +1129,15 @@ var AX6UIGrid = function (_AX6UICore) {
             }
             return this;
         }
+
+        /**
+         * 그리드에 키보드 액션을 전달
+         * @method
+         * @param _act
+         * @param _data
+         * @return {AX6UIGrid}
+         */
+
     }, {
         key: "keyDown",
         value: function keyDown(_act, _data) {
@@ -1093,6 +1209,13 @@ var AX6UIGrid = function (_AX6UICore) {
             if (_act in processor) processor[_act].call(this, _data);
             return this;
         }
+
+        /**
+         * 선택된 셀을 클립보드에 복사합니다
+         * @method
+         * @return {*}
+         */
+
     }, {
         key: "copySelect",
         value: function copySelect() {
@@ -1152,6 +1275,32 @@ var AX6UIGrid = function (_AX6UICore) {
             }
             return copysuccess;
         }
+
+        /**
+         * @method
+         * @param _data
+         * @return {AX6UIGrid}
+         * @example
+         * ```js
+         * import {AX6UIGrid as Grid} from "ax6ui";
+         *
+         * let grid = new Grid({target: el});
+         * grid.setData([
+         *  {name: "Thomas"}
+         * ]);
+         *
+         * grid.setData({
+         *  list: [],
+         *  page: {
+         *      currentPage: 0,
+         *      pageSize: 50,
+         *      totalElements: 500,
+         *      totalPages: 100
+         *  }
+         * });
+         * ```
+         */
+
     }, {
         key: "setData",
         value: function setData(_data) {
@@ -1168,11 +1317,40 @@ var AX6UIGrid = function (_AX6UICore) {
             isFirstPaint = null;
             return this;
         }
+
+        /**
+         * @method
+         * @param _type
+         * @return {*}
+         * @example
+         * ```js
+         * import {AX6UIGrid as Grid} from "ax6ui";
+         * let grid = new Grid({target: el});
+         * grid.setData([]);
+         *
+         * grid.getList(); // return all
+         * grid.getList("selected");
+         * grid.getList("modified");
+         * grid.getList("deleted");
+         * ```
+         */
+
     }, {
         key: "getList",
         value: function getList(_type) {
             return _AX6UIGrid_data2.default.getList.call(this, _type);
         }
+
+        /**
+         * @method
+         * @param _height
+         * @return {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.setHeight(height);
+         * ```
+         */
+
     }, {
         key: "setHeight",
         value: function setHeight(_height) {
@@ -1186,6 +1364,24 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_scroller2.default.resize.call(this);
             return this;
         }
+
+        /**
+         * @method
+         * @param _row
+         * @param {Number|String} [_dindex="last"]
+         * @param _options
+         * @param {Boolean} [_options.sort]
+         * @param {Number|String} [_options.focus] - HOME|END|[dindex]
+         * @return {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.addRow($.extend({}, {...}), "first");
+         * grid.addRow($.extend({}, {...}), "last", {focus: "END"});
+         * grid.addRow($.extend({}, {...}), "last", {focus: "HOME"});
+         * grid.addRow($.extend({}, {...}), "last", {focus: 10});
+         * ```
+         */
+
     }, {
         key: "addRow",
         value: function addRow(_row, _dindex, _options) {
@@ -1198,6 +1394,18 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_scroller2.default.resize.call(this);
             return this;
         }
+
+        /**
+         * @method
+         * @param _list
+         * @return {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.appendToList([{},{},{}]);
+         * grid.appendToList([{},{},{}]);
+         * ```
+         */
+
     }, {
         key: "appendToList",
         value: function appendToList(_list) {
@@ -1208,6 +1416,21 @@ var AX6UIGrid = function (_AX6UICore) {
             }.bind(this));
             return this;
         }
+
+        /**
+         * @method
+         * @param {Number|String} [_dindex=last]
+         * @return {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.removeRow();
+         * grid.removeRow("first");
+         * grid.removeRow("last");
+         * grid.removeRow(1);
+         * grid.removeRow("selected");
+         * ```
+         */
+
     }, {
         key: "removeRow",
         value: function removeRow(_dindex) {
@@ -1218,6 +1441,18 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_scroller2.default.resize.call(this);
             return this;
         }
+
+        /**
+         * @method
+         * @param _row
+         * @param _dindex
+         * @return {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.updateRow({price: 100, amount: 100, cost: 10000}, 1);
+         * ```
+         */
+
     }, {
         key: "updateRow",
         value: function updateRow(_row, _dindex) {
@@ -1226,6 +1461,28 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_body2.default.repaintRow.call(this, _dindex);
             return this;
         }
+
+        /**
+         * @method
+         * @param {Number} _dindex
+         * @param {Object} _updateData
+         * @param {Object} [_options]
+         * @param {Function} [_options.filter]
+         * @returns {AX6UIGrid}
+         * @example
+         * ```js
+         * onDataChanged: function () {
+         *      this.self.updateChildRows(this.dindex, {isChecked: this.item.isChecked});
+         * }
+         *
+         * onDataChanged: function () {
+         *      this.self.updateChildRows(this.dindex, {isChecked: this.item.isChecked}, {filter: function(){
+         *          return this.item.type == "A";
+         *      });
+         * }
+         * ```
+         */
+
     }, {
         key: "updateChildRows",
         value: function updateChildRows(_dindex, _updateData, _options) {
@@ -1235,6 +1492,20 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_body2.default.repaint.call(this);
             return this;
         }
+
+        /**
+         * @method
+         * @param {Number|String} _dindex
+         * @returns {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.deleteRow("first");
+         * grid.deleteRow("last");
+         * grid.deleteRow(1);
+         * grid.deleteRow("selected");
+         * ```
+         */
+
     }, {
         key: "deleteRow",
         value: function deleteRow(_dindex) {
@@ -1245,6 +1516,19 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_scroller2.default.resize.call(this);
             return this;
         }
+
+        /**
+         * @method
+         * @param _dindex
+         * @param _key
+         * @param _value
+         * @returns {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.setValue(0, "price", 100);
+         * ```
+         */
+
     }, {
         key: "setValue",
         value: function setValue(_dindex, _key, _value) {
@@ -1271,6 +1555,14 @@ var AX6UIGrid = function (_AX6UICore) {
 
             return this;
         }
+
+        /**
+         * @method
+         * @param {Object} _column
+         * @param {Number|String} [_cindex=last]
+         * @returns {AX6UIGrid}
+         */
+
     }, {
         key: "addColumn",
         value: function addColumn(_column, _cindex) {
@@ -1302,6 +1594,13 @@ var AX6UIGrid = function (_AX6UICore) {
             onResetColumns.call(this); // 컬럼이 변경되었을 때.
             return this;
         }
+
+        /**
+         * @method
+         * @param {Number|String} [_cindex=last]
+         * @returns {AX6UIGrid}
+         */
+
     }, {
         key: "removeColumn",
         value: function removeColumn(_cindex) {
@@ -1326,6 +1625,14 @@ var AX6UIGrid = function (_AX6UICore) {
             onResetColumns.call(this); // 컬럼이 변경되었을 때.
             return this;
         }
+
+        /**
+         * @method
+         * @param {Object} _column
+         * @param {Number} _cindex
+         * @returns {AX6UIGrid}
+         */
+
     }, {
         key: "updateColumn",
         value: function updateColumn(_column, _cindex) {
@@ -1337,6 +1644,14 @@ var AX6UIGrid = function (_AX6UICore) {
             onResetColumns.call(this); // 컬럼이 변경되었을 때.
             return this;
         }
+
+        /**
+         * @method
+         * @param {Number} _width
+         * @param {Number} _cindex
+         * @returns {AX6UIGrid}
+         */
+
     }, {
         key: "setColumnWidth",
         value: function setColumnWidth(_width, _cindex) {
@@ -1351,6 +1666,12 @@ var AX6UIGrid = function (_AX6UICore) {
             alignGrid.call(this);
             return this;
         }
+
+        /**
+         * @method
+         * @returns {Object} sortInfo
+         */
+
     }, {
         key: "getColumnSortInfo",
         value: function getColumnSortInfo() {
@@ -1367,6 +1688,20 @@ var AX6UIGrid = function (_AX6UICore) {
             });
             return that.sortInfo;
         }
+
+        /**
+         * @method
+         * @param {Object} _sortInfo
+         * @param {Object} _sortInfo.key
+         * @param {Number} _sortInfo.key.seq - seq of sortOrder
+         * @param {String} _sortInfo.key.orderBy - "desc"|"asc"
+         * @returns {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.setColumnSort({a:{seq:0, orderBy:"desc"}, b:{seq:1, orderBy:"asc"}});
+         * ```
+         */
+
     }, {
         key: "setColumnSort",
         value: function setColumnSort(_sortInfo) {
@@ -1378,6 +1713,26 @@ var AX6UIGrid = function (_AX6UICore) {
             sortColumns.call(this, _sortInfo || this.sortInfo);
             return this;
         }
+
+        /**
+         * @method
+         * @param {Number|Object} _selectObject
+         * @param {Number} _selectObject.index - index of row
+         * @param {Number} _selectObject.rowIndex - rowIndex of columns
+         * @param {Number} _selectObject.conIndex - colIndex of columns
+         * @param {Object} _options
+         * @param {Boolean} _options.selectedClear
+         * @param {Boolean} _options.selected
+         * @returns {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.select(0);
+         * grid.select(0, {selected: true});
+         * grid.select(0, {selected: false});
+         * grid.select(0, {selectedClear: true});
+         * ```
+         */
+
     }, {
         key: "select",
         value: function select(_selectObject, _options) {
@@ -1397,18 +1752,38 @@ var AX6UIGrid = function (_AX6UICore) {
             }
             return this;
         }
+
+        /**
+         * @method
+         * @param _dindex
+         * @return {AX6UIGrid}
+         */
+
     }, {
         key: "clickBody",
         value: function clickBody(_dindex) {
             _AX6UIGrid_body2.default.click.call(this, _dindex);
             return this;
         }
+
+        /**
+         * @method
+         * @param _dindex
+         * @return {AX6UIGrid}
+         */
+
     }, {
         key: "DBLClickBody",
         value: function DBLClickBody(_dindex) {
             _AX6UIGrid_body2.default.dblClick.call(this, _dindex);
             return this;
         }
+
+        /**
+         * @method
+         * @return {AX6UIGrid}
+         */
+
     }, {
         key: "clearSelect",
         value: function clearSelect() {
@@ -1416,6 +1791,27 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_data2.default.clearSelect.call(this);
             return this;
         }
+
+        /**
+         * @method
+         * @param {Object} _options
+         * @param {Boolean} _options.selected
+         * @param {Function} _options.filter
+         * @returns {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.selectAll();
+         * grid.selectAll({selected: true});
+         * grid.selectAll({selected: false});
+         * grid.selectAll({filter: function(){
+         *      return this["b"] == "A01";
+         * });
+         * grid.selectAll({selected: true, filter: function(){
+         *      return this["b"] == "A01";
+         * });
+         * ```
+         */
+
     }, {
         key: "selectAll",
         value: function selectAll(_options) {
@@ -1423,6 +1819,18 @@ var AX6UIGrid = function (_AX6UICore) {
             _AX6UIGrid_body2.default.updateRowStateAll.call(this, ["selected"]);
             return this;
         }
+
+        /**
+         * @method
+         * @param {String} _fileName
+         * @returns {AX6UIGrid|String}
+         * @example
+         * ```js
+         * grid.exportExcel("grid-to-excel.xls");
+         * console.log(grid.exportExcel());
+         * ```
+         */
+
     }, {
         key: "exportExcel",
         value: function exportExcel(_fileName) {
@@ -1440,6 +1848,20 @@ var AX6UIGrid = function (_AX6UICore) {
 
             return this;
         }
+
+        /**
+         * @method
+         * @param {String|Number} _pos - UP, DOWN, LEFT, RIGHT, HOME, END
+         * @returns {AX6UIGrid}
+         * @example
+         * ```js
+         * grid.focus("UP");
+         * grid.focus("DOWN");
+         * grid.focus("HOME");
+         * grid.focus("END");
+         * ```
+         */
+
     }, {
         key: "focus",
         value: function focus(_pos) {
@@ -1488,6 +1910,12 @@ var AX6UIGrid = function (_AX6UICore) {
             }
             return this;
         }
+
+        /**
+         * @method
+         * @return {null}
+         */
+
     }, {
         key: "destroy",
         value: function destroy() {

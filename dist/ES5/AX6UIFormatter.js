@@ -34,6 +34,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var formatter = {};
 var setSelectionRange = function setSelectionRange(input, pos) {
     if (typeof pos == "undefined") {
         pos = input.value.length;
@@ -88,7 +89,9 @@ var formatterEvent = {
         }
 
         beforeValue = elem.value;
-        if (opts.pattern in _AX6UIFormatter_formatter2.default) {
+        if (opts.pattern in this.customFormatter) {
+            newValue = this.customFormatter[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value);
+        } else if (opts.pattern in _AX6UIFormatter_formatter2.default) {
             newValue = _AX6UIFormatter_formatter2.default[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value);
         } else {
             newValue = beforeValue;
@@ -107,7 +110,9 @@ var formatterEvent = {
         opts.$input.removeData("__originValue__");
 
         beforeValue = elem.value;
-        if (opts.pattern in _AX6UIFormatter_formatter2.default) {
+        if (opts.pattern in this.customFormatter) {
+            newValue = this.customFormatter[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value, 'blur');
+        } else if (opts.pattern in _AX6UIFormatter_formatter2.default) {
             newValue = _AX6UIFormatter_formatter2.default[opts.pattern].getPatternValue.call(this, opts, optIdx, e, elem.value, 'blur');
         } else {
             newValue = beforeValue;
@@ -143,9 +148,11 @@ var bindFormatterTarget = function bindFormatterTarget(opts, optIdx) {
     opts.patternArgument = matched[1] || "";
 
     // 함수타입
-    if (opts.pattern in _AX6UIFormatter_formatter2.default) {
+    if (opts.pattern in this.customFormatter) {
+        opts.enterableKeyCodes = this.customFormatter[opts.pattern].getEnterableKeyCodes.call(this, opts, optIdx);
+    } else if (opts.pattern in _AX6UIFormatter_formatter2.default) {
         opts.enterableKeyCodes = _AX6UIFormatter_formatter2.default[opts.pattern].getEnterableKeyCodes.call(this, opts, optIdx);
-    } else if (opts.pattern in this.config.formatter) {}
+    }
 
     opts.$input.off('focus.ax6formatter').on('focus.ax6formatter', formatterEvent.focus.bind(this, this.queue[optIdx], optIdx)).off('keydown.ax6formatter').on('keydown.ax6formatter', formatterEvent.keydown.bind(this, this.queue[optIdx], optIdx)).off('keyup.ax6formatter').on('keyup.ax6formatter', formatterEvent.keyup.bind(this, this.queue[optIdx], optIdx)).off('blur.ax6formatter').on('blur.ax6formatter', formatterEvent.blur.bind(this, this.queue[optIdx], optIdx));
 
@@ -278,9 +285,11 @@ var AX6UIFormatter = function (_AX6UICore) {
     }, {
         key: "bind",
         value: function bind(opts) {
-            var self = this;
             var formatterConfig = {},
                 optIdx = void 0;
+
+            // 사용자 포메터 체크
+            this.customFormatter = AX6UIFormatter.getFormatter();
 
             _jqmin2.default.extend(true, formatterConfig, this.config);
             if (opts) _jqmin2.default.extend(true, formatterConfig, opts);
@@ -392,6 +401,28 @@ var AX6UIFormatter = function (_AX6UICore) {
             }
 
             return this;
+        }
+
+        /**
+         * @static
+         * @param _formatter
+         */
+
+    }], [{
+        key: "setFormatter",
+        value: function setFormatter(_formatter) {
+            formatter = _formatter;
+        }
+
+        /**
+         * @static
+         * @return {{}}
+         */
+
+    }, {
+        key: "getFormatter",
+        value: function getFormatter() {
+            return formatter || {};
         }
     }]);
 

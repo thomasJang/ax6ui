@@ -5,8 +5,9 @@ import U from "./AX6Util";
 import mustache from "./AX6Mustache";
 import "./AX6UICalendar/index.scss";
 
-const frameTmpl = function (columnKeys) {
-    return `
+let tmpl = {
+    frame(columnKeys){
+        return `
 <div data-ax6ui-calendar="" class="ax6-ui-calendar {{theme}}" data-calendar-els="root" onselectstart="return false;">
     {{#control}}
     <div class="calendar-control" data-calendar-els="control" style="{{controlCSS}}">
@@ -18,9 +19,9 @@ const frameTmpl = function (columnKeys) {
     <div class="calendar-body" data-calendar-els="body"></div>
 </div>
 `;
-};
-const dayTmpl = function (columnKeys) {
-    return `
+    },
+    day(columnKeys){
+        return `
 <table data-calendar-table="day" cellpadding="0" cellspacing="0" style="width:100%;">
     <thead>
         <tr>
@@ -52,9 +53,9 @@ const dayTmpl = function (columnKeys) {
     </tbody>
 </table>
 `;
-};
-const monthTmpl = function (columnKeys) {
-    return `
+    },
+    month(columnKeys){
+        return `
 <table data-calendar-table="month" cellpadding="0" cellspacing="0" style="width:100%;">
     <thead>
         <tr>
@@ -84,9 +85,9 @@ const monthTmpl = function (columnKeys) {
     </tbody>
 </table>
 `;
-};
-const yearTmpl = function (columnKeys) {
-    return `
+    },
+    year(columnKeys){
+        return `
 <table data-calendar-table="year" cellpadding="0" cellspacing="0" style="width:100%;">
     <thead>
         <tr>
@@ -116,7 +117,9 @@ const yearTmpl = function (columnKeys) {
     </tbody>
 </table>
 `;
+    }
 };
+
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
         opts.onStateChanged.call(that, that);
@@ -141,7 +144,7 @@ const getFrame = function () {
     data.controlButtonCSS = U.css(data.controlButtonCSS);
 
     try {
-        return mustache.render(frameTmpl.call(this), data);
+        return mustache.render(tmpl.frame.call(this), data);
     }
     finally {
         data = null;
@@ -314,7 +317,7 @@ const printDay = function (nowDate) {
     }
 
     this.$["body"]
-        .html(mustache.render(dayTmpl.call(this), data))
+        .html(mustache.render(tmpl.day.call(this), data))
         .off(this.config.clickEventName)
         .on(this.config.clickEventName, '[data-calendar-item-date]', (e) => {
             e = e || window.event;
@@ -411,7 +414,7 @@ const printMonth = function (nowDate) {
     }
 
     this.$["body"]
-        .html(mustache.render(monthTmpl.call(this), data))
+        .html(mustache.render(tmpl.month.call(this), data))
         .off(this.config.clickEventName)
         .on(this.config.clickEventName, '[data-calendar-item-month]', (e) => {
             e = e || window.event;
@@ -507,7 +510,7 @@ const printYear = function (nowDate) {
     }
 
     this.$["body"]
-        .html(mustache.render(yearTmpl.call(this), data))
+        .html(mustache.render(tmpl.year.call(this), data))
         .off(this.config.clickEventName)
         .on(this.config.clickEventName, '[data-calendar-item-year]', (e) => {
             e = (e || window.event);

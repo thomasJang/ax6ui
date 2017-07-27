@@ -8,8 +8,9 @@ import Calendar from "./AX6UICalendar";
 import Palette from "./AX6UIPalette";
 import "./AX6UIPicker/index.scss";
 
-const pickerTmpl = function (columnKeys) {
-    return `
+let tmpl = {
+    pickerTmpl(columnKeys) {
+        return `
 <div data-ax6ui-picker="" class="{{theme}}" id="{{id}}" data-picker-els="root" {{#zIndex}}style="z-index:{{zIndex}};"{{/zIndex}}>
     {{#title}}
         <div class="ax-picker-heading">{{title}}</div>
@@ -29,6 +30,7 @@ const pickerTmpl = function (columnKeys) {
     <div class="ax-picker-arrow"></div>
 </div>
 `;
+    }
 };
 const onStateChanged = function (item, that) {
     if (item && item.onStateChanged) {
@@ -1149,7 +1151,7 @@ class AX6UIPicker extends AX6UICore {
             return this;
         }
 
-        this.activePicker = jQuery(mustache.render(pickerTmpl.call(this), item));
+        this.activePicker = jQuery(mustache.render(tmpl.pickerTmpl.call(this), item));
         this.activePickerArrow = this.activePicker.find(".ax-picker-arrow");
         this.activePickerQueueIndex = queIdx;
         item.pickerContent = this.activePicker.find('[data-picker-els="content"]');

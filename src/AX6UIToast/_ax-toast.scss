@@ -60,42 +60,41 @@
 
 @include keyframes(ax-toast-bottom) {
     from {
-        @include transform(translateY(-100px) scale(0.7));
+        @include transform(translateY(-100px));
     }
     to {
         //@include opacity($mask-bg-opacity);
-        @include transform(translateY(0px) scale(1))
+        @include transform(translateY(0px))
     }
 }
 
 @include keyframes(ax-toast-top) {
     from {
-        @include transform(translateY(100px) scale(0.7));
+        @include transform(translateY(100px));
     }
     to {
-        //@include opacity($mask-bg-opacity);
-        @include transform(translateY(0px) scale(1))
+        @include transform(translateY(0px))
     }
 }
 
 @include keyframes(ax-toast-removed-bottom) {
     from {
-        @include transform(translateY(0px));
+        @include transform(translateX(0px));
         opacity: 1.0;
     }
     to {
-        @include transform(translateY(10px) scale(0.7));
+        @include transform(translateX(100px));
         opacity: 0.0;
     }
 }
 
 @include keyframes(ax-toast-removed-top) {
     from {
-        @include transform(translateY(0px));
+        @include transform(translateX(0px));
         opacity: 1.0;
     }
     to {
-        @include transform(translateY(-10px) scale(0.7));
+        @include transform(translateX(-100px));
         opacity: 0.0;
     }
 }
@@ -106,17 +105,19 @@
         opacity: 1.0;
     }
     to {
-        @include transform(scale(1.5));
+        @include transform(scale(0.7));
         opacity: 0.0;
     }
 }
 
 // mixins --------------------------------------------- end
 
-.ax5-ui-toast-container {
+[data-ax6ui-toast-container] {
     z-index: $ax6toast-z-index;
     position: fixed;
+    //width: 0;
     width: $ax6toast-container-width;
+    max-width: 100%;
     padding: $ax6toast-container-padding;
 
     box-sizing: border-box;
@@ -126,11 +127,10 @@
         box-sizing: border-box;
     }
 
-    .ax5-ui-toast {
+    [data-ax6ui-toast] {
         @include ax-toast();
         @include ax-toast-section();
-        @include transition(all $ax6toast-easing-time ease-in-out);
-
+        //@include transition(all $ax6toast-easing-time ease-in-out);
         @include toast-variant($ax6toast-default-text, $ax6toast-default-bg, $ax6toast-default-color);
 
         &.primary {
@@ -150,12 +150,12 @@
         }
     }
 
-    &.bottom-left {
-        left: 0;
+    &[data-toast-container-position="bottom-left"] {
+        left: 10px;
         bottom: 0;
 
-        .ax5-ui-toast {
-            @include animation(ax-toast-top $ax6toast-easing-time $ax6toast-easing);
+        [data-ax6ui-toast] {
+            @include animation(ax-toast-top $ax6toast-easing-time $ease-out-back);
             &.removed {
                 @include animation(ax-toast-removed-bottom $ax6toast-easing-time ease forwards);
             }
@@ -164,12 +164,12 @@
             }
         }
     }
-    &.bottom-right {
-        right: 0;
+    &[data-toast-container-position="bottom-right"] {
+        right: 10px;
         bottom: 0;
 
-        .ax5-ui-toast {
-            @include animation(ax-toast-top $ax6toast-easing-time $ax6toast-easing);
+        [data-ax6ui-toast] {
+            @include animation(ax-toast-top $ax6toast-easing-time $ease-out-back);
             &.removed {
                 @include animation(ax-toast-removed-bottom $ax6toast-easing-time ease forwards);
             }
@@ -177,15 +177,30 @@
                 @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
             }
         }
+    }
+    &[data-toast-container-position="bottom-center"] {
+        left: 50%;
+        bottom: 0;
 
+        [data-ax6ui-toast] {
+            position: relative;
+            left: -50%;
+            @include animation(ax-toast-top $ax6toast-easing-time $ease-out-back);
+            &.removed {
+                @include animation(ax-toast-removed-bottom $ax6toast-easing-time ease forwards);
+            }
+            &.destroy {
+                @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+            }
+        }
     }
 
-    &.top-left {
-        left: 0;
+    &[data-toast-container-position="top-left"] {
+        left: 10px;
         top: 0;
 
-        .ax5-ui-toast {
-            @include animation(ax-toast-bottom $ax6toast-easing-time $ax6toast-easing);
+        [data-ax6ui-toast] {
+            @include animation(ax-toast-bottom $ax6toast-easing-time $ease-out-back);
 
             &.removed {
                 @include animation(ax-toast-removed-top $ax6toast-easing-time ease forwards);
@@ -196,12 +211,29 @@
         }
     }
 
-    &.top-right {
-        right: 0;
+    &[data-toast-container-position="top-right"] {
+        right: 10px;
         top: 0;
 
-        .ax5-ui-toast {
-            @include animation(ax-toast-bottom $ax6toast-easing-time $ax6toast-easing);
+        [data-ax6ui-toast] {
+            @include animation(ax-toast-bottom $ax6toast-easing-time $ease-out-back);
+            &.removed {
+                @include animation(ax-toast-removed-top $ax6toast-easing-time ease forwards);
+            }
+            &.destroy {
+                @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+            }
+        }
+    }
+
+    &[data-toast-container-position="top-center"] {
+        left: 50%;
+        top: 0;
+
+        [data-ax6ui-toast] {
+            left: -50%;
+            @include animation(ax-toast-bottom $ax6toast-easing-time $ease-out-back);
+
             &.removed {
                 @include animation(ax-toast-removed-top $ax6toast-easing-time ease forwards);
             }

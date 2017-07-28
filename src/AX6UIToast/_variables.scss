@@ -42,78 +42,42 @@ $state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%) !
 //
 //##
 
-$panel-bg:                    #fff !default;
-$panel-body-padding:          15px !default;
-$panel-heading-padding:       10px 15px !default;
-$panel-footer-padding:        $panel-heading-padding !default;
-$panel-border-radius:         $border-radius-base !default;
-
-//** Border color for elements within panels
-$panel-inner-border:          #ddd !default;
-$panel-footer-bg:             #f5f5f5 !default;
-
-$panel-default-text:          $gray-dark !default;
-$panel-default-border:        #ddd !default;
-$panel-default-heading-bg:    #f5f5f5 !default;
-
-$panel-primary-text:          #fff !default;
-$panel-primary-border:        $brand-primary !default;
-$panel-primary-heading-bg:    $brand-primary !default;
-
-$panel-success-text:          $state-success-text !default;
-$panel-success-border:        $state-success-border !default;
-$panel-success-heading-bg:    $state-success-bg !default;
-
-$panel-info-text:             $state-info-text !default;
-$panel-info-border:           $state-info-border !default;
-$panel-info-heading-bg:       $state-info-bg !default;
-
-$panel-warning-text:          $state-warning-text !default;
-$panel-warning-border:        $state-warning-border !default;
-$panel-warning-heading-bg:    $state-warning-bg !default;
-
-$panel-danger-text:           $state-danger-text !default;
-$panel-danger-border:         $state-danger-border !default;
-$panel-danger-heading-bg:     $state-danger-bg !default;
-
-
 //============== toast
 $ax6toast-z-index: 2000;
 // 0:left,top / 1:right,top / 2:right,bottom / 3:left,bottom
 $ax6toast-container-width: auto !default;
-$ax6toast-container-padding: 10px !default;
+$ax6toast-container-padding: 10px 0 !default;
 $ax6toast-box-model: border-box  !default;
-$ax6toast-border: 1px solid rgb(255/2, 255/2, 255/2) !default;
+$ax6toast-border: 1px solid #c6c6c6 !default;
 $ax6toast-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.175) !default;
 $ax6toast-body-padding: 6px !default;
-$ax6toast-border-radius: 8px !default;
+$ax6toast-border-radius: 1px !default;
 $ax6toast-opacity: 0.9 !default;
 $ax6toast-box-margin: 5px 0px 5px 0px !default;
 $ax6toast-icon-size: 24px;
-$ax6toast-easing: $ease-in-out-quint;
 $ax6toast-easing-time: 0.3s;
 
 //** Border color for elements within toast
-$ax6toast-default-text: $panel-default-text !default;
-$ax6toast-default-bg: $panel-bg !default;
+$ax6toast-default-text: $gray-dark !default;
+$ax6toast-default-bg: #eee !default;
 $ax6toast-default-color: $text-color !default;
 
 $ax6toast-primary-text: $brand-primary !default;
-$ax6toast-primary-bg: $panel-bg !default;
+$ax6toast-primary-bg: #eee !default;
 $ax6toast-primary-color: $brand-primary !default;
 
 $ax6toast-success-text: $brand-success !default;
-$ax6toast-success-bg: $panel-bg !default;
+$ax6toast-success-bg: #eee !default;
 $ax6toast-success-color: $brand-success !default;
 
 $ax6toast-info-text: $brand-info !default;
-$ax6toast-info-bg: $panel-bg !default;
+$ax6toast-info-bg: #eee !default;
 $ax6toast-info-color: $brand-info !default;
 
 $ax6toast-warning-text: $brand-warning !default;
-$ax6toast-warning-bg: $panel-bg !default;
+$ax6toast-warning-bg: #eee !default;
 $ax6toast-warning-color: $brand-warning !default;
 
 $ax6toast-danger-text: $brand-danger !default;
-$ax6toast-danger-bg: $panel-bg !default;
+$ax6toast-danger-bg: #eee !default;
 $ax6toast-danger-color: $brand-danger !default;

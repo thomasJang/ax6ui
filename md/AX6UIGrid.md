@@ -116,6 +116,7 @@
 | [config.body.onClick] | <code>function</code> |  |  |
 | [config.body.onDBLClick] | <code>function</code> |  |  |
 | [config.body.onDataChanged] | <code>function</code> |  |  |
+| [config.body.onContextMenu] | <code>function</code> |  |  |
 | [config.body.mergeCells] | <code>String</code> &#124; <code>Array</code> | <code>false</code> | - |
 | [config.body.align] | <code>String</code> |  |  |
 | [config.body.columnHeight] | <code>Number</code> | <code>25</code> |  |

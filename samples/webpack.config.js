@@ -11,6 +11,7 @@ const entry = {
     picker: './src/picker.js',
     palette: './src/palette.js',
     dialog: './src/dialog.js',
+    toast: './src/toast.js',
     select: './src/select.js',
     menu: './src/menu.js',
     grid: './src/grid.js'

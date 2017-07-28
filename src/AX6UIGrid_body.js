@@ -304,6 +304,81 @@ const updateRowStateAll = function (_states, _data) {
 const init = function () {
     let self = this;
 
+    this.$["container"]["body"].on("dblclick", '[data-ax6grid-column-attr]', function (e) {
+        let panelName, attr,
+            row, col, dindex, doindex, rowIndex, colIndex,
+            targetDBLClick = {
+                "default": function (_column) {
+                    if (self.isInlineEditing) {
+                        for (let columnKey in self.inlineEditing) {
+                            if (columnKey == _column.dindex + "_" + _column.colIndex + "_" + _column.rowIndex) {
+                                return this;
+                            }
+                        }
+                    }
+
+                    let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex], value = "";
+                    if (column) {
+                        if (!self.list[dindex].__isGrouping) {
+                            value = DATA.getValue.call(self, dindex, doindex, column.key);
+                        }
+                    }
+
+                    let editor = self.colGroup[_column.colIndex].editor;
+                    if (U.isObject(editor)) {
+                        inlineEdit.active.call(self, self.focusedColumn, e, value);
+                    } else {
+                        // 더블클릭 실행
+                        if (self.config.body.onDBLClick) {
+                            let that = {
+                                self: self,
+                                page: self.page,
+                                list: self.list,
+                                item: self.list[_column.dindex],
+                                dindex: _column.dindex,
+                                doindex: _column.doindex,
+                                rowIndex: _column.rowIndex,
+                                colIndex: _column.colIndex,
+                                column: column,
+                                value: self.list[_column.dindex][column.key]
+                            };
+                            self.config.body.onDBLClick.call(that);
+                        }
+                    }
+                },
+                "rowSelector": function (_column) {
+
+                },
+                "lineNumber": function (_column) {
+
+                }
+            };
+
+        panelName = this.getAttribute("data-ax6grid-panel-name");
+        attr = this.getAttribute("data-ax6grid-column-attr");
+        row = Number(this.getAttribute("data-ax6grid-column-row"));
+        col = Number(this.getAttribute("data-ax6grid-column-col"));
+        rowIndex = Number(this.getAttribute("data-ax6grid-column-rowIndex"));
+        colIndex = Number(this.getAttribute("data-ax6grid-column-colIndex"));
+        dindex = Number(this.getAttribute("data-ax6grid-data-index"));
+        doindex = Number(this.getAttribute("data-ax6grid-data-o-index"));
+
+        if (attr in targetDBLClick) {
+            targetDBLClick[attr]({
+                panelName: panelName,
+                attr: attr,
+                row: row,
+                col: col,
+                dindex: dindex,
+                doindex: doindex,
+                rowIndex: rowIndex,
+                colIndex: colIndex
+            });
+
+            U.stopEvent(e);
+        }
+    });
+
     this.$["container"]["body"].on("click", '[data-ax6grid-column-attr]', function (e) {
         let panelName, attr,
             row, col, dindex, doindex, rowIndex, colIndex, disableSelection,
@@ -396,105 +471,27 @@ const init = function () {
             }, this);
         }
     });
-    this.$["container"]["body"].on("dblclick", '[data-ax6grid-column-attr]', function (e) {
-        let panelName, attr,
-            row, col, dindex, doindex, rowIndex, colIndex,
-            targetDBLClick = {
-                "default": function (_column) {
-                    if (self.isInlineEditing) {
-                        for (let columnKey in self.inlineEditing) {
-                            if (columnKey == _column.dindex + "_" + _column.colIndex + "_" + _column.rowIndex) {
-                                return this;
-                            }
-                        }
-                    }
 
-                    let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex], value = "";
-                    if (column) {
-                        if (!self.list[dindex].__isGrouping) {
-                            value = DATA.getValue.call(self, dindex, doindex, column.key);
-                        }
-                    }
+    this.$["container"]["body"].on("contextmenu", function (e) {
+        let target, dindex, doindex, rowIndex, colIndex, item, column, param = {};
 
-                    let editor = self.colGroup[_column.colIndex].editor;
-                    if (U.isObject(editor)) {
-                        inlineEdit.active.call(self, self.focusedColumn, e, value);
-                    } else {
-                        // 더블클릭 실행
-                        if (self.config.body.onDBLClick) {
-                            let that = {
-                                self: self,
-                                page: self.page,
-                                list: self.list,
-                                item: self.list[_column.dindex],
-                                dindex: _column.dindex,
-                                doindex: _column.doindex,
-                                rowIndex: _column.rowIndex,
-                                colIndex: _column.colIndex,
-                                column: column,
-                                value: self.list[_column.dindex][column.key]
-                            };
-                            self.config.body.onDBLClick.call(that);
-                        }
-                    }
-                },
-                "rowSelector": function (_column) {
+        target = U.findParentNode(e.target, function (t) {
+            if (t.getAttribute("data-ax6grid-column-attr")) {
+                return true;
+            }
+        });
 
-                },
-                "lineNumber": function (_column) {
-
-                }
-            };
-
-        panelName = this.getAttribute("data-ax6grid-panel-name");
-        attr = this.getAttribute("data-ax6grid-column-attr");
-        row = Number(this.getAttribute("data-ax6grid-column-row"));
-        col = Number(this.getAttribute("data-ax6grid-column-col"));
-        rowIndex = Number(this.getAttribute("data-ax6grid-column-rowIndex"));
-        colIndex = Number(this.getAttribute("data-ax6grid-column-colIndex"));
-        dindex = Number(this.getAttribute("data-ax6grid-data-index"));
-        doindex = Number(this.getAttribute("data-ax6grid-data-o-index"));
-
-        if (attr in targetDBLClick) {
-            targetDBLClick[attr]({
-                panelName: panelName,
-                attr: attr,
-                row: row,
-                col: col,
-                dindex: dindex,
-                doindex: doindex,
-                rowIndex: rowIndex,
-                colIndex: colIndex
-            });
+        if (target) {
+            // item 찾기
+            rowIndex = Number(target.getAttribute("data-ax6grid-column-rowIndex"));
+            colIndex = Number(target.getAttribute("data-ax6grid-column-colIndex"));
+            dindex = Number(target.getAttribute("data-ax6grid-data-index"));
+            doindex = Number(target.getAttribute("data-ax6grid-data-o-index"));
+            column = self.bodyRowMap[rowIndex + "_" + colIndex];
+            item = self.list[dindex];
         }
-    });
 
-    if (this.config.contextMenu) {
-        this.$["container"]["body"].on("contextmenu", function (e) {
-            let target, dindex, doindex, rowIndex, colIndex, item, column, param = {};
-
-            target = U.findParentNode(e.target, function (t) {
-                if (t.getAttribute("data-ax6grid-column-attr")) {
-                    return true;
-                }
-            });
-
-            if (target) {
-                // item 찾기
-                rowIndex = Number(target.getAttribute("data-ax6grid-column-rowIndex"));
-                colIndex = Number(target.getAttribute("data-ax6grid-column-colIndex"));
-                dindex = Number(target.getAttribute("data-ax6grid-data-index"));
-                doindex = Number(target.getAttribute("data-ax6grid-data-o-index"));
-                column = self.bodyRowMap[rowIndex + "_" + colIndex];
-                item = self.list[dindex];
-            }
-
-            if (!self.contextMenu) {
-                self.contextMenu = new ax5.ui.menu();
-            }
-
-            self.contextMenu.setConfig(self.config.contextMenu);
-
+        if (self.config.body.onContextMenu) {
             param = {
                 element: target,
                 dindex: dindex,
@@ -505,25 +502,27 @@ const init = function () {
                 column: column,
                 gridSelf: self
             };
+            self.config.body.onContextMenu.call({
+                self: self,
+                item: item,
+                column: column,
+                dindex: dindex,
+                doindex: doindex,
+                rowIndex: rowIndex,
+                colIndex: colIndex
+            }, e, param);
+        }
 
-            self.contextMenu.popup(e, {
-                filter: function () {
-                    return self.config.contextMenu.popupFilter.call(this, this, param);
-                },
-                param: param
-            });
-
-            U.stopEvent(e.originalEvent);
-            target = null;
-            dindex = null;
-            doindex = null;
-            rowIndex = null;
-            colIndex = null;
-            item = null;
-            column = null;
-            param = null;
-        });
-    }
+        U.stopEvent(e.originalEvent);
+        target = null;
+        dindex = null;
+        doindex = null;
+        rowIndex = null;
+        colIndex = null;
+        item = null;
+        column = null;
+        param = null;
+    });
 
     this.$["container"]["body"]
         .on("mousedown", '[data-ax6grid-column-attr="default"]', function (e) {
@@ -1288,7 +1287,7 @@ const repaint = function (_reset) {
 
                     if (!_colGroup[ci].editor && (() => {
                             if (U.isArray(cfg.body.mergeCells)) {
-                                return ax5.util.search(cfg.body.mergeCells, _colGroup[ci].key) > -1;
+                                return U.search(cfg.body.mergeCells, _colGroup[ci].key) > -1;
                             } else {
                                 return true;
                             }
@@ -2798,6 +2797,7 @@ const click = function (_dindex, _doindex) {
     };
 
     moveFocus.call(this, _dindex);
+
     if (this.config.body.onClick) {
         this.config.body.onClick.call(that);
     }

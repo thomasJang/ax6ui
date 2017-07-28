@@ -1,6 +1,7 @@
 import $ from "jqmin";
 import axios from "axios";
 import Grid from "../../src/AX6UIGrid";
+import Menu from "../../src/AX6UIMenu";
 import "./custom-materialize.scss";
 
 const $body = $("#sample-body");
@@ -136,6 +137,135 @@ new Grid({
     {a:"토마스", b:"Thomas", c: 50000, d: 500, e: "E", f: "이영희", g: "1977년", h:"woman"}
 ]);
 
+
+let menu = new Menu({
+    theme: 'primary',
+    // width: 200,
+    iconWidth: 20,
+    acceleratorWidth: 100,
+    // offset: {left: 10, top: 10},
+    itemClickAndClose: false,
+    //position: "absolute",
+    icons: {
+        'arrow': '<i class="tiny material-icons">chevron_right</i>'
+    },
+    columnKeys: {
+        label: 'name',
+        items: 'chidren'
+    },
+    items: [
+        {
+            icon: '<i class="tiny material-icons">class</i>',
+            name: "Menu Parent 0",
+            chidren: [
+                {
+                    check: {
+                        type: 'checkbox',
+                        name: 'A',
+                        value: '0',
+                        checked: false
+                    },
+                    name: "Menu Z",
+                    data: {},
+                    role: "",
+                    accelerator: "CmdOrCtrl+Z"
+                },
+                {
+                    check: {
+                        type: 'checkbox',
+                        name: 'A',
+                        value: '1',
+                        checked: true
+                    },
+                    name: "Menu A",
+                    data: {},
+                    role: ""
+                    //accelerator: "CmdOrCtrl+A"
+                }
+            ],
+            filterType: "A"
+        },
+        {
+            divide: true,
+            filterType: "A"
+        },
+        {
+            icon: '<i class="tiny material-icons">class</i>',
+            name: "Menu Parent 1",
+            chidren: [
+                {
+                    name: "Menu Z",
+                    data: {},
+                    role: "",
+                    //accelerator: "CmdOrCtrl+Z",
+                    chidren: [
+                        {
+                            name: "Menu Z",
+                            data: {},
+                            role: ""
+                            //accelerator: "CmdOrCtrl+Z"
+                        },
+                        {
+                            name: "Menu A",
+                            data: {},
+                            role: ""
+                            //accelerator: "CmdOrCtrl+A"
+                        }
+                    ]
+                },
+                {
+                    name: "Menu A",
+                    data: {},
+                    role: ""
+                    //accelerator: "CmdOrCtrl+A"
+                }
+            ],
+            filterType: "A"
+        },
+        {
+            check: {
+                type: 'radio',
+                name: 'radioName',
+                value: '1',
+                checked: false
+            },
+            icon: '<i class="tiny material-icons">class</i>',
+            name: "Menu Parent 2"
+        },
+        {
+            check: {
+                type: 'radio',
+                name: 'radioName',
+                value: '2',
+                checked: false
+            },
+            name: "Menu Parent 3"
+        },
+        {
+            check: {
+                type: 'radio',
+                name: 'radioName',
+                value: '3',
+                checked: false
+            },
+            name: "Menu Parent 4"
+        },
+        {divide: true},
+        {
+            html: function () {
+                // console.log(this);
+                return '<div style="text-align: center;">' +
+                    '<button class="btn btn-primary" data-menu-btn="OK">OK</button> ' +
+                    '<button class="btn btn-danger" data-menu-btn="CANCEL">CANCEL</button>' +
+                    '</div>';
+            }
+        }
+    ]
+});
+menu.onClick = function (item, param) {
+    console.log(item, param);
+};
+
 new Grid({
     target: $body.find('[data-ax6ui-grid="grid-context-menu"]'),
     columns: [
@@ -144,7 +274,13 @@ new Grid({
         {key: "c", label: "field C", formatter: "money"},
         {key: "g", label: "field G"},
         {key: "h", label: "field H"}
-    ]
+    ],
+    body: {
+        onContextMenu: function (e, param) {
+            // console.log(e);
+            menu.popup(e, {param: param});
+        }
+    }
 }).setData([
     {a:"토마스", b:"Thomas", c: 50000, d: 500, e: "E", f: "장서우", g: "2010년", h:"woman"},
     {a:"토마스", b:"Thomas", c: 50000, d: 500, e: "E", f: "이영희", g: "1977년", h:"woman"}

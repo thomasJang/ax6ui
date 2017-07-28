@@ -629,6 +629,7 @@ var AX6UIGrid = function (_AX6UICore) {
          * @param {Function} [config.body.onClick]
          * @param {Function} [config.body.onDBLClick]
          * @param {Function} [config.body.onDataChanged]
+         * @param {Function} [config.body.onContextMenu]
          * @param {String|Array} [config.body.mergeCells=false] -
          * @param {String} [config.body.align]
          * @param {Number} [config.body.columnHeight=25]
@@ -962,9 +963,7 @@ var AX6UIGrid = function (_AX6UICore) {
 
             // 그리드의 이벤트 정의 구간
             this.onStateChanged = this.config.onStateChanged;
-            this.onClick = this.config.onClick;
             this.onLoad = this.config.onLoad;
-            this.onDataChanged = this.config.body.onDataChanged;
 
             // init 호출 여부
             this.initOnce();

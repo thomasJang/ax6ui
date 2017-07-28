@@ -48,8 +48,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var pickerTmpl = function pickerTmpl(columnKeys) {
-    return "\n<div data-ax6ui-picker=\"\" class=\"{{theme}}\" id=\"{{id}}\" data-picker-els=\"root\" {{#zIndex}}style=\"z-index:{{zIndex}};\"{{/zIndex}}>\n    {{#title}}\n        <div class=\"ax-picker-heading\">{{title}}</div>\n    {{/title}}\n    <div class=\"ax-picker-body\">\n        <div class=\"ax-picker-content\" data-picker-els=\"content\" style=\"width:{{contentWidth}}px;\"></div>\n        {{#btns}}\n            <div class=\"ax-picker-buttons\">\n            {{#btns}}\n                {{#@each}}\n                <button data-picker-btn=\"{{@key}}\" class=\"{{@value.theme}}\">{{@value.label}}</button>\n                {{/@each}}\n            {{/btns}}\n            </div>\n        {{/btns}}\n    </div>\n    <div class=\"ax-picker-arrow\"></div>\n</div>\n";
+var tmpl = {
+    pickerTmpl: function pickerTmpl(columnKeys) {
+        return "\n<div data-ax6ui-picker=\"\" class=\"{{theme}}\" id=\"{{id}}\" data-picker-els=\"root\" {{#zIndex}}style=\"z-index:{{zIndex}};\"{{/zIndex}}>\n    {{#title}}\n        <div class=\"ax-picker-heading\">{{title}}</div>\n    {{/title}}\n    <div class=\"ax-picker-body\">\n        <div class=\"ax-picker-content\" data-picker-els=\"content\" style=\"width:{{contentWidth}}px;\"></div>\n        {{#btns}}\n            <div class=\"ax-picker-buttons\">\n            {{#btns}}\n                {{#@each}}\n                <button data-picker-btn=\"{{@key}}\" class=\"{{@value.theme}}\">{{@value.label}}</button>\n                {{/@each}}\n            {{/btns}}\n            </div>\n        {{/btns}}\n    </div>\n    <div class=\"ax-picker-arrow\"></div>\n</div>\n";
+    }
 };
 var onStateChanged = function onStateChanged(item, that) {
     if (item && item.onStateChanged) {
@@ -1092,7 +1094,7 @@ var AX6UIPicker = function (_AX6UICore) {
                 return this;
             }
 
-            this.activePicker = (0, _jqmin2.default)(_AX6Mustache2.default.render(pickerTmpl.call(this), item));
+            this.activePicker = (0, _jqmin2.default)(_AX6Mustache2.default.render(tmpl.pickerTmpl.call(this), item));
             this.activePickerArrow = this.activePicker.find(".ax-picker-arrow");
             this.activePickerQueueIndex = queIdx;
             item.pickerContent = this.activePicker.find('[data-picker-els="content"]');

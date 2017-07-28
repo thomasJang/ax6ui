@@ -9,7 +9,7 @@
     * [.maskContent](#AX6UIMask+maskContent) : <code>String</code>
     * [.status](#AX6UIMask+status) : <code>String</code>
     * [.activeConfig](#AX6UIMask+activeConfig) : <code>JSON</code>
-    * [.init(config)](#AX6UIMask+init)
+    * [.init()](#AX6UIMask+init)
     * [.initOnce()](#AX6UIMask+initOnce)
     * [.open(options)](#AX6UIMask+open) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
     * [.close(delay)](#AX6UIMask+close) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
@@ -59,19 +59,8 @@
 **Kind**: instance property of <code>[AX6UIMask](#AX6UIMask)</code>  
 <a name="AX6UIMask+init"></a>
 
-### aX6UIMask.init(config)
+### aX6UIMask.init()
 **Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
-
-| Param |
-| --- |
-| config | 
-| [config.theme] | 
-| [config.target] | 
-| [config.animateTime] | 
-| [config.onStateChanged] | 
-| [config.onClick] | 
-| [config.content] | 
-
 <a name="AX6UIMask+initOnce"></a>
 
 ### aX6UIMask.initOnce()

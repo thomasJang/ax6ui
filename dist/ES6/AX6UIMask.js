@@ -88,13 +88,6 @@ class AX6UIMask extends AX6UICore {
 
     /**
      * @method
-     * @param config
-     * @param [config.theme]
-     * @param [config.target]
-     * @param [config.animateTime]
-     * @param [config.onStateChanged]
-     * @param [config.onClick]
-     * @param [config.content]
      */
     init() {
         this.onStateChanged = this.config.onStateChanged;

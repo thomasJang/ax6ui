@@ -24,6 +24,10 @@ var _AX6UIGrid_page = require("./AX6UIGrid_page");
 
 var _AX6UIGrid_page2 = _interopRequireDefault(_AX6UIGrid_page);
 
+var _AX6UIGrid_header = require("./AX6UIGrid_header");
+
+var _AX6UIGrid_header2 = _interopRequireDefault(_AX6UIGrid_header);
+
 var _AX6UIGrid_inline_editor = require("./AX6UIGrid_inline_editor");
 
 var _AX6UIGrid_inline_editor2 = _interopRequireDefault(_AX6UIGrid_inline_editor);
@@ -2214,14 +2218,14 @@ var moveFocus = function moveFocus(_position) {
                     if (focusedColumn.colIndex <= this.xvar.paintStartColumnIndex && this.colGroup[focusedColumn.colIndex]) {
                         scrollLeft = -this.colGroup[Number(focusedColumn.colIndex)]._sx;
                         scrollTo.call(this, { left: scrollLeft });
-                        GRID.header.scrollTo.call(this, { left: scrollLeft });
+                        _AX6UIGrid_header2.default.scrollTo.call(this, { left: scrollLeft });
                         _AX6UIGrid_scroller2.default.resize.call(this);
                         return true;
                     } else if (focusedColumn.colIndex >= this.xvar.paintEndColumnIndex && this.colGroup[Number(focusedColumn.colIndex)]) {
                         if (this.colGroup[Number(focusedColumn.colIndex)]._ex > this.xvar.bodyWidth) {
                             scrollLeft = this.colGroup[Number(focusedColumn.colIndex)]._ex - this.xvar.bodyWidth;
                             scrollTo.call(this, { left: -scrollLeft });
-                            GRID.header.scrollTo.call(this, { left: -scrollLeft });
+                            _AX6UIGrid_header2.default.scrollTo.call(this, { left: -scrollLeft });
                             _AX6UIGrid_scroller2.default.resize.call(this);
                         }
                         return true;
@@ -2252,7 +2256,7 @@ var moveFocus = function moveFocus(_position) {
                 }.call(this);
 
                 if (typeof newLeft !== "undefined") {
-                    GRID.header.scrollTo.call(this, { left: -newLeft });
+                    _AX6UIGrid_header2.default.scrollTo.call(this, { left: -newLeft });
                     scrollTo.call(this, { left: -newLeft });
                     _AX6UIGrid_scroller2.default.resize.call(this);
                 }

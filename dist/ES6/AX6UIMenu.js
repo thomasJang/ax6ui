@@ -78,23 +78,16 @@ let tmpl = {
 
 const appEventAttach = function (active, opt) {
     if (active) {
-        jQuery(document.body)
-            .off("click.ax5menu-" + this.instanceId)
-            .on("click.ax5menu-" + this.instanceId, clickItem.bind(this, opt));
+        jQuery(document.body).off("click.ax5menu-" + this.instanceId).on("click.ax5menu-" + this.instanceId, clickItem.bind(this, opt));
 
-        jQuery(window)
-            .off("keydown.ax5menu-" + this.instanceId)
-            .on("keydown.ax5menu-" + this.instanceId, function (e) {
-                if (e.which == info.eventKeys.ESC) {
-                    self.close();
-                }
-            })
-            .off("resize.ax5menu-" + this.instanceId)
-            .on("resize.ax5menu-" + this.instanceId, function (e) {
+        jQuery(window).off("keydown.ax5menu-" + this.instanceId).on("keydown.ax5menu-" + this.instanceId, function (e) {
+            if (e.which == info.eventKeys.ESC) {
                 self.close();
-            });
-    }
-    else {
+            }
+        }).off("resize.ax5menu-" + this.instanceId).on("resize.ax5menu-" + this.instanceId, function (e) {
+            self.close();
+        });
+    } else {
         jQuery(document.body).off("click.ax5menu-" + this.instanceId);
         jQuery(window).off("keydown.ax5menu-" + this.instanceId);
         jQuery(window).off("resize.ax5menu-" + this.instanceId);
@@ -103,8 +96,7 @@ const appEventAttach = function (active, opt) {
 const onStateChanged = function (opts, that) {
     if (opts && opts.onStateChanged) {
         opts.onStateChanged.call(that, that);
-    }
-    else if (this.onStateChanged) {
+    } else if (this.onStateChanged) {
         this.onStateChanged.call(that, that);
     }
 
@@ -122,7 +114,8 @@ const onLoad = function (that) {
     return true;
 };
 const popup = function (opt, items, depth, path) {
-    let self = this, cfg = this.config;
+    let self = this,
+        cfg = this.config;
     let data = opt,
         $activeMenu,
         removed;
@@ -144,8 +137,7 @@ const popup = function (opt, items, depth, path) {
                     opt: opt
                 });
             }
-        }
-        else {
+        } else {
             n['@isMenu'] = true;
         }
     });
@@ -194,7 +186,7 @@ const popup = function (opt, items, depth, path) {
 
                     $this = jQuery(this);
                     offset = $this.offset();
-                    scrollTop = (cfg.position == "fixed" ? jQuery(document).scrollTop() : 0);
+                    scrollTop = cfg.position == "fixed" ? jQuery(document).scrollTop() : 0;
                     childOpt = {
                         '@parent': {
                             left: offset.left,
@@ -207,9 +199,8 @@ const popup = function (opt, items, depth, path) {
                     };
 
                     childOpt = jQuery.extend(true, opt, childOpt);
-                    popup.call(self, childOpt, _items, (Number(depth) + 1), path);
-                }
-                else {
+                    popup.call(self, childOpt, _items, Number(depth) + 1, path);
+                } else {
                     self.queue.splice(Number(depth) + 1).forEach(function (n) {
                         n.$target.remove();
                     });
@@ -238,9 +229,7 @@ const popup = function (opt, items, depth, path) {
         if (path) {
             _items = self.queue[depth].data[cfg.columnKeys.items][index][cfg.columnKeys.items];
         }
-        if (_items && _items.length > 0) {
-
-        } else {
+        if (_items && _items.length > 0) {} else {
             jQuery(this).removeClass("hover");
         }
     });
@@ -251,15 +240,12 @@ const popup = function (opt, items, depth, path) {
         onStateChanged.call(this, null, {
             self: this,
             items: items,
-            parent: (function (path) {
+            parent: function (path) {
                 if (!path) return false;
                 try {
-                    return (Function("", "return this.config.items[" + path.substring(5).replace(/\./g, '].items[') + "];")).call(self);
-                }
-                catch (e) {
-
-                }
-            })(data['@path']),
+                    return Function("", "return this.config.items[" + path.substring(5).replace(/\./g, '].items[') + "];").call(self);
+                } catch (e) {}
+            }(data['@path']),
             state: "popup"
         });
     }
@@ -282,7 +268,8 @@ const popup = function (opt, items, depth, path) {
     return this;
 };
 const clickItem = function (opt, e) {
-    let self = this, cfg = this.config;
+    let self = this,
+        cfg = this.config;
     let target, item;
 
     target = U.findParentNode(e.target, function (target) {
@@ -292,18 +279,16 @@ const clickItem = function (opt, e) {
     });
     if (target) {
         if (typeof opt === "undefined") opt = {};
-        item = (function (path) {
+        item = function (path) {
             if (!path) return false;
             try {
-                return (Function("", "return this[" + path.substring(5).replace(/\./g, '].' + cfg.columnKeys.items + '[') + "];")).call(opt.items || cfg.items);
-            }
-            catch (e) {
+                return Function("", "return this[" + path.substring(5).replace(/\./g, '].' + cfg.columnKeys.items + '[') + "];").call(opt.items || cfg.items);
+            } catch (e) {
                 console.log(info.getError("ax5menu", "501", "menuItemClick"));
-            }
-            finally {
+            } finally {
                 item = null;
             }
-        })(target.getAttribute("data-menu-item-path"));
+        }(target.getAttribute("data-menu-item-path"));
 
         if (!item) return this;
 
@@ -346,8 +331,7 @@ const clickItem = function (opt, e) {
             }
         }
         if ((!item[cfg.columnKeys.items] || item[cfg.columnKeys.items].length == 0) && cfg.itemClickAndClose) self.close();
-    }
-    else {
+    } else {
         self.close();
     }
 
@@ -356,10 +340,11 @@ const clickItem = function (opt, e) {
     return this;
 };
 const align = function ($activeMenu, data) {
-    let self = this, cfg = this.config;
+    let self = this,
+        cfg = this.config;
     let $window = jQuery(window),
         $document = jQuery(document),
-        wh = (cfg.position == "fixed") ? $window.height() : $document.height(),
+        wh = cfg.position == "fixed" ? $window.height() : $document.height(),
         ww = $window.width(),
         h = $activeMenu.outerHeight(),
         w = $activeMenu.outerWidth(),
@@ -370,8 +355,7 @@ const align = function ($activeMenu, data) {
     if (l + w > ww) {
         if (data['@parent']) {
             l = data['@parent'].left - w + cfg.menuBodyPadding;
-        }
-        else {
+        } else {
             l = ww - w;
         }
     }
@@ -380,7 +364,7 @@ const align = function ($activeMenu, data) {
         t = wh - h;
     }
 
-    $activeMenu.css({left: l, top: t, position: position});
+    $activeMenu.css({ left: l, top: t, position: position });
 
     $activeMenu = null;
     data = null;
@@ -434,7 +418,7 @@ class AX6UIMenu extends AX6UICore {
             iconWidth: 22,
             acceleratorWidth: 100,
             menuBodyPadding: 5,
-            offset: {left: 0, top: 0},
+            offset: { left: 0, top: 0 },
             position: "fixed",
             animateTime: 250,
             items: [],
@@ -507,63 +491,62 @@ class AX6UIMenu extends AX6UICore {
      * @returns {AX6UIMenu}
      */
     popup(e, opt) {
-        let self = this, cfg = this.config;
+        let self = this,
+            cfg = this.config;
         const getOption = {
-                'event': function (e, opt) {
-                    e = {
-                        left: e.clientX,
-                        top: (cfg.position == "fixed") ? e.clientY : e.pageY,
-                        width: cfg.width,
-                        theme: cfg.theme
-                    };
+            'event': function (e, opt) {
+                e = {
+                    left: e.clientX,
+                    top: cfg.position == "fixed" ? e.clientY : e.pageY,
+                    width: cfg.width,
+                    theme: cfg.theme
+                };
 
-                    e.left -= 5;
-                    e.top -= 5;
+                e.left -= 5;
+                e.top -= 5;
 
-                    if (cfg.offset) {
-                        if (cfg.offset.left) e.left += cfg.offset.left;
-                        if (cfg.offset.top) e.top += cfg.offset.top;
-                    }
-                    opt = jQuery.extend(true, e, opt);
+                if (cfg.offset) {
+                    if (cfg.offset.left) e.left += cfg.offset.left;
+                    if (cfg.offset.top) e.top += cfg.offset.top;
+                }
+                opt = jQuery.extend(true, e, opt);
 
-                    try {
-                        return opt;
-                    }
-                    finally {
-                        e = null;
-                        //opt = null;
-                    }
-                },
-                'object': function (e, opt) {
-                    e = {
-                        left: e.left,
-                        top: e.top,
-                        width: e.width || cfg.width,
-                        theme: e.theme || cfg.theme
-                    };
-
-                    if (cfg.offset) {
-                        if (cfg.offset.left) e.left += cfg.offset.left;
-                        if (cfg.offset.top) e.top += cfg.offset.top;
-                    }
-
-                    opt = jQuery.extend(true, e, opt);
-
-                    try {
-                        return opt;
-                    }
-                    finally {
-                        e = null;
-                        //opt = null;
-                    }
+                try {
+                    return opt;
+                } finally {
+                    e = null;
+                    //opt = null;
                 }
             },
-            updateTheme = function (theme) {
-                if (theme) cfg.theme = theme;
-            };
+            'object': function (e, opt) {
+                e = {
+                    left: e.left,
+                    top: e.top,
+                    width: e.width || cfg.width,
+                    theme: e.theme || cfg.theme
+                };
+
+                if (cfg.offset) {
+                    if (cfg.offset.left) e.left += cfg.offset.left;
+                    if (cfg.offset.top) e.top += cfg.offset.top;
+                }
+
+                opt = jQuery.extend(true, e, opt);
+
+                try {
+                    return opt;
+                } finally {
+                    e = null;
+                    //opt = null;
+                }
+            }
+        },
+              updateTheme = function (theme) {
+            if (theme) cfg.theme = theme;
+        };
 
         if (!e) return this;
-        opt = getOption[((typeof e.clientX == "undefined") ? "object" : "event")].call(this, e, opt);
+        opt = getOption[typeof e.clientX == "undefined" ? "object" : "event"].call(this, e, opt);
         updateTheme(opt.theme);
 
         let items = [].concat(cfg.items),
@@ -591,9 +574,9 @@ class AX6UIMenu extends AX6UICore {
             popup.call(this, opt, items, 0); // 0 is seq of queue
 
             if (this.popupEventAttachTimer) clearTimeout(this.popupEventAttachTimer);
-            this.popupEventAttachTimer = setTimeout((function () {
+            this.popupEventAttachTimer = setTimeout(function () {
                 appEventAttach.call(this, true, opt); // 이벤트 연결
-            }).bind(this), 500);
+            }.bind(this), 500);
         }
 
         e = null;
@@ -606,7 +589,8 @@ class AX6UIMenu extends AX6UICore {
      * @returns {AX6UIMenu}
      */
     attach(el, opt) {
-        let self = this, cfg = this.config;
+        let self = this,
+            cfg = this.config;
         const getOption = {
             'object': function (e, opt) {
                 e = {
@@ -620,8 +604,7 @@ class AX6UIMenu extends AX6UICore {
 
                 try {
                     return opt;
-                }
-                finally {
+                } finally {
                     e = null;
                     opt = null;
                 }
@@ -633,7 +616,7 @@ class AX6UIMenu extends AX6UICore {
                 offset = $target.offset(),
                 height = $target.outerHeight(),
                 index = Number(target.getAttribute("data-menu-item-index")),
-                scrollTop = (cfg.position == "fixed") ? jQuery(document).scrollTop() : 0;
+                scrollTop = cfg.position == "fixed" ? jQuery(document).scrollTop() : 0;
 
             if (cfg.items && cfg.items[index][cfg.columnKeys.items] && cfg.items[index][cfg.columnKeys.items].length) {
 
@@ -654,7 +637,7 @@ class AX6UIMenu extends AX6UICore {
                     if (cfg.offset.top) offset.top += cfg.offset.top;
                 }
 
-                opt = getOption["object"].call(this, {left: offset.left, top: offset.top + height - scrollTop}, opt);
+                opt = getOption["object"].call(this, { left: offset.left, top: offset.top + height - scrollTop }, opt);
 
                 popup.call(self, opt, cfg.items[index][cfg.columnKeys.items], 0, 'root.' + target.getAttribute("data-menu-item-index")); // 0 is seq of queue
                 appEventAttach.call(self, true, {}); // 이벤트 연결
@@ -673,7 +656,7 @@ class AX6UIMenu extends AX6UICore {
                 offset = $target.offset(),
                 height = $target.outerHeight(),
                 index = Number(target.getAttribute("data-menu-item-index")),
-                scrollTop = (cfg.position == "fixed") ? jQuery(document).scrollTop() : 0;
+                scrollTop = cfg.position == "fixed" ? jQuery(document).scrollTop() : 0;
             if (cfg.items && (!cfg.items[index][cfg.columnKeys.items] || cfg.items[index][cfg.columnKeys.items].length == 0)) {
                 if (self.onClick) {
                     self.onClick.call(cfg.items[index], cfg.items[index]);
@@ -704,8 +687,7 @@ class AX6UIMenu extends AX6UICore {
                         opt: opt
                     });
                 }
-            }
-            else {
+            } else {
                 n['@isMenu'] = true;
             }
         });
@@ -761,7 +743,8 @@ class AX6UIMenu extends AX6UICore {
      * @returns {AX6UIMenu}
      */
     close() {
-        let self = this, cfg = this.config;
+        let self = this,
+            cfg = this.config;
         if (self.menuBar && self.menuBar.target) {
             self.menuBar.target.find('[data-menu-item-index]').removeClass("hover");
             self.menuBar.opened = false;
@@ -781,7 +764,7 @@ class AX6UIMenu extends AX6UICore {
         });
 
         return this;
-    };
+    }
 
     /**
      * @method
@@ -791,25 +774,23 @@ class AX6UIMenu extends AX6UICore {
 
         let checkItems = {};
         const collectItem = function (items) {
-                let i = items.length;
-                while (i--) {
-                    if (items[i].check && items[i].check.checked) {
-                        if (!checkItems[items[i].check.name]) checkItems[items[i].check.name] = items[i].check.value;
-                        else {
-                            if (U.isString(checkItems[items[i].check.name])) checkItems[items[i].check.name] = [checkItems[items[i].check.name]];
-                            checkItems[items[i].check.name].push(items[i].check.value);
-                        }
+            let i = items.length;
+            while (i--) {
+                if (items[i].check && items[i].check.checked) {
+                    if (!checkItems[items[i].check.name]) checkItems[items[i].check.name] = items[i].check.value;else {
+                        if (U.isString(checkItems[items[i].check.name])) checkItems[items[i].check.name] = [checkItems[items[i].check.name]];
+                        checkItems[items[i].check.name].push(items[i].check.value);
                     }
-                    if (items[i].items && items[i].items.length > 0) collectItem(items[i].items);
                 }
-            };
+                if (items[i].items && items[i].items.length > 0) collectItem(items[i].items);
+            }
+        };
 
         collectItem(this.config.items);
 
         try {
             return checkItems;
-        }
-        finally {
+        } finally {
             checkItems = null;
         }
     }

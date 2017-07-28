@@ -144,52 +144,7 @@ new Grid({
         {key: "c", label: "field C", formatter: "money"},
         {key: "g", label: "field G"},
         {key: "h", label: "field H"}
-    ],
-    contextMenu: {
-        iconWidth: 20,
-        acceleratorWidth: 100,
-        itemClickAndClose: false,
-        icons: {
-            'arrow': '<i class="fa fa-caret-right"></i>'
-        },
-        items: [
-            {type: 1, label: "menu1"},
-            {divide: true},
-            {
-                label: "Tools",
-                items: [
-                    {type: 1, label: "Ping"},
-                    {type: 1, label: "SSH"},
-                    {type: 1, label: "Telnet"},
-                    {type: 1, label: "Winbox"},
-                    {type: 1, label: "FileZilla Check SWF Hang"},
-                    {label: "FileZilla IS_FILES"},
-                    {label: "FileZilla CPU"}
-                ]
-            },
-            {
-                label: "Config",
-                items: [
-                    {label: "ssh"},
-                    {type: 1, label: "ftp"},
-                    {type: 1, label: "winbox"}
-                ]
-            }
-        ],
-        popupFilter: function (item, param) {
-            //console.log(item, param);
-            if(param.element) {
-                return true;
-            }else{
-                return item.type == 1;
-            }
-        },
-        onClick: function (item, param) {
-            console.log(item, param);
-            firstGrid.contextMenu.close();
-            //또는 return true;
-        }
-    }
+    ]
 }).setData([
     {a:"토마스", b:"Thomas", c: 50000, d: 500, e: "E", f: "장서우", g: "2010년", h:"woman"},
     {a:"토마스", b:"Thomas", c: 50000, d: 500, e: "E", f: "이영희", g: "1977년", h:"woman"}

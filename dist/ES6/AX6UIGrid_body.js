@@ -3,6 +3,7 @@ import U from "./AX6Util";
 import UTIL from "./AX6UIGrid_util";
 import DATA from "./AX6UIGrid_data";
 import PAGE from "./AX6UIGrid_page";
+import HEADER from "./AX6UIGrid_header";
 
 import INLINE_EDITOR from "./AX6UIGrid_inline_editor";
 import COLLECTOR from "./AX6UIGrid_collector";
@@ -2166,14 +2167,14 @@ const moveFocus = function (_position) {
                     if (focusedColumn.colIndex <= this.xvar.paintStartColumnIndex && this.colGroup[focusedColumn.colIndex]) {
                         scrollLeft = -this.colGroup[Number(focusedColumn.colIndex)]._sx;
                         scrollTo.call(this, { left: scrollLeft });
-                        GRID.header.scrollTo.call(this, { left: scrollLeft });
+                        HEADER.scrollTo.call(this, { left: scrollLeft });
                         SCROLLER.resize.call(this);
                         return true;
                     } else if (focusedColumn.colIndex >= this.xvar.paintEndColumnIndex && this.colGroup[Number(focusedColumn.colIndex)]) {
                         if (this.colGroup[Number(focusedColumn.colIndex)]._ex > this.xvar.bodyWidth) {
                             scrollLeft = this.colGroup[Number(focusedColumn.colIndex)]._ex - this.xvar.bodyWidth;
                             scrollTo.call(this, { left: -scrollLeft });
-                            GRID.header.scrollTo.call(this, { left: -scrollLeft });
+                            HEADER.scrollTo.call(this, { left: -scrollLeft });
                             SCROLLER.resize.call(this);
                         }
                         return true;
@@ -2204,7 +2205,7 @@ const moveFocus = function (_position) {
                 }.call(this);
 
                 if (typeof newLeft !== "undefined") {
-                    GRID.header.scrollTo.call(this, { left: -newLeft });
+                    HEADER.scrollTo.call(this, { left: -newLeft });
                     scrollTo.call(this, { left: -newLeft });
                     SCROLLER.resize.call(this);
                 }

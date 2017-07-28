@@ -12,6 +12,7 @@ const entry = {
     palette: './src/palette.js',
     dialog: './src/dialog.js',
     select: './src/select.js',
+    menu: './src/menu.js',
     grid: './src/grid.js'
 };
 

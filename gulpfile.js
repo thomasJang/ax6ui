@@ -35,7 +35,7 @@ gulp.task('default', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], function () {
 
 // task for ES6
 gulp.task('js-ES6', function () {
-    gulp.src([fnObj.paths.src + '*.js'])
+    gulp.src([fnObj.paths.src + '/**/*.js'])
         //.pipe(plumber({errorHandler: fnObj.errorAlert}))
         //.pipe(sourcemaps.init())
         .pipe(babel({
@@ -47,7 +47,7 @@ gulp.task('js-ES6', function () {
 
 // task for ES5
 gulp.task('js-ES5', function () {
-    gulp.src([fnObj.paths.src + '*.js'])
+    gulp.src([fnObj.paths.src + '/**/*.js'])
     //.pipe(plumber({errorHandler: fnObj.errorAlert}))
         .pipe(sourcemaps.init())
         .pipe(babel({
@@ -93,11 +93,11 @@ gulp.task('scss-ES6', ['dist-scss-ES6'], function () {
 /**
  * npm publish
  */
-gulp.task('npm publish patch', shell.task([
+gulp.task('npm publish patch', ['default'], shell.task([
     'cd dist/ES5 && npm version patch -m "version patch" && npm publish',
     'cd dist/ES6 && npm version patch -m "version patch" && npm publish'
 ]));
-gulp.task('npm publish minor', shell.task([
+gulp.task('npm publish minor', ['default'], shell.task([
     'cd dist/ES5 && npm version minor -m "version minor" && npm publish',
     'cd dist/ES6 && npm version minor -m "version minor" && npm publish'
 ]));

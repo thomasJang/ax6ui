@@ -78,18 +78,17 @@ var open = function open(opts, callback) {
         box = {
         width: opts.width
     };
-    (0, _jqmin2.default)(document.body).append(getContent.call(this, opts.id, opts));
 
     this.dialogConfig = opts;
-    this.activeDialog = (0, _jqmin2.default)('#' + opts.id);
-    this.activeDialog.css({ width: box.width });
+    this.$activeDialog = (0, _jqmin2.default)(getContent.call(this, opts.id, opts));
+    this.$activeDialog.css({ width: box.width });
 
     if (typeof callback === "undefined") {
         callback = opts.callback;
     }
 
     // dialog 높이 구하기 - 너비가 정해지면 높이가 변경 될 것.
-    opts.height = box.height = this.activeDialog.height();
+    opts.height = box.height = this.$activeDialog.height();
 
     //- position 정렬
     if (typeof opts.position === "undefined" || opts.position === "center") {
@@ -103,9 +102,11 @@ var open = function open(opts, callback) {
         pos["z-index"] = this.config.zIndex;
     }
 
-    this.activeDialog.css(pos).on(opts.clickEventName, "[data-dialog-btn]", function (e) {
+    this.$activeDialog.css(pos).on(opts.clickEventName, "[data-dialog-btn]", function (e) {
         btnOnClick.call(_this, e || window.event, opts, callback);
     }).find(opts.dialogType === "prompt" ? "[data-dialog-prompt]" : "[data-dialog-btn]").trigger("focus");
+
+    (0, _jqmin2.default)(document.body).append(this.$activeDialog);
 
     // bind key event
     (0, _jqmin2.default)(window).on("keydown.ax6dialog", function (e) {
@@ -129,7 +130,7 @@ var open = function open(opts, callback) {
     box = null;
 };
 var align = function align(e) {
-    if (!this.activeDialog) return this;
+    if (!this.$activeDialog) return this;
     var opts = this.dialogConfig,
         box = {
         width: opts.width,
@@ -147,7 +148,7 @@ var align = function align(e) {
     if (box.left < 0) box.left = 0;
     if (box.top < 0) box.top = 0;
 
-    this.activeDialog.css(box);
+    this.$activeDialog.css(box);
 
     opts = null;
     box = null;
@@ -177,7 +178,7 @@ var btnOnClick = function btnOnClick(e, opts, callback, target, k) {
         };
         if (opts.dialogType === "prompt") {
             for (var oi in opts.input) {
-                that[oi] = this.activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+                that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
                 if (that[oi] == "" || that[oi] == null) {
                     emptyKey = oi;
                     break;
@@ -195,7 +196,7 @@ var btnOnClick = function btnOnClick(e, opts, callback, target, k) {
         } else if (opts.dialogType === "prompt") {
             if (k === 'ok') {
                 if (emptyKey) {
-                    this.activeDialog.find('[data-dialog-prompt="' + emptyKey + '"]').get(0).focus();
+                    this.$activeDialog.find('[data-dialog-prompt="' + emptyKey + '"]').get(0).focus();
                     return false;
                 }
             }
@@ -227,7 +228,7 @@ var onKeyup = function onKeyup(e, opts, callback, target, k) {
             };
 
             for (var oi in opts.input) {
-                that[oi] = this.activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+                that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
                 if (that[oi] == "" || that[oi] == null) {
                     emptyKey = oi;
                     break;
@@ -304,9 +305,9 @@ var AX6UIDialog = function (_AX6UICore) {
          */
         _this2.queue = [];
         /**
-         * @member {Object}
+         * @member {jQueryElement}
          */
-        _this2.activeDialog = null;
+        _this2.$activeDialog = null;
         /**
          * @member {Object}
          */
@@ -388,7 +389,7 @@ var AX6UIDialog = function (_AX6UICore) {
                 };
             }
 
-            if (this.activeDialog) {
+            if (this.$activeDialog) {
                 this.queue.push(opts);
             } else {
                 open.call(this, opts, callback);
@@ -460,7 +461,7 @@ var AX6UIDialog = function (_AX6UICore) {
                 };
             }
 
-            if (this.activeDialog) {
+            if (this.$activeDialog) {
                 this.queue.push(opts);
             } else {
                 open.call(this, opts, callback);
@@ -526,7 +527,7 @@ var AX6UIDialog = function (_AX6UICore) {
                 };
             }
 
-            if (this.activeDialog) {
+            if (this.$activeDialog) {
                 this.queue.push(opts);
             } else {
                 open.call(this, opts, callback);
@@ -554,18 +555,18 @@ var AX6UIDialog = function (_AX6UICore) {
             var opts = void 0,
                 that = void 0;
 
-            if (this.activeDialog) {
+            if (this.$activeDialog) {
                 if (this.autoCloseTimer) clearTimeout(this.autoCloseTimer);
 
                 opts = this.dialogConfig;
 
-                this.activeDialog.addClass("destroy");
+                this.$activeDialog.addClass("destroy");
                 (0, _jqmin2.default)(window).off("keydown.ax6dialog").off("resize.ax6dialog");
 
                 setTimeout(function () {
-                    if (this.activeDialog) {
-                        this.activeDialog.remove();
-                        this.activeDialog = null;
+                    if (this.$activeDialog) {
+                        this.$activeDialog.remove();
+                        this.$activeDialog = null;
                     }
 
                     that = {

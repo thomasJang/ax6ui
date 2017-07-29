@@ -147,7 +147,7 @@
 
 // mixins --------------------------------------------- end
 
-.ax6modal {
+[data-ax6ui-modal] {
     * {
         box-sizing: border-box;
     }
@@ -319,7 +319,7 @@
 }
 
 // resizer가 활성화 되면 리사이저 백그라운드도 함께 활성화 됩니다. 백그라운드는 페이지 전체를 투명 레이어로 덮어 리사이저가 자유롭게 활동 하도록 도와 줍니다.
-.ax6modal-resizer-background{
+[data-ax6ui-modal-resizer-background]{
     position: fixed;
     left: 0px;
     top: 0px;
@@ -330,7 +330,7 @@
     //opacity: 0.1;
     cursor: move;
 }
-.ax6modal-resizer{
+[data-ax6ui-modal-resizer]{
     position: absolute;
     left: 0;
     top: 0;

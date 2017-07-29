@@ -212,21 +212,6 @@
 
 	@include picker-variant($ax6picker-default-text, $ax6picker-default-border-color, $ax6picker-default-heading-bg);
 
-	&.primary {
-		@include picker-variant($ax6picker-primary-text, $ax6picker-primary-border-color, $ax6picker-primary-heading-bg);
-	}
-	&.success {
-		@include picker-variant($ax6picker-success-text, $ax6picker-success-border-color, $ax6picker-success-heading-bg);
-	}
-	&.info {
-		@include picker-variant($ax6picker-info-text, $ax6picker-info-border-color, $ax6picker-info-heading-bg);
-	}
-	&.warning {
-		@include picker-variant($ax6picker-warning-text, $ax6picker-warning-border-color, $ax6picker-warning-heading-bg);
-	}
-	&.danger {
-		@include picker-variant($ax6picker-danger-text, $ax6picker-danger-border-color, $ax6picker-danger-heading-bg);
-	}
 	&.destroy {
 		@include animation(ax-picker-destroy $ax6picker-easing-time-close $ease-out-cubic forwards);
 	}

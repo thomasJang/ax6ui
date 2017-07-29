@@ -14,7 +14,8 @@ const entry = {
     toast: './src/toast.js',
     select: './src/select.js',
     menu: './src/menu.js',
-    grid: './src/grid.js'
+    grid: './src/grid.js',
+    modal: './src/modal.js',
 };
 
 let plugins = [

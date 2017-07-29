@@ -4,13 +4,13 @@ import U from "./AX6Util";
 import info from "./AX6Info";
 import mustache from "./AX6Mustache";
 
-import DATA from "./AX6UIGrid_data";
-import HEADER from "./AX6UIGrid_header";
-import BODY from "./AX6UIGrid_body";
-import SCROLLER from "./AX6UIGrid_scroller";
-import PAGE from "./AX6UIGrid_page";
-import TMPL from "./AX6UIGrid_tmpl";
-import UTIL from "./AX6UIGrid_util";
+import DATA from "./AX6UIGrid/AX6UIGrid_data";
+import HEADER from "./AX6UIGrid/AX6UIGrid_header";
+import BODY from "./AX6UIGrid/AX6UIGrid_body";
+import SCROLLER from "./AX6UIGrid/AX6UIGrid_scroller";
+import PAGE from "./AX6UIGrid/AX6UIGrid_page";
+import TMPL from "./AX6UIGrid/AX6UIGrid_tmpl";
+import UTIL from "./AX6UIGrid/AX6UIGrid_util";
 
 import "./AX6UIGrid/index.scss";
 

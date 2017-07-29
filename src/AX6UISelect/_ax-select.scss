@@ -1,35 +1,22 @@
 // themes
 $base-colors: (
-        default: $ax6select-default-base-color,
-        primary: $ax6select-primary-base-color,
-        success: $ax6select-success-base-color,
-        info: $ax6select-info-base-color,
-        warning: $ax6select-warning-base-color,
-        danger: $ax6select-danger-base-color
+        default: $ax6select-default-base-color
 );
 $theme-colors: (
-        default: $ax6select-default-theme-color,
-        primary: $ax6select-primary-theme-color,
-        success: $ax6select-success-theme-color,
-        info: $ax6select-info-theme-color,
-        warning: $ax6select-warning-theme-color,
-        danger: $ax6select-danger-theme-color
+        default: $ax6select-default-theme-color
 );
 $hover-types: (
-        default: $ax6select-default-hover-type,
-        primary: $ax6select-primary-hover-type,
-        success: $ax6select-success-hover-type,
-        info: $ax6select-info-hover-type,
-        warning: $ax6select-warning-hover-type,
-        danger: $ax6select-danger-hover-type
+        default: $ax6select-default-hover-type
 );
 
 @include keyframes(ax-select-option-group) {
     from {
         @include transform(scale(1, 0));
+        max-height: 0;
         opacity: 0;
     }
     to {
+        //max-height: 100%;
         @include transform(scale(1, 1));
         opacity: 1;
     }
@@ -306,9 +293,9 @@ $hover-types: (
     padding: 0;
 
     display: block;
-    height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
-    font-size: $font-size-base;
-    border-radius: $input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
+    height: $ax-input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+    font-size: $ax-font-size-base;
+    border-radius: $ax-input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
 
     @include ax-background(top, $ax6select-label-bg-colors);
     border: $ax6select-label-border;
@@ -426,12 +413,12 @@ $hover-types: (
     border: $ax6select-option-group-inner-border;
     overflow: hidden;
     @include ax-background($ax6select-option-group-bg);
-    @include animation(ax-select-option-group $ax6select-option-group-easing-time-open $ease-out-back forwards);
+    @include animation(ax-select-option-group $ax6select-option-group-easing-time-open $ease-out-expo forwards);
     @include transform(translateZ(0));
     @include transform-origin(center top);
 
     &.destroy {
-        @include animation(ax-select-option-group-destroy $ax6select-option-group-easing-time-close $ease-in-back forwards);
+        @include animation(ax-select-option-group-destroy $ax6select-option-group-easing-time-close $ease-in-expo forwards);
     }
     &.direction-top {
         @include transform-origin(center top);

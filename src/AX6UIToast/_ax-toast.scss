@@ -132,22 +132,6 @@
         @include ax-toast-section();
         //@include transition(all $ax6toast-easing-time ease-in-out);
         @include toast-variant($ax6toast-default-text, $ax6toast-default-bg, $ax6toast-default-color);
-
-        &.primary {
-            @include toast-variant($ax6toast-primary-text, $ax6toast-primary-bg, $ax6toast-primary-color);
-        }
-        &.success {
-            @include toast-variant($ax6toast-success-text, $ax6toast-success-bg, $ax6toast-success-color);
-        }
-        &.info {
-            @include toast-variant($ax6toast-info-text, $ax6toast-info-bg, $ax6toast-info-color);
-        }
-        &.warning {
-            @include toast-variant($ax6toast-warning-text, $ax6toast-warning-bg, $ax6toast-warning-color);
-        }
-        &.danger {
-            @include toast-variant($ax6toast-danger-text, $ax6toast-danger-bg, $ax6toast-danger-color);
-        }
     }
 
     &[data-toast-container-position="bottom-left"] {

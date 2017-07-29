@@ -1,0 +1,348 @@
+@mixin ax-modal() {
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    background-color: $ax6modal-bg;
+    border: $ax6modal-border;
+
+    @include ax-border-radius($ax6modal-border-radius);
+    @include box-shadow($ax6modal-box-shadow);
+
+    z-index: $ax6modal-z-index;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    //overflow: hidden;
+    box-sizing: content-box;
+}
+
+@mixin ax-modal-section() {
+    .ax-modal-header {
+        user-select: none;
+        //font-size: 1em;
+        font-weight: 600;
+        padding: $ax6modal-header-padding;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: $ax6modal-border-radius;
+        border-top-right-radius: $ax6modal-border-radius;
+
+        cursor: move;
+        .ax-modal-header-addon{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            padding: $ax6modal-header-addon-padding;
+            [data-modal-header-btn]{
+                border: 0;
+                padding: $ax6modal-header-addon-btn-padding;
+                background: transparent;
+                display: inline-block;
+                text-align: center;
+                cursor: pointer;
+                outline: 0;
+            }
+        }
+    }
+    .ax-modal-body {
+        border-bottom-left-radius: $ax6modal-border-radius;
+        border-bottom-right-radius: $ax6modal-border-radius;
+
+        padding: $ax6modal-body-padding;
+        text-align: center;
+        @include flex(1);
+        position: relative;
+        overflow: hidden;
+
+        iframe {
+            border: 0 none;
+        }
+
+        .fadeIn{
+            @include animation(ax-modal-fade-in $ax6modal-easing-time-open $ease-out-back forwards);
+        }
+        .fadeOut{
+            @include animation(ax-modal-fade-out $ax6modal-easing-time-open $ease-out-back forwards);
+        }
+    }
+}
+
+@mixin modal-variant($text-color, $border, $header-bg-color) {
+    .ax-modal-header {
+        color: $text-color;
+        background: $header-bg-color;
+        .ax-modal-header-addon{
+            a{
+                color: $text-color;
+                outline: 0;
+            }
+        }
+    }
+    .ax-modal-body {
+
+    }
+}
+
+@include keyframes(ax-modal) {
+    0% {
+        opacity: 0.0;
+        //@include transform(translateY(20%));
+        @include transform(scale(0.8));
+    }
+    100% {
+        opacity: 1.0;
+        @include transform(scale(1.0));
+    }
+}
+
+@include keyframes(ax-modal-destroy) {
+    100% {
+        opacity: 0.0;
+        @include transform(translateY(20%));
+    }
+    0% {
+        opacity: 1.0;
+        @include transform(translateY(0));
+    }
+
+}
+
+@include keyframes(ax-modal-fullscreen) {
+    0% {
+        @include transform(translateY(20%));
+    }
+    100% {
+        @include transform(translateY(0));
+    }
+}
+
+@include keyframes(ax-modal-fullscreen-destroy) {
+    0% {
+        @include transform(translateY(0));
+    }
+    100% {
+        @include transform(translateY(100%));
+    }
+}
+
+@include keyframes(ax-modal-fade-in){
+    0% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1.0;
+    }
+}
+
+@include keyframes(ax-modal-fade-out){
+    0% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.0;
+    }
+}
+
+// mixins --------------------------------------------- end
+
+.ax6modal {
+    * {
+        box-sizing: border-box;
+    }
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    @include animation(ax-modal $ax6modal-easing-time-open $ax6modal-easing-open forwards);
+    @include transform(translateZ(0px));
+    //@include transition(all $ax6modal-easing-time-open linear);
+
+    @include ax-modal();
+    @include ax-modal-section();
+    @include modal-variant($ax6modal-default-text, $ax6modal-default-border, $ax6modal-default-header-bg);
+
+    &.destroy {
+        @include animation(ax-modal-destroy $ax6modal-easing-time-close $ax6modal-easing-close forwards);
+    }
+    &.fullscreen {
+        border: 0px none;
+        @include ax-border-radius(0px);
+        @include box-shadow(none);
+        @include animation(ax-modal-fullscreen $ax6modal-easing-time-open $ease-out-back forwards);
+
+        &.destroy {
+            @include animation(ax-modal-fullscreen-destroy $ax6modal-easing-time-close $ease-out-expo forwards);
+        }
+    }
+
+    &.draged{
+        .ax-modal-header {
+            opacity: 0.5;
+        }
+        .ax-modal-body {
+            opacity: 0.5;
+        }
+    }
+    [data-ax6modal-resizer]{
+        position: absolute;
+        display: block;
+        &:before{
+            position: absolute;
+            content: ' ';
+            display: block;
+            width: auto;
+            height: auto;
+            left: auto;
+            top: auto;
+            right: auto;
+            bottom: auto;
+            //background: #ff3300;
+            //opacity: 0.3;
+        }
+
+        &[data-ax6modal-resizer="top"]{
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 0;
+
+            &:before{
+                width: 100%;
+                height: 8px;
+                left: 0;
+                top: -4px;
+                cursor: row-resize;
+            }
+        }
+        &[data-ax6modal-resizer="bottom"]{
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 0;
+
+            &:before{
+                width: 100%;
+                height: 8px;
+                left: 0;
+                top: -4px;
+                cursor: row-resize;
+            }
+        }
+        &[data-ax6modal-resizer="left"]{
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+
+            &:before{
+                width: 8px;
+                height: 100%;
+                left: -4px;
+                top: 0;
+                cursor: col-resize;
+            }
+        }
+        &[data-ax6modal-resizer="right"]{
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+
+            &:before{
+                width: 8px;
+                height: 100%;
+                left: -4px;
+                top: 0;
+                cursor: col-resize;
+            }
+        }
+        &[data-ax6modal-resizer="top-left"]{
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+
+            &:before{
+                width: 8px;
+                height: 8px;
+                left: -4px;
+                top: -4px;
+                cursor: nwse-resize;
+            }
+        }
+        &[data-ax6modal-resizer="top-right"]{
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+
+            &:before{
+                width: 8px;
+                height: 8px;
+                left: -4px;
+                top: -4px;
+                cursor: nesw-resize;
+            }
+        }
+        &[data-ax6modal-resizer="bottom-left"]{
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 0;
+
+            &:before{
+                width: 8px;
+                height: 8px;
+                left: -4px;
+                top: -4px;
+                cursor: nesw-resize;
+            }
+        }
+        &[data-ax6modal-resizer="bottom-right"]{
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 0;
+
+            &:before{
+                width: 8px;
+                height: 8px;
+                left: -4px;
+                top: -4px;
+                cursor: nwse-resize;
+            }
+        }
+    }
+}
+
+// resizer가 활성화 되면 리사이저 백그라운드도 함께 활성화 됩니다. 백그라운드는 페이지 전체를 투명 레이어로 덮어 리사이저가 자유롭게 활동 하도록 도와 줍니다.
+.ax6modal-resizer-background{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: $ax6modal-z-index;
+    //opacity: 0.1;
+    cursor: move;
+}
+.ax6modal-resizer{
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    z-index: $ax6modal-z-index + 1;
+    cursor: move;
+
+    box-sizing: $ax6modal-box-model;
+    background-color: $ax6modal-resizer-bg;
+    border: $ax6modal-resizer-border;
+    opacity: $ax6modal-resizer-opacity;
+
+    @include ax-border-radius($ax6modal-border-radius);
+    @include box-shadow($ax6modal-box-shadow);
+}

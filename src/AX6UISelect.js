@@ -865,18 +865,18 @@ class AX6UISelect extends AX6UICore {
                 item: item
             }, O => {
                 if (this.waitOptionsCallback) {
-                    var data = {};
-                    var item = this.queue[this.activeSelectQueueIndex];
+                    let data = {};
+                    let item = this.queue[this.activeSelectQueueIndex];
 
                     /// 현재 selected 검증후 처리
                     (function (item, O) {
-                        var optionsMap = {};
-                        O.options.forEach(function (_O, _OIndex) {
+                        let optionsMap = {};
+                        O.options.forEach((_O, _OIndex) => {
                             _O["@index"] = _OIndex;
                             optionsMap[_O[item.columnKeys.optionValue]] = _O;
                         });
                         if (U.isArray(item.selected)) {
-                            item.selected.forEach(function (_O) {
+                            item.selected.forEach((_O) => {
                                 if (optionsMap[_O[item.columnKeys.optionValue]]) {
                                     O.options[optionsMap[_O[item.columnKeys.optionValue]]["@index"]][item.columnKeys.optionSelected] = true;
                                 }
@@ -955,21 +955,21 @@ class AX6UISelect extends AX6UICore {
 
         alignSelectOptionGroup.call(this, "append"); // alignSelectOptionGroup 에서 body append
 
-        if (item.selected && item.selected.length > 0) {
-            selectedOptionEl = this.activeSelectOptionGroup.find('[data-option-index="' + item.selected[0]["@index"] + '"]');
-
-            if (selectedOptionEl.get(0)) {
-                focusTop = selectedOptionEl.position().top - this.activeSelectOptionGroup.height() / 3;
-                this.activeSelectOptionGroup.find('[data-els="content"]').scrollTop(focusTop);
-            }
-        }
-
         /// 사용자 입력으로 옵션을 검색하기 위한 시나리오
         // 옵션그룹이 활성화 되면 사용자 입력을 받기위한 input 값 초기화 및 포커스 다른 select가 닫히면서 display focus 이벤트와 충돌하는 문제가 있으므로
         // 1밀리세컨 지연후 포커스 처리. input에 포커스가 되므로 input value로 options를 검색 할 수 있게 됩니다.
         item.$displayInput.val('');
 
-        setTimeout((function () {
+        setTimeout(() => {
+
+            if (item.selected && item.selected.length > 0) {
+                selectedOptionEl = this.activeSelectOptionGroup.find('[data-option-index="' + item.selected[0]["@index"] + '"]');
+                if (selectedOptionEl.get(0)) {
+                    focusTop = selectedOptionEl.position().top - this.activeSelectOptionGroup.height() / 3;
+                    this.activeSelectOptionGroup.find('[data-els="content"]').scrollTop(focusTop);
+                }
+            }
+
             item.$displayInput.trigger("focus");
 
             jQuery(window).on("keyup.ax6select-" + this.instanceId, (function (e) {
@@ -984,7 +984,7 @@ class AX6UISelect extends AX6UICore {
                 U.stopEvent(e);
             }).bind(this));
 
-        }).bind(this), 300);
+        }, this.config.animateTime);
 
         onStateChanged.call(this, item, {
             self: this,

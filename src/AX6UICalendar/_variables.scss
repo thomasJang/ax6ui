@@ -1,22 +1,22 @@
 
 //==============
 //== calendar
-$ax6calendar-control-bg: ($panel-default-heading-bg) !default; // color, (color1, color2), (pos, color1, color2) 모두 사용가능
-$ax6calendar-control-border: 1px solid $panel-default-border !default;
+$ax6calendar-control-bg: #f5f5f5 !default; // color, (color1, color2), (pos, color1, color2) 모두 사용가능
+$ax6calendar-control-border: 1px solid #ddd !default;
 $ax6calendar-control-border-radius: 5px !default;
-$ax6calendar-control-font-size: ceil(($font-size-base * 1.25)) !default;
-$ax6calendar-control-text-color: $panel-default-text !default;
-$ax6calendar-control-hover-text-color: $brand-primary !default;
+$ax6calendar-control-font-size: ceil(($ax-font-size-base * 1.25)) !default;
+$ax6calendar-control-text-color: #333 !default;
+$ax6calendar-control-hover-text-color: $ax-link-color !default;
 $ax6calendar-control-padding: 0 !default;
 
 $ax6calendar-header-bg: (#FFFFFF, #FFFFFF) !default;
 $ax6calendar-header-border: 0px none !default;
 $ax6calendar-header-padding: 0px 2px !default;
-$ax6calendar-header-font-size: ceil(($font-size-base * 0.8)) !default;
+$ax6calendar-header-font-size: ceil(($ax-font-size-base * 0.8)) !default;
 
 $ax6calendar-body-bg: (#FFFFFF, #FFFFFF) !default;
 $ax6calendar-body-border: 0px none !default;
-$ax6calendar-body-font-size: ceil(($font-size-base * 1)) !default;
+$ax6calendar-body-font-size: ceil(($ax-font-size-base * 1)) !default;
 $ax6calendar-body-animation-in: ax6-ui-calendar-fadein !default;
 $ax6calendar-body-animation-out: ax6-ui-calendar-fadeout !default;
 

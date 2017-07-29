@@ -1,7 +1,5 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
-import U from "./AX6Util";
-import mustache from "./AX6Mustache.js";
 import "./AX6UIToast/index.scss";
 
 /**

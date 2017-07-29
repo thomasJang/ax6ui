@@ -6,7 +6,7 @@ import mustache from "./AX6Mustache.js";
 import "./AX6UIDialog/index.scss";
 
 const dialogTmpl = function (columnKeys) {
-    return ` 
+  return ` 
 <div id="{{dialogId}}" data-dialog-els="root" data-ax6ui-dialog="" class="{{theme}}">
     <div class="ax-dialog-header" data-dialog-els="header">
         {{{title}}}
@@ -48,356 +48,356 @@ const dialogTmpl = function (columnKeys) {
 `;
 };
 const onStateChanged = function (opts, that) {
-    if (opts && opts.onStateChanged) {
-        opts.onStateChanged.call(that, that);
-    } else if (this.onStateChanged) {
-        this.onStateChanged.call(that, that);
-    }
+  if (opts && opts.onStateChanged) {
+    opts.onStateChanged.call(that, that);
+  } else if (this.onStateChanged) {
+    this.onStateChanged.call(that, that);
+  }
 
-    opts = null;
-    that = null;
-    return true;
+  opts = null;
+  that = null;
+  return true;
 };
 const getContent = function (dialogId, opts) {
-    let data = {
-        dialogId: dialogId,
-        title: opts.title || this.config.title || "",
-        msg: (opts.msg || this.config.msg || "").replace(/\n/g, "<br/>"),
-        input: opts.input,
-        btns: opts.btns,
-        '_crlf': function () {
-            return this.replace(/\n/g, "<br/>");
-        },
-        additionalContent: function (additionalContent) {
-            if (U.isFunction(additionalContent)) {
-                return additionalContent.call(opts);
-            } else {
-                return additionalContent;
-            }
-        }(opts.additionalContent)
-    };
+  let data = {
+    dialogId: dialogId,
+    title: opts.title || this.config.title || "",
+    msg: (opts.msg || this.config.msg || "").replace(/\n/g, "<br/>"),
+    input: opts.input,
+    btns: opts.btns,
+    '_crlf': function () {
+      return this.replace(/\n/g, "<br/>");
+    },
+    additionalContent: function (additionalContent) {
+      if (U.isFunction(additionalContent)) {
+        return additionalContent.call(opts);
+      } else {
+        return additionalContent;
+      }
+    }(opts.additionalContent)
+  };
 
-    return mustache.render(dialogTmpl.call(this), data);
+  return mustache.render(dialogTmpl.call(this), data);
 };
 const open = function (opts, callback) {
-    let pos = {},
-        box = {
-        width: opts.width
-    };
+  let pos = {},
+      box = {
+    width: opts.width
+  };
 
-    this.dialogConfig = opts;
-    this.$activeDialog = jQuery(getContent.call(this, opts.id, opts));
-    this.$activeDialog.css({ width: box.width });
+  this.dialogConfig = opts;
+  this.$activeDialog = jQuery(getContent.call(this, opts.id, opts));
+  this.$activeDialog.css({ width: box.width });
 
-    if (typeof callback === "undefined") {
-        callback = opts.callback;
-    }
+  if (typeof callback === "undefined") {
+    callback = opts.callback;
+  }
 
-    // dialog 높이 구하기 - 너비가 정해지면 높이가 변경 될 것.
-    opts.height = box.height = this.$activeDialog.height();
+  // dialog 높이 구하기 - 너비가 정해지면 높이가 변경 될 것.
+  opts.height = box.height = this.$activeDialog.height();
 
-    //- position 정렬
-    if (typeof opts.position === "undefined" || opts.position === "center") {
-        pos.top = jQuery(window).height() / 2 - box.height / 2;
-        pos.left = jQuery(window).width() / 2 - box.width / 2;
-    } else {
-        pos.left = opts.position.left || 0;
-        pos.top = opts.position.top || 0;
-    }
-    if (this.config.zIndex) {
-        pos["z-index"] = this.config.zIndex;
-    }
+  //- position 정렬
+  if (typeof opts.position === "undefined" || opts.position === "center") {
+    pos.top = jQuery(window).height() / 2 - box.height / 2;
+    pos.left = jQuery(window).width() / 2 - box.width / 2;
+  } else {
+    pos.left = opts.position.left || 0;
+    pos.top = opts.position.top || 0;
+  }
+  if (this.config.zIndex) {
+    pos["z-index"] = this.config.zIndex;
+  }
 
-    this.$activeDialog.css(pos).on(opts.clickEventName, "[data-dialog-btn]", e => {
-        btnOnClick.call(this, e || window.event, opts, callback);
-    }).find(opts.dialogType === "prompt" ? "[data-dialog-prompt]" : "[data-dialog-btn]").trigger("focus");
+  this.$activeDialog.css(pos).on(opts.clickEventName, "[data-dialog-btn]", e => {
+    btnOnClick.call(this, e || window.event, opts, callback);
+  }).find(opts.dialogType === "prompt" ? "[data-dialog-prompt]" : "[data-dialog-btn]").trigger("focus");
 
-    jQuery(document.body).append(this.$activeDialog);
+  jQuery(document.body).append(this.$activeDialog);
 
-    // bind key event
-    jQuery(window).on("keydown.ax6dialog", e => {
-        onKeyup.call(this, e || window.event, opts, callback);
-    }).on("resize.ax6dialog", U.throttle(function (e) {
-        align.call(this, e || window.event);
-    }, 30).bind(this));
+  // bind key event
+  jQuery(window).on("keydown.ax6dialog", e => {
+    onKeyup.call(this, e || window.event, opts, callback);
+  }).on("resize.ax6dialog", U.throttle(function (e) {
+    align.call(this, e || window.event);
+  }, 30).bind(this));
 
-    onStateChanged.call(this, opts, {
-        self: this,
-        state: "open"
-    });
+  onStateChanged.call(this, opts, {
+    self: this,
+    state: "open"
+  });
 
-    if (opts.autoCloseTime) {
-        this.autoCloseTimer = setTimeout(() => {
-            this.close();
-        }, opts.autoCloseTime);
-    }
+  if (opts.autoCloseTime) {
+    this.autoCloseTimer = setTimeout(() => {
+      this.close();
+    }, opts.autoCloseTime);
+  }
 
-    pos = null;
-    box = null;
+  pos = null;
+  box = null;
 };
 const align = function (e) {
-    if (!this.$activeDialog) return this;
-    let opts = this.dialogConfig,
-        box = {
-        width: opts.width,
-        height: opts.height
-    };
+  if (!this.$activeDialog) return this;
+  let opts = this.dialogConfig,
+      box = {
+    width: opts.width,
+    height: opts.height
+  };
 
-    //- position 정렬
-    if (typeof opts.position === "undefined" || opts.position === "center") {
-        box.top = window.innerHeight / 2 - box.height / 2;
-        box.left = window.innerWidth / 2 - box.width / 2;
-    } else {
-        box.left = opts.position.left || 0;
-        box.top = opts.position.top || 0;
-    }
-    if (box.left < 0) box.left = 0;
-    if (box.top < 0) box.top = 0;
+  //- position 정렬
+  if (typeof opts.position === "undefined" || opts.position === "center") {
+    box.top = window.innerHeight / 2 - box.height / 2;
+    box.left = window.innerWidth / 2 - box.width / 2;
+  } else {
+    box.left = opts.position.left || 0;
+    box.top = opts.position.top || 0;
+  }
+  if (box.left < 0) box.left = 0;
+  if (box.top < 0) box.top = 0;
 
-    this.$activeDialog.css(box);
+  this.$activeDialog.css(box);
 
-    opts = null;
-    box = null;
+  opts = null;
+  box = null;
 
-    return this;
+  return this;
 };
 const btnOnClick = function (e, opts, callback, target, k) {
-    let that,
-        emptyKey = null;
+  let that,
+      emptyKey = null;
 
-    if (e.srcElement) e.target = e.srcElement;
+  if (e.srcElement) e.target = e.srcElement;
 
-    target = U.findParentNode(e.target, function (target) {
-        if (target.getAttribute("data-dialog-btn")) {
-            return true;
-        }
-    });
-
-    if (target) {
-        k = target.getAttribute("data-dialog-btn");
-
-        that = {
-            self: this,
-            key: k, value: opts.btns[k],
-            dialogId: opts.id,
-            btnTarget: target
-        };
-        if (opts.dialogType === "prompt") {
-            for (let oi in opts.input) {
-                that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
-                if (that[oi] == "" || that[oi] == null) {
-                    emptyKey = oi;
-                    break;
-                }
-            }
-        }
-        if (opts.btns[k].onClick) {
-            opts.btns[k].onClick.call(that, that);
-        } else if (opts.dialogType === "alert") {
-            if (callback) callback.call(that, that);
-            this.close({ doNotCallback: true });
-        } else if (opts.dialogType === "confirm") {
-            if (callback) callback.call(that, that);
-            this.close({ doNotCallback: true });
-        } else if (opts.dialogType === "prompt") {
-            if (k === 'ok') {
-                if (emptyKey) {
-                    this.$activeDialog.find('[data-dialog-prompt="' + emptyKey + '"]').get(0).focus();
-                    return false;
-                }
-            }
-            if (callback) callback.call(that, that);
-            this.close({ doNotCallback: true });
-        }
+  target = U.findParentNode(e.target, function (target) {
+    if (target.getAttribute("data-dialog-btn")) {
+      return true;
     }
+  });
 
-    that = null;
-    opts = null;
-    callback = null;
-    target = null;
-    k = null;
+  if (target) {
+    k = target.getAttribute("data-dialog-btn");
+
+    that = {
+      self: this,
+      key: k, value: opts.btns[k],
+      dialogId: opts.id,
+      btnTarget: target
+    };
+    if (opts.dialogType === "prompt") {
+      for (let oi in opts.input) {
+        that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+        if (that[oi] == "" || that[oi] == null) {
+          emptyKey = oi;
+          break;
+        }
+      }
+    }
+    if (opts.btns[k].onClick) {
+      opts.btns[k].onClick.call(that, that);
+    } else if (opts.dialogType === "alert") {
+      if (callback) callback.call(that, that);
+      this.close({ doNotCallback: true });
+    } else if (opts.dialogType === "confirm") {
+      if (callback) callback.call(that, that);
+      this.close({ doNotCallback: true });
+    } else if (opts.dialogType === "prompt") {
+      if (k === 'ok') {
+        if (emptyKey) {
+          this.$activeDialog.find('[data-dialog-prompt="' + emptyKey + '"]').get(0).focus();
+          return false;
+        }
+      }
+      if (callback) callback.call(that, that);
+      this.close({ doNotCallback: true });
+    }
+  }
+
+  that = null;
+  opts = null;
+  callback = null;
+  target = null;
+  k = null;
 };
 const onKeyup = function (e, opts, callback, target, k) {
-    let that,
-        emptyKey = null;
+  let that,
+      emptyKey = null;
 
-    if (e.keyCode == info.eventKeys.ESC) {
-        this.close();
-    }
-    if (opts.dialogType === "prompt") {
-        if (e.keyCode == info.eventKeys.RETURN) {
-            that = {
-                self: this,
-                key: k, value: opts.btns[k],
-                dialogId: opts.id,
-                btnTarget: target
-            };
+  if (e.keyCode == info.eventKeys.ESC) {
+    this.close();
+  }
+  if (opts.dialogType === "prompt") {
+    if (e.keyCode == info.eventKeys.RETURN) {
+      that = {
+        self: this,
+        key: k, value: opts.btns[k],
+        dialogId: opts.id,
+        btnTarget: target
+      };
 
-            for (let oi in opts.input) {
-                that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
-                if (that[oi] == "" || that[oi] == null) {
-                    emptyKey = oi;
-                    break;
-                }
-            }
-            if (emptyKey) {
-                that = null;
-                emptyKey = null;
-                return false;
-            }
-            if (callback) callback.call(that, that);
-            this.close({ doNotCallback: true });
+      for (let oi in opts.input) {
+        that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+        if (that[oi] == "" || that[oi] == null) {
+          emptyKey = oi;
+          break;
         }
+      }
+      if (emptyKey) {
+        that = null;
+        emptyKey = null;
+        return false;
+      }
+      if (callback) callback.call(that, that);
+      this.close({ doNotCallback: true });
     }
+  }
 
-    that = null;
-    emptyKey = null;
-    opts = null;
-    callback = null;
-    target = null;
-    k = null;
+  that = null;
+  emptyKey = null;
+  opts = null;
+  callback = null;
+  target = null;
+  k = null;
 };
 
 /**
  * @class
  */
 class AX6UIDialog extends AX6UICore {
+  /**
+   * @constructor
+   * @param config
+   */
+  constructor(config) {
+    super();
+
     /**
-     * @constructor
+     * @member {JSON}
      * @param config
-     */
-    constructor(config) {
-        super();
-
-        /**
-         * @member {JSON}
-         * @param config
-         * @param [config.theme='default']
-         * @param [config.width=300]
-         * @param [config.title='']
-         * @param [config.msg='']
-         * @param [config.lang]
-         * @param [config.lang.ok='ok']
-         * @param [config.lang.cancel='cancel']
-         * @param [config.animateTime=150]
-         * @param [config.autoCloseTime=0]
-         * @param [config.onStateChanged]
-         *
-         */
-        this.config = {
-            id: 'ax6-dialog-' + this.instanceId,
-            clickEventName: "click",
-            theme: 'default',
-            width: 300,
-            title: 'AX6UIDialog',
-            msg: '',
-            lang: {
-                "ok": "ok", "cancel": "cancel"
-            },
-            animateTime: 150,
-            autoCloseTime: 0
-        };
-        jQuery.extend(true, this.config, config);
-
-        // 멤버 변수 초기화
-        /**
-         * dialog가 열려있는 상태에서 다시 open이 되면 queue에 보관 하였다가 close후 open
-         * @member {Array}
-         */
-        this.queue = [];
-        /**
-         * @member {jQueryElement}
-         */
-        this.$activeDialog = null;
-        /**
-         * @member {Object}
-         */
-        this.autoCloseTimer = null;
-
-        this.init();
-    }
-
-    /**
-     * @method
-     * @param config
-     */
-    init() {
-        this.onStateChanged = this.config.onStateChanged;
-        delete this.config.onStateChanged;
-
-        // init 호출 여부
-        this.initOnce();
-    }
-
-    /**
-     * @method
-     */
-    initOnce() {
-        if (this.initialized) return this;
-        this.initialized = true;
-    }
-
-    /**
-     * @method
-     * @param opts
-     * @param callback
-     * @param tryCount
-     * @return {AX6UIDialog}
-     * @example
-     * ```js
-     * import {Dialog} from "ax6ui"
+     * @param [config.theme='default']
+     * @param [config.width=300]
+     * @param [config.title='']
+     * @param [config.msg='']
+     * @param [config.lang]
+     * @param [config.lang.ok='ok']
+     * @param [config.lang.cancel='cancel']
+     * @param [config.animateTime=150]
+     * @param [config.autoCloseTime=0]
+     * @param [config.onStateChanged]
      *
-     * const dialog = new Dialog();
-     * dialog.alert("Alert Message");
-     * dialog.alert({
+     */
+    this.config = {
+      id: 'ax6-dialog-' + this.instanceId,
+      clickEventName: "click",
+      theme: 'default',
+      width: 300,
+      title: 'AX6UIDialog',
+      msg: '',
+      lang: {
+        "ok": "ok", "cancel": "cancel"
+      },
+      animateTime: 150,
+      autoCloseTime: 0
+    };
+    jQuery.extend(true, this.config, config);
+
+    // 멤버 변수 초기화
+    /**
+     * dialog가 열려있는 상태에서 다시 open이 되면 queue에 보관 하였다가 close후 open
+     * @member {Array}
+     */
+    this.queue = [];
+    /**
+     * @member {jQueryElement}
+     */
+    this.$activeDialog = null;
+    /**
+     * @member {Object}
+     */
+    this.autoCloseTimer = null;
+
+    this.init();
+  }
+
+  /**
+   * @method
+   * @param config
+   */
+  init() {
+    this.onStateChanged = this.config.onStateChanged;
+    delete this.config.onStateChanged;
+
+    // init 호출 여부
+    this.initOnce();
+  }
+
+  /**
+   * @method
+   */
+  initOnce() {
+    if (this.initialized) return this;
+    this.initialized = true;
+  }
+
+  /**
+   * @method
+   * @param opts
+   * @param callback
+   * @param tryCount
+   * @return {AX6UIDialog}
+   * @example
+   * ```js
+   * import {Dialog} from "ax6ui"
+   *
+   * const dialog = new Dialog();
+   * dialog.alert("Alert Message");
+   * dialog.alert({
      *     title: "Title",
      *     msg: "Alert Message"
      * });
-     * ```
-     */
-    alert(opts, callback, tryCount) {
-        if (typeof opts === "undefined") {
-            opts = {
-                title: this.config.title,
-                msg: ""
-            };
-        } else if (U.isString(opts)) {
-            opts = {
-                title: this.config.title,
-                msg: opts
-            };
-        }
-
-        opts = jQuery.extend(true, {}, this.config, opts, {
-            dialogType: "alert",
-            callback: callback
-        });
-
-        if (typeof opts.btns === "undefined") {
-            opts.btns = {
-                ok: { label: opts.lang["ok"], theme: opts.theme }
-            };
-        }
-
-        if (this.$activeDialog) {
-            this.queue.push(opts);
-        } else {
-            open.call(this, opts, callback);
-        }
+   * ```
+   */
+  alert(opts, callback, tryCount) {
+    if (typeof opts === "undefined") {
+      opts = {
+        title: this.config.title,
+        msg: ""
+      };
+    } else if (U.isString(opts)) {
+      opts = {
+        title: this.config.title,
+        msg: opts
+      };
     }
 
-    /**
-     * @method
-     * @param opts
-     * @param callback
-     * @param tryCount
-     * @return {AX6UIDialog}
-     * @example
-     * ```js
-     * import {Dialog} from "ax6ui"
-     *
-     * const dialog = new Dialog();
-     * dialog.confirm({
+    opts = jQuery.extend(true, {}, this.config, opts, {
+      dialogType: "alert",
+      callback: callback
+    });
+
+    if (typeof opts.btns === "undefined") {
+      opts.btns = {
+        ok: { label: opts.lang["ok"], theme: opts.theme }
+      };
+    }
+
+    if (this.$activeDialog) {
+      this.queue.push(opts);
+    } else {
+      open.call(this, opts, callback);
+    }
+  }
+
+  /**
+   * @method
+   * @param opts
+   * @param callback
+   * @param tryCount
+   * @return {AX6UIDialog}
+   * @example
+   * ```js
+   * import {Dialog} from "ax6ui"
+   *
+   * const dialog = new Dialog();
+   * dialog.confirm({
      *     title: "확인",
      *     msg: "확인 또는 취소를 누르세요"
      * }, function (res) {
@@ -409,9 +409,9 @@ class AX6UIDialog extends AX6UICore {
      *         console.log("CANCEL");
      *     }
      * });
-     *
-     * // btns custom
-     * dialog.config({
+   *
+   * // btns custom
+   * dialog.config({
      *  title: "예/아니오",
      *  msg: "당신은 개발자 입니까?",
      *  btns: {
@@ -421,55 +421,55 @@ class AX6UIDialog extends AX6UICore {
      * }, function (res) {
      *      console.log(res);
      * });
-     * ```
-     */
-    confirm(opts, callback, tryCount) {
-        if (typeof opts === "undefined") {
-            opts = {
-                title: this.config.title,
-                msg: ""
-            };
-        } else if (U.isString(opts)) {
-            opts = {
-                title: this.config.title,
-                msg: opts
-            };
-        }
-
-        opts = jQuery.extend(true, {}, this.config, opts, {
-            dialogType: "confirm",
-            callback: callback
-        });
-
-        if (typeof opts.btns === "undefined") {
-            opts.btns = {
-                ok: { label: opts.lang["ok"], theme: opts.theme },
-                cancel: { label: opts.lang["cancel"] }
-            };
-        }
-
-        if (this.$activeDialog) {
-            this.queue.push(opts);
-        } else {
-            open.call(this, opts, callback);
-        }
-
-        return this;
+   * ```
+   */
+  confirm(opts, callback, tryCount) {
+    if (typeof opts === "undefined") {
+      opts = {
+        title: this.config.title,
+        msg: ""
+      };
+    } else if (U.isString(opts)) {
+      opts = {
+        title: this.config.title,
+        msg: opts
+      };
     }
 
-    /**
-     * @method
-     * @param opts
-     * @param callback
-     * @param tryCount
-     * @return {AX6UIDialog}
-     * @example
-     * ```js
-     * import {Dialog} from "ax6ui"
-     *
-     * const dialog = new Dialog();
-     *
-     * dialog.prompt({
+    opts = jQuery.extend(true, {}, this.config, opts, {
+      dialogType: "confirm",
+      callback: callback
+    });
+
+    if (typeof opts.btns === "undefined") {
+      opts.btns = {
+        ok: { label: opts.lang["ok"], theme: opts.theme },
+        cancel: { label: opts.lang["cancel"] }
+      };
+    }
+
+    if (this.$activeDialog) {
+      this.queue.push(opts);
+    } else {
+      open.call(this, opts, callback);
+    }
+
+    return this;
+  }
+
+  /**
+   * @method
+   * @param opts
+   * @param callback
+   * @param tryCount
+   * @return {AX6UIDialog}
+   * @example
+   * ```js
+   * import {Dialog} from "ax6ui"
+   *
+   * const dialog = new Dialog();
+   *
+   * dialog.prompt({
      *  title: "prompt",
      *  msg: '다음의 값을 입력하세요.',
      *  input: {
@@ -479,105 +479,105 @@ class AX6UIDialog extends AX6UICore {
      * }, function(res){
      *      console.log(res);
      * });
-     * ```
-     */
-    prompt(opts, callback, tryCount) {
-        if (typeof opts === "undefined") {
-            opts = {
-                title: this.config.title,
-                msg: ""
-            };
-        } else if (U.isString(opts)) {
-            opts = {
-                title: this.config.title,
-                msg: opts
-            };
-        }
-
-        opts = jQuery.extend(true, {}, this.config, opts, {
-            dialogType: "prompt",
-            callback: callback
-        });
-
-        if (typeof opts.input === "undefined") {
-            opts.input = {
-                value: { label: "" }
-            };
-        }
-        if (typeof opts.btns === "undefined") {
-            opts.btns = {
-                ok: { label: opts.lang["ok"], theme: opts.theme },
-                cancel: { label: opts.lang["cancel"] }
-            };
-        }
-
-        if (this.$activeDialog) {
-            this.queue.push(opts);
-        } else {
-            open.call(this, opts, callback);
-        }
-
-        return this;
+   * ```
+   */
+  prompt(opts, callback, tryCount) {
+    if (typeof opts === "undefined") {
+      opts = {
+        title: this.config.title,
+        msg: ""
+      };
+    } else if (U.isString(opts)) {
+      opts = {
+        title: this.config.title,
+        msg: opts
+      };
     }
 
-    /**
-     * @method
-     * @param _option
-     * @return {AX6UIDialog}
-     * @example
-     * ```js
-     * dialog.close();
-     * dialog.close({callback: function(){
+    opts = jQuery.extend(true, {}, this.config, opts, {
+      dialogType: "prompt",
+      callback: callback
+    });
+
+    if (typeof opts.input === "undefined") {
+      opts.input = {
+        value: { label: "" }
+      };
+    }
+    if (typeof opts.btns === "undefined") {
+      opts.btns = {
+        ok: { label: opts.lang["ok"], theme: opts.theme },
+        cancel: { label: opts.lang["cancel"] }
+      };
+    }
+
+    if (this.$activeDialog) {
+      this.queue.push(opts);
+    } else {
+      open.call(this, opts, callback);
+    }
+
+    return this;
+  }
+
+  /**
+   * @method
+   * @param _option
+   * @return {AX6UIDialog}
+   * @example
+   * ```js
+   * dialog.close();
+   * dialog.close({callback: function(){
      *
      * });
      * ```
      */
-    close(_option) {
-        let opts, that;
+  close(_option) {
+    let opts, that;
 
+    if (this.$activeDialog) {
+      if (this.autoCloseTimer) clearTimeout(this.autoCloseTimer);
+
+      opts = this.dialogConfig;
+
+      this.$activeDialog.addClass("destroy");
+      jQuery(window).off("keydown.ax6dialog").off("resize.ax6dialog");
+
+      setTimeout(function () {
         if (this.$activeDialog) {
-            if (this.autoCloseTimer) clearTimeout(this.autoCloseTimer);
-
-            opts = this.dialogConfig;
-
-            this.$activeDialog.addClass("destroy");
-            jQuery(window).off("keydown.ax6dialog").off("resize.ax6dialog");
-
-            setTimeout(function () {
-                if (this.$activeDialog) {
-                    this.$activeDialog.remove();
-                    this.$activeDialog = null;
-                }
-
-                that = {
-                    self: this,
-                    state: "close",
-                    dialogId: opts.id
-                };
-
-                if (_option && U.isFunction(_option.callback)) {
-                    _option.callback.call(that, that);
-                } else if (opts.callback && (!_option || !_option.doNotCallback)) {
-                    opts.callback.call(that, that);
-                }
-
-                if (opts && opts.onStateChanged) {
-                    opts.onStateChanged.call(that, that);
-                } else if (this.onStateChanged) {
-                    this.onStateChanged.call(that, that);
-                }
-
-                // 열려야 할 큐가 남아 있다면 큐아이템으로 다시 open
-                if (this.queue && this.queue.length) {
-                    open.call(this, this.queue.shift());
-                }
-
-                opts = null;
-                that = null;
-            }.bind(this), this.config.animateTime);
+          this.$activeDialog.remove();
+          this.$activeDialog = null;
         }
-        return this;
+
+        that = {
+          self: this,
+          state: "close",
+          dialogId: opts.id
+        };
+
+        if (_option && U.isFunction(_option.callback)) {
+          _option.callback.call(that, that);
+        } else if (opts.callback && (!_option || !_option.doNotCallback)) {
+          opts.callback.call(that, that);
+        }
+
+        if (opts && opts.onStateChanged) {
+          opts.onStateChanged.call(that, that);
+        } else if (this.onStateChanged) {
+          this.onStateChanged.call(that, that);
+        }
+
+        // 열려야 할 큐가 남아 있다면 큐아이템으로 다시 open
+        if (this.queue && this.queue.length) {
+          open.call(this, this.queue.shift());
+        }
+
+        opts = null;
+        that = null;
+      }.bind(this), this.config.animateTime);
     }
+    return this;
+  }
 }
 
 export default AX6UIDialog;

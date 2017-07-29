@@ -14,14 +14,6 @@ var _AX6UICore2 = require("./AX6UICore.js");
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Util = require("./AX6Util");
-
-var _AX6Util2 = _interopRequireDefault(_AX6Util);
-
-var _AX6Mustache = require("./AX6Mustache.js");
-
-var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
-
 require("./AX6UIToast/index.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

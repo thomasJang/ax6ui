@@ -15,15 +15,15 @@ let modal = new Modal();
 modal.setConfig({});
 
 $body.on("click", '[data-btn]', (e) => {
-    let btn = e.currentTarget.getAttribute("data-btn");
-    let processor = {
-        modal() {
+  let btn = e.currentTarget.getAttribute("data-btn");
+  let processor = {
+    modal() {
 
-        },
-    };
+    },
+  };
 
-    if (btn in processor) {
-        processor[btn]();
-    }
+  if (btn in processor) {
+    processor[btn]();
+  }
 });
 

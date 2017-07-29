@@ -20,37 +20,37 @@ $body.append(el);
 let myMask = new Mask();
 
 myMask.setConfig({
-    zIndex: 1000,
-    onStateChanged: function () {
-        console.log(this);
-    }
+  zIndex: 1000,
+  onStateChanged: function () {
+    console.log(this);
+  }
 });
 
 myMask.onClick = function () {
-    console.log(this);
-    myMask.fadeOut();
+  console.log(this);
+  myMask.fadeOut();
 };
 
 $body.on("click", '[data-btn]', (e) => {
-    let btn = e.currentTarget.getAttribute("data-btn");
-    let processor = {
-        mask(){
-            myMask.open();
-        },
-        "mask-content"(){
-            myMask.open({
-                content: "MASK CONTENT"
-            });
-        },
-        "mask-div"(){
-            myMask.open({
-                target: $('#making-div')
-            });
-        }
-    };
-
-    if(btn in processor){
-        processor[btn]();
+  let btn = e.currentTarget.getAttribute("data-btn");
+  let processor = {
+    mask() {
+      myMask.open();
+    },
+    "mask-content"() {
+      myMask.open({
+        content: "MASK CONTENT"
+      });
+    },
+    "mask-div"() {
+      myMask.open({
+        target: $('#making-div')
+      });
     }
+  };
+
+  if (btn in processor) {
+    processor[btn]();
+  }
 });
 

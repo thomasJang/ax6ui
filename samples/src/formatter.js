@@ -33,28 +33,28 @@ $body.append(el);
 var formatter = new Formatter();
 
 $body.on("click", '[data-btn]', function () {
-    let btn = this.getAttribute("data-btn");
-    let processor = {
-        "bind-money"(){
-            formatter.bind({
-                target: $('[data-ax6formatter="money"]')
-            });
-        },
-        "unbind-money"(){
-            formatter.unbind({
-                target: $('[data-ax6formatter="money"]')
-            });
-        },
-        "bind-date"(){
-            formatter.bind({
-                target: $('[data-ax6formatter="date"]')
-            });
-        },
-        "unbind-date"(){
-            formatter.unbind({
-                target: $('[data-ax6formatter="date"]')
-            });
-        }
-    };
-    processor[btn]();
+  let btn = this.getAttribute("data-btn");
+  let processor = {
+    "bind-money"() {
+      formatter.bind({
+        target: $('[data-ax6formatter="money"]')
+      });
+    },
+    "unbind-money"() {
+      formatter.unbind({
+        target: $('[data-ax6formatter="money"]')
+      });
+    },
+    "bind-date"() {
+      formatter.bind({
+        target: $('[data-ax6formatter="date"]')
+      });
+    },
+    "unbind-date"() {
+      formatter.unbind({
+        target: $('[data-ax6formatter="date"]')
+      });
+    }
+  };
+  processor[btn]();
 })

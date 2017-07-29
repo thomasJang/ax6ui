@@ -20,14 +20,14 @@ let select = new Select();
 let options = [];
 options.push({id: "", alias: "-- 전체 --"});
 for (let i = 0; i < 20; i++) {
-    options.push({id: i, alias: "optionText" + i});
+  options.push({id: i, alias: "optionText" + i});
 }
 
 select.bind({
-    target: $('[data-ax6ui-select="select1"]'),
-    columnKeys: {
-        optionValue: 'id',
-        optionText: 'alias'
-    },
-    options: options
+  target: $('[data-ax6ui-select="select1"]'),
+  columnKeys: {
+    optionValue: 'id',
+    optionText: 'alias'
+  },
+  options: options
 });

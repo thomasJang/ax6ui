@@ -1,53 +1,49 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
-import U from "./AX6Util";
-import mustache from "./AX6Mustache.js";
 import "./AX6UIToast/index.scss";
 
 /**
  * @class
  */
 class AX6UIToast extends AX6UICore {
+  /**
+   * @constructor
+   * @param config
+   */
+  constructor(config) {
+    super();
+
     /**
-     * @constructor
+     * @member {JSON}
      * @param config
+     *
      */
-    constructor(config) {
-        super();
+    this.config = {};
+    jQuery.extend(true, this.config, config);
 
-        /**
-         * @member {JSON}
-         * @param config
-         *
-         */
-        this.config = {
+    // 멤버 변수 초기화
 
-        };
-        jQuery.extend(true, this.config, config);
+    if (typeof config !== "undefined") this.init();
+  }
 
-        // 멤버 변수 초기화
+  /**
+   * @method
+   */
+  init() {
+    this.onStateChanged = this.config.onStateChanged;
+    delete this.config.onStateChanged;
 
-        if(typeof config !== "undefined") this.init();
-    }
+    // init 호출 여부
+    this.initOnce();
+  }
 
-    /**
-     * @method
-     */
-    init(){
-        this.onStateChanged = this.config.onStateChanged;
-        delete this.config.onStateChanged;
-
-        // init 호출 여부
-        this.initOnce();
-    }
-
-    /**
-     * @method
-     */
-    initOnce(){
-        if(this.initialized) return this;
-        this.initialized = true;
-    }
+  /**
+   * @method
+   */
+  initOnce() {
+    if (this.initialized) return this;
+    this.initialized = true;
+  }
 
 }
 

@@ -1,5 +1,5 @@
 const main = function () {
-    return `<div data-ax6grid-container="root" data-ax6grid-instance="{{instanceId}}">
+  return `<div data-ax6grid-container="root" data-ax6grid-instance="{{instanceId}}">
             <div data-ax6grid-container="hidden">
                 <textarea data-ax6grid-form="clipboard"></textarea>
             </div>
@@ -57,8 +57,8 @@ const main = function () {
         </div>`;
 };
 
-const page_navigation = function(){
-    return `<div data-ax6grid-page-navigation="holder">
+const page_navigation = function () {
+  return `<div data-ax6grid-page-navigation="holder">
             {{#hasPage}}
             <div data-ax6grid-page-navigation="cell">    
                 {{#firstIcon}}<button type="button" data-ax6grid-page-move="first">{{{firstIcon}}}</button>{{/firstIcon}}
@@ -77,13 +77,13 @@ const page_navigation = function(){
         </div>`;
 };
 
-const page_status = function(){
-    return `<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}} of {{dataRowCount}} {{#dataRealRowCount}}&nbsp; Current {{.}}{{/dataRealRowCount}} {{#totalElements}}&nbsp; Total {{.}}{{/totalElements}}</span>`;
+const page_status = function () {
+  return `<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}} of {{dataRowCount}} {{#dataRealRowCount}}&nbsp; Current {{.}}{{/dataRealRowCount}} {{#totalElements}}&nbsp; Total {{.}}{{/totalElements}}</span>`;
 };
 
 
 export default {
-    "main": main,
-    "page_navigation": page_navigation,
-    "page_status": page_status
+  "main": main,
+  "page_navigation": page_navigation,
+  "page_status": page_status
 };

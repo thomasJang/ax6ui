@@ -1,7 +1,7 @@
-.btn{
-    height: 2em;
-    line-height: 2em;
-    padding: 0 0.8em;
+.btn {
+  height: 2em;
+  line-height: 2em;
+  padding: 0 0.8em;
 }
 
 // Media Query Ranges
@@ -19,29 +19,29 @@ $small-and-down: "only screen and (max-width : #{$small-screen})" !default;
 $medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
 $medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
 
-nav{
-    background: #000;
-    .nav-wrapper{
+nav {
+  background: #000;
+  .nav-wrapper {
 
-        .container {
-            margin: 0 auto;
-            max-width: 1280px;
-            width: 100%;
-        }
-        @media #{$medium-and-up} {
-            .container {
-                width: 85%;
-            }
-        }
-        @media #{$large-and-up} {
-            .container {
-                width: 70%;
-            }
-        }
+    .container {
+      margin: 0 auto;
+      max-width: 1280px;
+      width: 100%;
     }
+    @media #{$medium-and-up} {
+      .container {
+        width: 85%;
+      }
+    }
+    @media #{$large-and-up} {
+      .container {
+        width: 70%;
+      }
+    }
+  }
 }
 
-.material-icons{
-    vertical-align: middle;
-    line-height: inherit;
+.material-icons {
+  vertical-align: middle;
+  line-height: inherit;
 }

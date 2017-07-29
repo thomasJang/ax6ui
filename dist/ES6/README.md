@@ -3,8 +3,9 @@
 
 # ax6ui
 ES6 Javascript UI Component
-ax6ui는 ES6표준 문법 사용이 가능한 JSUI 컴포넌트 입니다. 
-모든 샘플소스 제작환경은 webpack을 이용하였습니다. 제대로된 테스트를 위해서는 webpack이 필요합니다.
+`ax6ui`는 ES6표준 문법으로 사용하는 Javascript UI 콤포넌트 입니다. 
+React, Vue 등의 프로젝트와 함께 사용할 수 있습니다.
+
 
 # Install
 ```
@@ -197,6 +198,74 @@ picker.bind({
 - API : https://github.com/ax6ui/ax6ui/blob/master/md/AX6UIPicker.md
 - SAMPLE : https://github.com/ax6ui/ax6ui/blob/master/samples/src/picker.js
 
+## AX6UIGrid
+```js
+import $ from "jqmin";
+import axios from "axios";
+import Grid from "../../src/AX6UIGrid";
+import "./custom-materialize.scss";
+
+const $body = $("#sample-body");
+let el = `
+<h4>Grid basic</h4>
+<div data-ax6ui-grid="grid-basic" data-ax6ui-grid-config="{columns: [
+        {key: 'a', label: 'field A'},
+        {key: 'b', label: 'field B'},
+        {key: 'c', label: 'numbers C'},
+        {key: 'd', label: 'field D'},
+        {key: 'e', label: 'field E'},
+        {key: 'f', label: 'field F'},
+        {key: 'g', label: 'field G'},
+        {key: 'h', label: 'field H'}
+    ]}" style="height: 200px;"></div>
+    
+<h4>Grid formatter</h4>
+<div data-ax6ui-grid="grid-formatter" style="height: 200px;"></div>
+`;
+$body.append(el);
+
+
+/////~~~~~~~~~~~~~~~~~~
+
+Grid.setFormatter({
+  "capital"() { // 개발자가 직접 정의한.
+    return this.value.toUpperCase();
+  }
+});
+
+let grid_basic = new Grid({
+  target: $body.find('[data-ax6ui-grid="grid-basic"]'),
+});
+
+// xhr 호출
+axios({
+  method: 'get',
+  url: 'http://api-demo.ax5.io/api/v1/ax5grid'
+}).then(res => {
+  grid_basic.setData(res.data);
+}).catch(error => {
+  console.log(error);
+});
+
+// formatter 사용
+new Grid({
+  target: $body.find('[data-ax6ui-grid="grid-formatter"]'),
+  showLineNumber: true,
+  showRowSelector: true,
+  multipleSelect: true,
+  lineNumberColumnWidth: 40,
+  rowSelectorColumnWidth: 27,
+  columns: [
+    {key: 'a', label: 'field A'},
+    {key: 'b', label: 'field B', formatter: 'capital'},
+    {key: 'c', label: 'number C', formatter: 'money'} // 그리드에 내장된 formatter
+  ]
+}).setData([
+  {a: "토마스", b: "Thomas", c: 50000}
+]);
+```
+- API : https://github.com/ax6ui/ax6ui/blob/master/md/AX6UIGrid.md
+- SAMPLE : https://github.com/ax6ui/ax6ui/blob/master/samples/src/grid.js
 
 ## Question
 - https://jsdev.kr/c/axisj/ax6ui

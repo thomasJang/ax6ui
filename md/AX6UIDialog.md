@@ -7,7 +7,7 @@
     * [new AX6UIDialog(config)](#new_AX6UIDialog_new)
     * [.config](#AX6UIDialog+config) : <code>JSON</code>
     * [.queue](#AX6UIDialog+queue) : <code>Array</code>
-    * [.activeDialog](#AX6UIDialog+activeDialog) : <code>Object</code>
+    * [.$activeDialog](#AX6UIDialog+$activeDialog) : <code>jQueryElement</code>
     * [.autoCloseTimer](#AX6UIDialog+autoCloseTimer) : <code>Object</code>
     * [.init(config)](#AX6UIDialog+init)
     * [.initOnce()](#AX6UIDialog+initOnce)
@@ -49,9 +49,9 @@
 dialog가 열려있는 상태에서 다시 open이 되면 queue에 보관 하였다가 close후 open
 
 **Kind**: instance property of <code>[AX6UIDialog](#AX6UIDialog)</code>  
-<a name="AX6UIDialog+activeDialog"></a>
+<a name="AX6UIDialog+$activeDialog"></a>
 
-### aX6UIDialog.activeDialog : <code>Object</code>
+### aX6UIDialog.$activeDialog : <code>jQueryElement</code>
 **Kind**: instance property of <code>[AX6UIDialog](#AX6UIDialog)</code>  
 <a name="AX6UIDialog+autoCloseTimer"></a>
 

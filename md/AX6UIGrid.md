@@ -73,9 +73,10 @@
     * _static_
         * [.setFormatter(_formatter)](#AX6UIGrid.setFormatter)
         * [.getFormatter()](#AX6UIGrid.getFormatter) ⇒ <code>Object</code>
-        * [.setCollector(_collector)](#AX6UIGrid.setCollector)
-        * [.getCollector()](#AX6UIGrid.getCollector) ⇒ <code>Object</code>
-        * [.setTmpl(_tmpl)](#AX6UIGrid.setTmpl)
+        * [.setCollector(_collector)](#AX6UIGrid.setCollector) ⇒ <code>collector</code>
+        * [.getCollector()](#AX6UIGrid.getCollector) ⇒ <code>collector</code>
+        * [.setTmpl(_tmpl)](#AX6UIGrid.setTmpl) ⇒ <code>tmpl</code>
+        * [.getTmpl()](#AX6UIGrid.getTmpl) ⇒ <code>tmpl</code>
 
 <a name="new_AX6UIGrid_new"></a>
 
@@ -709,7 +710,7 @@ grid.focus("END");
 **Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid.setCollector"></a>
 
-### AX6UIGrid.setCollector(_collector)
+### AX6UIGrid.setCollector(_collector) ⇒ <code>collector</code>
 **Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
@@ -718,14 +719,18 @@ grid.focus("END");
 
 <a name="AX6UIGrid.getCollector"></a>
 
-### AX6UIGrid.getCollector() ⇒ <code>Object</code>
+### AX6UIGrid.getCollector() ⇒ <code>collector</code>
 **Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid.setTmpl"></a>
 
-### AX6UIGrid.setTmpl(_tmpl)
+### AX6UIGrid.setTmpl(_tmpl) ⇒ <code>tmpl</code>
 **Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
 | _tmpl | 
 
+<a name="AX6UIGrid.getTmpl"></a>
+
+### AX6UIGrid.getTmpl() ⇒ <code>tmpl</code>
+**Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  

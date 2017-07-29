@@ -3,7 +3,7 @@ import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
 import info from "./AX6Info";
 import mustache from "./AX6Mustache";
-import "./AX6UIToast/index.scss";
+import "./AX6UIModal/index.scss";
 
 let tmpl = {
   modal() {
@@ -125,6 +125,10 @@ const open = function (opts, callback) {
 
   this.modalConfig = opts;
   this.$activeModal = jQuery(getContent.call(this, opts.id, opts));
+
+  if (typeof callback === "undefined") {
+    callback = opts.callback;
+  }
 
   // 파트수집
   this.$ = {
@@ -940,16 +944,15 @@ class AX6UIModal extends AX6UICore {
              * });
    * ```
    */
-  open(opts, callback, tryCount) {
+  open(opts, callback) {
     if (typeof opts === "undefined") {
       opts = {}
     }
 
-    opts = jQuery.extend(true, {}, this.config, opts, {
-      callback: callback
-    });
+    opts = jQuery.extend(true, {}, this.config, opts);
 
     if (this.$activeModal) {
+      opts.callback = callback;
       this.queue.push(opts);
     } else {
       open.call(this, opts, callback);

@@ -1,0 +1,32 @@
+//============== ax6select
+$ax6select-label-padding: 0px 7px !default;
+
+$ax6select-label-bg-colors: (#fff, #eee) !default;
+$ax6select-label-border: 1px solid #ccc !default;
+$ax6select-label-color: #444 !default;
+
+$ax6select-addon-icon-height: 4.5px !default;
+$ax6select-addon-icon-color: #444 !default;
+$ax6select-addon-icon-padding-right: 7px !default;
+
+///== option group
+$ax6select-option-group-z-index: 2000 !default;
+$ax6select-option-group-box-model: border-box !default;
+$ax6select-option-group-bg: lighten(#eee, 5%) !default;
+$ax6select-option-group-inner-border: 1px solid !default;
+$ax6select-option-group-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.175) !default;
+$ax6select-option-group-border-radius: 5px !default;
+$ax6select-option-group-body-padding: 0px !default;
+
+$ax6select-option-group-easing-time-open: 0.1s !default;
+$ax6select-option-group-easing-time-close: 0.1s !default;
+$ax6select-option-group-arrow-size: 10px !default;
+$ax6select-option-group-arrow-border-width: 1px !default;
+
+$ax6select-option-item-padding: 3px 0px !default;
+$ax6select-option-item-font-size: 12px !default;
+
+///~~ theme
+$ax6select-default-base-color: #555 !default;
+$ax6select-default-theme-color: #ccc !default;
+$ax6select-default-hover-type: darken, 20% !default;

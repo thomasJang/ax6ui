@@ -1,0 +1,28 @@
+//============== ax6picker
+$ax6picker-z-index: 2000 !default;
+$ax6picker-box-model: border-box !default;
+$ax6picker-bg: #fff !default;
+$ax6picker-inner-border: 1px solid !default;
+$ax6picker-inner-border-color: #ddd !default;
+
+$ax6picker-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.175) !default;
+$ax6picker-border-radius: 5px !default;
+
+$ax6picker-body-padding: 5px !default;
+$ax6picker-heading-padding: 10px 15px !default;
+$ax6picker-buttons-padding: 10px 0px 5px 0px !default;
+
+$ax6picker-content-border: 0px solid !default;
+$ax6picker-content-border-color: none !default;
+$ax6picker-content-border-radius: 0px !default;
+$ax6picker-content-padding: 0px !default;
+
+$ax6picker-easing-time-open: 0.1s !default;
+$ax6picker-easing-time-close: 0.1s !default;
+$ax6picker-arrow-size: 10px !default;
+$ax6picker-arrow-border-width: 1px !default;
+
+//** Border color for elements within dialog
+$ax6picker-default-text: #333 !default;
+$ax6picker-default-border-color: #ddd !default;
+$ax6picker-default-heading-bg: #f5f5f5 !default;

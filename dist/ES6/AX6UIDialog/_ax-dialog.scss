@@ -1,0 +1,109 @@
+@mixin ax-dialog() {
+    box-sizing: $ax6dialog-box-model;
+    background-color: $ax6dialog-bg;
+    border: $ax6dialog-inner-border;
+    border-radius: $ax6dialog-border-radius;
+    box-shadow: $ax6dialog-box-shaodw;
+
+    z-index: $ax6dialog-z-index;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+@mixin ax-dialog-section() {
+    .ax-dialog-header {
+        //font-size: 1em;
+        font-weight: 600;
+        padding: $ax6dialog-header-padding;
+        border-bottom: 1px solid transparent;
+        .badge {
+            font-size: 0.8em;
+            color: $ax6dialog-default-header-bg;
+            background-color: $ax6dialog-default-text;
+        }
+    }
+    .ax-dialog-body {
+        padding: $ax6dialog-body-padding;
+        text-align: center;
+        .ax-dialog-msg {
+            padding-top: $ax6dialog-body-padding;
+            padding-bottom: $ax6dialog-body-padding;
+        }
+        .ax-dialog-prompt {
+            text-align: left;
+            padding-bottom: $ax6dialog-body-padding/2;
+        }
+        .ax-dialog-buttons {
+            margin-top: $ax6dialog-body-padding;
+            button {
+                &:not(:last-child) {
+                    margin-right: 3px;
+                }
+            }
+        }
+        [data-dialog-els="additional-content"] {
+            margin-top: $ax6dialog-body-padding;
+        }
+    }
+}
+
+@mixin dialog-variant($text-color, $border, $header-bg-color) {
+
+    border: $ax6dialog-inner-border;
+
+    .ax-dialog-header {
+        color: $text-color;
+        background: $header-bg-color;
+        .badge {
+            color: $header-bg-color;
+            background-color: $text-color;
+        }
+    }
+    .ax-dialog-body {
+
+    }
+}
+
+@include keyframes(ax-dialog) {
+    0% {
+        opacity: 0.0;
+        @include transform(scaleX(1));
+    }
+    0.1% {
+        opacity: 0.0;
+        @include transform(scaleX(1.3));
+    }
+    100% {
+        opacity: 1.0;
+        @include transform(scaleX(1));
+    }
+}
+
+@include keyframes(ax-dialog-destroy) {
+    from {
+        @include transform(translate(0, 0));
+        opacity: 1.0;
+    }
+    to {
+        @include transform(translate(0, 50%));
+        opacity: 0.0;
+    }
+}
+
+// mixins --------------------------------------------- end
+
+[data-ax6ui-dialog] {
+    @include animation(ax-dialog $ax6dialog-easing-time-open $ease-out-back);
+    @include transform(translateZ(0));
+
+    @include ax-dialog();
+    @include ax-dialog-section();
+
+    @include dialog-variant($ax6dialog-default-text, $ax6dialog-default-border, $ax6dialog-default-header-bg);
+
+    &.destroy {
+        @include animation(ax-dialog-destroy $ax6dialog-easing-time-close $ease-in-quint forwards);
+    }
+}

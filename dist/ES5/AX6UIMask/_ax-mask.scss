@@ -1,0 +1,86 @@
+@mixin ax-mask() {
+    position: absolute;
+}
+
+@mixin ax-panel-mask() {
+    position: absolute;
+}
+
+// mixins --------------------------------------------- end
+
+@include keyframes(ax-mask) {
+    from {
+        opacity: 0.0;
+    }
+    to {
+        opacity: $ax6mask-bg-opacity;
+    }
+}
+
+@include keyframes(ax-mask-fade-out) {
+    from {
+        opacity: $ax6mask-bg-opacity;
+    }
+    to {
+        opacity: 0.0;
+    }
+}
+
+.ax-masking {
+    -webkit-filter: blur(3px);
+    //position: fixed;
+    @include transform(scale(0.96));
+    @include transform(translateZ(0));
+}
+
+[data-ax6ui-mask] {
+    box-sizing: border-box;
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    z-index: $ax6mask-z-index;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    .ax-mask-bg {
+        z-index: 1;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        background: $ax6mask-bg;
+        opacity: $ax6mask-bg-opacity;
+    }
+    .ax-mask-content {
+        z-index: 2;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        display: table;
+        vertical-align: middle;
+        text-align: center;
+        color: $ax6mask-text-color;
+        text-shadow: $ax6mask-text-shadow;
+        * {
+            color: inherit;
+        }
+        > div {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+    }
+
+    &.fade-out {
+        @include animation(ax-mask-fade-out $ax6mask-easing-time-close);
+        opacity: 0.0;
+    }
+}

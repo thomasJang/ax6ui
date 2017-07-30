@@ -1,7 +1,7 @@
 import $ from "jqmin";
 import util from "../../src/AX6Util";
 import Picker from "../../src/AX6UIPicker";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 const $body = $("#sample-body");
 let el = `

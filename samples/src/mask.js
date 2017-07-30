@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Mask from "../../src/AX6UIMask";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 
 const $body = $("#sample-body");

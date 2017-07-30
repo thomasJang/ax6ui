@@ -1,7 +1,7 @@
 import $ from "jqmin";
 import U from "../../src/AX6Util";
 import Menu from "../../src/AX6UIMenu";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 
 const $body = $("#sample-body");

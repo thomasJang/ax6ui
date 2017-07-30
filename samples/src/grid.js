@@ -2,7 +2,7 @@ import $ from "jqmin";
 import axios from "axios";
 import Grid from "../../src/AX6UIGrid";
 import Menu from "../../src/AX6UIMenu";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 const $body = $("#sample-body");
 let el = `

@@ -1,7 +1,7 @@
 import $ from "jqmin";
 import U from "../../src/AX6Util";
 import Calendar from "../../src/AX6UICalendar";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 const $body = $("#sample-body");
 let el = `

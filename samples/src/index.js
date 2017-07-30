@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import util from "../../src/AX6Util";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 let $el = $('<div id="test-target"></div>');
 

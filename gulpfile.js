@@ -11,6 +11,7 @@ const babel = require('gulp-babel');
 const shell = require('gulp-shell');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
+const exec = require('gulp-exec');
 
 // 전역 오브젝트 모음
 const fnObj = {
@@ -106,6 +107,18 @@ gulp.task('samples npm start', shell.task([
   'cd samples && npm start',
 ]));
 
-gulp.task('jsdoc build', shell.task([
-  'cd jsdoc2md && ./build.sh',
-]));
+gulp.task('jsdoc build', function () {
+  let options = {
+    continueOnError: false, // default = false, true means don't emit error event
+    pipeStdout: false, // default = false, true means stdout is written to file.contents
+    customTemplatingThing: "test" // content passed to gutil.template()
+  };
+  let reportOptions = {
+    err: true, // default = true, false means don't write err
+    stderr: true, // default = true, false means don't write stderr
+    stdout: true // default = true, false means don't write stdout
+  };
+  return gulp.src('./jsdoc2md')
+    .pipe(exec('cd jsdoc2md && ./build.sh', options))
+    .pipe(exec.reporter(reportOptions));
+});

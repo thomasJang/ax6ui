@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Formatter from "../../src/AX6UIFormatter";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 const $body = $("#sample-body");
 let el = `

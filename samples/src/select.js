@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Select from "../../src/AX6UISelect";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 const $body = $("#sample-body");
 let el = `

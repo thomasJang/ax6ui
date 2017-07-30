@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Toast from "../../src/AX6UIToast";
-import "./custom-materialize.scss";
+import "./assets/sample.scss";
 
 const $body = $("#sample-body");
 let el = `

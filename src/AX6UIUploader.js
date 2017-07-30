@@ -1,6 +1,8 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
+import info from "./AX6Info";
+import mustache from "./AX6Mustache";
 
 import "./AX6UIUploader/index.scss";
 
@@ -394,11 +396,11 @@ const bound_closeProgressBox = function () {
 const bound_startUpload = function () {
   const processor = {
     "html5"() {
-
+      const self = this;
       let uploadFile = this.selectedFiles.shift();
       if (!uploadFile) {
         // 업로드 종료
-        bound_uploadComplete();
+        bound_uploadComplete.call(this);
         return this;
       }
 
@@ -423,13 +425,13 @@ const bound_startUpload = function () {
         catch (e) {
           return false;
         }
-        if (this.config.debug) console.log(res);
+        if (self.config.debug) console.log(res);
 
         if (res.error) {
-          if (this.config.debug) console.log(res.error);
-          if (U.isFunction(this.config.onuploaderror)) {
-            this.config.onuploaderror.call({
-              self: this,
+          if (self.config.debug) console.log(res.error);
+          if (U.isFunction(self.config.onuploaderror)) {
+            self.config.onuploaderror.call({
+              self: self,
               error: res.error
             }, res);
           }
@@ -437,14 +439,14 @@ const bound_startUpload = function () {
           return false;
         }
 
-        bound_uploaded(res);
+        bound_uploaded.call(self, res);
         self.send();
       };
       this.xhr.upload.onprogress = function (e) {
         // console.log(e.loaded, e.total);
-        bound_updateProgressBar(e);
-        if (U.isFunction(this.config.onprogress)) {
-          this.config.onprogress.call({
+        bound_updateProgressBar.call(self, e);
+        if (U.isFunction(self.config.onprogress)) {
+          self.config.onprogress.call({
             loaded: e.loaded,
             total: e.total
           }, e);
@@ -464,8 +466,8 @@ const bound_startUpload = function () {
 
       // onload 이벤트 핸들러
       // action에서 파일을 받아 처리한 결과값을 텍스트로 출력한다고 가정하고 iframe의 내부 데이터를 결과값으로 callback 호출
-      $iframe.load(function () {
-        let doc = this.contentWindow ? this.contentWindow.document : (this.contentDocument ? this.contentDocument : this.document),
+      $iframe.on('load', e => {
+        let doc = e.currentTarget.contentWindow ? e.currentTarget.contentWindow.document : (e.currentTarget.contentDocument ? e.currentTarget.contentDocument : e.currentTarget.document),
           root = doc.documentElement ? doc.documentElement : doc.body,
           result = root.textContent ? root.textContent : root.innerText,
           res;
@@ -485,11 +487,11 @@ const bound_startUpload = function () {
           console.log(res);
         }
         else {
-          bound_uploaded(res);
+          bound_uploaded.call(this, res);
           $iframe.remove();
 
-          setTimeout(function () {
-            bound_uploadComplete();
+          setTimeout(() => {
+            bound_uploadComplete.call(this);
           }, 300);
         }
       });
@@ -500,7 +502,7 @@ const bound_startUpload = function () {
         .submit();
 
       this.selectedFilesTotal = 1;
-      bound_updateProgressBar({
+      bound_updateProgressBar.call(this, {
         loaded: 1,
         total: 1
       });
@@ -536,7 +538,7 @@ const bound_updateProgressBar = function (e) {
 const bound_uploaded = function (res) {
   if (this.config.debug) console.log(res);
   this.uploadedFiles.push(res);
-  bound_repaintUploadedBox(); // 업로드된 파일 출력
+  bound_repaintUploadedBox.call(this); // 업로드된 파일 출력
 
   if (U.isFunction(this.config.onuploaded)) {
     this.config.onuploaded.call({
@@ -619,20 +621,24 @@ const bound_attachFileTag = function () {
     this.$inputFileForm.remove();
   }
 
-  this.$inputFile = jQuery(UPLOADER.tmpl.get.call(this, "inputFile", {
-    instanceId: this.instanceId,
-    multiple: this.config.multiple,
-    accept: this.config.accept,
-    name: this.config.form.fileName
-  }));
+  this.$inputFile = jQuery(
+    mustache.render(tmpl.inputFile.call(this), {
+      instanceId: this.instanceId,
+      multiple: this.config.multiple,
+      accept: this.config.accept,
+      name: this.config.form.fileName
+    })
+  );
 
   if (info.supportFileApi) {
     jQuery(document.body).append(this.$inputFile);
   } else {
     this.$fileSelector.attr("tabindex", -1);
-    this.$inputFileForm = jQuery(UPLOADER.tmpl.get.call(this, "inputFileForm", {
-      instanceId: this.instanceId
-    }));
+    this.$inputFileForm = jQuery(
+      mustache.render(tmpl.inputFileForm.call(this), {
+        instanceId: this.instanceId
+      })
+    );
 
     this.$inputFileForm.append(this.$inputFile);
     jQuery(document.body).append(this.$inputFileForm);
@@ -762,10 +768,12 @@ class AX6UIUploader extends AX6UICore {
       // btns 확인
       this.config.btns = jQuery.extend({}, this.defaultBtns, this.config.btns);
 
-      this.$progressBox = jQuery(tmpl.progressBox.call(this), {
-        instanceId: this.instanceId,
-        btns: this.config.btns
-      });
+      this.$progressBox = jQuery(
+        mustache.render(tmpl.progressBox.call(this), {
+          instanceId: this.instanceId,
+          btns: this.config.btns
+        })
+      );
       this.$progressBar = this.$progressBox.find('[role="progressbar"]');
       this.$progressBoxArrow = this.$progressBox.find(".ax-progressbox-arrow");
       this.$progressUpload = this.$progressBox.find('[data-pregressbox-btn="upload"]');
@@ -867,7 +875,7 @@ class AX6UIUploader extends AX6UICore {
       }
     }
 
-    bound_repaintUploadedBox();
+    bound_repaintUploadedBox.call(this);
     return this;
   }
 
@@ -896,7 +904,7 @@ class AX6UIUploader extends AX6UICore {
     if (!isNaN(Number(_index))) {
       this.uploadedFiles.splice(_index, 1);
     }
-    bound_repaintUploadedBox();
+    bound_repaintUploadedBox.call(this);
     return this;
   }
 
@@ -911,7 +919,7 @@ class AX6UIUploader extends AX6UICore {
    */
   removeFileAll() {
     this.uploadedFiles = [];
-    bound_repaintUploadedBox();
+    bound_repaintUploadedBox.call(this);
     return this;
   }
 

@@ -206,7 +206,7 @@
     }
 
     position: relative;
-    [data-ax6i-uploader-button="selector"] {
+    [data-ax6ui-uploader-button="selector"] {
         position: relative;
     }
 
@@ -225,7 +225,7 @@
     }
 }
 
-[data-ax6i-uploader-uploaded-box] {
+[data-ax6ui-uploader-uploaded-box] {
     background: $ax6uploader-uploaded-box-bg;
     border: $ax6uploader-uploaded-box-border;
     border-radius: $ax6uploader-uploaded-box-border-radius;
@@ -233,10 +233,10 @@
     padding: $ax6uploader-uploaded-box-padding;
     min-height: $ax6uploader-uploaded-box-min-height;
 
-    &[data-ax6i-uploader-uploaded-box] {
+    &[data-ax6ui-uploader-uploaded-box] {
         margin: $ax6uploader-uploaded-box-margin;
 
-        [data-ax6i-uploader-uploaded-item] {
+        [data-ax6ui-uploader-uploaded-item] {
             display: block;
             color: $ax6uploader-uploaded-item-color;
             border: $ax6uploader-uploaded-item-border;
@@ -309,26 +309,26 @@
         }
     }
 
-    &[data-ax6i-uploader-uploaded-box="inline"] {
+    &[data-ax6ui-uploader-uploaded-box="inline"] {
         &:after {
             content: " ";
             display: block;
             clear: both;
         }
-        [data-ax6i-uploader-uploaded-item] {
+        [data-ax6ui-uploader-uploaded-item] {
             display: block;
             float: left;
         }
     }
 
-    &[data-ax6i-uploader-uploaded-box="thumbnail"] {
+    &[data-ax6ui-uploader-uploaded-box="thumbnail"] {
         &:after {
             content: " ";
             display: block;
             clear: both;
         }
 
-        [data-ax6i-uploader-uploaded-item] {
+        [data-ax6ui-uploader-uploaded-item] {
             display: block;
             float: left;
             width: $ax6uploader-uploaded-item-preview-width;
@@ -403,7 +403,7 @@
     }
 }
 
-[data-ax6i-uploader-input] {
+[data-ax6ui-uploader-input] {
     position: absolute;
     left: -1000px;
     top: -1000px;
@@ -411,7 +411,7 @@
     cursor: pointer;
 }
 
-[data-ax6i-uploader-progressbox] {
+[data-ax6ui-uploader-progressbox] {
 
     @include ax-progressbox();
 

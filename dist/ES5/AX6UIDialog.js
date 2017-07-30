@@ -82,6 +82,7 @@ var open = function open(opts, callback) {
   this.dialogConfig = opts;
   this.$activeDialog = (0, _jqmin2.default)(getContent.call(this, opts.id, opts));
   this.$activeDialog.css({ width: box.width });
+  (0, _jqmin2.default)(document.body).append(this.$activeDialog);
 
   if (typeof callback === "undefined") {
     callback = opts.callback;
@@ -105,8 +106,6 @@ var open = function open(opts, callback) {
   this.$activeDialog.css(pos).on(opts.clickEventName, "[data-dialog-btn]", function (e) {
     btnOnClick.call(_this, e || window.event, opts, callback);
   }).find(opts.dialogType === "prompt" ? "[data-dialog-prompt]" : "[data-dialog-btn]").trigger("focus");
-
-  (0, _jqmin2.default)(document.body).append(this.$activeDialog);
 
   // bind key event
   (0, _jqmin2.default)(window).on("keydown.ax6dialog", function (e) {

@@ -90,6 +90,7 @@ const open = function (opts, callback) {
   this.dialogConfig = opts;
   this.$activeDialog = jQuery(getContent.call(this, opts.id, opts));
   this.$activeDialog.css({width: box.width});
+  jQuery(document.body).append(this.$activeDialog);
 
   if (typeof callback === "undefined") {
     callback = opts.callback;
@@ -118,7 +119,7 @@ const open = function (opts, callback) {
     })
     .find(opts.dialogType === "prompt" ? "[data-dialog-prompt]" : "[data-dialog-btn]").trigger("focus");
 
-  jQuery(document.body).append(this.$activeDialog);
+
 
   // bind key event
   jQuery(window)

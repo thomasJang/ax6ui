@@ -23,7 +23,7 @@ let tmpl = {
         <div class="ax-pregressbox-content">
             <div class="progress">
               <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0">
-                <span class="sr-only">0% Complete</span>
+                <span class="sr-only" role="progressbarval">0% Complete</span>
               </div>
             </div>
         </div>
@@ -55,14 +55,16 @@ let tmpl = {
     </div>
 </div>{{/uploadedFiles}}
 {{^uploadedFiles}}
-{{#supportFileApi}}{{{lang.supportedHTML5_emptyListMsg}}}{{/supportFileApi}}
-{{^supportFileApi}}{{{lang.emptyListMsg}}}{{/supportFileApi}}
+<div data-ax6ui-uploader-emptyList-msg="true">
+  {{#supportFileApi}}{{{lang.supportedHTML5_emptyListMsg}}}{{/supportFileApi}}
+  {{^supportFileApi}}{{{lang.emptyListMsg}}}{{/supportFileApi}}
+</div>
 {{/uploadedFiles}}
 `;
   }
 };
 
-const bound_onStateChanged = function (that) {
+const onStateChanged = function (that) {
   if (this.config.onStateChanged) {
     this.config.onStateChanged.call(that, that);
   }
@@ -73,7 +75,7 @@ const bound_onStateChanged = function (that) {
   that = null;
   return true;
 };
-const bound_onSelectFile = function (_evt) {
+const onSelectFile = function (_evt) {
   let files;
 
   if (!info.supportFileApi) {
@@ -105,17 +107,18 @@ const bound_onSelectFile = function (_evt) {
   }
 
   if (this.config.progressBox) {
-    bound_openProgressBox.call(this);
+    openProgressBox.call(this);
   }
   if (!this.config.manualUpload) {
     this.send();
   }
 
   if (!info.supportFileApi) {
-    bound_alignLayout.call(this, false);
+    alignLayout.call(this, false);
   }
 };
-const bound_bindEvent = function () {
+const bindEvent = function () {
+
   this.$fileSelector
     .off("click.ax5uploader")
     .on("click.ax5uploader", e => {
@@ -126,7 +129,7 @@ const bound_bindEvent = function () {
     this.$fileSelector
       .off("mouseover.ax5uploader")
       .on("mouseover.ax5uploader", e => {
-        bound_alignLayout.call(this, true);
+        alignLayout.call(this, true);
       });
 
     this.$inputFile
@@ -139,7 +142,7 @@ const bound_bindEvent = function () {
       .off("mouseout.ax5uploader")
       .on("mouseout.ax5uploader", e => {
         this.$fileSelector.removeClass("active");
-        bound_alignLayout.call(this, false);
+        alignLayout.call(this, false);
       });
   }
 
@@ -156,7 +159,7 @@ const bound_bindEvent = function () {
         that = {
           self: this,
           cellType: cellType,
-          uploadedFiles: self.uploadedFiles,
+          uploadedFiles: this.uploadedFiles,
           fileIndex: uploadedItemIndex
         };
         this.config.uploadedBox.onclick.call(that, that);
@@ -186,7 +189,8 @@ const bound_bindEvent = function () {
       .on("click", "[data-ax6ui-uploader-dropzone]", e => {
         let $target = jQuery(e.currentTarget);
         if ($target.parents('[data-ax6ui-uploader-uploaded-item]').length == 0 && !$target.attr('data-ax6ui-uploader-uploaded-item')) {
-          if (e.currentTarget == e.target || $.contains(e.currentTarget, e.target)) {
+          //console.log(e.currentTarget == e.target, $.contains(e.target, e.currentTarget), e.target.getAttribute('data-ax6ui-uploader-emptylist-msg'));
+          if (e.currentTarget == e.target || $.contains(e.target, e.currentTarget) || e.target.getAttribute('data-ax6ui-uploader-emptylist-msg')) {
             if (U.isFunction(this.config.dropZone.onclick)) {
               this.config.dropZone.onclick.call({
                 self: this
@@ -196,6 +200,7 @@ const bound_bindEvent = function () {
             }
           }
         }
+        $target = null;
       });
 
     this.$dropZone.get(0).addEventListener('dragover', e => {
@@ -238,12 +243,12 @@ const bound_bindEvent = function () {
         this.$dropZone.removeClass("dragover");
       }
 
-      bound_onSelectFile.call(this, e || window.event);
+      onSelectFile.call(this, e || window.event);
     }, false);
 
   }
 };
-const bound_alignLayout = function (_TF) {
+const alignLayout = function (_TF) {
   // 상황이 좋지 않은경우 (만약 버튼 클릭으로 input file click이 되지 않는 다면 z-index값을 높여서 버튼위를 덮는다.)
   if (_TF) {
     if (!info.supportFileApi) {
@@ -261,7 +266,7 @@ const bound_alignLayout = function (_TF) {
     });
   }
 }
-const bound_alignProgressBox = function (append) {
+const alignProgressBox = function (append) {
   const _alignProgressBox = function () {
     let $window = jQuery(window), $body = jQuery(document.body);
     let pos = {}, positionMargin = 6,
@@ -372,35 +377,35 @@ const bound_alignProgressBox = function (append) {
     _alignProgressBox.call(this);
   });
 };
-const bound_openProgressBox = function () {
+const openProgressBox = function () {
   this.$progressBox.removeClass("destroy");
   this.$progressUpload.removeAttr("disabled");
   this.$progressAbort.removeAttr("disabled");
 
   // apend & align progress box
-  bound_alignProgressBox.call(this, "append");
+  alignProgressBox.call(this, "append");
 
   // state change
-  bound_onStateChanged.call(this, {
+  onStateChanged.call(this, {
     self: this,
     state: "open"
   });
 };
-const bound_closeProgressBox = function () {
+const closeProgressBox = function () {
   this.$progressBox.addClass("destroy");
   setTimeout(() => {
     this.$progressBox
       .remove();
   }, this.config.animateTime);
 };
-const bound_startUpload = function () {
+const startUpload = function () {
   const processor = {
     "html5"() {
       const self = this;
       let uploadFile = this.selectedFiles.shift();
       if (!uploadFile) {
         // 업로드 종료
-        bound_uploadComplete.call(this);
+        uploadComplete.call(this);
         return this;
       }
 
@@ -439,12 +444,11 @@ const bound_startUpload = function () {
           return false;
         }
 
-        bound_uploaded.call(self, res);
+        uploaded.call(self, res);
         self.send();
       };
       this.xhr.upload.onprogress = function (e) {
-        // console.log(e.loaded, e.total);
-        bound_updateProgressBar.call(self, e);
+        updateProgressBar.call(self, e);
         if (U.isFunction(self.config.onprogress)) {
           self.config.onprogress.call({
             loaded: e.loaded,
@@ -487,11 +491,11 @@ const bound_startUpload = function () {
           console.log(res);
         }
         else {
-          bound_uploaded.call(this, res);
+          uploaded.call(this, res);
           $iframe.remove();
 
           setTimeout(() => {
-            bound_uploadComplete.call(this);
+            uploadComplete.call(this);
           }, 300);
         }
       });
@@ -502,7 +506,7 @@ const bound_startUpload = function () {
         .submit();
 
       this.selectedFilesTotal = 1;
-      bound_updateProgressBar.call(this, {
+      updateProgressBar.call(this, {
         loaded: 1,
         total: 1
       });
@@ -526,19 +530,24 @@ const bound_startUpload = function () {
   processor[info.supportFileApi ? "html5" : "form"].call(this);
 
 };
-const bound_updateProgressBar = function (e) {
-  this.__loaded += e.loaded;
-  this.$progressBar.css({width: U.number(this.__loaded / this.selectedFilesTotal * 100, {round: 2}) + '%'});
+const updateProgressBar = function (e) {
+  let percent = U.number((this.__loaded + e.loaded) / this.selectedFilesTotal * 100, {round: 2});
+  this.$progressBar.css({width: percent + '%'});
+  this.$progressBarVal.html(percent + '% Complete');
+  if(e.loaded >= e.total){
+    this.__loaded += e.total;
+  }
   if (e.lengthComputable) {
     if (e.loaded >= e.total) {
 
     }
   }
+  percent = null;
 };
-const bound_uploaded = function (res) {
+const uploaded = function (res) {
   if (this.config.debug) console.log(res);
   this.uploadedFiles.push(res);
-  bound_repaintUploadedBox.call(this); // 업로드된 파일 출력
+  repaintUploadedBox.call(this); // 업로드된 파일 출력
 
   if (U.isFunction(this.config.onuploaded)) {
     this.config.onuploaded.call({
@@ -546,13 +555,13 @@ const bound_uploaded = function (res) {
     }, res);
   }
 };
-const bound_uploadComplete = function () {
+const uploadComplete = function () {
   this.__uploading = false; // 업로드 완료 상태처리
   this.$progressUpload.removeAttr("disabled");
   this.$progressAbort.attr("disabled", "disabled");
 
   if (this.config.progressBox) {
-    bound_closeProgressBox.call(this);
+    closeProgressBox.call(this);
   }
   if (U.isFunction(this.config.onuploadComplete)) {
     this.config.onuploadComplete.call({
@@ -562,11 +571,11 @@ const bound_uploadComplete = function () {
   // update uploadedFiles display
 
   /// reset inputFile
-  bound_attachFileTag.call(this);
+  attachFileTag.call(this);
 };
-const bound_cancelUpload = function () {
+const cancelUpload = function () {
 
-  let processor = {
+  const processor = {
     "html5": function () {
       if (this.xhr) {
         this.xhr.abort();
@@ -584,23 +593,28 @@ const bound_cancelUpload = function () {
   processor[info.supportFileApi ? "html5" : "form"].call(this);
 
   if (this.config.progressBox) {
-    bound_closeProgressBox.call(this);
+    closeProgressBox.call(this);
   }
 
   //this.$inputFile.val("");
   /// reset inputFile
-  bound_attachFileTag.call(this);
+  attachFileTag.call(this);
 
   if (this.config.debug) console.log("cancelUpload");
   // update uploadedFiles display
 };
-const bound_repaintUploadedBox = function () {
+const repaintUploadedBox = function () {
   // uploadedBox 가 없다면 아무일도 하지 않음.
   // onuploaded 함수 이벤트를 이용하여 개발자가 직접 업로드디 박스를 구현 한다고 이해 하자.
   if (this.$uploadedBox === null) return this;
 
   this.$uploadedBox.html(
     mustache.render(tmpl.upoadedBox.call(this, this.config.uploadedBox.columnKeys), {
+      "@fn_get_byte"() {
+        return function (text, render) {
+          return U.number(render(text), {round: 2, byte: true});
+        }
+      },
       uploadedFiles: this.uploadedFiles,
       icon: this.config.uploadedBox.icon,
       lang: this.config.uploadedBox.lang,
@@ -613,7 +627,7 @@ const bound_repaintUploadedBox = function () {
   });
 
 };
-const bound_attachFileTag = function () {
+const attachFileTag = function () {
   if (this.$inputFile && this.$inputFile.get(0)) {
     this.$inputFile.remove();
   }
@@ -647,7 +661,7 @@ const bound_attachFileTag = function () {
   this.$inputFile
     .off("change.ax5uploader")
     .on("change.ax5uploader", e => {
-      bound_onSelectFile.call(this, e);
+      onSelectFile.call(this, e);
     });
 };
 
@@ -665,16 +679,70 @@ class AX6UIUploader extends AX6UICore {
     /**
      * @member {JSON}
      * @param config
-     *
+     * @param {Element} config.target
+     * @param [config.theme='default']
+     * @param [config.lang]
+     * @param [config.lang.upload='Upload']
+     * @param [config.lang.abort='Abort']
+     * @param [config.animateTime=100]
+     * @param [config.accept="*\/*"]
+     * @param [config.multiple=false]
+     * @param [config.manualUpload=false]
+     * @param [config.progressBox=true]
+     * @param [config.progressBoxDirection='left'] - top, bottom, left, right, auto
+     * @param [config.form]
+     * @param [config.form.action='']
+     * @param [config.form.fileName='file']
+     * @param [config.dropZone]
+     * @param {Element} [config.dropZone.target]
+     * @param [config.uploadedBox]
+     * @param {Element} [config.uploadedBox.target]
+     * @param [config.uploadedBox.icon]
+     * @param [config.uploadedBox.icon.download='U+2913']
+     * @param [config.uploadedBox.icon.delete='U+232b']
+     * @param [config.uploadedBox.columnKeys.name='name']
+     * @param [config.uploadedBox.columnKeys.type='type']
+     * @param [config.uploadedBox.columnKeys.size='size']
+     * @param [config.uploadedBox.columnKeys.uploadedName='uploadedName']
+     * @param [config.uploadedBox.columnKeys.uploadedPath='uploadedPath']
+     * @param [config.uploadedBox.columnKeys.downloadPath='downloadPath']
+     * @param [config.uploadedBox.columnKeys.previewPath='previewPath']
+     * @param [config.uploadedBox.columnKeys.thumbnail='thumbnail']
+     * @param [config.uploadedBox.lang]
+     * @param [config.uploadedBox.lang.supportedHTML5_emptyListMsg='Drop files here or click to upload.']
+     * @param [config.uploadedBox.lang.emptyListMsg='Empty of List.']
+     * @param {Function} [config.uploadedBox.onchange]
+     * @param {Function} [config.uploadedBox.onclick]
+     * @param {Function} [config.onprogress]
+     * @param {Function} [config.onuploaderror]
+     * @param {Function} [config.onuploaded]
+     * @param {Function} [config.onuploadComplete]
      */
     this.config = {
-      clickEventName: "click", //(('ontouchstart' in document.documentElement) ? "touchend" : "click"),
       theme: 'default', // theme of uploader
       lang: { // 업로더 버튼 랭귀지 설정
         "upload": "Upload",
         "abort": "Abort"
       },
+      animateTime: 100,
+      accept: "*/*", // 업로드 선택 파일 타입 설정
+      multiple: false, // 다중 파일 업로드
+      manualUpload: false, // 업로딩 시작 수동처리 여부
+      progressBox: true, // 업로드 프로그래스 박스 사용여부 false 이면 업로드 진행바를 표시 하지 않습니다. 개발자가 onprogress 함수를 이용하여 직접 구현 해야 합니다.
+      progressBoxDirection: "left",
+      form: {
+        action: "",
+        fileName: "file"
+      },
+      dropZone: {
+        target: null
+      },
       uploadedBox: {
+        target: null,
+        icon: {
+          download: "U+2913",
+          delete: "U+232b"
+        },
         columnKeys: {
           name: "name",
           type: "type",
@@ -684,41 +752,95 @@ class AX6UIUploader extends AX6UICore {
           downloadPath: "downloadPath",
           previewPath: "previewPath",
           thumbnail: "thumbnail"
-        }
+        },
+        lang: {
+          supportedHTML5_emptyListMsg: 'Drop files here or click to upload.',
+          emptyListMsg: 'Empty of List.'
+        },
+        onchange: null,
+        onclick: null
       },
-      animateTime: 100,
-      accept: "*/*", // 업로드 선택 파일 타입 설정
-      multiple: false, // 다중 파일 업로드
-      manualUpload: false, // 업로딩 시작 수동처리 여부
-      progressBox: true // 업로드 프로그래스 박스 사용여부 false 이면 업로드 진행바를 표시 하지 않습니다. 개발자가 onprogress 함수를 이용하여 직접 구현 해야 합니다.
+      validateSelectedFiles: null,
+      onprogress: null,
+      onuploaderror: null,
+      onuploaded: null,
+      onuploadComplete: null
     };
     jQuery.extend(true, this.config, config);
 
     // 멤버 변수 초기화
+    /**
+     * 버튼속성
+     * @member {JSON}
+     */
     this.defaultBtns = {
-      "upload": {label: this.config.lang["upload"], theme: "btn-primary"},
-      "abort": {label: this.config.lang["abort"], theme: this.config.theme}
+      "upload": {label: this.config.lang["upload"], theme: "upload"},
+      "abort": {label: this.config.lang["abort"], theme: "abort"}
     };
 
-    /// 업로드된 파일 큐
+    /**
+     * 업로드된 파일
+     * @member {Array}
+     */
     this.uploadedFiles = [];
-    /// 업로더 타겟
+
+    /**
+     * 업로더 타겟
+     * @member {jQuery}
+     */
     this.$target = null;
-    /// 업로드된 파일 정보들의 input 태그를 담아두는 컨테이너
-    this.$inputContainer = null;
-    /// input file 태그
+     
+    /**
+     * input file 태그
+     * @member {jQuery}
+     */
     this.$inputFile = null;
+    /**
+     * input form
+     * @member {jQuery}
+     */
     this.$inputFileForm = null;
-    /// 파일 선택버튼
+
+    /**
+     * 파일 선택 버튼
+     * @member {jQuery}
+     */
     this.$fileSelector = null;
-    /// 파일 드랍존
+    
+    /**
+     * 파일 드랍존
+     * @member {jQuery}
+     */
     this.$dropZone = null;
-    /// 파일 목록 표시박스
+ 
+    /**
+     * 파일 목록 표시박스
+     * @member {jQuery}
+     */
     this.$uploadedBox = null;
 
+    /**
+     * 업로드 진행 상태바
+     * @member {Boolean}
+     */
     this.__uploading = false;
+    
+    /**
+     * 선택된 파일들
+     * @member {Array}
+     */
     this.selectedFiles = [];
+
+    /**
+     * 선택된 파일의 전체 크기
+     * @member {Number}
+     */
     this.selectedFilesTotal = 0;
+
+    /**
+     * 전송된 파일 크기
+     * @member {Number}
+     */
     this.__loaded = 0;
 
     if (typeof config !== "undefined") this.init();
@@ -763,7 +885,7 @@ class AX6UIUploader extends AX6UICore {
       }
 
       // input file 추가
-      bound_attachFileTag.call(this);
+      attachFileTag.call(this);
 
       // btns 확인
       this.config.btns = jQuery.extend({}, this.defaultBtns, this.config.btns);
@@ -775,20 +897,21 @@ class AX6UIUploader extends AX6UICore {
         })
       );
       this.$progressBar = this.$progressBox.find('[role="progressbar"]');
+      this.$progressBarVal = this.$progressBox.find('[role="progressbarval"]');
       this.$progressBoxArrow = this.$progressBox.find(".ax-progressbox-arrow");
       this.$progressUpload = this.$progressBox.find('[data-pregressbox-btn="upload"]');
       this.$progressAbort = this.$progressBox.find('[data-pregressbox-btn="abort"]');
 
       // file API가 지원되지 않는 브라우저는 중지 기능 제공 못함.
       if (!info.supportFileApi) {
-        this.$progressAbort.hide();
+        this.$progressAbort.css({display:"none"});
       }
+
       // 파일버튼 등에 이벤트 연결.
-      bound_bindEvent.call(this);
-
-      bound_repaintUploadedBox.call(this);
-
+      bindEvent.call(this);
+      repaintUploadedBox.call(this);
     }
+
     // init 호출 여부
     this.initOnce();
   }
@@ -805,7 +928,6 @@ class AX6UIUploader extends AX6UICore {
   /**
    * @method
    * @returns {AX6UIUploader}
-   *
    */
   send() {
     // 업로드 시작
@@ -816,13 +938,13 @@ class AX6UIUploader extends AX6UICore {
         selectedFiles: this.selectedFiles
       };
       if (!this.config.validateSelectedFiles.call(that, that)) {
-        bound_cancelUpload.call(this);
+        cancelUpload.call(this);
         return false;
         // 전송처리 안함.
       }
     }
 
-    bound_startUpload.call(this);
+    startUpload.call(this);
     return this;
   }
 
@@ -835,7 +957,7 @@ class AX6UIUploader extends AX6UICore {
       alert("This browser not supported abort method");
       return this;
     }
-    bound_cancelUpload.call(this);
+    cancelUpload.call(this);
     return this;
   }
 
@@ -875,7 +997,7 @@ class AX6UIUploader extends AX6UICore {
       }
     }
 
-    bound_repaintUploadedBox.call(this);
+    repaintUploadedBox.call(this);
     return this;
   }
 
@@ -904,7 +1026,7 @@ class AX6UIUploader extends AX6UICore {
     if (!isNaN(Number(_index))) {
       this.uploadedFiles.splice(_index, 1);
     }
-    bound_repaintUploadedBox.call(this);
+    repaintUploadedBox.call(this);
     return this;
   }
 
@@ -919,7 +1041,7 @@ class AX6UIUploader extends AX6UICore {
    */
   removeFileAll() {
     this.uploadedFiles = [];
-    bound_repaintUploadedBox.call(this);
+    repaintUploadedBox.call(this);
     return this;
   }
 

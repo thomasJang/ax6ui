@@ -42,8 +42,8 @@ let uploader = new Uploader({
   uploadedBox: {
     target: $body.find('[data-uploaded-box="upload1"]'),
     icon: {
-      "download": '<i class="fa fa-download" aria-hidden="true"></i>',
-      "delete": '<i class="fa fa-minus-circle" aria-hidden="true"></i>'
+      "download": '<i class="material-icons">file_download</i>',
+      "delete": '<i class="material-icons">delete</i>'
     },
     columnKeys: {
       name: "fileName",
@@ -56,16 +56,16 @@ let uploader = new Uploader({
       thumbnail: ""
     },
     lang: {
-      supportedHTML5_emptyListMsg: '<div class="text-center" style="padding-top: 30px;">Drop files here or click to uploader.</div>',
-      emptyListMsg: '<div class="text-center" style="padding-top: 30px;">Empty of List.</div>'
+      supportedHTML5_emptyListMsg: 'Drop files here or click to upload.',
+      emptyListMsg: 'Empty of List.'
     },
     onchange: function () {
 
     },
     onclick: function () {
       // console.log(this.cellType);
-      var fileIndex = this.fileIndex;
-      var file = this.uploadedFiles[fileIndex];
+      let fileIndex = this.fileIndex;
+      let file = this.uploadedFiles[fileIndex];
       switch (this.cellType) {
         case "delete":
           dialog.confirm({
@@ -73,21 +73,22 @@ let uploader = new Uploader({
             msg: "Are you sure you want to delete it?"
           }, function () {
             if (this.key == "ok") {
-              $.ajax({
-                contentType: "application/json",
+
+              axios({
+                headers: {
+                  'Content-Type': "application/json",
+                },
                 method: "post",
-                url: "http://api-demo.ax5.io/api/v1/ax5uploader/delete",
+                url: 'http://api-demo.ax5.io/api/v1/ax5uploader/delete',
                 data: JSON.stringify([{
                   id: file.id
                 }]),
-                success: function (res) {
-                  if (res.error) {
-                    alert(res.error.message);
-                    return;
-                  }
-                  uploader.removeFile(fileIndex);
-                }
+              }).then(res => {
+                uploader.removeFile(fileIndex);
+              }).catch(error => {
+                dialog.alert(error);
               });
+
             }
           });
           break;

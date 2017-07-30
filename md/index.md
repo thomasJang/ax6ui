@@ -8,13 +8,17 @@
     * [.AX6UICore](#module_AX6UI.AX6UICore)
     * [.AX6Mustache](#module_AX6UI.AX6Mustache)
     * [.AX6UIFormatter](#module_AX6UI.AX6UIFormatter)
-    * [.AX6UIFormatter_formatter](#module_AX6UI.AX6UIFormatter_formatter)
     * [.AX6UIMask](#module_AX6UI.AX6UIMask)
     * [.AX6UIPalette](#module_AX6UI.AX6UIPalette)
     * [.AX6UIDialog](#module_AX6UI.AX6UIDialog)
     * [.AX6UIPicker](#module_AX6UI.AX6UIPicker)
     * [.AX6UICalendar](#module_AX6UI.AX6UICalendar)
     * [.AX6UISelect](#module_AX6UI.AX6UISelect)
+    * [.AX6UIGrid](#module_AX6UI.AX6UIGrid)
+    * [.AX6UIMenu](#module_AX6UI.AX6UIMenu)
+    * [.AX6UIToast](#module_AX6UI.AX6UIToast)
+    * [.AX6UIModal](#module_AX6UI.AX6UIModal)
+    * [.AX6UIUploader](#module_AX6UI.AX6UIUploader)
 
 <a name="module_AX6UI.AX6Info"></a>
 
@@ -76,18 +80,6 @@ import AX6UIFormatter from "ax6ui/AX6UIFormatter";
 // or
 import { AX6UIFormatter } from "ax6ui";
 ```
-<a name="module_AX6UI.AX6UIFormatter_formatter"></a>
-
-### AX6UI.AX6UIFormatter_formatter
-AX6UI.AX6UIFormatter_formatter
-
-**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
-**Example**  
-```js
-import AX6UIFormatter_formatter from "ax6ui/AX6UIFormatter_formatter";
-// or
-import { AX6UIFormatter_formatter } from "ax6ui";
-```
 <a name="module_AX6UI.AX6UIMask"></a>
 
 ### AX6UI.AX6UIMask
@@ -128,5 +120,35 @@ AX6UI.AX6UICalendar
 
 ### AX6UI.AX6UISelect
 AX6UI.AX6UISelect
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UIGrid"></a>
+
+### AX6UI.AX6UIGrid
+AX6UI.AX6UIGrid
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UIMenu"></a>
+
+### AX6UI.AX6UIMenu
+AX6UI.AX6UIMenu
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UIToast"></a>
+
+### AX6UI.AX6UIToast
+AX6UI.AX6UIToast
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UIModal"></a>
+
+### AX6UI.AX6UIModal
+AX6UI.AX6UIModal
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+<a name="module_AX6UI.AX6UIUploader"></a>
+
+### AX6UI.AX6UIUploader
+AX6UI.AX6UIUploader
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  

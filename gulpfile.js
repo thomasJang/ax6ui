@@ -14,94 +14,98 @@ const rename = require('gulp-rename');
 
 // 전역 오브젝트 모음
 const fnObj = {
-    paths: {
-        src: 'src/',
-        dist_es6: 'dist/ES6/',
-        dist_es5: 'dist/ES5/',
-        scss: 'scss/',
-        css: 'css/'
-    },
-    errorAlert(error){
-        notify.onError({title: "Gulp Error", message: "Check your terminal", sound: "Purr"})(error); //Error Notification
-        console.log(error.toString());//Prints Error to Console
-        this.emit("end"); //End function
-    }
+  paths: {
+    src: 'src/',
+    dist_es6: 'dist/ES6/',
+    dist_es5: 'dist/ES5/',
+    scss: 'scss/',
+    css: 'css/'
+  },
+  errorAlert(error) {
+    notify.onError({title: "Gulp Error", message: "Check your terminal", sound: "Purr"})(error); //Error Notification
+    console.log(error.toString());//Prints Error to Console
+    this.emit("end"); //End function
+  }
 };
 
 // 걸프 기본 타스크
 gulp.task('default', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], function () {
-    return true;
+  return true;
 });
 
 // task for ES6
 gulp.task('js-ES6', function () {
-    gulp.src([fnObj.paths.src + '/**/*.js'])
-        //.pipe(plumber({errorHandler: fnObj.errorAlert}))
-        //.pipe(sourcemaps.init())
-        .pipe(babel({
-            //presets: ['es2016'],
-            //plugins: ['transform-runtime']
-        }))
-        .pipe(gulp.dest(fnObj.paths.dist_es6));
+  return gulp.src([fnObj.paths.src + '/**/*.js'])
+    //.pipe(plumber({errorHandler: fnObj.errorAlert}))
+    //.pipe(sourcemaps.init())
+    .pipe(babel({
+      //presets: ['es2016'],
+      //plugins: ['transform-runtime']
+    }))
+    .pipe(gulp.dest(fnObj.paths.dist_es6));
 });
 
 // task for ES5
 gulp.task('js-ES5', function () {
-    gulp.src([fnObj.paths.src + '/**/*.js'])
+  return gulp.src([fnObj.paths.src + '/**/*.js'])
     //.pipe(plumber({errorHandler: fnObj.errorAlert}))
-        .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets: ["modern-browsers", "es2015"],
-            //"plugins": ["transform-es2015-modules-amd"]
-            //plugins: ['transform-runtime']
-        }))
-        .pipe(gulp.dest(fnObj.paths.dist_es5))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('.'))
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest(fnObj.paths.dist_es5));
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ["modern-browsers", "es2015"],
+      //"plugins": ["transform-es2015-modules-amd"]
+      //plugins: ['transform-runtime']
+    }))
+    .pipe(gulp.dest(fnObj.paths.dist_es5))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
+    .pipe(rename({
+      suffix: '.min'
+    }))
+    .pipe(gulp.dest(fnObj.paths.dist_es5));
 });
 
 gulp.task('dist-scss-ES5', function () {
-    gulp.src([
-        fnObj.paths.src + '/**/*.scss',
+  return gulp.src([
+      fnObj.paths.src + '/**/*.scss',
     ], {base: fnObj.paths.src})
-        .pipe(gulp.dest(fnObj.paths.dist_es5));
+    .pipe(gulp.dest(fnObj.paths.dist_es5));
 });
 
 gulp.task('scss-ES5', ['dist-scss-ES5'], function () {
-    gulp.src(fnObj.paths.src + '/**/index.scss')
-        .pipe(sass({outputStyle: 'compressed'}))
-        .pipe(gulp.dest(fnObj.paths.dist_es5));
+  return gulp.src(fnObj.paths.src + '/**/index.scss')
+    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(gulp.dest(fnObj.paths.dist_es5));
 });
 
 gulp.task('dist-scss-ES6', function () {
-    gulp.src([
-        fnObj.paths.src + '/**/*.scss',
+  return gulp.src([
+      fnObj.paths.src + '/**/*.scss',
     ], {base: fnObj.paths.src})
-        .pipe(gulp.dest(fnObj.paths.dist_es6));
+    .pipe(gulp.dest(fnObj.paths.dist_es6));
 });
 
 gulp.task('scss-ES6', ['dist-scss-ES6'], function () {
-    gulp.src(fnObj.paths.src + '/**/index.scss')
-        .pipe(sass({outputStyle: 'compressed'}))
-        .pipe(gulp.dest(fnObj.paths.dist_es6));
+  gulp.src(fnObj.paths.src + '/**/index.scss')
+    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(gulp.dest(fnObj.paths.dist_es6));
 });
 
 /**
  * npm publish
  */
-gulp.task('npm publish patch', ['default'], shell.task([
-    'cd dist/ES5 && npm version patch -m "version patch" && npm publish',
-    'cd dist/ES6 && npm version patch -m "version patch" && npm publish'
+gulp.task('npm publish patch', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], shell.task([
+  'cd dist/ES5 && npm version patch -m "version patch" && npm publish',
+  'cd dist/ES6 && npm version patch -m "version patch" && npm publish'
 ]));
-gulp.task('npm publish minor', ['default'], shell.task([
-    'cd dist/ES5 && npm version minor -m "version minor" && npm publish',
-    'cd dist/ES6 && npm version minor -m "version minor" && npm publish'
+gulp.task('npm publish minor', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], shell.task([
+  'cd dist/ES5 && npm version minor -m "version minor" && npm publish',
+  'cd dist/ES6 && npm version minor -m "version minor" && npm publish'
 ]));
 
 gulp.task('samples npm start', shell.task([
-    'cd samples && npm start',
+  'cd samples && npm start',
+]));
+
+gulp.task('jsdoc build', shell.task([
+  'cd jsdoc2md && ./build.sh',
 ]));

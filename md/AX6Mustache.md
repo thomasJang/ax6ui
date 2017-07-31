@@ -7,7 +7,7 @@ AX6Mustache는 http://github.com/janl/mustache.js에 몇가지 최소한의 기�
 <a name="AX6Mustache.render"></a>
 
 ### AX6Mustache.render()
-**Kind**: static method of [<code>AX6Mustache</code>](#AX6Mustache)  
+**Kind**: static method of <code>[AX6Mustache](#AX6Mustache)</code>  
 **Example**  
 ```js
 ax5.mustache.render(template, view)

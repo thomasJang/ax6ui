@@ -13,11 +13,11 @@
     * [.closeTimer](#AX6UIPicker+closeTimer) : <code>Object</code>
     * [.init(config)](#AX6UIPicker+init)
     * [.initOnce()](#AX6UIPicker+initOnce)
-    * [.bind(item)](#AX6UIPicker+bind) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
-    * [.setContentValue(boundID, inputIndex, val, _option)](#AX6UIPicker+setContentValue) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
+    * [.bind(item)](#AX6UIPicker+bind) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
+    * [.setContentValue(boundID, inputIndex, val, _option)](#AX6UIPicker+setContentValue) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
     * [.getContentValue(boundID, inputIndex)](#AX6UIPicker+getContentValue) ⇒ <code>\*</code>
-    * [.open(boundID, tryCount)](#AX6UIPicker+open) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
-    * [.close(item, state)](#AX6UIPicker+close) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
+    * [.open(boundID, tryCount)](#AX6UIPicker+open) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
+    * [.close(item, state)](#AX6UIPicker+close) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
 
 <a name="new_AX6UIPicker_new"></a>
 
@@ -36,7 +36,7 @@
 <a name="AX6UIPicker+config"></a>
 
 ### aX6UIPicker.config : <code>JSON</code>
-**Kind**: instance property of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance property of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 
 | Param | Default |
 | --- | --- |
@@ -60,27 +60,27 @@
 <a name="AX6UIPicker+queue"></a>
 
 ### aX6UIPicker.queue : <code>Array</code>
-**Kind**: instance property of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance property of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 <a name="AX6UIPicker+activePicker"></a>
 
 ### aX6UIPicker.activePicker : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance property of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 <a name="AX6UIPicker+activePickerQueueIndex"></a>
 
 ### aX6UIPicker.activePickerQueueIndex : <code>Number</code>
-**Kind**: instance property of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance property of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 <a name="AX6UIPicker+openTimer"></a>
 
 ### aX6UIPicker.openTimer : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance property of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 <a name="AX6UIPicker+closeTimer"></a>
 
 ### aX6UIPicker.closeTimer : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance property of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 <a name="AX6UIPicker+init"></a>
 
 ### aX6UIPicker.init(config)
-**Kind**: instance method of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 
 | Param |
 | --- |
@@ -95,11 +95,11 @@
 <a name="AX6UIPicker+initOnce"></a>
 
 ### aX6UIPicker.initOnce()
-**Kind**: instance method of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 <a name="AX6UIPicker+bind"></a>
 
-### aX6UIPicker.bind(item) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
-**Kind**: instance method of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+### aX6UIPicker.bind(item) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
+**Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -142,8 +142,8 @@ picker.bind({
 ```
 <a name="AX6UIPicker+setContentValue"></a>
 
-### aX6UIPicker.setContentValue(boundID, inputIndex, val, _option) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
-**Kind**: instance method of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+### aX6UIPicker.setContentValue(boundID, inputIndex, val, _option) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
+**Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 
 | Param |
 | --- |
@@ -155,7 +155,7 @@ picker.bind({
 <a name="AX6UIPicker+getContentValue"></a>
 
 ### aX6UIPicker.getContentValue(boundID, inputIndex) ⇒ <code>\*</code>
-**Kind**: instance method of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+**Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 
 | Param |
 | --- |
@@ -164,8 +164,8 @@ picker.bind({
 
 <a name="AX6UIPicker+open"></a>
 
-### aX6UIPicker.open(boundID, tryCount) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
-**Kind**: instance method of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+### aX6UIPicker.open(boundID, tryCount) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
+**Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 
 | Param |
 | --- |
@@ -174,8 +174,8 @@ picker.bind({
 
 <a name="AX6UIPicker+close"></a>
 
-### aX6UIPicker.close(item, state) ⇒ [<code>AX6UIPicker</code>](#AX6UIPicker)
-**Kind**: instance method of [<code>AX6UIPicker</code>](#AX6UIPicker)  
+### aX6UIPicker.close(item, state) ⇒ <code>[AX6UIPicker](#AX6UIPicker)</code>
+**Kind**: instance method of <code>[AX6UIPicker](#AX6UIPicker)</code>  
 
 | Param |
 | --- |

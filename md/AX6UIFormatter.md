@@ -9,10 +9,10 @@
         * [.config](#AX6UIFormatter+config) : <code>JSON</code>
         * [.queue](#AX6UIFormatter+queue) : <code>Array</code>
         * [.init()](#AX6UIFormatter+init)
-        * [.initOnce()](#AX6UIFormatter+initOnce) ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
-        * [.bind(opts)](#AX6UIFormatter+bind) ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
-        * [.formatting()](#AX6UIFormatter+formatting) ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
-        * [.unbind(opts)](#AX6UIFormatter+unbind) ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
+        * [.initOnce()](#AX6UIFormatter+initOnce) ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
+        * [.bind(opts)](#AX6UIFormatter+bind) ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
+        * [.formatting()](#AX6UIFormatter+formatting) ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
+        * [.unbind(opts)](#AX6UIFormatter+unbind) ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
     * _static_
         * [.setFormatter(_formatter)](#AX6UIFormatter.setFormatter)
         * [.getFormatter()](#AX6UIFormatter.getFormatter) ⇒ <code>Object</code>
@@ -60,7 +60,7 @@ var myFormatter = new Formatter({
 <a name="AX6UIFormatter+config"></a>
 
 ### aX6UIFormatter.config : <code>JSON</code>
-**Kind**: instance property of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+**Kind**: instance property of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 
 | Param | Default |
 | --- | --- |
@@ -70,19 +70,19 @@ var myFormatter = new Formatter({
 <a name="AX6UIFormatter+queue"></a>
 
 ### aX6UIFormatter.queue : <code>Array</code>
-**Kind**: instance property of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+**Kind**: instance property of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 <a name="AX6UIFormatter+init"></a>
 
 ### aX6UIFormatter.init()
-**Kind**: instance method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+**Kind**: instance method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 <a name="AX6UIFormatter+initOnce"></a>
 
-### aX6UIFormatter.initOnce() ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
-**Kind**: instance method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+### aX6UIFormatter.initOnce() ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
+**Kind**: instance method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 <a name="AX6UIFormatter+bind"></a>
 
-### aX6UIFormatter.bind(opts) ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
-**Kind**: instance method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+### aX6UIFormatter.bind(opts) ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
+**Kind**: instance method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 
 | Param | Type |
 | --- | --- |
@@ -91,12 +91,12 @@ var myFormatter = new Formatter({
 
 <a name="AX6UIFormatter+formatting"></a>
 
-### aX6UIFormatter.formatting() ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
-**Kind**: instance method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+### aX6UIFormatter.formatting() ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
+**Kind**: instance method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 <a name="AX6UIFormatter+unbind"></a>
 
-### aX6UIFormatter.unbind(opts) ⇒ [<code>AX6UIFormatter</code>](#AX6UIFormatter)
-**Kind**: instance method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+### aX6UIFormatter.unbind(opts) ⇒ <code>[AX6UIFormatter](#AX6UIFormatter)</code>
+**Kind**: instance method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 
 | Param |
 | --- |
@@ -105,7 +105,7 @@ var myFormatter = new Formatter({
 <a name="AX6UIFormatter.setFormatter"></a>
 
 ### AX6UIFormatter.setFormatter(_formatter)
-**Kind**: static method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+**Kind**: static method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 
 | Param |
 | --- |
@@ -114,12 +114,12 @@ var myFormatter = new Formatter({
 <a name="AX6UIFormatter.getFormatter"></a>
 
 ### AX6UIFormatter.getFormatter() ⇒ <code>Object</code>
-**Kind**: static method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+**Kind**: static method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 <a name="AX6UIFormatter.getCtrlKeys"></a>
 
 ### AX6UIFormatter.getCtrlKeys() ⇒ <code>Object</code>
-**Kind**: static method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+**Kind**: static method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
 <a name="AX6UIFormatter.getNumKeys"></a>
 
 ### AX6UIFormatter.getNumKeys() ⇒ <code>Object</code>
-**Kind**: static method of [<code>AX6UIFormatter</code>](#AX6UIFormatter)  
+**Kind**: static method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  

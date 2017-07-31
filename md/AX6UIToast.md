@@ -8,9 +8,9 @@
     * [.config](#AX6UIToast+config) : <code>JSON</code>
     * [.init()](#AX6UIToast+init)
     * [.initOnce()](#AX6UIToast+initOnce)
-    * [.push(opts, callback)](#AX6UIToast+push) ⇒ [<code>AX6UIToast</code>](#AX6UIToast)
-    * [.confirm(opts, callback)](#AX6UIToast+confirm) ⇒ [<code>AX6UIToast</code>](#AX6UIToast)
-    * [.close()](#AX6UIToast+close) ⇒ [<code>AX6UIToast</code>](#AX6UIToast)
+    * [.push(opts, callback)](#AX6UIToast+push) ⇒ <code>[AX6UIToast](#AX6UIToast)</code>
+    * [.confirm(opts, callback)](#AX6UIToast+confirm) ⇒ <code>[AX6UIToast](#AX6UIToast)</code>
+    * [.close()](#AX6UIToast+close) ⇒ <code>[AX6UIToast](#AX6UIToast)</code>
 
 <a name="new_AX6UIToast_new"></a>
 
@@ -23,7 +23,7 @@
 <a name="AX6UIToast+config"></a>
 
 ### aX6UIToast.config : <code>JSON</code>
-**Kind**: instance property of [<code>AX6UIToast</code>](#AX6UIToast)  
+**Kind**: instance property of <code>[AX6UIToast](#AX6UIToast)</code>  
 
 | Param | Default |
 | --- | --- |
@@ -43,15 +43,15 @@
 <a name="AX6UIToast+init"></a>
 
 ### aX6UIToast.init()
-**Kind**: instance method of [<code>AX6UIToast</code>](#AX6UIToast)  
+**Kind**: instance method of <code>[AX6UIToast](#AX6UIToast)</code>  
 <a name="AX6UIToast+initOnce"></a>
 
 ### aX6UIToast.initOnce()
-**Kind**: instance method of [<code>AX6UIToast</code>](#AX6UIToast)  
+**Kind**: instance method of <code>[AX6UIToast](#AX6UIToast)</code>  
 <a name="AX6UIToast+push"></a>
 
-### aX6UIToast.push(opts, callback) ⇒ [<code>AX6UIToast</code>](#AX6UIToast)
-**Kind**: instance method of [<code>AX6UIToast</code>](#AX6UIToast)  
+### aX6UIToast.push(opts, callback) ⇒ <code>[AX6UIToast](#AX6UIToast)</code>
+**Kind**: instance method of <code>[AX6UIToast](#AX6UIToast)</code>  
 
 | Param |
 | --- |
@@ -70,8 +70,8 @@ toast.push("toast messages");
 ```
 <a name="AX6UIToast+confirm"></a>
 
-### aX6UIToast.confirm(opts, callback) ⇒ [<code>AX6UIToast</code>](#AX6UIToast)
-**Kind**: instance method of [<code>AX6UIToast</code>](#AX6UIToast)  
+### aX6UIToast.confirm(opts, callback) ⇒ <code>[AX6UIToast](#AX6UIToast)</code>
+**Kind**: instance method of <code>[AX6UIToast](#AX6UIToast)</code>  
 
 | Param |
 | --- |
@@ -99,10 +99,10 @@ toast.confirm({
 ```
 <a name="AX6UIToast+close"></a>
 
-### aX6UIToast.close() ⇒ [<code>AX6UIToast</code>](#AX6UIToast)
+### aX6UIToast.close() ⇒ <code>[AX6UIToast](#AX6UIToast)</code>
 close the toast
 
-**Kind**: instance method of [<code>AX6UIToast</code>](#AX6UIToast)  
+**Kind**: instance method of <code>[AX6UIToast](#AX6UIToast)</code>  
 **Example**  
 ```
 toast.close();

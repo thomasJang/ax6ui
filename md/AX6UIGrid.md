@@ -43,32 +43,32 @@
         * [.customCollector](#AX6UIGrid+customCollector)
         * [.init(config)](#AX6UIGrid+init)
         * [.initOnce()](#AX6UIGrid+initOnce)
-        * [.align()](#AX6UIGrid+align) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.keyDown(_act, _data)](#AX6UIGrid+keyDown) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
+        * [.align()](#AX6UIGrid+align) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.keyDown(_act, _data)](#AX6UIGrid+keyDown) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
         * [.copySelect()](#AX6UIGrid+copySelect) ⇒ <code>\*</code>
-        * [.setData(_data)](#AX6UIGrid+setData) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
+        * [.setData(_data)](#AX6UIGrid+setData) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
         * [.getList(_type)](#AX6UIGrid+getList) ⇒ <code>\*</code>
-        * [.setHeight(_height)](#AX6UIGrid+setHeight) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.addRow(_row, [_dindex], _options)](#AX6UIGrid+addRow) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.appendToList(_list)](#AX6UIGrid+appendToList) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.removeRow([_dindex])](#AX6UIGrid+removeRow) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.updateRow(_row, _dindex)](#AX6UIGrid+updateRow) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.updateChildRows(_dindex, _updateData, [_options])](#AX6UIGrid+updateChildRows) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.deleteRow(_dindex)](#AX6UIGrid+deleteRow) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.setValue(_dindex, _key, _value)](#AX6UIGrid+setValue) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.addColumn(_column, [_cindex])](#AX6UIGrid+addColumn) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.removeColumn([_cindex])](#AX6UIGrid+removeColumn) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.updateColumn(_column, _cindex)](#AX6UIGrid+updateColumn) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.setColumnWidth(_width, _cindex)](#AX6UIGrid+setColumnWidth) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
+        * [.setHeight(_height)](#AX6UIGrid+setHeight) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.addRow(_row, [_dindex], _options)](#AX6UIGrid+addRow) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.appendToList(_list)](#AX6UIGrid+appendToList) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.removeRow([_dindex])](#AX6UIGrid+removeRow) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.updateRow(_row, _dindex)](#AX6UIGrid+updateRow) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.updateChildRows(_dindex, _updateData, [_options])](#AX6UIGrid+updateChildRows) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.deleteRow(_dindex)](#AX6UIGrid+deleteRow) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.setValue(_dindex, _key, _value)](#AX6UIGrid+setValue) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.addColumn(_column, [_cindex])](#AX6UIGrid+addColumn) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.removeColumn([_cindex])](#AX6UIGrid+removeColumn) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.updateColumn(_column, _cindex)](#AX6UIGrid+updateColumn) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.setColumnWidth(_width, _cindex)](#AX6UIGrid+setColumnWidth) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
         * [.getColumnSortInfo()](#AX6UIGrid+getColumnSortInfo) ⇒ <code>Object</code>
-        * [.setColumnSort(_sortInfo)](#AX6UIGrid+setColumnSort) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.select(_selectObject, _options)](#AX6UIGrid+select) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.clickBody(_dindex)](#AX6UIGrid+clickBody) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.DBLClickBody(_dindex)](#AX6UIGrid+DBLClickBody) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.clearSelect()](#AX6UIGrid+clearSelect) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.selectAll(_options)](#AX6UIGrid+selectAll) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-        * [.exportExcel(_fileName)](#AX6UIGrid+exportExcel) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid) \| <code>String</code>
-        * [.focus(_pos)](#AX6UIGrid+focus) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
+        * [.setColumnSort(_sortInfo)](#AX6UIGrid+setColumnSort) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.select(_selectObject, _options)](#AX6UIGrid+select) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.clickBody(_dindex)](#AX6UIGrid+clickBody) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.DBLClickBody(_dindex)](#AX6UIGrid+DBLClickBody) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.clearSelect()](#AX6UIGrid+clearSelect) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.selectAll(_options)](#AX6UIGrid+selectAll) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+        * [.exportExcel(_fileName)](#AX6UIGrid+exportExcel) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code> &#124; <code>String</code>
+        * [.focus(_pos)](#AX6UIGrid+focus) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
         * [.destroy()](#AX6UIGrid+destroy) ⇒ <code>null</code>
     * _static_
         * [.setFormatter(_formatter)](#AX6UIGrid.setFormatter)
@@ -89,7 +89,7 @@
 <a name="AX6UIGrid+config"></a>
 
 ### aX6UIGrid.config : <code>JSON</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -118,7 +118,7 @@
 | [config.body.onDBLClick] | <code>function</code> |  |  |
 | [config.body.onDataChanged] | <code>function</code> |  |  |
 | [config.body.onContextMenu] | <code>function</code> |  |  |
-| [config.body.mergeCells] | <code>String</code> \| <code>Array</code> | <code>false</code> | - |
+| [config.body.mergeCells] | <code>String</code> &#124; <code>Array</code> | <code>false</code> | - |
 | [config.body.align] | <code>String</code> |  |  |
 | [config.body.columnHeight] | <code>Number</code> | <code>25</code> |  |
 | [config.body.columnPadding] | <code>Number</code> | <code>3</code> |  |
@@ -126,7 +126,7 @@
 | [config.body.grouping] | <code>Object</code> |  |  |
 | [config.body.grouping.by] | <code>Array</code> |  | list grouping keys |
 | [config.body.grouping.columns] | <code>Array</code> |  | list grouping columns |
-| [config.body.trStyleClass] | <code>String</code> \| <code>function</code> |  |  |
+| [config.body.trStyleClass] | <code>String</code> &#124; <code>function</code> |  |  |
 | [config.page] | <code>Object</code> |  |  |
 | [config.page.height] | <code>Number</code> | <code>25</code> |  |
 | [config.page.display] | <code>Boolean</code> | <code>true</code> | grid page display |
@@ -142,12 +142,12 @@
 | config.columns[].key | <code>String</code> |  |  |
 | config.columns[].label | <code>String</code> |  |  |
 | config.columns[].width | <code>Number</code> |  |  |
-| config.columns[].styleClass | <code>String</code> \| <code>function</code> |  |  |
-| config.columns[].headerStyleClass | <code>String</code> \| <code>function</code> |  |  |
+| config.columns[].styleClass | <code>String</code> &#124; <code>function</code> |  |  |
+| config.columns[].headerStyleClass | <code>String</code> &#124; <code>function</code> |  |  |
 | config.columns[].enableFilter | <code>Boolean</code> |  |  |
 | config.columns[].sortable | <code>Boolean</code> |  |  |
 | config.columns[].align | <code>String</code> |  |  |
-| config.columns[].formatter | <code>String</code> \| <code>function</code> |  |  |
+| config.columns[].formatter | <code>String</code> &#124; <code>function</code> |  |  |
 | config.columns[].editor | <code>Object</code> |  |  |
 | config.columns[].editor.type | <code>String</code> |  | text,number,money,date |
 | config.columns[].editor.config | <code>Object</code> |  |  |
@@ -179,147 +179,147 @@
 <a name="AX6UIGrid+xvar"></a>
 
 ### aX6UIGrid.xvar : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+columns"></a>
 
 ### aX6UIGrid.columns : <code>Array</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+colGroup"></a>
 
 ### aX6UIGrid.colGroup : <code>Array</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+footSumColumns"></a>
 
 ### aX6UIGrid.footSumColumns : <code>Array</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+bodyGrouping"></a>
 
 ### aX6UIGrid.bodyGrouping : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+list"></a>
 
 ### aX6UIGrid.list : <code>Array</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+proxyList"></a>
 
 ### aX6UIGrid.proxyList : <code>Array</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+page"></a>
 
 ### aX6UIGrid.page : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+sortInfo"></a>
 
 ### aX6UIGrid.sortInfo : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+focusedColumn"></a>
 
 ### aX6UIGrid.focusedColumn : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+selectedColumn"></a>
 
 ### aX6UIGrid.selectedColumn : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+inlineEditing"></a>
 
 ### aX6UIGrid.inlineEditing : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+listIndexMap"></a>
 
 ### aX6UIGrid.listIndexMap : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+contextMenu"></a>
 
 ### aX6UIGrid.contextMenu : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+headerTable"></a>
 
 ### aX6UIGrid.headerTable : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+leftHeaderData"></a>
 
 ### aX6UIGrid.leftHeaderData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+headerData"></a>
 
 ### aX6UIGrid.headerData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+rightHeaderData"></a>
 
 ### aX6UIGrid.rightHeaderData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+bodyRowTable"></a>
 
 ### aX6UIGrid.bodyRowTable : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+leftBodyRowData"></a>
 
 ### aX6UIGrid.leftBodyRowData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+bodyRowData"></a>
 
 ### aX6UIGrid.bodyRowData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+rightBodyRowData"></a>
 
 ### aX6UIGrid.rightBodyRowData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+bodyRowMap"></a>
 
 ### aX6UIGrid.bodyRowMap : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+bodyGroupingTable"></a>
 
 ### aX6UIGrid.bodyGroupingTable : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+leftBodyGroupingData"></a>
 
 ### aX6UIGrid.leftBodyGroupingData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+bodyGroupingData"></a>
 
 ### aX6UIGrid.bodyGroupingData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+rightBodyGroupingData"></a>
 
 ### aX6UIGrid.rightBodyGroupingData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+bodyGroupingMap"></a>
 
 ### aX6UIGrid.bodyGroupingMap : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+footSumTable"></a>
 
 ### aX6UIGrid.footSumTable : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+leftFootSumData"></a>
 
 ### aX6UIGrid.leftFootSumData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+footSumData"></a>
 
 ### aX6UIGrid.footSumData : <code>Object</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+needToPaintSum"></a>
 
 ### aX6UIGrid.needToPaintSum : <code>Boolean</code>
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+customFormatter"></a>
 
 ### aX6UIGrid.customFormatter
 사용자 정의 formatter. AX6UIGrid.setFormatter 를 이용하여 확장
 
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+customCollector"></a>
 
 ### aX6UIGrid.customCollector
 사용자 정의 collector. AX6UIGrid.setCollector 를 이용하여 확장
 
-**Kind**: instance property of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance property of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+init"></a>
 
 ### aX6UIGrid.init(config)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -328,19 +328,19 @@
 <a name="AX6UIGrid+initOnce"></a>
 
 ### aX6UIGrid.initOnce()
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+align"></a>
 
-### aX6UIGrid.align() ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
+### aX6UIGrid.align() ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
 그리드의 각 패널들의 크기를 변경된 설정에 맞추어 다시 그림
 
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+keyDown"></a>
 
-### aX6UIGrid.keyDown(_act, _data) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
+### aX6UIGrid.keyDown(_act, _data) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
 그리드에 키보드 액션을 전달
 
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -352,11 +352,11 @@
 ### aX6UIGrid.copySelect() ⇒ <code>\*</code>
 선택된 셀을 클립보드에 복사합니다
 
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+setData"></a>
 
-### aX6UIGrid.setData(_data) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.setData(_data) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -384,7 +384,7 @@ grid.setData({
 <a name="AX6UIGrid+getList"></a>
 
 ### aX6UIGrid.getList(_type) ⇒ <code>\*</code>
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -403,8 +403,8 @@ grid.getList("deleted");
 ```
 <a name="AX6UIGrid+setHeight"></a>
 
-### aX6UIGrid.setHeight(_height) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.setHeight(_height) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -416,16 +416,16 @@ grid.setHeight(height);
 ```
 <a name="AX6UIGrid+addRow"></a>
 
-### aX6UIGrid.addRow(_row, [_dindex], _options) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.addRow(_row, [_dindex], _options) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | _row |  |  |  |
-| [_dindex] | <code>Number</code> \| <code>String</code> | <code>&quot;last&quot;</code> |  |
+| [_dindex] | <code>Number</code> &#124; <code>String</code> | <code>&quot;last&quot;</code> |  |
 | _options |  |  |  |
 | [_options.sort] | <code>Boolean</code> |  |  |
-| [_options.focus] | <code>Number</code> \| <code>String</code> |  | HOME|END|[dindex] |
+| [_options.focus] | <code>Number</code> &#124; <code>String</code> |  | HOME|END|[dindex] |
 
 **Example**  
 ```js
@@ -436,8 +436,8 @@ grid.addRow($.extend({}, {...}), "last", {focus: 10});
 ```
 <a name="AX6UIGrid+appendToList"></a>
 
-### aX6UIGrid.appendToList(_list) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.appendToList(_list) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -450,12 +450,12 @@ grid.appendToList([{},{},{}]);
 ```
 <a name="AX6UIGrid+removeRow"></a>
 
-### aX6UIGrid.removeRow([_dindex]) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.removeRow([_dindex]) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Default |
 | --- | --- | --- |
-| [_dindex] | <code>Number</code> \| <code>String</code> | <code>last</code> | 
+| [_dindex] | <code>Number</code> &#124; <code>String</code> | <code>last</code> | 
 
 **Example**  
 ```js
@@ -467,8 +467,8 @@ grid.removeRow("selected");
 ```
 <a name="AX6UIGrid+updateRow"></a>
 
-### aX6UIGrid.updateRow(_row, _dindex) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.updateRow(_row, _dindex) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -481,8 +481,8 @@ grid.updateRow({price: 100, amount: 100, cost: 10000}, 1);
 ```
 <a name="AX6UIGrid+updateChildRows"></a>
 
-### aX6UIGrid.updateChildRows(_dindex, _updateData, [_options]) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.updateChildRows(_dindex, _updateData, [_options]) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type |
 | --- | --- |
@@ -505,12 +505,12 @@ onDataChanged: function () {
 ```
 <a name="AX6UIGrid+deleteRow"></a>
 
-### aX6UIGrid.deleteRow(_dindex) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.deleteRow(_dindex) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type |
 | --- | --- |
-| _dindex | <code>Number</code> \| <code>String</code> | 
+| _dindex | <code>Number</code> &#124; <code>String</code> | 
 
 **Example**  
 ```js
@@ -521,8 +521,8 @@ grid.deleteRow("selected");
 ```
 <a name="AX6UIGrid+setValue"></a>
 
-### aX6UIGrid.setValue(_dindex, _key, _value) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.setValue(_dindex, _key, _value) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -536,27 +536,27 @@ grid.setValue(0, "price", 100);
 ```
 <a name="AX6UIGrid+addColumn"></a>
 
-### aX6UIGrid.addColumn(_column, [_cindex]) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.addColumn(_column, [_cindex]) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Default |
 | --- | --- | --- |
 | _column | <code>Object</code> |  | 
-| [_cindex] | <code>Number</code> \| <code>String</code> | <code>last</code> | 
+| [_cindex] | <code>Number</code> &#124; <code>String</code> | <code>last</code> | 
 
 <a name="AX6UIGrid+removeColumn"></a>
 
-### aX6UIGrid.removeColumn([_cindex]) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.removeColumn([_cindex]) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Default |
 | --- | --- | --- |
-| [_cindex] | <code>Number</code> \| <code>String</code> | <code>last</code> | 
+| [_cindex] | <code>Number</code> &#124; <code>String</code> | <code>last</code> | 
 
 <a name="AX6UIGrid+updateColumn"></a>
 
-### aX6UIGrid.updateColumn(_column, _cindex) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.updateColumn(_column, _cindex) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type |
 | --- | --- |
@@ -565,8 +565,8 @@ grid.setValue(0, "price", 100);
 
 <a name="AX6UIGrid+setColumnWidth"></a>
 
-### aX6UIGrid.setColumnWidth(_width, _cindex) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.setColumnWidth(_width, _cindex) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type |
 | --- | --- |
@@ -576,12 +576,12 @@ grid.setValue(0, "price", 100);
 <a name="AX6UIGrid+getColumnSortInfo"></a>
 
 ### aX6UIGrid.getColumnSortInfo() ⇒ <code>Object</code>
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 **Returns**: <code>Object</code> - sortInfo  
 <a name="AX6UIGrid+setColumnSort"></a>
 
-### aX6UIGrid.setColumnSort(_sortInfo) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.setColumnSort(_sortInfo) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -596,12 +596,12 @@ grid.setColumnSort({a:{seq:0, orderBy:"desc"}, b:{seq:1, orderBy:"asc"}});
 ```
 <a name="AX6UIGrid+select"></a>
 
-### aX6UIGrid.select(_selectObject, _options) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.select(_selectObject, _options) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| _selectObject | <code>Number</code> \| <code>Object</code> |  |
+| _selectObject | <code>Number</code> &#124; <code>Object</code> |  |
 | _selectObject.index | <code>Number</code> | index of row |
 | _selectObject.rowIndex | <code>Number</code> | rowIndex of columns |
 | _selectObject.conIndex | <code>Number</code> | colIndex of columns |
@@ -618,8 +618,8 @@ grid.select(0, {selectedClear: true});
 ```
 <a name="AX6UIGrid+clickBody"></a>
 
-### aX6UIGrid.clickBody(_dindex) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.clickBody(_dindex) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -627,8 +627,8 @@ grid.select(0, {selectedClear: true});
 
 <a name="AX6UIGrid+DBLClickBody"></a>
 
-### aX6UIGrid.DBLClickBody(_dindex) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.DBLClickBody(_dindex) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -636,12 +636,12 @@ grid.select(0, {selectedClear: true});
 
 <a name="AX6UIGrid+clearSelect"></a>
 
-### aX6UIGrid.clearSelect() ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.clearSelect() ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid+selectAll"></a>
 
-### aX6UIGrid.selectAll(_options) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.selectAll(_options) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type |
 | --- | --- |
@@ -663,8 +663,8 @@ grid.selectAll({selected: true, filter: function(){
 ```
 <a name="AX6UIGrid+exportExcel"></a>
 
-### aX6UIGrid.exportExcel(_fileName) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid) \| <code>String</code>
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.exportExcel(_fileName) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code> &#124; <code>String</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type |
 | --- | --- |
@@ -677,12 +677,12 @@ console.log(grid.exportExcel());
 ```
 <a name="AX6UIGrid+focus"></a>
 
-### aX6UIGrid.focus(_pos) ⇒ [<code>AX6UIGrid</code>](#AX6UIGrid)
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+### aX6UIGrid.focus(_pos) ⇒ <code>[AX6UIGrid](#AX6UIGrid)</code>
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| _pos | <code>String</code> \| <code>Number</code> | UP, DOWN, LEFT, RIGHT, HOME, END |
+| _pos | <code>String</code> &#124; <code>Number</code> | UP, DOWN, LEFT, RIGHT, HOME, END |
 
 **Example**  
 ```js
@@ -694,11 +694,11 @@ grid.focus("END");
 <a name="AX6UIGrid+destroy"></a>
 
 ### aX6UIGrid.destroy() ⇒ <code>null</code>
-**Kind**: instance method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: instance method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid.setFormatter"></a>
 
 ### AX6UIGrid.setFormatter(_formatter)
-**Kind**: static method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -707,11 +707,11 @@ grid.focus("END");
 <a name="AX6UIGrid.getFormatter"></a>
 
 ### AX6UIGrid.getFormatter() ⇒ <code>Object</code>
-**Kind**: static method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid.setCollector"></a>
 
 ### AX6UIGrid.setCollector(_collector) ⇒ <code>collector</code>
-**Kind**: static method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -720,11 +720,11 @@ grid.focus("END");
 <a name="AX6UIGrid.getCollector"></a>
 
 ### AX6UIGrid.getCollector() ⇒ <code>collector</code>
-**Kind**: static method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 <a name="AX6UIGrid.setTmpl"></a>
 
 ### AX6UIGrid.setTmpl(_tmpl) ⇒ <code>tmpl</code>
-**Kind**: static method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  
 
 | Param |
 | --- |
@@ -733,4 +733,4 @@ grid.focus("END");
 <a name="AX6UIGrid.getTmpl"></a>
 
 ### AX6UIGrid.getTmpl() ⇒ <code>tmpl</code>
-**Kind**: static method of [<code>AX6UIGrid</code>](#AX6UIGrid)  
+**Kind**: static method of <code>[AX6UIGrid](#AX6UIGrid)</code>  

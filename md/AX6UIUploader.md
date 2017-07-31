@@ -20,12 +20,12 @@
     * [.__loaded](#AX6UIUploader+__loaded) : <code>Number</code>
     * [.init()](#AX6UIUploader+init)
     * [.initOnce()](#AX6UIUploader+initOnce)
-    * [.send()](#AX6UIUploader+send) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-    * [.abort()](#AX6UIUploader+abort) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-    * [.setUploadedFiles(_files)](#AX6UIUploader+setUploadedFiles) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-    * [.clear()](#AX6UIUploader+clear) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-    * [.removeFile(_index)](#AX6UIUploader+removeFile) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-    * [.removeFileAll()](#AX6UIUploader+removeFileAll) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
+    * [.send()](#AX6UIUploader+send) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+    * [.abort()](#AX6UIUploader+abort) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+    * [.setUploadedFiles(_files)](#AX6UIUploader+setUploadedFiles) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+    * [.clear()](#AX6UIUploader+clear) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+    * [.removeFile(_index)](#AX6UIUploader+removeFile) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+    * [.removeFileAll()](#AX6UIUploader+removeFileAll) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
     * [.selectFile()](#AX6UIUploader+selectFile) ⇒ <code>Boolean</code>
 
 <a name="new_AX6UIUploader_new"></a>
@@ -39,7 +39,7 @@
 <a name="AX6UIUploader+config"></a>
 
 ### aX6UIUploader.config : <code>JSON</code>
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -88,93 +88,93 @@
 ### aX6UIUploader.defaultBtns : <code>JSON</code>
 버튼속성
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+uploadedFiles"></a>
 
 ### aX6UIUploader.uploadedFiles : <code>Array</code>
 업로드된 파일
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+$target"></a>
 
 ### aX6UIUploader.$target : <code>jQuery</code>
 업로더 타겟
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+$inputFile"></a>
 
 ### aX6UIUploader.$inputFile : <code>jQuery</code>
 input file 태그
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+$inputFileForm"></a>
 
 ### aX6UIUploader.$inputFileForm : <code>jQuery</code>
 input form
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+$fileSelector"></a>
 
 ### aX6UIUploader.$fileSelector : <code>jQuery</code>
 파일 선택 버튼
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+$dropZone"></a>
 
 ### aX6UIUploader.$dropZone : <code>jQuery</code>
 파일 드랍존
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+$uploadedBox"></a>
 
 ### aX6UIUploader.$uploadedBox : <code>jQuery</code>
 파일 목록 표시박스
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+__uploading"></a>
 
 ### aX6UIUploader.__uploading : <code>Boolean</code>
 업로드 진행 상태바
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+selectedFiles"></a>
 
 ### aX6UIUploader.selectedFiles : <code>Array</code>
 선택된 파일들
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+selectedFilesTotal"></a>
 
 ### aX6UIUploader.selectedFilesTotal : <code>Number</code>
 선택된 파일의 전체 크기
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+__loaded"></a>
 
 ### aX6UIUploader.__loaded : <code>Number</code>
 전송된 파일 크기
 
-**Kind**: instance property of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance property of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+init"></a>
 
 ### aX6UIUploader.init()
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+initOnce"></a>
 
 ### aX6UIUploader.initOnce()
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+send"></a>
 
-### aX6UIUploader.send() ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+### aX6UIUploader.send() ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+abort"></a>
 
-### aX6UIUploader.abort() ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+### aX6UIUploader.abort() ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+setUploadedFiles"></a>
 
-### aX6UIUploader.setUploadedFiles(_files) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+### aX6UIUploader.setUploadedFiles(_files) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -200,16 +200,16 @@ $.ajax({
 ```
 <a name="AX6UIUploader+clear"></a>
 
-### aX6UIUploader.clear() ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
+### aX6UIUploader.clear() ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
 clear uploadedFiles
 
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 <a name="AX6UIUploader+removeFile"></a>
 
-### aX6UIUploader.removeFile(_index) ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
+### aX6UIUploader.removeFile(_index) ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
 Removes the object corresponding to the index passed to the argument from uploadedFiles.
 
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 
 | Param | Type |
 | --- | --- |
@@ -222,10 +222,10 @@ upload.removeFile(fileIndex);
 ```
 <a name="AX6UIUploader+removeFileAll"></a>
 
-### aX6UIUploader.removeFileAll() ⇒ [<code>AX6UIUploader</code>](#AX6UIUploader)
+### aX6UIUploader.removeFileAll() ⇒ <code>[AX6UIUploader](#AX6UIUploader)</code>
 Empty uploadedFiles
 
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  
 **Example**  
 ```js
 
@@ -233,4 +233,4 @@ Empty uploadedFiles
 <a name="AX6UIUploader+selectFile"></a>
 
 ### aX6UIUploader.selectFile() ⇒ <code>Boolean</code>
-**Kind**: instance method of [<code>AX6UIUploader</code>](#AX6UIUploader)  
+**Kind**: instance method of <code>[AX6UIUploader](#AX6UIUploader)</code>  

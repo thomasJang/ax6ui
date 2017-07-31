@@ -108,7 +108,7 @@ gulp.task('samples npm start', shell.task([
 ]));
 
 gulp.task('samples deploy', shell.task([
-  'cd samples && npm start',
+  './samples-deploy.sh',
 ]));
 
 gulp.task('jsdoc build', function () {
@@ -122,7 +122,7 @@ gulp.task('jsdoc build', function () {
     stderr: true, // default = true, false means don't write stderr
     stdout: true // default = true, false means don't write stdout
   };
-  return gulp.src('./jsdoc2md')
-    .pipe(exec('cd jsdoc2md && ./build.sh', options))
+  return gulp.src('./md.sh')
+    .pipe(exec('./md.sh', options))
     .pipe(exec.reporter(reportOptions));
 });

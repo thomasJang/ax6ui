@@ -10,10 +10,10 @@
     * [.$activeModal](#AX6UIModal+$activeModal) : <code>jQueryElement</code>
     * [.init()](#AX6UIModal+init)
     * [.initOnce()](#AX6UIModal+initOnce)
-    * [.open()](#AX6UIModal+open) ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
-    * [.close(_option)](#AX6UIModal+close) ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
-    * [.minimize()](#AX6UIModal+minimize) ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
-    * [.setModalConfig(_config)](#AX6UIModal+setModalConfig) ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
+    * [.open()](#AX6UIModal+open) ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
+    * [.close(_option)](#AX6UIModal+close) ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
+    * [.minimize()](#AX6UIModal+minimize) ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
+    * [.setModalConfig(_config)](#AX6UIModal+setModalConfig) ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
 
 <a name="new_AX6UIModal_new"></a>
 
@@ -26,7 +26,7 @@
 <a name="AX6UIModal+config"></a>
 
 ### aX6UIModal.config : <code>JSON</code>
-**Kind**: instance property of [<code>AX6UIModal</code>](#AX6UIModal)  
+**Kind**: instance property of <code>[AX6UIModal](#AX6UIModal)</code>  
 
 | Param | Default |
 | --- | --- |
@@ -52,25 +52,25 @@
 ### aX6UIModal.queue : <code>Array</code>
 열려있는 상태에서 다시 open이 되면 queue에 보관 하였다가 close후 open
 
-**Kind**: instance property of [<code>AX6UIModal</code>](#AX6UIModal)  
+**Kind**: instance property of <code>[AX6UIModal](#AX6UIModal)</code>  
 <a name="AX6UIModal+$activeModal"></a>
 
 ### aX6UIModal.$activeModal : <code>jQueryElement</code>
-**Kind**: instance property of [<code>AX6UIModal</code>](#AX6UIModal)  
+**Kind**: instance property of <code>[AX6UIModal](#AX6UIModal)</code>  
 <a name="AX6UIModal+init"></a>
 
 ### aX6UIModal.init()
-**Kind**: instance method of [<code>AX6UIModal</code>](#AX6UIModal)  
+**Kind**: instance method of <code>[AX6UIModal](#AX6UIModal)</code>  
 <a name="AX6UIModal+initOnce"></a>
 
 ### aX6UIModal.initOnce()
-**Kind**: instance method of [<code>AX6UIModal</code>](#AX6UIModal)  
+**Kind**: instance method of <code>[AX6UIModal](#AX6UIModal)</code>  
 <a name="AX6UIModal+open"></a>
 
-### aX6UIModal.open() ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
+### aX6UIModal.open() ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
 open the modal
 
-**Kind**: instance method of [<code>AX6UIModal</code>](#AX6UIModal)  
+**Kind**: instance method of <code>[AX6UIModal](#AX6UIModal)</code>  
 **Example**  
 ```
 modal.open();
@@ -84,10 +84,10 @@ moaal.open({}, function(){
 ```
 <a name="AX6UIModal+close"></a>
 
-### aX6UIModal.close(_option) ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
+### aX6UIModal.close(_option) ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
 close the modal
 
-**Kind**: instance method of [<code>AX6UIModal</code>](#AX6UIModal)  
+**Kind**: instance method of <code>[AX6UIModal](#AX6UIModal)</code>  
 
 | Param |
 | --- |
@@ -103,12 +103,12 @@ modal.close({callback: function(){
 ```
 <a name="AX6UIModal+minimize"></a>
 
-### aX6UIModal.minimize() ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
-**Kind**: instance method of [<code>AX6UIModal</code>](#AX6UIModal)  
+### aX6UIModal.minimize() ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
+**Kind**: instance method of <code>[AX6UIModal](#AX6UIModal)</code>  
 <a name="AX6UIModal+setModalConfig"></a>
 
-### aX6UIModal.setModalConfig(_config) ⇒ [<code>AX6UIModal</code>](#AX6UIModal)
-**Kind**: instance method of [<code>AX6UIModal</code>](#AX6UIModal)  
+### aX6UIModal.setModalConfig(_config) ⇒ <code>[AX6UIModal](#AX6UIModal)</code>
+**Kind**: instance method of <code>[AX6UIModal](#AX6UIModal)</code>  
 
 | Param |
 | --- |

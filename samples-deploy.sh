@@ -1,6 +1,7 @@
+#!/usr/bin/env bash
+
 rm -rf samples/dist
-cat samples/CNAME >> samples/dist/CNAME
-cd samples && webpack && cd ..
+cd samples && webpack && cd .. && echo "ax6ui.com" > samples/dist/CNAME
 git add -A
 git commit -m "Update Site"
 git push origin master

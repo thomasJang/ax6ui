@@ -1,4 +1,5 @@
 rm -rf samples/dist
+cat samples/CNAME >> samples/dist/CNAME
 cd samples && webpack && cd ..
 git add -A
 git commit -m "Update Site"

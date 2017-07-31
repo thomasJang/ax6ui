@@ -107,6 +107,10 @@ gulp.task('samples npm start', shell.task([
   'cd samples && npm start',
 ]));
 
+gulp.task('samples deploy', shell.task([
+  'cd samples && npm start',
+]));
+
 gulp.task('jsdoc build', function () {
   let options = {
     continueOnError: false, // default = false, true means don't emit error event

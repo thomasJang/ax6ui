@@ -828,7 +828,7 @@ var AX6UIGrid = function (_AX6UICore) {
     /**
      * @member {Object}
      */
-    _this3.page = {}; // 그리드의 페이지 정보
+    _this3.page = null; // 그리드의 페이지 정보
 
     _this3.selectedDataIndexs = [];
     _this3.deletedList = [];

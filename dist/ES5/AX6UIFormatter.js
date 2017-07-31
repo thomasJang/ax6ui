@@ -35,6 +35,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var formatter = {};
+
 var setSelectionRange = function setSelectionRange(input, pos) {
   if (typeof pos == "undefined") {
     pos = input.value.length;
@@ -165,7 +166,6 @@ var unbindFormatterTarget = function unbindFormatterTarget(opts, optIdx) {
 
   return this;
 };
-
 var getQueIdx = function getQueIdx(boundID) {
   if (!_AX6Util2.default.isString(boundID)) {
     boundID = (0, _jqmin2.default)(boundID).data("data-formatter");
@@ -300,6 +300,10 @@ var AX6UIFormatter = function (_AX6UICore) {
         return this;
       }
       opts.$target = (0, _jqmin2.default)(opts.target);
+      if (!opts.$target.get(0)) {
+        console.log(_AX6Info2.default.getError("ax6formatter", "401", "can't found target element"));
+        return this;
+      }
 
       if (opts.$target.get(0).tagName == "INPUT") {
         opts.$input = opts.$target;
@@ -411,7 +415,7 @@ var AX6UIFormatter = function (_AX6UICore) {
   }], [{
     key: "setFormatter",
     value: function setFormatter(_formatter) {
-      formatter = _formatter;
+      return formatter = Object.assign(formatter, _formatter);
     }
 
     /**
@@ -423,6 +427,28 @@ var AX6UIFormatter = function (_AX6UICore) {
     key: "getFormatter",
     value: function getFormatter() {
       return formatter || {};
+    }
+
+    /**
+     * @static
+     * @return {{}}
+     */
+
+  }, {
+    key: "getCtrlKeys",
+    value: function getCtrlKeys() {
+      return _AX6UIFormatter_formatter2.default.ctrlKeys;
+    }
+
+    /**
+     * @static
+     * @return {{}}
+     */
+
+  }, {
+    key: "getNumKeys",
+    value: function getNumKeys() {
+      return _AX6UIFormatter_formatter2.default.numKeys;
     }
   }]);
 

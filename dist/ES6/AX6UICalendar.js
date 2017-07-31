@@ -872,7 +872,7 @@ class AX6UICalendar extends AX6UICore {
     return this.selection;
   }
 
-  setSelectable(selection, isPrint) {
+  setSelectable(selectable, isPrint) {
     this.selectableMap = {};
     let key,
         result = {};
@@ -996,7 +996,6 @@ class AX6UICalendar extends AX6UICore {
   }
 
   setPeriod(period, isApply) {
-    this.periodMap = {};
     let key,
         result = {};
     const processor = {

@@ -14,25 +14,13 @@
     </head>
     <body>
 
-        <ul id="dropdown1" class="dropdown-content">
-            <% for (key in htmlWebpackPlugin.options.menu) { %>
-            <li><a href="<%= htmlWebpackPlugin.options.menu[key] %>"><%= htmlWebpackPlugin.options.menu[key] %></a></li>
-            <% } %>
-        </ul>
-
         <nav>
             <div class="nav-wrapper">
                 <div class="container">
-                <ul class="left hide-on-large-only" data-nav-account="">
+                <ul class="left" data-nav-account="">
                     <li><a href="#" data-activates="slide-out" class="waves-effect waves-light"><i class="large material-icons">menu</i></a></li>
                 </ul>
                 <a href="#!" class="brand-logo" style="padding:0 20px;">AX6UI</a>
-                <ul class="right hide-on-med-and-down">
-
-                    <!-- Dropdown Trigger -->
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Samples<i class="material-icons right">arrow_drop_down</i></a></li>
-
-                </ul>
                 </div>
             </div>
         </nav>

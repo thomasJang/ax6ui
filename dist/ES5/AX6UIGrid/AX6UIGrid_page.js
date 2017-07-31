@@ -112,22 +112,29 @@ var statusUpdate = function statusUpdate() {
     return;
   }
 
-  var fromRowIndex = this.xvar.virtualPaintStartRowIndex;
-  var toRowIndex = this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount;
-  var totalElements = this.page && this.page.totalElements ? this.page.totalElements : false;
+  var toRowIndex = void 0;
+  var data = {};
 
-  if (toRowIndex > totalElements) {
-    toRowIndex = totalElements;
+  toRowIndex = this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount;
+
+  if (toRowIndex > this.xvar.dataRowCount) {
+    toRowIndex = this.xvar.dataRowCount;
   }
 
-  this.$["page"]["status"].html(_AX6Mustache2.default.render(this.__tmpl.page_status.call(this), {
-    fromRowIndex: _AX6Util2.default.number(fromRowIndex + 1, { "money": true }),
-    toRowIndex: _AX6Util2.default.number(toRowIndex, { "money": true }),
-    totalElements: totalElements ? _AX6Util2.default.number(totalElements, { "money": true }) : false,
-    dataRealRowCount: this.xvar.dataRowCount !== this.xvar.dataRealRowCount ? _AX6Util2.default.number(this.xvar.dataRealRowCount, { "money": true }) : false,
-    dataRowCount: _AX6Util2.default.number(this.xvar.dataRowCount, { "money": true }),
-    progress: this.appendProgress ? this.config.appendProgressIcon : ""
-  }));
+  data.fromRowIndex = _AX6Util2.default.number(this.xvar.virtualPaintStartRowIndex + 1, { "money": true });
+  data.toRowIndex = _AX6Util2.default.number(toRowIndex, { "money": true });
+  data.totalElements = false;
+  data.dataRealRowCount = this.xvar.dataRowCount !== this.xvar.dataRealRowCount ? _AX6Util2.default.number(this.xvar.dataRealRowCount, { "money": true }) : false;
+  data.dataRowCount = _AX6Util2.default.number(this.xvar.dataRowCount, { "money": true });
+  data.progress = this.appendProgress ? this.config.appendProgressIcon : "";
+
+  if (this.page) {
+    data.fromRowIndex_page = _AX6Util2.default.number(this.xvar.virtualPaintStartRowIndex + this.page.currentPage * this.page.pageSize + 1, { "money": true });
+    data.toRowIndex_page = _AX6Util2.default.number(this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount + this.page.currentPage * this.page.pageSize, { "money": true });
+    data.totalElements = _AX6Util2.default.number(this.page.totalElements, { "money": true });
+  }
+
+  this.$["page"]["status"].html(_AX6Mustache2.default.render(this.__tmpl.page_status.call(this), data));
 };
 
 exports.default = {

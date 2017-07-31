@@ -745,7 +745,7 @@ class AX6UIGrid extends AX6UICore {
     /**
      * @member {Object}
      */
-    this.page = {}; // 그리드의 페이지 정보
+    this.page = null; // 그리드의 페이지 정보
 
     this.selectedDataIndexs = [];
     this.deletedList = [];

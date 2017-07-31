@@ -99,22 +99,29 @@ const statusUpdate = function () {
     return;
   }
 
-  let fromRowIndex = this.xvar.virtualPaintStartRowIndex;
-  let toRowIndex = this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount;
-  let totalElements = this.page && this.page.totalElements ? this.page.totalElements : false;
+  let toRowIndex;
+  let data = {};
 
-  if (toRowIndex > totalElements) {
-    toRowIndex = totalElements;
+  toRowIndex = this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount;
+
+  if (toRowIndex > this.xvar.dataRowCount) {
+    toRowIndex = this.xvar.dataRowCount;
   }
 
-  this.$["page"]["status"].html(mustache.render(this.__tmpl.page_status.call(this), {
-    fromRowIndex: U.number(fromRowIndex + 1, { "money": true }),
-    toRowIndex: U.number(toRowIndex, { "money": true }),
-    totalElements: totalElements ? U.number(totalElements, { "money": true }) : false,
-    dataRealRowCount: this.xvar.dataRowCount !== this.xvar.dataRealRowCount ? U.number(this.xvar.dataRealRowCount, { "money": true }) : false,
-    dataRowCount: U.number(this.xvar.dataRowCount, { "money": true }),
-    progress: this.appendProgress ? this.config.appendProgressIcon : ""
-  }));
+  data.fromRowIndex = U.number(this.xvar.virtualPaintStartRowIndex + 1, { "money": true });
+  data.toRowIndex = U.number(toRowIndex, { "money": true });
+  data.totalElements = false;
+  data.dataRealRowCount = this.xvar.dataRowCount !== this.xvar.dataRealRowCount ? U.number(this.xvar.dataRealRowCount, { "money": true }) : false;
+  data.dataRowCount = U.number(this.xvar.dataRowCount, { "money": true });
+  data.progress = this.appendProgress ? this.config.appendProgressIcon : "";
+
+  if (this.page) {
+    data.fromRowIndex_page = U.number(this.xvar.virtualPaintStartRowIndex + this.page.currentPage * this.page.pageSize + 1, { "money": true });
+    data.toRowIndex_page = U.number(this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount + this.page.currentPage * this.page.pageSize, { "money": true });
+    data.totalElements = U.number(this.page.totalElements, { "money": true });
+  }
+
+  this.$["page"]["status"].html(mustache.render(this.__tmpl.page_status.call(this), data));
 };
 
 export default {

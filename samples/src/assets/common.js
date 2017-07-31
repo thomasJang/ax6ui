@@ -3,7 +3,9 @@ import "./sample.scss";
 window.jQuery = window.$ = $;
 
 
-$(document).ready(function () {
+$(document).ready(function (e) {
+
+
   require("materialize-css/dist/js/materialize.js");
   //require("https://fonts.googleapis.com/icon?family=Material+Icons");
 

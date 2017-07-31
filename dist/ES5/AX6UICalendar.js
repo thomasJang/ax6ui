@@ -845,7 +845,7 @@ var AX6UICalendar = function (_AX6UICore) {
     }
   }, {
     key: "setSelectable",
-    value: function setSelectable(selection, isPrint) {
+    value: function setSelectable(selectable, isPrint) {
       this.selectableMap = {};
       var key = void 0,
           result = {};
@@ -977,7 +977,6 @@ var AX6UICalendar = function (_AX6UICore) {
   }, {
     key: "setPeriod",
     value: function setPeriod(period, isApply) {
-      this.periodMap = {};
       var key = void 0,
           result = {};
       var processor = {

@@ -12,7 +12,7 @@ var page_navigation = function page_navigation() {
 };
 
 var page_status = function page_status() {
-    return "<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}} of {{dataRowCount}} {{#dataRealRowCount}}&nbsp; Current {{.}}{{/dataRealRowCount}} {{#totalElements}}&nbsp; Total {{.}}{{/totalElements}}</span>";
+    return "<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}} of {{dataRowCount}} {{#totalElements}}&nbsp; Total {{.}}{{/totalElements}}</span>";
 };
 
 exports.default = {

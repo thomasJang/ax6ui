@@ -22,13 +22,13 @@
 두번째 자리수 목적어 - 문자열 0, 숫자 1, 배열 2, 오브젝트 3, 함수 4, DOM 5, 파일 6, 기타 7
 세번째 자리수 옵션
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 <a name="module_AX6Info.onerror"></a>
 
 ### AX6Info.onerror
 에러 출력메세지 사용자 재 정의
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 **Example**  
 ```
 AX6Info.onerror = function(){
@@ -40,7 +40,7 @@ AX6Info.onerror = function(){
 ### AX6Info.eventKeys
 event keyCodes
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 **Example**  
 ```
 {
@@ -54,7 +54,7 @@ event keyCodes
 ### AX6Info.weekNames
 week names
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 **Example**  
 ```
 [
@@ -68,7 +68,7 @@ console.log( AX6Info.weekNames[(new Date()).getDay()].label )
 ### AX6Info.browser
 사용자 브라우저 식별용 오브젝트
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 **Example**  
 ```
 console.log( AX6Info.browser );
@@ -79,13 +79,13 @@ console.log( AX6Info.browser );
 ### AX6Info.isBrowser
 브라우저 여부
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 <a name="module_AX6Info.supportTouch"></a>
 
 ### AX6Info.supportTouch ⇒ <code>boolean</code>
 브라우져의 터치 가능 유무를 확인합니다.
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 **Example**  
 ```
 var chkFlag = AX6Info.supportTouch;
@@ -94,19 +94,19 @@ var chkFlag = AX6Info.supportTouch;
 ### AX6Info.supportFileApi
 HTML5 FileApi 지원여부
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 <a name="module_AX6Info.wheelEnm"></a>
 
 ### AX6Info.wheelEnm
 브라우저에 따른 마우스 휠 이벤트이름
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 <a name="module_AX6Info.urlUtil"></a>
 
 ### AX6Info.urlUtil
 현재 페이지의 Url 정보를 리턴합니다.
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 **Example**  
 ```
 console.log( ax5.util.toJson( AX6Info.urlUtil() ) );
@@ -127,7 +127,7 @@ console.log( ax5.util.toJson( AX6Info.urlUtil() ) );
 ### AX6Info.getError ⇒ <code>Object</code>
 ax5-error-msg.js 에 정의된 ax5 error를 반환합니다.
 
-**Kind**: static property of <code>[AX6Info](#module_AX6Info)</code>  
+**Kind**: static property of [<code>AX6Info</code>](#module_AX6Info)  
 **Example**  
 ```
 console.log( AX6Info.getError("single-uploader", "460", "upload") );

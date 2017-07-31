@@ -18,7 +18,7 @@
 ### AX6Formatter_formatter.ctrlKeys
 컨트롤 keycodes
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 **Example**  
 ```js
 let ctrlKeys = {
@@ -50,7 +50,7 @@ let ctrlKeys = {
 ### AX6Formatter_formatter.numKeys
 숫자키패드 keycodes
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 **Example**  
 ```js
 let numKeys = {
@@ -63,40 +63,40 @@ let numKeys = {
 ### AX6Formatter_formatter.money
 통화패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 <a name="module_AX6Formatter_formatter.number"></a>
 
 ### AX6Formatter_formatter.number
 숫자패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 <a name="module_AX6Formatter_formatter.date"></a>
 
 ### AX6Formatter_formatter.date
 날짜패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 <a name="module_AX6Formatter_formatter.time"></a>
 
 ### AX6Formatter_formatter.time
 시간패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 <a name="module_AX6Formatter_formatter.bizno"></a>
 
 ### AX6Formatter_formatter.bizno
 한국 사업자 번호 패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 <a name="module_AX6Formatter_formatter.phone"></a>
 
 ### AX6Formatter_formatter.phone
 전화번호 패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  
 <a name="module_AX6Formatter_formatter.custom"></a>
 
 ### AX6Formatter_formatter.custom
 사용자 정의 패턴 사용시
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of [<code>AX6Formatter_formatter</code>](#module_AX6Formatter_formatter)  

@@ -11,10 +11,10 @@
     * [.autoCloseTimer](#AX6UIDialog+autoCloseTimer) : <code>Object</code>
     * [.init(config)](#AX6UIDialog+init)
     * [.initOnce()](#AX6UIDialog+initOnce)
-    * [.alert(opts, callback, tryCount)](#AX6UIDialog+alert) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
-    * [.confirm(opts, callback, tryCount)](#AX6UIDialog+confirm) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
-    * [.prompt(opts, callback, tryCount)](#AX6UIDialog+prompt) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
-    * [.close(_option)](#AX6UIDialog+close) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
+    * [.alert(opts, callback, tryCount)](#AX6UIDialog+alert) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
+    * [.confirm(opts, callback, tryCount)](#AX6UIDialog+confirm) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
+    * [.prompt(opts, callback, tryCount)](#AX6UIDialog+prompt) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
+    * [.close(_option)](#AX6UIDialog+close) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
 
 <a name="new_AX6UIDialog_new"></a>
 
@@ -27,7 +27,7 @@
 <a name="AX6UIDialog+config"></a>
 
 ### aX6UIDialog.config : <code>JSON</code>
-**Kind**: instance property of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+**Kind**: instance property of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 
 | Param | Default |
 | --- | --- |
@@ -48,19 +48,19 @@
 ### aX6UIDialog.queue : <code>Array</code>
 dialog가 열려있는 상태에서 다시 open이 되면 queue에 보관 하였다가 close후 open
 
-**Kind**: instance property of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+**Kind**: instance property of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 <a name="AX6UIDialog+$activeDialog"></a>
 
 ### aX6UIDialog.$activeDialog : <code>jQueryElement</code>
-**Kind**: instance property of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+**Kind**: instance property of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 <a name="AX6UIDialog+autoCloseTimer"></a>
 
 ### aX6UIDialog.autoCloseTimer : <code>Object</code>
-**Kind**: instance property of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+**Kind**: instance property of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 <a name="AX6UIDialog+init"></a>
 
 ### aX6UIDialog.init(config)
-**Kind**: instance method of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+**Kind**: instance method of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 
 | Param |
 | --- |
@@ -69,11 +69,11 @@ dialog가 열려있는 상태에서 다시 open이 되면 queue에 보관 하였
 <a name="AX6UIDialog+initOnce"></a>
 
 ### aX6UIDialog.initOnce()
-**Kind**: instance method of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+**Kind**: instance method of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 <a name="AX6UIDialog+alert"></a>
 
-### aX6UIDialog.alert(opts, callback, tryCount) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
-**Kind**: instance method of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+### aX6UIDialog.alert(opts, callback, tryCount) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
+**Kind**: instance method of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 
 | Param |
 | --- |
@@ -94,8 +94,8 @@ dialog.alert({
 ```
 <a name="AX6UIDialog+confirm"></a>
 
-### aX6UIDialog.confirm(opts, callback, tryCount) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
-**Kind**: instance method of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+### aX6UIDialog.confirm(opts, callback, tryCount) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
+**Kind**: instance method of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 
 | Param |
 | --- |
@@ -135,8 +135,8 @@ dialog.config({
 ```
 <a name="AX6UIDialog+prompt"></a>
 
-### aX6UIDialog.prompt(opts, callback, tryCount) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
-**Kind**: instance method of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+### aX6UIDialog.prompt(opts, callback, tryCount) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
+**Kind**: instance method of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 
 | Param |
 | --- |
@@ -163,8 +163,8 @@ dialog.prompt({
 ```
 <a name="AX6UIDialog+close"></a>
 
-### aX6UIDialog.close(_option) ⇒ <code>[AX6UIDialog](#AX6UIDialog)</code>
-**Kind**: instance method of <code>[AX6UIDialog](#AX6UIDialog)</code>  
+### aX6UIDialog.close(_option) ⇒ [<code>AX6UIDialog</code>](#AX6UIDialog)
+**Kind**: instance method of [<code>AX6UIDialog</code>](#AX6UIDialog)  
 
 | Param |
 | --- |

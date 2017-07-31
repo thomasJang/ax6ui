@@ -11,8 +11,8 @@
     * [.colors](#AX6UIPalette+colors) : <code>Array</code>
     * [.init(config)](#AX6UIPalette+init)
     * [.initOnce()](#AX6UIPalette+initOnce)
-    * [.repaint()](#AX6UIPalette+repaint) ⇒ <code>[AX6UIPalette](#AX6UIPalette)</code>
-    * [.setSelectedColor(selectedColor)](#AX6UIPalette+setSelectedColor) ⇒ <code>[AX6UIPalette](#AX6UIPalette)</code>
+    * [.repaint()](#AX6UIPalette+repaint) ⇒ [<code>AX6UIPalette</code>](#AX6UIPalette)
+    * [.setSelectedColor(selectedColor)](#AX6UIPalette+setSelectedColor) ⇒ [<code>AX6UIPalette</code>](#AX6UIPalette)
 
 <a name="new_AX6UIPalette_new"></a>
 
@@ -74,7 +74,7 @@ myPalette = new Palette({
 <a name="AX6UIPalette+config"></a>
 
 ### aX6UIPalette.config : <code>JSON</code>
-**Kind**: instance property of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+**Kind**: instance property of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 
 | Param | Default |
 | --- | --- |
@@ -107,19 +107,19 @@ myPalette = new Palette({
 <a name="AX6UIPalette+$target"></a>
 
 ### aX6UIPalette.$target : <code>Object</code>
-**Kind**: instance property of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+**Kind**: instance property of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 <a name="AX6UIPalette+xvar"></a>
 
 ### aX6UIPalette.xvar : <code>Object</code>
-**Kind**: instance property of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+**Kind**: instance property of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 <a name="AX6UIPalette+colors"></a>
 
 ### aX6UIPalette.colors : <code>Array</code>
-**Kind**: instance property of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+**Kind**: instance property of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 <a name="AX6UIPalette+init"></a>
 
 ### aX6UIPalette.init(config)
-**Kind**: instance method of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+**Kind**: instance method of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 
 | Param | Type | Default |
 | --- | --- | --- |
@@ -152,15 +152,15 @@ myPalette = new Palette({
 <a name="AX6UIPalette+initOnce"></a>
 
 ### aX6UIPalette.initOnce()
-**Kind**: instance method of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+**Kind**: instance method of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 <a name="AX6UIPalette+repaint"></a>
 
-### aX6UIPalette.repaint() ⇒ <code>[AX6UIPalette](#AX6UIPalette)</code>
-**Kind**: instance method of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+### aX6UIPalette.repaint() ⇒ [<code>AX6UIPalette</code>](#AX6UIPalette)
+**Kind**: instance method of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 <a name="AX6UIPalette+setSelectedColor"></a>
 
-### aX6UIPalette.setSelectedColor(selectedColor) ⇒ <code>[AX6UIPalette](#AX6UIPalette)</code>
-**Kind**: instance method of <code>[AX6UIPalette](#AX6UIPalette)</code>  
+### aX6UIPalette.setSelectedColor(selectedColor) ⇒ [<code>AX6UIPalette</code>](#AX6UIPalette)
+**Kind**: instance method of [<code>AX6UIPalette</code>](#AX6UIPalette)  
 
 | Param |
 | --- |

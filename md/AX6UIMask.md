@@ -11,10 +11,10 @@
     * [.activeConfig](#AX6UIMask+activeConfig) : <code>JSON</code>
     * [.init()](#AX6UIMask+init)
     * [.initOnce()](#AX6UIMask+initOnce)
-    * [.open(options)](#AX6UIMask+open) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
-    * [.close(delay)](#AX6UIMask+close) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
-    * [.fadeOut()](#AX6UIMask+fadeOut) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
-    * [.align()](#AX6UIMask+align) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
+    * [.open(options)](#AX6UIMask+open) ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
+    * [.close(delay)](#AX6UIMask+close) ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
+    * [.fadeOut()](#AX6UIMask+fadeOut) ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
+    * [.align()](#AX6UIMask+align) ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
 
 <a name="new_AX6UIMask_new"></a>
 
@@ -33,7 +33,7 @@
 <a name="AX6UIMask+config"></a>
 
 ### aX6UIMask.config : <code>JSON</code>
-**Kind**: instance property of <code>[AX6UIMask](#AX6UIMask)</code>  
+**Kind**: instance property of [<code>AX6UIMask</code>](#AX6UIMask)  
 
 | Param | Default |
 | --- | --- |
@@ -48,27 +48,27 @@
 <a name="AX6UIMask+maskContent"></a>
 
 ### aX6UIMask.maskContent : <code>String</code>
-**Kind**: instance property of <code>[AX6UIMask](#AX6UIMask)</code>  
+**Kind**: instance property of [<code>AX6UIMask</code>](#AX6UIMask)  
 <a name="AX6UIMask+status"></a>
 
 ### aX6UIMask.status : <code>String</code>
-**Kind**: instance property of <code>[AX6UIMask](#AX6UIMask)</code>  
+**Kind**: instance property of [<code>AX6UIMask</code>](#AX6UIMask)  
 <a name="AX6UIMask+activeConfig"></a>
 
 ### aX6UIMask.activeConfig : <code>JSON</code>
-**Kind**: instance property of <code>[AX6UIMask](#AX6UIMask)</code>  
+**Kind**: instance property of [<code>AX6UIMask</code>](#AX6UIMask)  
 <a name="AX6UIMask+init"></a>
 
 ### aX6UIMask.init()
-**Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
+**Kind**: instance method of [<code>AX6UIMask</code>](#AX6UIMask)  
 <a name="AX6UIMask+initOnce"></a>
 
 ### aX6UIMask.initOnce()
-**Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
+**Kind**: instance method of [<code>AX6UIMask</code>](#AX6UIMask)  
 <a name="AX6UIMask+open"></a>
 
-### aX6UIMask.open(options) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
-**Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
+### aX6UIMask.open(options) ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
+**Kind**: instance method of [<code>AX6UIMask</code>](#AX6UIMask)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -86,8 +86,8 @@ myMask.open();
 ```
 <a name="AX6UIMask+close"></a>
 
-### aX6UIMask.close(delay) ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
-**Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
+### aX6UIMask.close(delay) ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
+**Kind**: instance method of [<code>AX6UIMask</code>](#AX6UIMask)  
 
 | Param |
 | --- |
@@ -95,9 +95,9 @@ myMask.open();
 
 <a name="AX6UIMask+fadeOut"></a>
 
-### aX6UIMask.fadeOut() ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
-**Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
+### aX6UIMask.fadeOut() ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
+**Kind**: instance method of [<code>AX6UIMask</code>](#AX6UIMask)  
 <a name="AX6UIMask+align"></a>
 
-### aX6UIMask.align() ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
-**Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
+### aX6UIMask.align() ⇒ [<code>AX6UIMask</code>](#AX6UIMask)
+**Kind**: instance method of [<code>AX6UIMask</code>](#AX6UIMask)  

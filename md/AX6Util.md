@@ -4,9 +4,9 @@
 
 * [AX6Util](#module_AX6Util)
     * _static_
-        * [.alert](#module_AX6Util.alert) ⇒ <code>Object</code> &#124; <code>Array</code> &#124; <code>String</code> &#124; <code>Number</code>
+        * [.alert](#module_AX6Util.alert) ⇒ <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Number</code>
         * [.each](#module_AX6Util.each)
-        * [.search](#module_AX6Util.search) ⇒ <code>Number</code> &#124; <code>String</code>
+        * [.search](#module_AX6Util.search) ⇒ <code>Number</code> \| <code>String</code>
         * [.filter](#module_AX6Util.filter) ⇒ <code>Array</code>
         * [.parseJson](#module_AX6Util.parseJson) ⇒ <code>Object</code>
         * [.first](#module_AX6Util.first) ⇒ <code>Object</code>
@@ -29,10 +29,10 @@
         * [.getCookie](#module_AX6Util.getCookie) ⇒ <code>String</code>
         * [.camelCase](#module_AX6Util.camelCase) ⇒ <code>String</code>
         * [.snakeCase](#module_AX6Util.snakeCase) ⇒ <code>String</code>
-        * [.number](#module_AX6Util.number) ⇒ <code>String</code> &#124; <code>Number</code>
+        * [.number](#module_AX6Util.number) ⇒ <code>String</code> \| <code>Number</code>
         * [.toArray](#module_AX6Util.toArray) ⇒ <code>Array</code>
-        * [.param](#module_AX6Util.param) ⇒ <code>Object</code> &#124; <code>String</code>
-        * [.date](#module_AX6Util.date) ⇒ <code>Date</code> &#124; <code>String</code>
+        * [.param](#module_AX6Util.param) ⇒ <code>Object</code> \| <code>String</code>
+        * [.date](#module_AX6Util.date) ⇒ <code>Date</code> \| <code>String</code>
         * [.dday](#module_AX6Util.dday) ⇒ <code>Number</code>
         * [.daysOfMonth](#module_AX6Util.daysOfMonth) ⇒ <code>Number</code>
         * [.weeksOfMonth](#module_AX6Util.weeksOfMonth) ⇒ <code>Object</code>
@@ -40,7 +40,7 @@
         * [.times](#module_AX6Util.times) ⇒ <code>string</code>
         * [.findParentNode](#module_AX6Util.findParentNode) ⇒ <code>Element</code>
         * [.cssNumber](#module_AX6Util.cssNumber) ⇒ <code>String</code>
-        * [.css](#module_AX6Util.css) ⇒ <code>String</code> &#124; <code>Object</code>
+        * [.css](#module_AX6Util.css) ⇒ <code>String</code> \| <code>Object</code>
         * [.stopEvent](#module_AX6Util.stopEvent)
         * [.selectRange](#module_AX6Util.selectRange)
         * [.debounce](#module_AX6Util.debounce) ⇒ <code>debounced</code>
@@ -55,15 +55,15 @@
 
 <a name="module_AX6Util.alert"></a>
 
-### AX6Util.alert ⇒ <code>Object</code> &#124; <code>Array</code> &#124; <code>String</code> &#124; <code>Number</code>
+### AX6Util.alert ⇒ <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Number</code>
 jsonString 으로 alert 합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
-**Returns**: <code>Object</code> &#124; <code>Array</code> &#124; <code>String</code> &#124; <code>Number</code> - O  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
+**Returns**: <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Number</code> - O  
 
 | Param | Type |
 | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> &#124; <code>String</code> &#124; <code>Number</code> | 
+| O | <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Number</code> | 
 
 **Example**  
 ```js
@@ -75,11 +75,11 @@ AX6Util.alert("정말?");
 ### AX6Util.each
 Object나 Array의 아이템으로 사용자 함수를 호출합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> | 
+| O | <code>Object</code> \| <code>Array</code> | 
 | _fn | <code>function</code> | 
 
 **Example**  
@@ -94,15 +94,15 @@ axf.each({a:1, b:2}, function(){
 ```
 <a name="module_AX6Util.search"></a>
 
-### AX6Util.search ⇒ <code>Number</code> &#124; <code>String</code>
+### AX6Util.search ⇒ <code>Number</code> \| <code>String</code>
 원본 아이템들을 이용하여 사용자 함수의 리턴값이 참인 아이템의 위치나 키값을 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> |  |
-| _fn | <code>function</code> &#124; <code>String</code> &#124; <code>Number</code> | 함수 또는 값 |
+| O | <code>Object</code> \| <code>Array</code> |  |
+| _fn | <code>function</code> \| <code>String</code> \| <code>Number</code> | 함수 또는 값 |
 
 **Example**  
 ```js
@@ -135,11 +135,11 @@ AX6Util.search({k1:"name",k2:"value"}, "value");
 ### AX6Util.filter ⇒ <code>Array</code>
 배열또는 오브젝트의 각 아이템을 인자로 하는 사용자 함수의 결과가 참인 아이템들의 배열을 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> | 
+| O | <code>Object</code> \| <code>Array</code> | 
 | _fn | <code>function</code> | 
 
 **Example**  
@@ -163,7 +163,7 @@ console.log( AX6Util.toJson(result) );
 ### AX6Util.parseJson ⇒ <code>Object</code>
 관용의 JSON Parser
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -192,11 +192,11 @@ console.log(AX6Util.parseJson("[{'a':'99'},'2','3']"));
 ### AX6Util.first ⇒ <code>Object</code>
 오브젝트의 첫번째 아이템을 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> | 
+| O | <code>Object</code> \| <code>Array</code> | 
 
 **Example**  
 ```js
@@ -210,11 +210,11 @@ AX6Util.first([1,2,3,4]);
 ### AX6Util.last ⇒ <code>Object</code>
 오브젝트의 마지막 아이템을 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> | 
+| O | <code>Object</code> \| <code>Array</code> | 
 
 **Example**  
 ```js
@@ -228,12 +228,12 @@ AX6Util.last([1,2,3,4]);
 ### AX6Util.left ⇒ <code>String</code>
 문자열의 특정 문자열까지 잘라주거나 원하는 포지션까지 잘라줍니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | str | <code>String</code> | 문자열 |
-| pos | <code>String</code> &#124; <code>Number</code> | 찾을 문자열 또는 포지션 |
+| pos | <code>String</code> \| <code>Number</code> | 찾을 문자열 또는 포지션 |
 
 **Example**  
 ```js
@@ -247,12 +247,12 @@ AX6Util.left("abcd.efd", ".");
 ### AX6Util.right ⇒ <code>String</code>
 문자열의 특정 문자열까지 잘라주거나 원하는 포지션까지 잘라줍니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | str | <code>String</code> | 문자열 |
-| pos | <code>String</code> &#124; <code>Number</code> | 찾을 문자열 또는 포지션 |
+| pos | <code>String</code> \| <code>Number</code> | 찾을 문자열 또는 포지션 |
 
 **Example**  
 ```js
@@ -266,12 +266,12 @@ AX6Util.right("abcd.efd", ".");
 ### AX6Util.getType ⇒ <code>String</code>
 인자의 타입을 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 **Returns**: <code>String</code> - window|element|object|array|function|string|number|undefined|nodelist  
 
 | Param | Type |
 | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> &#124; <code>String</code> &#124; <code>Number</code> &#124; <code>Element</code> &#124; <code>Etc</code> | 
+| O | <code>Object</code> \| <code>Array</code> \| <code>String</code> \| <code>Number</code> \| <code>Element</code> \| <code>Etc</code> | 
 
 **Example**  
 ```js
@@ -286,7 +286,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isWindow ⇒ <code>Boolean</code>
 오브젝트가 window 인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -297,7 +297,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isElement ⇒ <code>Boolean</code>
 오브젝트가 HTML 엘리먼트여부인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -308,7 +308,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isObject ⇒ <code>Boolean</code>
 오브젝트가 Object인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -319,7 +319,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isArray ⇒ <code>Boolean</code>
 오브젝트가 Array인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -330,7 +330,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isFunction ⇒ <code>Boolean</code>
 오브젝트가 Function인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -341,7 +341,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isString ⇒ <code>Boolean</code>
 오브젝트가 String인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -352,7 +352,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isNumber ⇒ <code>Boolean</code>
 오브젝트가 Number인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -363,7 +363,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isNodelist ⇒ <code>Boolean</code>
 오브젝트가 NodeList인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -374,7 +374,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isUndefined ⇒ <code>Boolean</code>
 오브젝트가 undefined인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -385,7 +385,7 @@ console.log( axf.getType(b) );
 ### AX6Util.isDate ⇒ <code>Boolean</code>
 오브젝트가 날자값인지 판단합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -403,13 +403,13 @@ AX6Util.isDate( new Date('2016-09-30') );
 ### AX6Util.isDateFormat
 오브젝트가 날짜형 변수인지 판단합니다
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 <a name="module_AX6Util.setCookie"></a>
 
 ### AX6Util.setCookie
 쿠키를 설정합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -429,7 +429,7 @@ AX6Util.setCookie("jslib", "AX5", 3, {path:"/", domain:".axisj.com"});
 ### AX6Util.getCookie ⇒ <code>String</code>
 쿠키를 가져옵니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 **Returns**: <code>String</code> - cookie value  
 
 | Param | Type |
@@ -445,7 +445,7 @@ AX6Util.getCookie("jslib");
 ### AX6Util.camelCase ⇒ <code>String</code>
 css형 문자열이나 특수문자가 포함된 문자열을 카멜케이스로 바꾸어 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -462,7 +462,7 @@ AX6Util.camelCase("innerWidth");
 ### AX6Util.snakeCase ⇒ <code>String</code>
 css형 문자열이나 카멜케이스문자열을 스네이크 케이스 문자열로 바꾸어 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -477,14 +477,14 @@ AX6Util.snakeCase("innerWidth");
 ```
 <a name="module_AX6Util.number"></a>
 
-### AX6Util.number ⇒ <code>String</code> &#124; <code>Number</code>
+### AX6Util.number ⇒ <code>String</code> \| <code>Number</code>
 문자열에서 -. 을 제외한 모든 문자열을 제거하고 숫자로 반환합니다. 옵션에 따라 원하는 형식의 숫자로 변환 할 수 도 있습니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| str | <code>String</code> &#124; <code>Number</code> |  |
+| str | <code>String</code> \| <code>Number</code> |  |
 | cond | <code>Object</code> | 옵션 |
 
 **Example**  
@@ -513,11 +513,11 @@ console.log(AX6Util.number("A-1234~~56789.8~888PX", {abs:true, round:2, money:tr
 ### AX6Util.toArray ⇒ <code>Array</code>
 배열 비슷한 오브젝트를 배열로 변환해줍니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| O | <code>Object</code> &#124; <code>Elements</code> &#124; <code>Arguments</code> | 
+| O | <code>Object</code> \| <code>Elements</code> \| <code>Arguments</code> | 
 
 **Example**  
 ```js
@@ -526,14 +526,14 @@ AX6Util.toArray(arguments);
 ```
 <a name="module_AX6Util.param"></a>
 
-### AX6Util.param ⇒ <code>Object</code> &#124; <code>String</code>
+### AX6Util.param ⇒ <code>Object</code> \| <code>String</code>
 오브젝트를 파라미터형식으로 또는 파라미터를 오브젝트 형식으로 변환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| O | <code>Object</code> &#124; <code>Array</code> &#124; <code>String</code> |  |
+| O | <code>Object</code> \| <code>Array</code> \| <code>String</code> |  |
 | [cond] | <code>String</code> | param|object |
 
 **Example**  
@@ -546,14 +546,14 @@ AX6Util.param("a=1&b=1232");
 ```
 <a name="module_AX6Util.date"></a>
 
-### AX6Util.date ⇒ <code>Date</code> &#124; <code>String</code>
+### AX6Util.date ⇒ <code>Date</code> \| <code>String</code>
 날짜 형식의 문자열이나 Date객체를 조건에 맞게 처리 한 후 원하는 return 값으로 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| d | <code>String</code> &#124; <code>Date</code> | 
+| d | <code>String</code> \| <code>Date</code> | 
 | cond | <code>Object</code> | 
 
 **Example**  
@@ -567,11 +567,11 @@ AX6Util.date('1919-03-01', {add:{d:10}, return:'yyyy/MM/dd hh:mm:ss'}); // "1919
 ### AX6Util.dday ⇒ <code>Number</code>
 인자인 날짜가 오늘부터 몇일전인지 반환합니다. 또는 인자인 날짜가 가까운 미래에 몇일 후인지 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| d | <code>String</code> &#124; <code>Data</code> | 
+| d | <code>String</code> \| <code>Data</code> | 
 | cond | <code>Object</code> | 
 
 **Example**  
@@ -589,7 +589,7 @@ AX6Util.dday('1977-03-29', {today:'2016-01-28', age:true});
 년월에 맞는 날자수를 반환합니다.
 (new Date()).getMonth() 기준으로 월값을 보냅니다. "2월" 인경우 "1" 을 넘기게 됩니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 **Examples**: ```js
 AX6Util.daysOfMonth(2015, 11); // 31
 AX6Util.daysOfMonth(2015, 1); // 28
@@ -605,11 +605,11 @@ AX6Util.daysOfMonth(2015, 1); // 28
 ### AX6Util.weeksOfMonth ⇒ <code>Object</code>
 인자인 날짜가 몇년 몇월의 몇번째 주차인지 반환합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| d | <code>String</code> &#124; <code>Data</code> | 
+| d | <code>String</code> \| <code>Data</code> | 
 
 **Example**  
 ```js
@@ -622,11 +622,11 @@ AX6Util.weeksOfMonth("2015-09-19"); // {year: 2015, month: 9, count: 3}
 원하는 횟수 만큼 자릿수 맞춤 문자열을 포함한 문자열을 반환합니다.
 문자열 길이보다 작은값을 보내면 무시됩니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Default |
 | --- | --- | --- |
-| num | <code>String</code> &#124; <code>Number</code> |  | 
+| num | <code>String</code> \| <code>Number</code> |  | 
 | length | <code>Number</code> |  | 
 | [padder] | <code>String</code> | <code>0</code> | 
 | [radix] | <code>Number</code> |  | 
@@ -643,7 +643,7 @@ AX6Util.setDigit(2016, 2)
 ### AX6Util.times ⇒ <code>string</code>
 문자열을 지정된 수만큼 반복 합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -660,12 +660,12 @@ AX6Util.times(2016, 2)
 ### AX6Util.findParentNode ⇒ <code>Element</code>
 타겟엘리먼트의 부모 엘리멘트 트리에서 원하는 조건의 엘리먼트를 얻습니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | _target | <code>Element</code> | target element |
-| cond | <code>Object</code> &#124; <code>function</code> | 원하는 element를 찾을 조건 |
+| cond | <code>Object</code> \| <code>function</code> | 원하는 element를 찾을 조건 |
 
 **Example**  
 ```
@@ -698,11 +698,11 @@ jQuery('#id').bind("click.app_expand", function(e){
 <a name="module_AX6Util.cssNumber"></a>
 
 ### AX6Util.cssNumber ⇒ <code>String</code>
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
-| val | <code>String</code> &#124; <code>Number</code> | 
+| val | <code>String</code> \| <code>Number</code> | 
 
 **Example**  
 ```
@@ -714,14 +714,14 @@ console.log(AX6Util.cssNumber("!!100@#"))
 ```
 <a name="module_AX6Util.css"></a>
 
-### AX6Util.css ⇒ <code>String</code> &#124; <code>Object</code>
+### AX6Util.css ⇒ <code>String</code> \| <code>Object</code>
 css string 및 object 를 넘기면 object 및 string 으로 변환되어 리턴됩니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| val | <code>Object</code> &#124; <code>String</code> | CSS String or CSS Object |
+| val | <code>Object</code> \| <code>String</code> | CSS String or CSS Object |
 
 **Example**  
 ```
@@ -733,7 +733,7 @@ console.log(AX6Util.css('width:100px;padding: 50px; background: #ccc'));
 <a name="module_AX6Util.stopEvent"></a>
 
 ### AX6Util.stopEvent
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -746,7 +746,7 @@ AX6Util.stopEvent(e);
 <a name="module_AX6Util.selectRange"></a>
 
 ### AX6Util.selectRange
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -766,7 +766,7 @@ AX6Util.selectRange($("#select-test-0"), [1, 5]); // select 1~5
 ### AX6Util.debounce ⇒ <code>debounced</code>
 지정한 시간을 지연시켜 함수를 실행합니다.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -785,7 +785,7 @@ $(document.body).click(function(){
 <a name="module_AX6Util.throttle"></a>
 
 ### AX6Util.throttle ⇒ <code>throttled</code>
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param |
 | --- |
@@ -804,7 +804,7 @@ $(window).scroll(function(){
 <a name="module_AX6Util.deepCopy"></a>
 
 ### AX6Util.deepCopy ⇒ <code>Object</code>
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -828,7 +828,7 @@ HTML 문자열을 escape 처리합니다.
 "&quot; represents the " mark.
 [Character entity references](https://www.w3.org/TR/html401/charset.html#h-5.3)
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -845,7 +845,7 @@ AX6Util.escapeHtml('HTML <span>string</span> & "escape"')
 HTML 문자열을 unescape 처리합니다.
 escapeHtml를 참고하세요.
 
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -859,7 +859,7 @@ AX6Util.unescapeHtml('HTML &lt;span&gt;string&lt;/span&gt; &amp; &quot;escape&qu
 <a name="module_AX6Util.string"></a>
 
 ### AX6Util.string ⇒ <code>ax6string</code>
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param | Type |
 | --- | --- |
@@ -875,7 +875,7 @@ AX6Util.stinrg("{0} counts").format(100);
 <a name="module_AX6Util.color"></a>
 
 ### AX6Util.color ⇒ <code>ax5color</code>
-**Kind**: static property of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: static property of [<code>AX6Util</code>](#module_AX6Util)  
 
 | Param |
 | --- |
@@ -889,7 +889,7 @@ console.log(AX6Util.color("#ff3300").darken(10).getHexValue());
 <a name="module_AX6Util..ax6string"></a>
 
 ### AX6Util~ax6string : <code>object</code>
-**Kind**: inner namespace of <code>[AX6Util](#module_AX6Util)</code>  
+**Kind**: inner namespace of [<code>AX6Util</code>](#module_AX6Util)  
 **Example**  
 ```js
 AX6Util.string("{0} is dead").format("A");

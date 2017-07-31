@@ -13,9 +13,9 @@
     * [.state](#AX6UIMenu+state)
     * [.init()](#AX6UIMenu+init)
     * [.initOnce()](#AX6UIMenu+initOnce)
-    * [.popup(e, [opt])](#AX6UIMenu+popup) ⇒ <code>[AX6UIMenu](#AX6UIMenu)</code>
-    * [.attach(el)](#AX6UIMenu+attach) ⇒ <code>[AX6UIMenu](#AX6UIMenu)</code>
-    * [.close()](#AX6UIMenu+close) ⇒ <code>[AX6UIMenu](#AX6UIMenu)</code>
+    * [.popup(e, [opt])](#AX6UIMenu+popup) ⇒ [<code>AX6UIMenu</code>](#AX6UIMenu)
+    * [.attach(el)](#AX6UIMenu+attach) ⇒ [<code>AX6UIMenu</code>](#AX6UIMenu)
+    * [.close()](#AX6UIMenu+close) ⇒ [<code>AX6UIMenu</code>](#AX6UIMenu)
     * [.getCheckValue()](#AX6UIMenu+getCheckValue) ⇒ <code>Object</code>
 
 <a name="new_AX6UIMenu_new"></a>
@@ -29,7 +29,7 @@
 <a name="AX6UIMenu+config"></a>
 
 ### aX6UIMenu.config : <code>JSON</code>
-**Kind**: instance property of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance property of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 
 | Param | Default |
 | --- | --- |
@@ -55,58 +55,58 @@
 <a name="AX6UIMenu+openTimer"></a>
 
 ### aX6UIMenu.openTimer
-**Kind**: instance property of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance property of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+closeTimer"></a>
 
 ### aX6UIMenu.closeTimer
-**Kind**: instance property of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance property of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+queue"></a>
 
 ### aX6UIMenu.queue : <code>Array</code>
-**Kind**: instance property of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance property of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+menuBar"></a>
 
 ### aX6UIMenu.menuBar : <code>Object</code>
-**Kind**: instance property of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance property of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+state"></a>
 
 ### aX6UIMenu.state
-**Kind**: instance property of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance property of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+init"></a>
 
 ### aX6UIMenu.init()
-**Kind**: instance method of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance method of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+initOnce"></a>
 
 ### aX6UIMenu.initOnce()
-**Kind**: instance method of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance method of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+popup"></a>
 
-### aX6UIMenu.popup(e, [opt]) ⇒ <code>[AX6UIMenu](#AX6UIMenu)</code>
-**Kind**: instance method of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+### aX6UIMenu.popup(e, [opt]) ⇒ [<code>AX6UIMenu</code>](#AX6UIMenu)
+**Kind**: instance method of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| e | <code>Event</code> &#124; <code>Object</code> | Event or Object |
+| e | <code>Event</code> \| <code>Object</code> | Event or Object |
 | [opt] | <code>Object</code> |  |
 | [opt.theme] | <code>String</code> |  |
 | [opt.filter] | <code>function</code> |  |
 
 <a name="AX6UIMenu+attach"></a>
 
-### aX6UIMenu.attach(el) ⇒ <code>[AX6UIMenu](#AX6UIMenu)</code>
-**Kind**: instance method of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+### aX6UIMenu.attach(el) ⇒ [<code>AX6UIMenu</code>](#AX6UIMenu)
+**Kind**: instance method of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 
 | Param | Type |
 | --- | --- |
-| el | <code>Element</code> &#124; <code>jQueryObject</code> | 
+| el | <code>Element</code> \| <code>jQueryObject</code> | 
 
 <a name="AX6UIMenu+close"></a>
 
-### aX6UIMenu.close() ⇒ <code>[AX6UIMenu](#AX6UIMenu)</code>
-**Kind**: instance method of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+### aX6UIMenu.close() ⇒ [<code>AX6UIMenu</code>](#AX6UIMenu)
+**Kind**: instance method of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 <a name="AX6UIMenu+getCheckValue"></a>
 
 ### aX6UIMenu.getCheckValue() ⇒ <code>Object</code>
-**Kind**: instance method of <code>[AX6UIMenu](#AX6UIMenu)</code>  
+**Kind**: instance method of [<code>AX6UIMenu</code>](#AX6UIMenu)  
 **Returns**: <code>Object</code> - statusCheckItem  

@@ -11,6 +11,7 @@ let el = `
 <div id="calendar-target-2" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 20px;" class="card"></div>
 <div id="calendar-target-3" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 20px;" class="card"></div>
 <div id="calendar-target-4" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 20px;" class="card"></div>
+<div id="calendar-target-5" style="width:270px;padding: 10px;border-radius: 5px;float:left;margin-right: 20px;" class="card"></div>
 `;
 $body.append(el);
 
@@ -70,6 +71,9 @@ myCalendar_1.setSelection([
   U.date(today, {'add': {d: -3}})
 ]);
 
+console.log(myCalendar_1.getSelection());
+
+
 let myCalendar_2 = new Calendar({
   target: document.getElementById("calendar-target-2"),
   marker: (function () {
@@ -93,7 +97,6 @@ let myCalendar_3 = new Calendar({
     console.log(this)
   }
 });
-
 
 // Period
 let myCalendar_4 = new Calendar({
@@ -120,3 +123,31 @@ let myCalendar_4 = new Calendar({
     }
   },
 });
+
+// changeMode
+let myCalendar_5 = new Calendar({
+    control: {
+        left: '<i class="material-icons">keyboard_arrow_left</i>',
+        yearTmpl: '%s',
+        monthTmpl: '%s',
+        right: '<i class="material-icons">keyboard_arrow_right</i>',
+        yearFirst: true
+    },
+    dimensions: {
+        itemPadding: 1,
+        height: 250
+    },
+    target: document.getElementById("calendar-target-5"),
+    displayDate: (new Date()),
+    startOfWeek: 1,
+    mode: "day",
+    selectMode: "day",
+    onClick: function () {
+        console.log(myCalendar_0.getSelection());
+    },
+    onStateChanged: function () {
+        console.log(this);
+    },
+    multipleSelect: 2
+});
+myCalendar_5.changeMode("y");

@@ -1230,10 +1230,10 @@ class AX6UIGrid extends AX6UICore {
     DATA.set.call(this, _data);
     alignGrid.call(this);
     BODY.repaint.call(this);
+    if (!isFirstPaint) BODY.scrollTo.call(this, {top: 0});
+
     SCROLLER.resize.call(this);
     PAGE.navigationUpdate.call(this);
-
-    if (!isFirstPaint) BODY.scrollTo.call(this, {top: 0});
 
     isFirstPaint = null;
     return this;

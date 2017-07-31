@@ -1316,10 +1316,10 @@ var AX6UIGrid = function (_AX6UICore) {
       _AX6UIGrid_data2.default.set.call(this, _data);
       alignGrid.call(this);
       _AX6UIGrid_body2.default.repaint.call(this);
+      if (!isFirstPaint) _AX6UIGrid_body2.default.scrollTo.call(this, { top: 0 });
+
       _AX6UIGrid_scroller2.default.resize.call(this);
       _AX6UIGrid_page2.default.navigationUpdate.call(this);
-
-      if (!isFirstPaint) _AX6UIGrid_body2.default.scrollTo.call(this, { top: 0 });
 
       isFirstPaint = null;
       return this;

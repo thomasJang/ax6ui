@@ -132,6 +132,10 @@ var statusUpdate = function statusUpdate() {
     data.fromRowIndex_page = _AX6Util2.default.number(this.xvar.virtualPaintStartRowIndex + this.page.currentPage * this.page.pageSize + 1, { "money": true });
     data.toRowIndex_page = _AX6Util2.default.number(this.xvar.virtualPaintStartRowIndex + this.xvar.virtualPaintRowCount + this.page.currentPage * this.page.pageSize, { "money": true });
     data.totalElements = _AX6Util2.default.number(this.page.totalElements, { "money": true });
+
+    if (data.toRowIndex_page > this.page.totalElements) {
+      data.toRowIndex_page = this.page.totalElements;
+    }
   }
 
   this.$["page"]["status"].html(_AX6Mustache2.default.render(this.__tmpl.page_status.call(this), data));

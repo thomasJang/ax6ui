@@ -21,7 +21,7 @@ let entry = {
 };
 
 let plugins = [
-  new CleanWebpackPlugin(['dist'])
+  //new CleanWebpackPlugin(['dist'])
 ];
 
 let menu = [];

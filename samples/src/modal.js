@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Modal from "../../src/AX6UIModal";
-import "./assets/sample.scss";
+
 
 const $body = $("#sample-body");
 let el = `

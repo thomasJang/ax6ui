@@ -1,7 +1,7 @@
 import $ from "jqmin";
 import U from "../../src/AX6Util";
 import Menu from "../../src/AX6UIMenu";
-import "./assets/sample.scss";
+
 
 
 const $body = $("#sample-body");
@@ -16,7 +16,6 @@ $body.append(el);
 
 /////~~~~~~~~~~~~~~~~~~
 let menu = new Menu({
-  theme: 'primary',
   // width: 200,
   iconWidth: 20,
   acceleratorWidth: 100,
@@ -162,7 +161,7 @@ menu.onLoad = function () {
 
 $(document.body).on("contextmenu", function (e) {
   menu.popup(e, {
-    theme: "danger", filter: function () {
+    filter: function () {
       return true;
     }
   });
@@ -172,7 +171,6 @@ $(document.body).on("contextmenu", function (e) {
 
 
 let attachedMenu = new Menu({
-  theme: 'danger',
   direction: "top",
   offset: {left: 0, top: 1},
   position: "absolute",

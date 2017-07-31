@@ -2,7 +2,7 @@ import $ from "jqmin";
 import axios from "axios";
 import Dialog from "../../src/AX6UIDialog";
 import Uploader from "../../src/AX6UIUploader";
-import "./assets/sample.scss";
+
 
 const $body = $("#sample-body");
 let el = `

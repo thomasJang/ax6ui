@@ -5,6 +5,7 @@ import U from "./AX6Util";
 import FORMATTER from "./AX6UIFormatter/AX6UIFormatter_formatter";
 
 let formatter = {};
+
 const setSelectionRange = function (input, pos) {
   if (typeof pos == "undefined") {
     pos = input.value.length;
@@ -160,7 +161,6 @@ const unbindFormatterTarget = function (opts, optIdx) {
 
   return this;
 };
-
 const getQueIdx = function (boundID) {
   if (!U.isString(boundID)) {
     boundID = jQuery(boundID).data("data-formatter");
@@ -278,6 +278,10 @@ class AX6UIFormatter extends AX6UICore {
       return this;
     }
     opts.$target = jQuery(opts.target);
+    if(!opts.$target.get(0)){
+      console.log(info.getError("ax6formatter", "401", "can't found target element"));
+      return this;
+    }
 
     if (opts.$target.get(0).tagName == "INPUT") {
       opts.$input = opts.$target;
@@ -383,7 +387,7 @@ class AX6UIFormatter extends AX6UICore {
    * @param _formatter
    */
   static setFormatter(_formatter) {
-    formatter = _formatter;
+    return formatter = Object.assign(formatter, _formatter);
   }
 
   /**
@@ -392,6 +396,22 @@ class AX6UIFormatter extends AX6UICore {
    */
   static getFormatter() {
     return formatter || {};
+  }
+
+  /**
+   * @static
+   * @return {{}}
+   */
+  static getCtrlKeys(){
+    return FORMATTER.ctrlKeys;
+  }
+
+  /**
+   * @static
+   * @return {{}}
+   */
+  static getNumKeys(){
+    return FORMATTER.numKeys;
   }
 }
 

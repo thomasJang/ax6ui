@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Dialog from "../../src/AX6UIDialog";
-import "./assets/sample.scss";
+
 
 const $body = $("#sample-body");
 let el = `

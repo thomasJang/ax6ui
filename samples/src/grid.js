@@ -2,7 +2,7 @@ import $ from "jqmin";
 import axios from "axios";
 import Grid from "../../src/AX6UIGrid";
 import Menu from "../../src/AX6UIMenu";
-import "./assets/sample.scss";
+
 
 const $body = $("#sample-body");
 let el = `
@@ -43,7 +43,7 @@ Grid.setFormatter({
 Grid.setCollector({});
 Grid.setTmpl({
   "page_status": function () {
-    return `<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}}</span>`;
+    return '<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}} of {{dataRowCount}} {{#dataRealRowCount}}  현재페이지 {{.}}{{/dataRealRowCount}} {{#totalElements}}  전체갯수 {{.}}{{/totalElements}}</span>';
   }
 });
 
@@ -137,7 +137,6 @@ new Grid({
 
 
 let menu = new Menu({
-  theme: 'primary',
   // width: 200,
   iconWidth: 20,
   acceleratorWidth: 100,

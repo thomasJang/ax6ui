@@ -1,23 +1,61 @@
-.btn {
-  height: 2em;
-  line-height: 2em;
-  padding: 0 0.8em;
-}
+@import "material-design-icons/iconfont/material-icons.css";
 
 // Media Query Ranges
-$small-screen-up: 601px !default;
-$medium-screen-up: 993px !default;
-$large-screen-up: 1201px !default;
-$small-screen: 600px !default;
-$medium-screen: 992px !default;
-$large-screen: 1200px !default;
+$small-screen-up: 601px;
+$medium-screen-up: 993px;
+$large-screen-up: 1201px;
+$small-screen: 600px;
+$medium-screen: 992px;
+$large-screen: 1200px;
 
-$medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
-$large-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
-$extra-large-and-up: "only screen and (min-width : #{$large-screen-up})" !default;
-$small-and-down: "only screen and (max-width : #{$small-screen})" !default;
-$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
-$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})";
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})";
+$extra-large-and-up: "only screen and (min-width : #{$large-screen-up})";
+$small-and-down: "only screen and (max-width : #{$small-screen})";
+$medium-and-down: "only screen and (max-width : #{$medium-screen})";
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})";
+
+$roboto-font-path: "fonts/roboto/";
+
+// Mixins
+@import "scss/components/mixins";
+@import "scss/components/color";
+
+// Variables;
+@import "scss/components/variables";
+
+// Reset
+@import "scss/components/normalize";
+
+// components
+@import "scss/components/global";
+@import "scss/components/badges";
+@import "scss/components/icons-material-design";
+@import "scss/components/grid";
+@import "scss/components/navbar";
+@import "scss/components/roboto";
+@import "scss/components/typography";
+@import "scss/components/transitions";
+@import "scss/components/cards";
+@import "scss/components/toast";
+@import "scss/components/tabs";
+@import "scss/components/tooltip";
+@import "scss/components/buttons";
+@import "scss/components/dropdown";
+@import "scss/components/waves";
+@import "scss/components/modal";
+@import "scss/components/collapsible";
+@import "scss/components/chips";
+@import "scss/components/materialbox";
+@import "scss/components/forms/forms";
+@import "scss/components/table_of_contents";
+@import "scss/components/sideNav";
+@import "scss/components/preloader";
+@import "scss/components/slider";
+@import "scss/components/carousel";
+@import "scss/components/tapTarget";
+@import "scss/components/pulse";
+
 
 nav {
   background: #000;
@@ -44,4 +82,10 @@ nav {
 .material-icons {
   vertical-align: middle;
   line-height: inherit;
+}
+
+.btn {
+  height: 2em;
+  line-height: 2em;
+  padding: 0 0.8em;
 }

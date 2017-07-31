@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Mask from "../../src/AX6UIMask";
-import "./assets/sample.scss";
+
 
 
 const $body = $("#sample-body");
@@ -8,15 +8,14 @@ let el = `
 
 <div id="making-div" style="height:500px;background: #ccc;">making div</div>
 <br/>
-<a class="waves-effect waves-light btn" data-btn="mask">button</a>
-<a class="waves-effect waves-light btn" data-btn="mask-content">button(with content)</a>
-<a class="waves-effect waves-light btn" data-btn="mask-div">button(masking)</a>
+<a class="waves-effect waves-light btn" data-btn="mask">Open Mask</a>
+<a class="waves-effect waves-light btn" data-btn="mask-content">Open Mask(with content)</a>
+<a class="waves-effect waves-light btn" data-btn="mask-div">Open Mask(masking)</a>
 `;
 $body.append(el);
 
 
 /////~~~~~~~~~~~~~~~~~~
-
 let myMask = new Mask();
 
 myMask.setConfig({

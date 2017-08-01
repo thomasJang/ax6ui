@@ -3,7 +3,7 @@ import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
 import info from "./AX6Info";
 import mustache from "./AX6Mustache";
-import "./AX6UIModal/index.scss";
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 let tmpl = {
   modal() {
@@ -58,6 +58,7 @@ let ENM = {
   "mousemove": (info.supportTouch) ? "touchmove" : "mousemove",
   "mouseup": (info.supportTouch) ? "touchend" : "mouseup"
 };
+
 const getMousePosition = function (e) {
   let mouseObj = e;
   if ('changedTouches' in e && e.changedTouches) {
@@ -68,7 +69,6 @@ const getMousePosition = function (e) {
     clientY: mouseObj.clientY
   }
 };
-
 const onStateChanged = function (opts, that) {
   const eventProcessor = {
     "resize": function (that) {
@@ -838,7 +838,7 @@ const resizeModal = {
 
   }
 };
-
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

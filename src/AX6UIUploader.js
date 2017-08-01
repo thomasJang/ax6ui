@@ -3,8 +3,8 @@ import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
 import info from "./AX6Info";
 import mustache from "./AX6Mustache";
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
-import "./AX6UIUploader/index.scss";
 
 let tmpl = {
   uploadProgress(columnKeys) {
@@ -664,6 +664,7 @@ const attachFileTag = function () {
       onSelectFile.call(this, e);
     });
 };
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

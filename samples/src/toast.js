@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Toast from "../../src/AX6UIToast";
-
+import "../../src/AX6UIToast/style.scss";
 
 const $body = $("#sample-body");
 let el = `

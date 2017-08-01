@@ -14,13 +14,13 @@ var _AX6UICore2 = require("./AX6UICore");
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Info = require("./AX6Info");
-
-var _AX6Info2 = _interopRequireDefault(_AX6Info);
-
 var _AX6Util = require("./AX6Util");
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
+
+var _AX6Info = require("./AX6Info");
+
+var _AX6Info2 = _interopRequireDefault(_AX6Info);
 
 var _AX6UIFormatter_formatter = require("./AX6UIFormatter/AX6UIFormatter_formatter");
 
@@ -33,6 +33,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 var formatter = {};
 
@@ -180,6 +182,7 @@ var getQueIdx = function getQueIdx(boundID) {
     return this.id == boundID;
   });
 };
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

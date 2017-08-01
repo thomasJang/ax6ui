@@ -26,8 +26,6 @@ var _AX6Mustache = require("./AX6Mustache");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
-require("./AX6UISelect/index.scss");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,6 +33,40 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+
+var ctrlKeys = {
+  "18": "KEY_ALT",
+  "8": "KEY_BACKSPACE",
+  "17": "KEY_CONTROL",
+  "46": "KEY_DELETE",
+  "40": "KEY_DOWN",
+  "35": "KEY_END",
+  "187": "KEY_EQUAL",
+  "27": "KEY_ESC",
+  "36": "KEY_HOME",
+  "45": "KEY_INSERT",
+  "37": "KEY_LEFT",
+  "189": "KEY_MINUS",
+  "34": "KEY_PAGEDOWN",
+  "33": "KEY_PAGEUP",
+  // "190": "KEY_PERIOD",
+  "13": "KEY_RETURN",
+  "39": "KEY_RIGHT",
+  "16": "KEY_SHIFT",
+  // "32": "KEY_SPACE",
+  "9": "KEY_TAB",
+  "38": "KEY_UP",
+  "91": "KEY_WINDOW"
+  //"107" : "NUMPAD_ADD",
+  //"194" : "NUMPAD_COMMA",
+  //"110" : "NUMPAD_DECIMAL",
+  //"111" : "NUMPAD_DIVIDE",
+  //"12" : "NUMPAD_EQUAL",
+  //"106" : "NUMPAD_MULTIPLY",
+  //"109" : "NUMPAD_SUBTRACT"
+};
 
 var $window = (0, _jqmin2.default)(window);
 var displayTmpl = function displayTmpl(columnKeys) {
@@ -450,7 +482,6 @@ var bindSelectTarget = function bindSelectTarget(queIdx) {
   queIdx = null;
   return this;
 };
-
 var syncSelectOptions = function syncSelectOptions(queIdx, options) {
   var _this2 = this;
 
@@ -546,7 +577,6 @@ var syncSelectOptions = function syncSelectOptions(queIdx, options) {
   newOptions = null;
   return item.options;
 };
-
 var getQueIdx = function getQueIdx(boundID) {
   if (!_AX6Util2.default.isString(boundID)) {
     boundID = (0, _jqmin2.default)(boundID).data("data-ax6ui-select-id");
@@ -559,38 +589,7 @@ var getQueIdx = function getQueIdx(boundID) {
     return this.id == boundID;
   });
 };
-
-var ctrlKeys = {
-  "18": "KEY_ALT",
-  "8": "KEY_BACKSPACE",
-  "17": "KEY_CONTROL",
-  "46": "KEY_DELETE",
-  "40": "KEY_DOWN",
-  "35": "KEY_END",
-  "187": "KEY_EQUAL",
-  "27": "KEY_ESC",
-  "36": "KEY_HOME",
-  "45": "KEY_INSERT",
-  "37": "KEY_LEFT",
-  "189": "KEY_MINUS",
-  "34": "KEY_PAGEDOWN",
-  "33": "KEY_PAGEUP",
-  // "190": "KEY_PERIOD",
-  "13": "KEY_RETURN",
-  "39": "KEY_RIGHT",
-  "16": "KEY_SHIFT",
-  // "32": "KEY_SPACE",
-  "9": "KEY_TAB",
-  "38": "KEY_UP",
-  "91": "KEY_WINDOW"
-  //"107" : "NUMPAD_ADD",
-  //"194" : "NUMPAD_COMMA",
-  //"110" : "NUMPAD_DECIMAL",
-  //"111" : "NUMPAD_DIVIDE",
-  //"12" : "NUMPAD_EQUAL",
-  //"106" : "NUMPAD_MULTIPLY",
-  //"109" : "NUMPAD_SUBTRACT"
-};
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

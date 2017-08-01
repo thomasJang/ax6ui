@@ -1,6 +1,7 @@
 import $ from "jqmin";
 import U from "../../src/AX6Util";
 import Calendar from "../../src/AX6UICalendar";
+import "../../src/AX6UICalendar/style.scss";
 
 
 const $body = $("#sample-body");

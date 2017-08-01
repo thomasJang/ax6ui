@@ -3,7 +3,7 @@ import AX6UICore from "./AX6UICore.js";
 import info from "./AX6Info";
 import U from "./AX6Util";
 import mustache from "./AX6Mustache";
-import "./AX6UIMenu/index.scss";
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 let tmpl = {
   menu(columnKeys) {
@@ -395,6 +395,7 @@ const align = function ($activeMenu, data) {
   position = null;
   return this;
 };
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

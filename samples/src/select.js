@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Select from "../../src/AX6UISelect";
-
+import "../../src/AX6UISelect/style.scss";
 
 const $body = $("#sample-body");
 let el = `

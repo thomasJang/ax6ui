@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Mask from "../../src/AX6UIMask";
-
+import "../../src/AX6UIMask/style.scss";
 
 
 const $body = $("#sample-body");

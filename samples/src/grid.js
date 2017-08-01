@@ -2,7 +2,10 @@ import $ from "jqmin";
 import axios from "axios";
 import Grid from "../../src/AX6UIGrid";
 import Menu from "../../src/AX6UIMenu";
-
+import "../../src/AX6UIGrid/style.scss";
+import "../../src/AX6UIMenu/style.scss";
+import "../../src/AX6UICalendar/style.scss";
+import "../../src/AX6UIPicker/style.scss";
 
 const $body = $("#sample-body");
 let el = `

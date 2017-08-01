@@ -3,7 +3,39 @@ import AX6UICore from "./AX6UICore.js";
 import info from "./AX6Info";
 import U from "./AX6Util";
 import mustache from "./AX6Mustache";
-import "./AX6UISelect/index.scss";
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+
+let ctrlKeys = {
+  "18": "KEY_ALT",
+  "8": "KEY_BACKSPACE",
+  "17": "KEY_CONTROL",
+  "46": "KEY_DELETE",
+  "40": "KEY_DOWN",
+  "35": "KEY_END",
+  "187": "KEY_EQUAL",
+  "27": "KEY_ESC",
+  "36": "KEY_HOME",
+  "45": "KEY_INSERT",
+  "37": "KEY_LEFT",
+  "189": "KEY_MINUS",
+  "34": "KEY_PAGEDOWN",
+  "33": "KEY_PAGEUP",
+  // "190": "KEY_PERIOD",
+  "13": "KEY_RETURN",
+  "39": "KEY_RIGHT",
+  "16": "KEY_SHIFT",
+  // "32": "KEY_SPACE",
+  "9": "KEY_TAB",
+  "38": "KEY_UP",
+  "91": "KEY_WINDOW"
+  //"107" : "NUMPAD_ADD",
+  //"194" : "NUMPAD_COMMA",
+  //"110" : "NUMPAD_DECIMAL",
+  //"111" : "NUMPAD_DIVIDE",
+  //"12" : "NUMPAD_EQUAL",
+  //"106" : "NUMPAD_MULTIPLY",
+  //"109" : "NUMPAD_SUBTRACT"
+};
 
 const $window = jQuery(window);
 const displayTmpl = function (columnKeys) {
@@ -503,7 +535,6 @@ const bindSelectTarget = function (queIdx) {
   queIdx = null;
   return this;
 };
-
 const syncSelectOptions = function (queIdx, options) {
   const setSelected = function (queIdx, O) {
     if (!O) {
@@ -597,7 +628,6 @@ const syncSelectOptions = function (queIdx, options) {
   newOptions = null;
   return item.options;
 };
-
 const getQueIdx = function (boundID) {
   if (!U.isString(boundID)) {
     boundID = jQuery(boundID).data("data-ax6ui-select-id");
@@ -610,38 +640,7 @@ const getQueIdx = function (boundID) {
     return this.id == boundID;
   });
 };
-
-let ctrlKeys = {
-  "18": "KEY_ALT",
-  "8": "KEY_BACKSPACE",
-  "17": "KEY_CONTROL",
-  "46": "KEY_DELETE",
-  "40": "KEY_DOWN",
-  "35": "KEY_END",
-  "187": "KEY_EQUAL",
-  "27": "KEY_ESC",
-  "36": "KEY_HOME",
-  "45": "KEY_INSERT",
-  "37": "KEY_LEFT",
-  "189": "KEY_MINUS",
-  "34": "KEY_PAGEDOWN",
-  "33": "KEY_PAGEUP",
-  // "190": "KEY_PERIOD",
-  "13": "KEY_RETURN",
-  "39": "KEY_RIGHT",
-  "16": "KEY_SHIFT",
-  // "32": "KEY_SPACE",
-  "9": "KEY_TAB",
-  "38": "KEY_UP",
-  "91": "KEY_WINDOW"
-  //"107" : "NUMPAD_ADD",
-  //"194" : "NUMPAD_COMMA",
-  //"110" : "NUMPAD_DECIMAL",
-  //"111" : "NUMPAD_DIVIDE",
-  //"12" : "NUMPAD_EQUAL",
-  //"106" : "NUMPAD_MULTIPLY",
-  //"109" : "NUMPAD_SUBTRACT"
-};
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

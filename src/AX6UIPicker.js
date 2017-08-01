@@ -6,7 +6,7 @@ import mustache from "./AX6Mustache";
 import Formatter from "./AX6UIFormatter";
 import Calendar from "./AX6UICalendar";
 import Palette from "./AX6UIPalette";
-import "./AX6UIPicker/index.scss";
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 let tmpl = {
   pickerTmpl(columnKeys) {
@@ -32,6 +32,7 @@ let tmpl = {
 `;
   }
 };
+
 const onStateChanged = function (item, that) {
   if (item && item.onStateChanged) {
     item.onStateChanged.call(that, that);
@@ -365,6 +366,7 @@ const getQueIdx = function (boundID) {
     return this.id == boundID;
   });
 };
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

@@ -26,8 +26,6 @@ var _AX6Mustache = require("./AX6Mustache.js");
 
 var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
-require("./AX6UIDialog/index.scss");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,6 +33,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 var dialogTmpl = function dialogTmpl(columnKeys) {
   return " \n<div id=\"{{dialogId}}\" data-dialog-els=\"root\" data-ax6ui-dialog=\"\" class=\"{{theme}}\">\n    <div class=\"ax-dialog-header\" data-dialog-els=\"header\">\n        {{{title}}}\n    </div>\n    <div class=\"ax-dialog-body\" data-dialog-els=\"body\">\n        <div class=\"ax-dialog-msg\">{{{msg}}}</div>\n        \n        {{#input}}\n        <div class=\"ax-dialog-prompt\">\n            {{#@each}}\n            <div class=\"form-group\">\n            {{#@value.label}}\n            <label>{{#_crlf}}{{{.}}}{{/_crlf}}</label>\n            {{/@value.label}}\n            <input type=\"{{@value.type}}\" placeholder=\"{{@value.placeholder}}\" class=\"form-control {{@value.theme}}\" data-dialog-prompt=\"{{@key}}\" style=\"width:100%;\" value=\"{{@value.value}}\" />\n            {{#@value.help}}\n            <p class=\"help-block\">{{#_crlf}}{{.}}{{/_crlf}}</p>\n            {{/@value.help}}\n            </div>\n            {{/@each}}\n        </div>\n        {{/input}}\n        \n        <div class=\"ax-dialog-buttons\" data-dialog-els=\"buttons\">\n            <div class=\"ax-button-wrap\">\n            {{#btns}}\n                {{#@each}}\n                <button type=\"button\" data-dialog-btn=\"{{@key}}\" class=\"btn btn-{{@value.theme}}\">{{@value.label}}</button>\n                {{/@each}}\n            {{/btns}}\n            </div>\n        </div>\n        \n        {{#additionalContent}}\n        <div data-dialog-els=\"additional-content\">{{{.}}}</div>\n        {{/additionalContent}}\n    </div>\n</div>  \n";
@@ -250,6 +250,7 @@ var onKeyup = function onKeyup(e, opts, callback, target, k) {
   target = null;
   k = null;
 };
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

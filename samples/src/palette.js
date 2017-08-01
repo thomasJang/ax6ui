@@ -1,6 +1,6 @@
 import $ from "jqmin";
 import Palette from "../../src/AX6UIPalette";
-
+import "../../src/AX6UIPalette/style.scss";
 
 const $body = $("#sample-body");
 let el = `

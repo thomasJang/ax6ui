@@ -73,7 +73,7 @@ gulp.task('dist-scss-ES5', function () {
 });
 
 gulp.task('scss-ES5', ['dist-scss-ES5'], function () {
-  return gulp.src(fnObj.paths.src + '/**/index.scss')
+  return gulp.src(fnObj.paths.src + '/**/style.scss')
     .pipe(sass({outputStyle: 'compressed'}))
     .pipe(gulp.dest(fnObj.paths.dist_es5));
 });
@@ -86,7 +86,7 @@ gulp.task('dist-scss-ES6', function () {
 });
 
 gulp.task('scss-ES6', ['dist-scss-ES6'], function () {
-  gulp.src(fnObj.paths.src + '/**/index.scss')
+  gulp.src(fnObj.paths.src + '/**/style.scss')
     .pipe(sass({outputStyle: 'compressed'}))
     .pipe(gulp.dest(fnObj.paths.dist_es6));
 });

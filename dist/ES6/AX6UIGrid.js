@@ -10,8 +10,7 @@ import SCROLLER from "./AX6UIGrid/AX6UIGrid_scroller";
 import PAGE from "./AX6UIGrid/AX6UIGrid_page";
 import TMPL from "./AX6UIGrid/AX6UIGrid_tmpl";
 import UTIL from "./AX6UIGrid/AX6UIGrid_util";
-
-import "./AX6UIGrid/index.scss";
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 let formatter = {};
 let collector = {};
@@ -467,6 +466,7 @@ const sortColumns = function (_sortInfo) {
     SCROLLER.resize.call(this);
   }
 };
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

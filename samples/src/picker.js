@@ -1,7 +1,9 @@
 import $ from "jqmin";
 import util from "../../src/AX6Util";
 import Picker from "../../src/AX6UIPicker";
-
+import "../../src/AX6UICalendar/style.scss";
+import "../../src/AX6UIPalette/style.scss";
+import "../../src/AX6UIPicker/style.scss";
 
 const $body = $("#sample-body");
 let el = `

@@ -2,7 +2,7 @@ import jQuery from "jqmin";
 import U from "./AX6Util.js";
 import AX6UICore from "./AX6UICore.js";
 import mustache from "./AX6Mustache";
-import "./AX6UIToast/index.scss";
+/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 let tmpl = {
   display(columnKeys) {
@@ -138,6 +138,7 @@ const btnOnClick = function (e, opts, $toastBox, callback, target, k) {
   target = null;
   k = null;
 };
+/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
  * @class

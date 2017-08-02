@@ -14,6 +14,7 @@ let entry = {
   dialog: './src/dialog.js',
   toast: './src/toast.js',
   select: './src/select.js',
+  autocomplete: './src/autocomplete.js',
   menu: './src/menu.js',
   grid: './src/grid.js',
   modal: './src/modal.js',

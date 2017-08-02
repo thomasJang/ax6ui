@@ -3,14 +3,10 @@
 
 ![ax6ui logo](https://github.com/ax6ui/assets/blob/master/ax6ui-logo-320.png)
 
-
-
-
-
 # ax6ui
 ES6 Javascript UI Component
 `ax6ui`는 ES6표준 문법으로 사용하는 Javascript UI 콤포넌트 입니다. 
-React, Vue 등의 프로젝트와 함께 사용할 수 있습니다.
+React, Vue 등의 프로젝트와 함께 사용할 수 있습니다.
 
 # Install
 

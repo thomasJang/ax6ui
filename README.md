@@ -1,11 +1,12 @@
 [![npm version](https://badge.fury.io/js/ax6ui.svg)](https://badge.fury.io/js/ax6ui)
 [![](https://img.shields.io/npm/dm/ax6ui.svg)](https://www.npmjs.com/package/ax6ui)
 
+[![](https://github.com/ax6ui/assets/blob/master/ax6ui-logo-320.png)](ax6ui logo)
 
 # ax6ui
 ES6 Javascript UI Component
 `ax6ui`는 ES6표준 문법으로 사용하는 Javascript UI 콤포넌트 입니다. 
-React, Vue 등의 프로젝트와 함께 사용할 수 있습니다.
+React, Vue 등의 프로젝트와 함께 사용할 수 있습니다.
 
 # Install
 
@@ -333,6 +334,8 @@ new Grid({
 ]);
 ```
 - https://github.com/ax6ui/ax6ui/blob/master/md/AX6UIGrid.md
+
+> ax6ui의 모든 컴포넌트를 사용한다면 개별 컴포넌트의 style.scss를 별도로 import하는 대신에 `import "ax6ui/style.scss";` 을 이용하여 모든 style을 사용할 수 있습니다.
 
 ## Question
 - https://jsdev.kr/c/axisj/ax6ui

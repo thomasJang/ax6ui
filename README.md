@@ -1,7 +1,11 @@
 [![npm version](https://badge.fury.io/js/ax6ui.svg)](https://badge.fury.io/js/ax6ui)
 [![](https://img.shields.io/npm/dm/ax6ui.svg)](https://www.npmjs.com/package/ax6ui)
 
-[![](https://github.com/ax6ui/assets/blob/master/ax6ui-logo-320.png)](ax6ui logo)
+![ax6ui logo](https://github.com/ax6ui/assets/blob/master/ax6ui-logo-320.png)
+
+
+
+
 
 # ax6ui
 ES6 Javascript UI Component

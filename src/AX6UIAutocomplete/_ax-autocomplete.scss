@@ -284,7 +284,18 @@ $hover-types: (
   position: relative;
   z-index: 2;
   padding: 0;
+
   display: block;
+  height: $ax-input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  font-size: $ax-font-size-base;
+  border-radius: $ax-input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
+
+  @include ax-background(top, $ax6autocomplete-label-bg-colors);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  border: $ax6autocomplete-label-border;
+  color: $ax6autocomplete-label-color;
+
+  text-decoration: none;
 
   &:hover, &:focus {
     text-decoration: none;
@@ -301,6 +312,13 @@ $hover-types: (
       display: table-cell;
       vertical-align: middle;
       padding: 0 0;
+      input{
+        margin:0;
+        &:focus, &:active, &:hover{
+          border: 0 none;
+          box-shadow: none;
+        }
+      }
     }
     [data-ax6ui-autocomplete-display="label"] {
       display: block;

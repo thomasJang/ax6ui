@@ -25,6 +25,7 @@ for (let i = 0; i < 20; i++) {
 
 select.bind({
   target: $('[data-ax6ui-select="select1"]'),
+  //height: 30,
   columnKeys: {
     optionValue: 'id',
     optionText: 'alias'

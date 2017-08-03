@@ -51,12 +51,12 @@ let tmpl = {
   "autocompleteDisplay"(columnKeys) {
     return ` 
 <input tabindex="-1" type="text" data-input-dummy="" style="display: none;" />
-<div class="ax6ui-autocomplete-display {{theme}}" data-ax6ui-autocomplete-display="{{id}}" data-ax6ui-autocomplete-instance="{{instanceId}}">
+<div class="ax6ui-autocomplete-display {{theme}}" data-ax6ui-autocomplete-display="{{id}}" data-ax6ui-autocomplete-instance="{{instanceId}}" style="height: {{height}}px;">
     <div class="ax6ui-autocomplete-display-table" data-els="display-table">
         <div data-ax6ui-autocomplete-display="label-holder"> 
-        <a {{^tabIndex}}{{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}}
-        data-ax6ui-autocomplete-display="label"
-        spellcheck="false"><input type="text"data-ax6ui-autocomplete-display="input" style="border:0px none;" /></a>
+          <a {{^tabIndex}}{{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}} data-ax6ui-autocomplete-display="label" spellcheck="false">
+              <input type="text" data-ax6ui-autocomplete-display="input" style="border:0 none;height: {{height}}px;" />
+          </a>
         </div>
         <div data-ax6ui-autocomplete-display="addon"> 
             {{#multiple}}{{#reset}}
@@ -143,10 +143,10 @@ const onStateChanged = function (item, that) {
   return true;
 };
 const alignAutocompleteDisplay = function () {
-  var i = this.queue.length, w;
+  let i = this.queue.length, w;
 
   while (i--) {
-    var item = this.queue[i];
+    let item = this.queue[i];
     if (item.$display) {
       w = Math.max(item.$select.outerWidth(), U.number(item.minWidth));
       item.$display.css({
@@ -182,7 +182,7 @@ const alignAutocompleteDisplay = function () {
 const alignAutocompleteOptionGroup = function (append) {
   if (append && !this.activeautocompleteOptionGroup) return this;
 
-  var item = this.queue[this.activeautocompleteQueueIndex],
+  let item = this.queue[this.activeautocompleteQueueIndex],
     pos = {}, positionMargin = 0,
     dim = {}, pickerDim = {},
     pickerDirection;
@@ -257,10 +257,7 @@ const alignAutocompleteOptionGroup = function (append) {
 const onBodyClick = function (e, target) {
   if (!this.activeautocompleteOptionGroup) return this;
 
-  var
-    item = this.queue[this.activeautocompleteQueueIndex],
-    clickEl = "display"
-  ;
+  let item = this.queue[this.activeautocompleteQueueIndex], clickEl = "display";
 
   target = U.findParentNode(e.target, function (target) {
     if (target.getAttribute("data-option-value")) {
@@ -312,7 +309,7 @@ const getLabel = function (queIdx) {
   return mustache.render(tmpl.label.call(this, item.columnKeys), data);
 };
 const syncLabel = function (queIdx) {
-  var item = this.queue[queIdx];
+  let item = this.queue[queIdx];
 
   if (!item.multiple && item.selected && item.selected.length > 0) {
     item.selected = [].concat(item.selected[item.selected.length - 1]);
@@ -322,12 +319,14 @@ const syncLabel = function (queIdx) {
     n["@index"] = nindex;
   });
 
-  item.$select.html(AUTOCOMPLETE.tmpl.get.call(this, "formSelectOptions", {
-    selected: item.selected
-  }, item.columnKeys));
+  item.$select.html(
+    mustache.render(tmpl.formSelectOptions.call(this, item.columnKeys), {
+      selected: item.selected
+    })
+  );
 };
 const printLabel = function (queIdx) {
-  var item = this.queue[queIdx];
+  let item = this.queue[queIdx];
 
   item.$displayLabel.find('[data-ax6ui-autocomplete-selected-label]').remove();
   item.$displayLabelInput.before(getLabel.call(this, queIdx));
@@ -346,7 +345,7 @@ const blurLabel = function (queIdx) {
 };
 const onSearch = function (queIdx, searchWord) {
   if (this.activeautocompleteQueueIndex == -1) return this; // 옵션박스가 닫힌상태이면 진행안함.
-  var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+  let regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
   searchWord = searchWord.replace(regExp, "");
 
   this.queue[queIdx].waitOptions = true;
@@ -356,13 +355,13 @@ const onSearch = function (queIdx, searchWord) {
     searchWord: searchWord
   }, (function (O) {
 
-    var data = {};
-    var item = this.queue[this.activeautocompleteQueueIndex];
+    let data = {};
+    let item = this.queue[this.activeautocompleteQueueIndex];
     if (!item) return false;
 
     /// 현재 selected 검증후 처리
     (function (item, O) {
-      var optionsMap = {};
+      let optionsMap = {};
       O.options.forEach(function (_O, _OIndex) {
         _O["@index"] = _OIndex;
         _O["@findex"] = _OIndex;
@@ -401,7 +400,7 @@ const onSearch = function (queIdx, searchWord) {
 };
 const focusWord = function (queIdx, searchWord) {
   if (this.activeautocompleteQueueIndex == -1) return this; // 옵션박스가 닫힌상태이면 진행안함.
-  var collect_options = [], i = -1, l = this.queue[queIdx].options.length - 1, n;
+  let collect_options = [], i = -1, l = this.queue[queIdx].options.length - 1, n;
   if (searchWord != "") {
     while (l - i++) {
       n = this.queue[queIdx].options[i];
@@ -410,7 +409,7 @@ const focusWord = function (queIdx, searchWord) {
         collect_options = [{'@findex': n['@findex'], optionsSort: 0}];
         break;
       } else {
-        var sort = ('' + n.text).toLowerCase().search(searchWord.toLowerCase());
+        let sort = ('' + n.text).toLowerCase().search(searchWord.toLowerCase());
         if (sort > -1) {
           collect_options.push({'@findex': n['@findex'], optionsSort: sort});
           if (collect_options.length > 2) break;
@@ -440,11 +439,8 @@ const focusClear = function (queIdx) {
   this.queue[queIdx].optionFocusIndex = -1;
 };
 const focusMove = function (queIdx, direction, findex) {
-  var _focusIndex,
-    _prevFocusIndex,
-    focusOptionEl,
-    optionGroupScrollContainer;
-  var item = this.queue[queIdx];
+  let _focusIndex, _prevFocusIndex, focusOptionEl, optionGroupScrollContainer;
+  let item = this.queue[queIdx];
 
   if (this.activeautocompleteOptionGroup && item.options && item.options.length > 0) {
 
@@ -472,7 +468,7 @@ const focusMove = function (queIdx, direction, findex) {
         return this;
       }
       else {
-        var isStrop = false;
+        let isStrop = false;
         while (item.options[_focusIndex].hide) {
           _focusIndex = _focusIndex + direction;
           if (_focusIndex < 0) {
@@ -525,7 +521,6 @@ const bindAutocompleteTarget = function (queIdx) {
     if (this.activeautocompleteQueueIndex == -1) return this; // 옵션박스가 닫힌상태이면 진행안함.
     onSearch.call(this, queIdx, this.queue[queIdx].$displayLabelInput.val());
   }, 100).bind(this);
-
   const autocompleteEvent = {
     'click': function (queIdx, e) {
       var clickEl;
@@ -647,9 +642,7 @@ const bindAutocompleteTarget = function (queIdx) {
       setSelected.call(this, queIdx, {value: this.queue[queIdx].$select.val()}, true);
     }
   };
-
-
-  var blurLabel = function (queIdx) {
+  const blurLabel = function (queIdx) {
     clearLabel.call(this, queIdx);
   };
 
@@ -664,6 +657,7 @@ const bindAutocompleteTarget = function (queIdx) {
     data.tabIndex = item.tabIndex;
     data.multiple = item.multiple;
     data.reset = item.reset;
+    data.height = item.height;
     data.label = getLabel.call(this, queIdx);
 
     item.$display = jQuery(mustache.render(tmpl.autocompleteDisplay.call(this, item.columnKeys), data));
@@ -703,17 +697,17 @@ const bindAutocompleteTarget = function (queIdx) {
 
   // autocomplete 태그에 대한 이벤트 감시
 
-    item.$displayLabelInput
-      .off("focus.ax6ui-autocomplete")
-      .on("focus.ax6ui-autocomplete", autocompleteEvent.focus.bind(this, queIdx))
-      .off("blur.ax6ui-autocomplete")
-      .on("blur.ax6ui-autocomplete", autocompleteEvent.blur.bind(this, queIdx))
-      .off("keydown.ax6ui-autocomplete")
-      .on("keydown.ax6ui-autocomplete", autocompleteEvent.keyDown.bind(this, queIdx))
-      .off("keyup.ax6ui-autocomplete")
-      .on("keyup.ax6ui-autocomplete", autocompleteEvent.keyUp.bind(this, queIdx));
+  item.$displayLabelInput
+    .off("focus.ax6ui-autocomplete")
+    .on("focus.ax6ui-autocomplete", autocompleteEvent.focus.bind(this, queIdx))
+    .off("blur.ax6ui-autocomplete")
+    .on("blur.ax6ui-autocomplete", autocompleteEvent.blur.bind(this, queIdx))
+    .off("keydown.ax6ui-autocomplete")
+    .on("keydown.ax6ui-autocomplete", autocompleteEvent.keyDown.bind(this, queIdx))
+    .off("keyup.ax6ui-autocomplete")
+    .on("keyup.ax6ui-autocomplete", autocompleteEvent.keyUp.bind(this, queIdx));
 
-    // select 태그에 대한 change 이벤트 감시
+  // select 태그에 대한 change 이벤트 감시
 
   /*
     item.$select
@@ -760,9 +754,11 @@ const clearSelected = function (queIdx) {
   });
 
   this.queue[queIdx].selected = [];
-  this.queue[queIdx].$select.html(AUTOCOMPLETE.tmpl.get.call(this, "formSelectOptions", {
-    selected: this.queue[queIdx].selected
-  }, this.queue[queIdx].columnKeys));
+  this.queue[queIdx].$select.html(
+    mustache.render(tmpl.formSelectOptions.call(this, this.queue[queIdx].columnKeys), {
+      selected: this.queue[queIdx].selected
+    })
+  );
 };
 const setSelected = function (boundID, value, selected, _option) {
   const processor = {
@@ -950,7 +946,7 @@ const setSelected = function (boundID, value, selected, _option) {
     }
   };
 
-  var queIdx = (U.isNumber(boundID)) ? boundID : getQueIdx.call(this, boundID);
+  let queIdx = (U.isNumber(boundID)) ? boundID : getQueIdx.call(this, boundID);
   if (queIdx === -1) {
     console.log(info.getError("ax6ui-autocomplete", "402", "val"));
     return;

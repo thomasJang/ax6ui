@@ -314,7 +314,6 @@ $hover-types: (
       &:hover {
         text-decoration: none;
       }
-
       &:after {
         content: ' ';
         display: block;
@@ -328,15 +327,11 @@ $hover-types: (
         background: transparent;
         padding: 0 3px;
         border: 1px solid transparent;
-        border-radius: 0;
-        margin: 1px 0 1px -0.5em;
-
-        @include ax-background(top, $ax6autocomplete-label-bg-colors);
+        margin: 1px 3px 1px 0;
+        border-radius: 3px;
         border: $ax6autocomplete-label-border;
         color: $ax6autocomplete-label-color;
-        border-radius: 3px;
-        margin-left: 0;
-        margin-right: 3px;
+        @include ax-background(top, $ax6autocomplete-label-bg-colors);
 
         &:first-child {
           margin-left: 0;
@@ -347,7 +342,7 @@ $hover-types: (
           position: absolute;
           right: 0;
           &:hover {
-            color: $brand-danger;
+            color: $ax6autocomplete-label-hover-color;
           }
         }
         span {

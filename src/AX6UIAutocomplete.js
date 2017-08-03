@@ -1,6 +1,8 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
+import info from "./AX6Info";
 import U from "./AX6Util";
+import mustache from "./AX6Mustache";
 
 /** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
@@ -49,8 +51,7 @@ let tmpl = {
   "autocompleteDisplay"(columnKeys) {
     return ` 
 <input tabindex="-1" type="text" data-input-dummy="" style="display: none;" />
-<div class="form-control {{formSize}} ax6ui-autocomplete-display {{theme}}" 
-data-ax6ui-autocomplete-display="{{id}}" data-ax6ui-autocomplete-instance="{{instanceId}}">
+<div class="ax6ui-autocomplete-display {{theme}}" data-ax6ui-autocomplete-display="{{id}}" data-ax6ui-autocomplete-instance="{{instanceId}}">
     <div class="ax6ui-autocomplete-display-table" data-els="display-table">
         <div data-ax6ui-autocomplete-display="label-holder"> 
         <a {{^tabIndex}}{{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}}
@@ -63,7 +64,7 @@ data-ax6ui-autocomplete-display="{{id}}" data-ax6ui-autocomplete-instance="{{ins
             {{/reset}}{{/multiple}}
         </div>
     </div>
-</a>
+</div>
 `;
   },
   "formSelect"(columnKeys) {
@@ -195,8 +196,8 @@ const alignAutocompleteOptionGroup = function (append) {
     height: item.$target.outerHeight()
   };
   pickerDim = {
-    winWidth: Math.max($window.width(), jQuery(document.body).width()),
-    winHeight: Math.max($window.height(), jQuery(document.body).height()),
+    winWidth: Math.max($(window).width(), jQuery(document.body).width()),
+    winHeight: Math.max($(window).height(), jQuery(document.body).height()),
     width: this.activeautocompleteOptionGroup.outerWidth(),
     height: this.activeautocompleteOptionGroup.outerHeight()
   };
@@ -295,10 +296,10 @@ const onBodyClick = function (e, target) {
   return this;
 };
 const getLabel = function (queIdx) {
-  var item = this.queue[queIdx];
+  let item = this.queue[queIdx];
 
   // 템플릿에 전달 해야할 데이터 선언
-  var data = {};
+  let data = {};
   data.id = item.id;
   data.theme = item.theme;
   data.multiple = item.multiple;
@@ -308,7 +309,7 @@ const getLabel = function (queIdx) {
   data.hasSelected = (data.selected && data.selected.length > 0);
   data.removeIcon = item.removeIcon;
 
-  return AUTOCOMPLETE.tmpl.get.call(this, "label", data, item.columnKeys);
+  return mustache.render(tmpl.label.call(this, item.columnKeys), data);
 };
 const syncLabel = function (queIdx) {
   var item = this.queue[queIdx];
@@ -386,7 +387,7 @@ const onSearch = function (queIdx, searchWord) {
     data.multiple = item.multiple;
     data.lang = item.lang;
     data.options = item.options;
-    this.activeautocompleteOptionGroup.find('[data-els="content"]').html(jQuery(AUTOCOMPLETE.tmpl.get.call(this, "options", data, item.columnKeys)));
+    this.activeautocompleteOptionGroup.find('[data-els="content"]').html(mustache.render(tmpl.options.call(this, item.columnKeys), data));
 
     focusWord.call(this, this.activeautocompleteQueueIndex, searchWord);
     alignAutocompleteOptionGroup.call(this);
@@ -519,14 +520,13 @@ const focusMove = function (queIdx, direction, findex) {
   }
 };
 const bindAutocompleteTarget = function (queIdx) {
-  var debouncedFocusWord = U.debounce(function (queIdx) {
+
+  const debouncedFocusWord = U.debounce(function (queIdx) {
     if (this.activeautocompleteQueueIndex == -1) return this; // 옵션박스가 닫힌상태이면 진행안함.
-    onSearch.call(self, queIdx, this.queue[queIdx].$displayLabelInput.val());
-  }, 150);
-  var blurLabel = function (queIdx) {
-    clearLabel.call(this, queIdx);
-  };
-  var autocompleteEvent = {
+    onSearch.call(this, queIdx, this.queue[queIdx].$displayLabelInput.val());
+  }, 100).bind(this);
+
+  const autocompleteEvent = {
     'click': function (queIdx, e) {
       var clickEl;
       var target = U.findParentNode(e.target, function (target) {
@@ -558,9 +558,9 @@ const bindAutocompleteTarget = function (queIdx) {
         }
       }
       else {
-        if (self.activeautocompleteQueueIndex == queIdx) {
+        if (this.activeautocompleteQueueIndex == queIdx) {
           if (this.queue[queIdx].optionFocusIndex == -1) { // 아이템에 포커스가 활성화 된 후, 마우스 이벤트 이면 무시
-            self.close();
+            this.close();
           }
         }
         else {
@@ -570,7 +570,7 @@ const bindAutocompleteTarget = function (queIdx) {
     },
     'keyUp': function (queIdx, e) {
       /// 약속된 키 이벤트가 발생하면 stopEvent를 통해 keyUp 이벤트가 발생되지 않도록 막아주는 센스
-      if (e.which == info.eventKeys.ESC && self.activeautocompleteQueueIndex === -1) { // ESC키를 누르고 옵션그룹이 열려있지 않은 경우
+      if (e.which == info.eventKeys.ESC && this.activeautocompleteQueueIndex === -1) { // ESC키를 누르고 옵션그룹이 열려있지 않은 경우
         U.stopEvent(e);
         return this;
       }
@@ -580,8 +580,8 @@ const bindAutocompleteTarget = function (queIdx) {
         this.close();
         return this;
       }
-      if (self.activeautocompleteQueueIndex != queIdx) { // 닫힌 상태 인경우
-        self.open(queIdx); // open and align
+      if (this.activeautocompleteQueueIndex != queIdx) { // 닫힌 상태 인경우
+        this.open(queIdx); // open and align
       }
       if (ctrlKeys[e.which]) {
         U.stopEvent(e);
@@ -598,7 +598,8 @@ const bindAutocompleteTarget = function (queIdx) {
           alignAutocompleteOptionGroup.call(this);
           U.stopEvent(e);
         } else {
-          debouncedFocusWord.call(this, queIdx);
+          debouncedFocusWord(queIdx);
+
         }
       }
     },
@@ -646,8 +647,13 @@ const bindAutocompleteTarget = function (queIdx) {
       setSelected.call(this, queIdx, {value: this.queue[queIdx].$select.val()}, true);
     }
   };
-  var item = this.queue[queIdx];
-  var data = {};
+
+
+  var blurLabel = function (queIdx) {
+    clearLabel.call(this, queIdx);
+  };
+
+  let item = this.queue[queIdx], data = {};
 
   if (!item.$display) {
     /// 템플릿에 전달할 오브젝트 선언
@@ -658,13 +664,9 @@ const bindAutocompleteTarget = function (queIdx) {
     data.tabIndex = item.tabIndex;
     data.multiple = item.multiple;
     data.reset = item.reset;
-
     data.label = getLabel.call(this, queIdx);
-    data.formSize = (function () {
-      return (item.size) ? "input-" + item.size : "";
-    })();
 
-    item.$display = jQuery(AUTOCOMPLETE.tmpl.get.call(this, "autocompleteDisplay", data, item.columnKeys));
+    item.$display = jQuery(mustache.render(tmpl.autocompleteDisplay.call(this, item.columnKeys), data));
     item.$displayTable = item.$display.find('[data-els="display-table"]');
     item.$displayLabel = item.$display.find('[data-ax6ui-autocomplete-display="label"]');
     item.$displayLabelInput = item.$display.find('[data-ax6ui-autocomplete-display="input"]');
@@ -681,7 +683,7 @@ const bindAutocompleteTarget = function (queIdx) {
       item.$select.attr("multiple", "multiple");
     }
     else {
-      item.$select = jQuery(AUTOCOMPLETE.tmpl.get.call(this, "formSelect", data, item.columnKeys));
+      item.$select = jQuery(mustache.render(tmpl.formSelect.call(this, item.columnKeys), data));
       item.$target.append(item.$select);
     }
 
@@ -694,27 +696,30 @@ const bindAutocompleteTarget = function (queIdx) {
 
   alignAutocompleteDisplay.call(this);
 
+
   item.$display
     .off('click.ax6ui-autocomplete')
     .on('click.ax6ui-autocomplete', autocompleteEvent.click.bind(this, queIdx));
 
   // autocomplete 태그에 대한 이벤트 감시
 
-  item.$displayLabelInput
-    .off("focus.ax6ui-autocomplete")
-    .on("focus.ax6ui-autocomplete", autocompleteEvent.focus.bind(this, queIdx))
-    .off("blur.ax6ui-autocomplete")
-    .on("blur.ax6ui-autocomplete", autocompleteEvent.blur.bind(this, queIdx))
-    .off("keydown.ax6ui-autocomplete")
-    .on("keydown.ax6ui-autocomplete", autocompleteEvent.keyUp.bind(this, queIdx))
-    .off("keyup.ax6ui-autocomplete")
-    .on("keyup.ax6ui-autocomplete", autocompleteEvent.keyDown.bind(this, queIdx));
+    item.$displayLabelInput
+      .off("focus.ax6ui-autocomplete")
+      .on("focus.ax6ui-autocomplete", autocompleteEvent.focus.bind(this, queIdx))
+      .off("blur.ax6ui-autocomplete")
+      .on("blur.ax6ui-autocomplete", autocompleteEvent.blur.bind(this, queIdx))
+      .off("keydown.ax6ui-autocomplete")
+      .on("keydown.ax6ui-autocomplete", autocompleteEvent.keyDown.bind(this, queIdx))
+      .off("keyup.ax6ui-autocomplete")
+      .on("keyup.ax6ui-autocomplete", autocompleteEvent.keyUp.bind(this, queIdx));
 
-  // select 태그에 대한 change 이벤트 감시
+    // select 태그에 대한 change 이벤트 감시
 
-  item.$select
-    .off('change.ax6ui-autocomplete')
-    .on('change.ax6ui-autocomplete', autocompleteEvent.selectChange.bind(this, queIdx));
+  /*
+    item.$select
+      .off('change.ax6ui-autocomplete')
+      .on('change.ax6ui-autocomplete', autocompleteEvent.selectChange.bind(this, queIdx));
+    */
 
   data = null;
   item = null;
@@ -825,7 +830,7 @@ const setSelected = function (boundID, value, selected, _option) {
         if (item.options[optionIndex][item.columnKeys.optionSelected]) {
           var appendOk = true;
           for (var i = 0; i < item.selected.length; i++) {
-            if (item.selected[i][cfg.columnKeys.optionValue] == item.options[optionIndex][cfg.columnKeys.optionValue]) {
+            if (item.selected[i][this.config.columnKeys.optionValue] == item.options[optionIndex][this.config.columnKeys.optionValue]) {
               appendOk = false;
               break;
             }
@@ -840,7 +845,7 @@ const setSelected = function (boundID, value, selected, _option) {
         else {
           var newSelectedArray = [];
           for (var i = 0; i < item.selected.length; i++) {
-            if (item.selected[i][cfg.columnKeys.optionValue] == item.options[optionIndex][cfg.columnKeys.optionValue]) {
+            if (item.selected[i][this.config.columnKeys.optionValue] == item.options[optionIndex][this.config.columnKeys.optionValue]) {
 
             }
             else {
@@ -858,7 +863,7 @@ const setSelected = function (boundID, value, selected, _option) {
         // 새로운 값 추가
         var appendOk = true;
         for (var i = 0; i < item.selected.length; i++) {
-          if (item.selected[i][cfg.columnKeys.optionValue] == value.value[cfg.columnKeys.optionValue]) {
+          if (item.selected[i][this.config.columnKeys.optionValue] == value.value[this.config.columnKeys.optionValue]) {
             appendOk = false;
             break;
           }
@@ -866,8 +871,8 @@ const setSelected = function (boundID, value, selected, _option) {
 
         if (appendOk) {
           addOptions = {};
-          addOptions[item.columnKeys.optionValue] = value.value[cfg.columnKeys.optionValue];
-          addOptions[item.columnKeys.optionText] = value.value[cfg.columnKeys.optionText];
+          addOptions[item.columnKeys.optionValue] = value.value[this.config.columnKeys.optionValue];
+          addOptions[item.columnKeys.optionText] = value.value[this.config.columnKeys.optionText];
           item.selected.push(addOptions);
         }
       }
@@ -886,7 +891,7 @@ const setSelected = function (boundID, value, selected, _option) {
         if (item.options[optionIndex][item.columnKeys.optionSelected]) {
           var appendOk = true;
           for (var i = 0; i < item.selected.length; i++) {
-            if (item.selected[i][cfg.columnKeys.optionText] == item.options[optionIndex][cfg.columnKeys.optionText]) {
+            if (item.selected[i][this.config.columnKeys.optionText] == item.options[optionIndex][this.config.columnKeys.optionText]) {
               appendOk = false;
               break;
             }
@@ -901,7 +906,7 @@ const setSelected = function (boundID, value, selected, _option) {
         else {
           var newSelectedArray = [];
           for (var i = 0; i < item.selected.length; i++) {
-            if (item.selected[i][cfg.columnKeys.optionText] == item.options[optionIndex][cfg.columnKeys.optionText]) {
+            if (item.selected[i][this.config.columnKeys.optionText] == item.options[optionIndex][this.config.columnKeys.optionText]) {
 
             }
             else {
@@ -918,7 +923,7 @@ const setSelected = function (boundID, value, selected, _option) {
         // 새로운 값 추가
         var appendOk = true;
         for (var i = 0; i < item.selected.length; i++) {
-          if (item.selected[i][cfg.columnKeys.optionText] == value) {
+          if (item.selected[i][this.config.columnKeys.optionText] == value) {
             appendOk = false;
             break;
           }
@@ -1107,7 +1112,7 @@ class AX6UIAutocomplete extends AX6UICore {
     this.initialized = true;
 
     // throttledResize
-    $window.on("resize.ax6ui-autocomplete-display-" + this.instanceId, U.throttle(function (e) {
+    $(window).on("resize.ax6ui-autocomplete-display-" + this.instanceId, U.throttle(function (e) {
       alignAutocompleteDisplay.call(this, e || window.event);
       alignAutocompleteOptionGroup.call(this);
     }, 100).bind(this));
@@ -1135,7 +1140,7 @@ class AX6UIAutocomplete extends AX6UICore {
 
     if (!item.id) item.id = item.$target.data("data-ax6ui-autocomplete-id");
     if (!item.id) {
-      item.id = 'ax6ui-autocomplete-' + ax5.getGuid();
+      item.id = 'ax6ui-autocomplete-' + AX6UICore.getInstanceId();
       item.$target.data("data-ax6ui-autocomplete-id", item.id);
     }
     item.name = item.$target.attr("data-ax6ui-autocomplete");
@@ -1362,7 +1367,7 @@ class AX6UIAutocomplete extends AX6UICore {
         state: "close"
       });
 
-    }).bind(this), cfg.animateTime);
+    }).bind(this), this.config.animateTime);
     this.waitOptionsCallback = null;
     return this;
   }

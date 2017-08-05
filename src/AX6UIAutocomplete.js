@@ -55,7 +55,7 @@ let tmpl = {
     <div class="ax6ui-autocomplete-display-table" data-els="display-table">
         <div data-ax6ui-autocomplete-display="label-holder"> 
           <a {{^tabIndex}}{{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}} data-ax6ui-autocomplete-display="label" spellcheck="false">
-              <input type="text" data-ax6ui-autocomplete-display="input" style="border:0 none;height: {{height}}px;" />
+              <input type="text" data-ax6ui-autocomplete-display="input" style="border:0 none;height: {{optionItemHeight}}px;line-height: {{optionItemHeight}}px;" />
           </a>
         </div>
         <div data-ax6ui-autocomplete-display="addon"> 
@@ -114,7 +114,7 @@ let tmpl = {
   },
   "label"(columnKeys) {
     return `{{#selected}}
-<div tabindex="-1" data-ax6ui-autocomplete-selected-label="{{@i}}" data-ax6ui-autocomplete-selected-text="{{text}}">
+<div tabindex="-1" data-ax6ui-autocomplete-selected-label="{{@i}}" data-ax6ui-autocomplete-selected-text="{{text}}" style="height: {{optionItemHeight}}px;line-height: {{optionItemHeight}}px;">
 <div data-ax6ui-autocomplete-remove="true" data-ax6ui-autocomplete-remove-index="{{@i}}">{{{removeIcon}}}</div>
 <span>{{${columnKeys.optionText}}}</span>
 </div>{{/selected}}`;
@@ -305,6 +305,8 @@ const getLabel = function (queIdx) {
   data.selected = item.selected;
   data.hasSelected = (data.selected && data.selected.length > 0);
   data.removeIcon = item.removeIcon;
+  data.height = item.height;
+  data.optionItemHeight = item.optionItemHeight;
 
   return mustache.render(tmpl.label.call(this, item.columnKeys), data);
 };
@@ -516,15 +518,15 @@ const focusMove = function (queIdx, direction, findex) {
   }
 };
 const bindAutocompleteTarget = function (queIdx) {
-
+  let item = this.queue[queIdx], data = {};
   const debouncedFocusWord = U.debounce(function (queIdx) {
     if (this.activeautocompleteQueueIndex == -1) return this; // 옵션박스가 닫힌상태이면 진행안함.
     onSearch.call(this, queIdx, this.queue[queIdx].$displayLabelInput.val());
   }, 100).bind(this);
   const autocompleteEvent = {
     'click': function (queIdx, e) {
-      var clickEl;
-      var target = U.findParentNode(e.target, function (target) {
+      let clickEl = "";
+      let target = U.findParentNode(e.target, function (target) {
         if (target.getAttribute("data-ax6ui-autocomplete-remove")) {
           clickEl = "optionItemRemove";
           return true;
@@ -537,7 +539,7 @@ const bindAutocompleteTarget = function (queIdx) {
 
       if (target) {
         if (clickEl === "optionItemRemove") {
-          var removeIndex = target.getAttribute("data-ax6ui-autocomplete-remove-index");
+          let removeIndex = target.getAttribute("data-ax6ui-autocomplete-remove-index");
           this.queue[queIdx].selected.splice(removeIndex, 1);
           syncLabel.call(this, queIdx);
           printLabel.call(this, queIdx);
@@ -599,13 +601,14 @@ const bindAutocompleteTarget = function (queIdx) {
       }
     },
     'keyDown': function (queIdx, e) {
+      let item = this.queue[queIdx];
       if (e.which == info.eventKeys.ESC) {
         clearLabel.call(this, queIdx);
         this.close();
         U.stopEvent(e);
       }
       else if (e.which == info.eventKeys.RETURN) {
-        var inputValue = this.queue[queIdx].$displayLabelInput.val();
+        let inputValue = item.$displayLabelInput.val();
         if (item.optionFocusIndex > -1) {
           setSelected.call(this, item.id, {
             optionIndex: {
@@ -632,21 +635,20 @@ const bindAutocompleteTarget = function (queIdx) {
     },
     'focus': function (queIdx, e) {
       // console.log(e);
-
     },
     'blur': function (queIdx, e) {
       blurLabel.call(this, queIdx);
       U.stopEvent(e);
     },
     'selectChange': function (queIdx, e) {
-      setSelected.call(this, queIdx, {value: this.queue[queIdx].$select.val()}, true);
+      setSelected.call(this, queIdx, {value: item.$select.val()}, true);
     }
   };
   const blurLabel = function (queIdx) {
     clearLabel.call(this, queIdx);
   };
 
-  let item = this.queue[queIdx], data = {};
+
 
   if (!item.$display) {
     /// 템플릿에 전달할 오브젝트 선언
@@ -658,6 +660,7 @@ const bindAutocompleteTarget = function (queIdx) {
     data.multiple = item.multiple;
     data.reset = item.reset;
     data.height = item.height;
+    data.optionItemHeight = item.optionItemHeight;
     data.label = getLabel.call(this, queIdx);
 
     item.$display = jQuery(mustache.render(tmpl.autocompleteDisplay.call(this, item.columnKeys), data));
@@ -1034,6 +1037,8 @@ class AX6UIAutocomplete extends AX6UICore {
       theme: 'default',
       animateTime: 250,
       height: 34,
+      optionItemHeight: 24,
+      borderWidth: 1,
       removeIcon: 'U+00d7',
       lang: {
         noSelected: '',

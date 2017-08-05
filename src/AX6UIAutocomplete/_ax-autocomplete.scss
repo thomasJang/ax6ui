@@ -314,6 +314,9 @@ $hover-types: (
       padding: 0 0;
       input{
         margin:0;
+        box-sizing: content-box;
+        background: transparent;
+        box-shadow: none;
         &:focus, &:active, &:hover{
           border: 0 none;
           box-shadow: none;
@@ -325,10 +328,11 @@ $hover-types: (
       white-space: nowrap;
       overflow: hidden;
       padding: $ax6autocomplete-label-padding;
+      text-decoration: none;
+
       &:focus {
         outline: none;
       }
-      text-decoration: none;
       &:hover {
         text-decoration: none;
       }
@@ -350,6 +354,7 @@ $hover-types: (
         border: $ax6autocomplete-label-border;
         color: $ax6autocomplete-label-color;
         @include ax-background(top, $ax6autocomplete-label-bg-colors);
+        box-sizing: border-box;
 
         &:first-child {
           margin-left: 0;

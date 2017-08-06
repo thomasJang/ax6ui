@@ -344,32 +344,44 @@ $hover-types: (
 
       [data-ax6ui-autocomplete-selected-label] {
         position: relative;
-        display: block;
+        display: table;
         float: left;
         background: transparent;
-        padding: 0 3px;
-        border: 1px solid transparent;
         margin: 1px 3px 1px 0;
-        border-radius: 3px;
-        border: $ax6autocomplete-label-border;
         color: $ax6autocomplete-label-color;
-        @include ax-background(top, $ax6autocomplete-label-bg-colors);
         box-sizing: border-box;
+        @include ax-background(top, $ax6autocomplete-label-bg-colors);
+
+        border-collapse: collapse;
 
         &:first-child {
           margin-left: 0;
         }
 
+        .label-cell{
+          display: table-cell;
+          padding: 0 5px;
+          vertical-align: middle;
+
+          border: 1px solid transparent;
+          border: $ax6autocomplete-label-border;
+
+          &:first-child{
+            border-bottom-left-radius: 10px;
+            border-right: 0 none;
+          }
+          &:last-child{
+            border-bottom-right-radius: 10px;
+            border-left: 0 none;
+            padding-left:0;
+          }
+        }
+
         [data-ax6ui-autocomplete-remove] {
-          width: 15px;
-          position: absolute;
-          right: 0;
+          cursor: pointer;
           &:hover {
             color: $ax6autocomplete-label-hover-color;
           }
-        }
-        span {
-          padding-right: 15px;
         }
       }
       [data-ax6ui-autocomplete-display="input"] {

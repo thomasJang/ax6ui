@@ -54,7 +54,7 @@ let tmpl = {
 <div class="ax6ui-autocomplete-display {{theme}}" data-ax6ui-autocomplete-display="{{id}}" data-ax6ui-autocomplete-instance="{{instanceId}}" style="height: {{height}}px;">
     <div class="ax6ui-autocomplete-display-table" data-els="display-table">
         <div data-ax6ui-autocomplete-display="label-holder"> 
-          <a {{^tabIndex}}{{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}} data-ax6ui-autocomplete-display="label" spellcheck="false">
+          <a {{^tabIndex}}{{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}} data-ax6ui-autocomplete-display="label" spellcheck="false" style="padding: 0 {{paddingLeft}}px;">
               <input type="text" data-ax6ui-autocomplete-display="input" style="border:0 none;height: {{optionItemHeight}}px;line-height: {{optionItemHeight}}px;" />
           </a>
         </div>
@@ -114,9 +114,9 @@ let tmpl = {
   },
   "label"(columnKeys) {
     return `{{#selected}}
-<div tabindex="-1" data-ax6ui-autocomplete-selected-label="{{@i}}" data-ax6ui-autocomplete-selected-text="{{text}}" style="height: {{optionItemHeight}}px;line-height: {{optionItemHeight}}px;">
-<div data-ax6ui-autocomplete-remove="true" data-ax6ui-autocomplete-remove-index="{{@i}}">{{{removeIcon}}}</div>
-<span>{{${columnKeys.optionText}}}</span>
+<div tabindex="-1" data-ax6ui-autocomplete-selected-label="{{@i}}" data-ax6ui-autocomplete-selected-text="{{text}}" style="height: {{optionItemHeight}}px;">  
+  <div class="label-cell">{{${columnKeys.optionText}}}</div>
+  <div class="label-cell" data-ax6ui-autocomplete-remove="true" data-ax6ui-autocomplete-remove-index="{{@i}}">{{{removeIcon}}}</div>
 </div>{{/selected}}`;
   },
 };
@@ -661,6 +661,7 @@ const bindAutocompleteTarget = function (queIdx) {
     data.reset = item.reset;
     data.height = item.height;
     data.optionItemHeight = item.optionItemHeight;
+    data.paddingLeft = (item.height - item.optionItemHeight) / 2;
     data.label = getLabel.call(this, queIdx);
 
     item.$display = jQuery(mustache.render(tmpl.autocompleteDisplay.call(this, item.columnKeys), data));

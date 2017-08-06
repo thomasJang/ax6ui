@@ -43,11 +43,13 @@ options.push({value: "25", text: "ax5dialog"});
 options.push({value: "26", text: "ax5modal"});
 
 let autocomplete = new Autocomplete({
-  removeIcon: '<i class="fa fa-times"></i>'
+  removeIcon: '<i class="tiny material-icons">close</i>'
 });
 
 autocomplete.bind({
   target: $('[data-ax6ui-autocomplete="ac1"]'),
+  height: 40,
+  optionItemHeight: 30,
   onSearch: function (callback) {
     var searchWord = this.searchWord;
     setTimeout(function () {

@@ -1,3 +1,18 @@
+## Classes
+
+<dl>
+<dt><a href="#AX6UIDialog">AX6UIDialog</a></dt>
+<dd></dd>
+</dl>
+
+## Functions
+
+<dl>
+<dt><a href="#dialogTmpl">dialogTmpl()</a></dt>
+<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
+</dd>
+</dl>
+
 <a name="AX6UIDialog"></a>
 
 ## AX6UIDialog
@@ -177,3 +192,9 @@ dialog.close({callback: function(){
 
 });
 ```
+<a name="dialogTmpl"></a>
+
+## dialogTmpl()
+~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
+
+**Kind**: global function  

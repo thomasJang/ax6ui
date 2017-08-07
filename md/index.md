@@ -19,6 +19,7 @@
     * [.AX6UIToast](#module_AX6UI.AX6UIToast)
     * [.AX6UIModal](#module_AX6UI.AX6UIModal)
     * [.AX6UIUploader](#module_AX6UI.AX6UIUploader)
+    * [.AX6UIAutocomplete](#module_AX6UI.AX6UIAutocomplete)
 
 <a name="module_AX6UI.AX6Info"></a>
 
@@ -98,57 +99,129 @@ import { AX6UIMask } from "ax6ui";
 AX6UI.AX6UIPalette
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIPalette from "ax6ui/AX6UIPalette";
+// or
+import { AX6UIPalette } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UIDialog"></a>
 
 ### AX6UI.AX6UIDialog
 AX6UI.AX6UIDialog
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIDialog from "ax6ui/AX6UIDialog";
+// or
+import { AX6UIDialog } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UIPicker"></a>
 
 ### AX6UI.AX6UIPicker
 AX6UI.AX6UIPicker
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIPicker from "ax6ui/AX6UIPicker";
+// or
+import { AX6UIPicker } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UICalendar"></a>
 
 ### AX6UI.AX6UICalendar
 AX6UI.AX6UICalendar
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UICalendar from "ax6ui/AX6UICalendar";
+// or
+import { AX6UICalendar } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UISelect"></a>
 
 ### AX6UI.AX6UISelect
 AX6UI.AX6UISelect
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UISelect from "ax6ui/AX6UISelect";
+// or
+import { AX6UISelect } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UIGrid"></a>
 
 ### AX6UI.AX6UIGrid
 AX6UI.AX6UIGrid
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIGrid from "ax6ui/AX6UIGrid";
+// or
+import { AX6UIGrid } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UIMenu"></a>
 
 ### AX6UI.AX6UIMenu
 AX6UI.AX6UIMenu
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIMenu from "ax6ui/AX6UIMenu";
+// or
+import { AX6UIMenu } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UIToast"></a>
 
 ### AX6UI.AX6UIToast
 AX6UI.AX6UIToast
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIToast from "ax6ui/AX6UIToast";
+// or
+import { AX6UIToast } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UIModal"></a>
 
 ### AX6UI.AX6UIModal
 AX6UI.AX6UIModal
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIModal from "ax6ui/AX6UIModal";
+// or
+import { AX6UIModal } from "ax6ui";
+```
 <a name="module_AX6UI.AX6UIUploader"></a>
 
 ### AX6UI.AX6UIUploader
 AX6UI.AX6UIUploader
 
 **Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIUploader from "ax6ui/AX6UIUploader";
+// or
+import { AX6UIUploader } from "ax6ui";
+```
+<a name="module_AX6UI.AX6UIAutocomplete"></a>
+
+### AX6UI.AX6UIAutocomplete
+AX6UI.AX6UIAutocomplete
+
+**Kind**: static property of <code>[AX6UI](#module_AX6UI)</code>  
+**Example**  
+```js
+import AX6UIAutocomplete from "ax6ui/AX6UIAutocomplete";
+// or
+import { AX6UIAutocomplete } from "ax6ui";
+```

@@ -1,24 +1,24 @@
-<a name="module_AX6Formatter_formatter"></a>
+<a name="module_AX6UIFormatter_formatter"></a>
 
-## AX6Formatter_formatter
+## AX6UIFormatter_formatter
 
-* [AX6Formatter_formatter](#module_AX6Formatter_formatter)
-    * [.ctrlKeys](#module_AX6Formatter_formatter.ctrlKeys)
-    * [.numKeys](#module_AX6Formatter_formatter.numKeys)
-    * [.money](#module_AX6Formatter_formatter.money)
-    * [.number](#module_AX6Formatter_formatter.number)
-    * [.date](#module_AX6Formatter_formatter.date)
-    * [.time](#module_AX6Formatter_formatter.time)
-    * [.bizno](#module_AX6Formatter_formatter.bizno)
-    * [.phone](#module_AX6Formatter_formatter.phone)
-    * [.custom](#module_AX6Formatter_formatter.custom)
+* [AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)
+    * [.ctrlKeys](#module_AX6UIFormatter_formatter.ctrlKeys)
+    * [.numKeys](#module_AX6UIFormatter_formatter.numKeys)
+    * [.money](#module_AX6UIFormatter_formatter.money)
+    * [.number](#module_AX6UIFormatter_formatter.number)
+    * [.date](#module_AX6UIFormatter_formatter.date)
+    * [.time](#module_AX6UIFormatter_formatter.time)
+    * [.bizno](#module_AX6UIFormatter_formatter.bizno)
+    * [.phone](#module_AX6UIFormatter_formatter.phone)
+    * [.custom](#module_AX6UIFormatter_formatter.custom)
 
-<a name="module_AX6Formatter_formatter.ctrlKeys"></a>
+<a name="module_AX6UIFormatter_formatter.ctrlKeys"></a>
 
-### AX6Formatter_formatter.ctrlKeys
+### AX6UIFormatter_formatter.ctrlKeys
 컨트롤 keycodes
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
 **Example**  
 ```js
 let ctrlKeys = {
@@ -45,12 +45,12 @@ let ctrlKeys = {
     "91": "KEY_WINDOW"
 };
 ```
-<a name="module_AX6Formatter_formatter.numKeys"></a>
+<a name="module_AX6UIFormatter_formatter.numKeys"></a>
 
-### AX6Formatter_formatter.numKeys
+### AX6UIFormatter_formatter.numKeys
 숫자키패드 keycodes
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
 **Example**  
 ```js
 let numKeys = {
@@ -58,45 +58,45 @@ let numKeys = {
     '96': 1, '97': 1, '98': 1, '99': 1, '100': 1, '101': 1, '102': 1, '103': 1, '104': 1, '105': 1
 };
 ```
-<a name="module_AX6Formatter_formatter.money"></a>
+<a name="module_AX6UIFormatter_formatter.money"></a>
 
-### AX6Formatter_formatter.money
+### AX6UIFormatter_formatter.money
 통화패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
-<a name="module_AX6Formatter_formatter.number"></a>
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
+<a name="module_AX6UIFormatter_formatter.number"></a>
 
-### AX6Formatter_formatter.number
+### AX6UIFormatter_formatter.number
 숫자패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
-<a name="module_AX6Formatter_formatter.date"></a>
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
+<a name="module_AX6UIFormatter_formatter.date"></a>
 
-### AX6Formatter_formatter.date
+### AX6UIFormatter_formatter.date
 날짜패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
-<a name="module_AX6Formatter_formatter.time"></a>
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
+<a name="module_AX6UIFormatter_formatter.time"></a>
 
-### AX6Formatter_formatter.time
+### AX6UIFormatter_formatter.time
 시간패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
-<a name="module_AX6Formatter_formatter.bizno"></a>
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
+<a name="module_AX6UIFormatter_formatter.bizno"></a>
 
-### AX6Formatter_formatter.bizno
+### AX6UIFormatter_formatter.bizno
 한국 사업자 번호 패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
-<a name="module_AX6Formatter_formatter.phone"></a>
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
+<a name="module_AX6UIFormatter_formatter.phone"></a>
 
-### AX6Formatter_formatter.phone
+### AX6UIFormatter_formatter.phone
 전화번호 패턴
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
-<a name="module_AX6Formatter_formatter.custom"></a>
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  
+<a name="module_AX6UIFormatter_formatter.custom"></a>
 
-### AX6Formatter_formatter.custom
+### AX6UIFormatter_formatter.custom
 사용자 정의 패턴 사용시
 
-**Kind**: static property of <code>[AX6Formatter_formatter](#module_AX6Formatter_formatter)</code>  
+**Kind**: static property of <code>[AX6UIFormatter_formatter](#module_AX6UIFormatter_formatter)</code>  

@@ -1,3 +1,18 @@
+## Classes
+
+<dl>
+<dt><a href="#AX6UISelect">AX6UISelect</a></dt>
+<dd></dd>
+</dl>
+
+## Members
+
+<dl>
+<dt><a href="#ctrlKeys">ctrlKeys</a></dt>
+<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
+</dd>
+</dl>
+
 <a name="AX6UISelect"></a>
 
 ## AX6UISelect
@@ -43,6 +58,7 @@
 | config |  |  |  |
 | [config.theme] |  | <code>&#x27;default&#x27;</code> |  |
 | [config.animateTime] |  | <code>100</code> |  |
+| [config.height] |  | <code>34</code> |  |
 | [config.lang] |  |  | 메세지들 |
 | [config.lang.noSelected] |  | <code>&#x27;&#x27;</code> |  |
 | [config.lang.noOptions] |  | <code>&#x27;no options&#x27;</code> |  |
@@ -177,3 +193,9 @@ bind를 통해 연결된 select가 저장되는 변수
 | --- |
 | boundID | 
 
+<a name="ctrlKeys"></a>
+
+## ctrlKeys
+~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
+
+**Kind**: global variable  

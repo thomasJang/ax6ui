@@ -36,13 +36,12 @@ let ctrlKeys = {
   //"106" : "NUMPAD_MULTIPLY",
   //"109" : "NUMPAD_SUBTRACT"
 };
-
-const $window = jQuery(window);
-const displayTmpl = function (columnKeys) {
-  return `
-<a {{^tabIndex}}href="#ax6select-{{id}}" {{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}}class="ax6select-display {{theme}}" 
+let tmpl = {
+  "display"(columnKeys) {
+    return `
+<a {{^tabIndex}}href="#ax6ui-select-{{id}}" {{/tabIndex}}{{#tabIndex}}tabindex="{{tabIndex}}" {{/tabIndex}}class="ax6ui-select-display {{theme}}" 
 data-ax6ui-select-display="{{id}}" data-ax6ui-select-instance="{{instanceId}}" style="height: {{height}}px;">
-    <div class="ax6select-display-table" data-els="display-table">
+    <div class="ax6ui-select-display-table" data-els="display-table">
         <div data-ax6ui-select-display="label">{{label}}</div>
         <div data-ax6ui-select-display="addon"> 
             {{#multiple}}{{#reset}}
@@ -62,24 +61,24 @@ data-ax6ui-select-display="{{id}}" data-ax6ui-select-instance="{{instanceId}}" s
     style="position:absolute;z-index:0;left:0px;top:0px;font-size:1px;opacity: 0;width:1px;height:1px;border: 0 none;color : transparent;text-indent: -9999em;" />
 </a>
 `;
-};
-const selectTmpl = function (columnKeys) {
-  return `
+  },
+  "select"(columnKeys) {
+    return `
 <select tabindex="-1" class="" name="{{name}}" {{#multiple}}multiple="multiple"{{/multiple}} style="height: {{height}}px;"></select>
 `;
-};
-const optionGroupTmpl = function (columnKeys) {
-  return `
-<div class="ax6select-option-group {{theme}}" data-ax6ui-select-option-group="{{id}}">
+  },
+  "optionGroup"(columnKeys) {
+    return `
+<div class="ax6ui-select-option-group {{theme}}" data-ax6ui-select-option-group="{{id}}">
     <div class="ax-select-body">
         <div class="ax-select-option-group-content" data-els="content"></div>
     </div>
     <div class="ax-select-arrow"></div> 
 </div>
 `;
-};
-const optionsTmpl = function (columnKeys) {
-  return `
+  },
+  "options"(columnKeys) {
+    return `
 {{#waitOptions}}
     <div class="ax-select-option-item">
             <div class="ax-select-option-item-holder">
@@ -138,7 +137,10 @@ const optionsTmpl = function (columnKeys) {
     {{/options}}
 {{/waitOptions}}
 `;
+  }
 };
+
+const $window = jQuery(window);
 const onStateChanged = function (item, that) {
   if (item && item.onStateChanged) {
     item.onStateChanged.call(that, that);
@@ -490,7 +492,7 @@ const bindSelectTarget = function (queIdx) {
     data.height = item.height;
     data.label = getLabel.call(this, queIdx);
 
-    item.$display = jQuery(mustache.render(displayTmpl.call(this), data));
+    item.$display = jQuery(mustache.render(tmpl.display.call(this), data));
     //item.$display.css({height: item.height});
     item.$displayLabel = item.$display.find('[data-ax6ui-select-display="label"]');
 
@@ -506,7 +508,7 @@ const bindSelectTarget = function (queIdx) {
         item.$select.attr("multiple", "multiple");
       }
     } else {
-      item.$select = jQuery(mustache.render(selectTmpl.call(this), data));
+      item.$select = jQuery(mustache.render(tmpl.select.call(this), data));
       item.$target.append(item.$select);
       // select append
     }
@@ -517,7 +519,7 @@ const bindSelectTarget = function (queIdx) {
 
     alignSelectDisplay.call(this);
 
-    item.$displayInput.off("blur.ax6select").on("blur.ax6select", selectEvent.blur.bind(this, queIdx)).off('keyup.ax6select').on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx)).off("keydown.ax6select").on("keydown.ax6select", selectEvent.keyDown.bind(this, queIdx));
+    item.$displayInput.off("blur.ax6ui-select").on("blur.ax6ui-select", selectEvent.blur.bind(this, queIdx)).off('keyup.ax6ui-select').on('keyup.ax6ui-select', selectEvent.keyUp.bind(this, queIdx)).off("keydown.ax6ui-select").on("keydown.ax6ui-select", selectEvent.keyDown.bind(this, queIdx));
   } else {
     item.$displayLabel.html(getLabel.call(this, queIdx));
     item.options = syncSelectOptions.call(this, queIdx, item.options);
@@ -525,10 +527,10 @@ const bindSelectTarget = function (queIdx) {
     alignSelectDisplay.call(this);
   }
 
-  item.$display.off('click.ax6select').on('click.ax6select', selectEvent.click.bind(this, queIdx)).off('keyup.ax6select').on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx));
+  item.$display.off('click.ax6ui-select').on('click.ax6ui-select', selectEvent.click.bind(this, queIdx)).off('keyup.ax6ui-select').on('keyup.ax6ui-select', selectEvent.keyUp.bind(this, queIdx));
 
   // select 태그에 대한 change 이벤트 감시
-  item.$select.off('change.ax6select').on('change.ax6select', selectEvent.selectChange.bind(this, queIdx));
+  item.$select.off('change.ax6ui-select').on('change.ax6ui-select', selectEvent.selectChange.bind(this, queIdx));
 
   data = null;
   item = null;
@@ -633,7 +635,7 @@ const getQueIdx = function (boundID) {
     boundID = jQuery(boundID).data("data-ax6ui-select-id");
   }
   if (!U.isString(boundID)) {
-    console.log(info.getError("ax6select", "402", "getQueIdx"));
+    console.log(info.getError("ax6ui-select", "402", "getQueIdx"));
     return;
   }
   return U.search(this.queue, function () {
@@ -658,6 +660,7 @@ class AX6UISelect extends AX6UICore {
      * @param config
      * @param [config.theme='default']
      * @param [config.animateTime=100]
+     * @param [config.height=34]
      * @param [config.lang] - 메세지들
      * @param [config.lang.noSelected='']
      * @param [config.lang.noOptions='no options']
@@ -746,7 +749,7 @@ class AX6UISelect extends AX6UICore {
     this.initialized = true;
 
     // throttledResize
-    $window.on("resize.ax6select-display-" + this.instanceId, U.throttle(function (e) {
+    $window.on("resize.ax6ui-select-display-" + this.instanceId, U.throttle(function (e) {
       alignSelectDisplay.call(this, e || window.event);
       alignSelectOptionGroup.call(this);
     }, 100).bind(this));
@@ -762,14 +765,14 @@ class AX6UISelect extends AX6UICore {
     item = jQuery.extend(true, {}, this.config, item);
 
     if (!item.target) {
-      console.log(info.getError("ax6select", "401", "bind"));
+      console.log(info.getError("ax6ui-select", "401", "bind"));
       return this;
     }
     item.$target = jQuery(item.target);
 
     if (!item.id) item.id = item.$target.data("data-ax6ui-select-id");
     if (!item.id) {
-      item.id = 'ax6select-' + AX6UICore.getInstanceId();
+      item.id = 'ax6ui-select-' + AX6UICore.getInstanceId();
       item.$target.data("data-ax6ui-select-id", item.id);
     }
     item.name = item.$target.attr("data-ax6ui-select");
@@ -843,11 +846,10 @@ class AX6UISelect extends AX6UICore {
           /// 템플릿에 전달할 오브젝트 선언
           data.id = item.id;
           data.theme = item.theme;
-          data.size = "ax6select-option-group-" + item.size;
           data.multiple = item.multiple;
           data.lang = item.lang;
           data.options = item.options;
-          this.activeSelectOptionGroup.find('[data-els="content"]').html(mustache.render(optionsTmpl.call(this, item.columnKeys), data));
+          this.activeSelectOptionGroup.find('[data-els="content"]').html(mustache.render(tmpl.options.call(this, item.columnKeys), data));
         }
       });
     };
@@ -887,12 +889,10 @@ class AX6UISelect extends AX6UICore {
     /// 템플릿에 전달할 오브젝트 선언
     data.id = item.id;
     data.theme = item.theme;
-    data.size = "ax6select-option-group-" + item.size;
     data.multiple = item.multiple;
 
     data.lang = item.lang;
     item.$display.attr("data-select-option-group-opened", "true");
-    //console.log(data.lang);
 
     if (item.onExpand) {
       // onExpand 인 경우 UI 대기모드 추가
@@ -900,8 +900,8 @@ class AX6UISelect extends AX6UICore {
     }
 
     data.options = item.options;
-    this.activeSelectOptionGroup = jQuery(mustache.render(optionGroupTmpl.call(this), data));
-    this.activeSelectOptionGroup.find('[data-els="content"]').html(mustache.render(optionsTmpl.call(this, item.columnKeys), data));
+    this.activeSelectOptionGroup = jQuery(mustache.render(tmpl.optionGroup.call(this), data));
+    this.activeSelectOptionGroup.find('[data-els="content"]').html(mustache.render(tmpl.options.call(this, item.columnKeys), data));
     this.activeSelectQueueIndex = queIdx;
 
     alignSelectOptionGroup.call(this, "append"); // alignSelectOptionGroup 에서 body append
@@ -923,13 +923,13 @@ class AX6UISelect extends AX6UICore {
 
       item.$displayInput.trigger("focus");
 
-      jQuery(window).on("keyup.ax6select-" + this.instanceId, function (e) {
+      jQuery(window).on("keyup.ax6ui-select-" + this.instanceId, function (e) {
         e = e || window.event;
         onBodyKeyup.call(this, e);
         U.stopEvent(e);
       }.bind(this));
 
-      jQuery(window).on("click.ax6select-" + this.instanceId, function (e) {
+      jQuery(window).on("click.ax6ui-select-" + this.instanceId, function (e) {
         e = e || window.event;
         onBodyClick.call(this, e);
         U.stopEvent(e);
@@ -1044,7 +1044,7 @@ class AX6UISelect extends AX6UICore {
         if (optionIndex > -1) {
           item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
         } else {
-          console.log(info.getError("ax6select", "501", "val"));
+          console.log(info.getError("ax6ui-select", "501", "val"));
           return;
         }
 
@@ -1059,7 +1059,7 @@ class AX6UISelect extends AX6UICore {
         if (optionIndex > -1) {
           item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
         } else {
-          console.log(info.getError("ax6select", "501", "val"));
+          console.log(info.getError("ax6ui-select", "501", "val"));
           return;
         }
 
@@ -1135,7 +1135,7 @@ class AX6UISelect extends AX6UICore {
 
     this.activeSelectOptionGroup.addClass("destroy");
 
-    jQuery(window).off("resize.ax6select-" + this.instanceId).off("click.ax6select-" + this.instanceId).off("keyup.ax6select-" + this.instanceId);
+    jQuery(window).off("resize.ax6ui-select-" + this.instanceId).off("click.ax6ui-select-" + this.instanceId).off("keyup.ax6ui-select-" + this.instanceId);
 
     this.closeTimer = setTimeout(() => {
       if (this.activeSelectOptionGroup) this.activeSelectOptionGroup.remove();

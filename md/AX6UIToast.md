@@ -1,3 +1,18 @@
+## Classes
+
+<dl>
+<dt><a href="#AX6UIToast">AX6UIToast</a></dt>
+<dd></dd>
+</dl>
+
+## Members
+
+<dl>
+<dt><a href="#tmpl">tmpl</a></dt>
+<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
+</dd>
+</dl>
+
 <a name="AX6UIToast"></a>
 
 ## AX6UIToast
@@ -107,3 +122,9 @@ close the toast
 ```
 toast.close();
 ```
+<a name="tmpl"></a>
+
+## tmpl
+~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
+
+**Kind**: global variable  

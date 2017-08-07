@@ -206,365 +206,6 @@ const columnSelector = {
   }
 };
 
-const updateRowState = function (_states, _dindex, _doindex, _data) {
-  let self = this,
-    cfg = this.config,
-    processor = {
-      "selected": function (_dindex, _doindex) {
-        if (this.list[_doindex]) {
-          let i = this.$.livePanelKeys.length;
-          while (i--) {
-            this.$.panel[this.$.livePanelKeys[i]]
-              .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
-              .attr("data-ax6grid-selected", this.list[_doindex][cfg.columnKeys.selected]);
-          }
-        }
-      },
-      "selectedClear": function () {
-        let di = this.list.length;
-        let pi;
-
-        if (!this.proxyList) {
-          while (di--) {
-            if (this.list[di][cfg.columnKeys.selected]) {
-              pi = this.$.livePanelKeys.length;
-              while (pi--) {
-                this.$.panel[this.$.livePanelKeys[pi]]
-                  .find('[data-ax6grid-tr-data-index="' + di + '"]')
-                  .attr("data-ax6grid-selected", false);
-              }
-            }
-            this.list[di][cfg.columnKeys.selected] = false;
-          }
-        } else {
-          while (di--) {
-            this.list[di][cfg.columnKeys.selected] = false;
-          }
-          di = this.proxyList.length;
-          while (di--) {
-            if (this.list[doi][cfg.columnKeys.selected]) {
-              pi = this.$.livePanelKeys.length;
-              while (pi--) {
-                this.$.panel[this.$.livePanelKeys[pi]]
-                  .find('[data-ax6grid-tr-data-index="' + di + '"]')
-                  .attr("data-ax6grid-selected", false);
-              }
-            }
-
-            this.proxyList[di][cfg.columnKeys.selected] = false;
-            let doi = this.proxyList[di].__original_index__;
-          }
-        }
-      },
-      "cellChecked": function (_dindex, _doindex, _data) {
-        let key = _data.key,
-          rowIndex = _data.rowIndex,
-          colIndex = _data.colIndex;
-
-        let panelName = (function () {
-          let _panels = [];
-          if (this.xvar.frozenRowIndex > _dindex) _panels.push("top");
-          if (this.xvar.frozenColumnIndex > colIndex) _panels.push("left");
-          _panels.push("body");
-          if (_panels[0] !== "top") _panels.push("scroll");
-          return _panels.join("-");
-        }).call(this);
-
-        this.$.panel[panelName]
-          .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
-          .find('[data-ax6grid-column-rowIndex="' + rowIndex + '"][data-ax6grid-column-colIndex="' + colIndex + '"]')
-          .find('[data-ax6grid-editor="checkbox"]')
-          .attr("data-ax6grid-checked", '' + _data.checked);
-      }
-    };
-
-  if (typeof _doindex === "undefined") _doindex = _dindex;
-
-  _states.forEach(function (_state) {
-    if (!processor[_state]) throw 'invaild state name';
-    processor[_state].call(self, _dindex, _doindex, _data);
-  });
-};
-
-const updateRowStateAll = function (_states, _data) {
-  let self = this,
-    cfg = this.config,
-    processor = {
-      "selected": function (_dindex) {
-        repaint.call(this, true);
-      }
-    };
-
-  _states.forEach(function (_state) {
-    if (!processor[_state]) throw 'invaild state name';
-    processor[_state].call(self, _data);
-  });
-};
-
-const init = function () {
-  let self = this;
-
-  this.$["container"]["body"].on("dblclick", '[data-ax6grid-column-attr]', function (e) {
-    let panelName, attr,
-      row, col, dindex, doindex, rowIndex, colIndex,
-      targetDBLClick = {
-        "default": function (_column) {
-          if (self.isInlineEditing) {
-            for (let columnKey in self.inlineEditing) {
-              if (columnKey == _column.dindex + "_" + _column.colIndex + "_" + _column.rowIndex) {
-                return this;
-              }
-            }
-          }
-
-          let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex], value = "";
-          if (column) {
-            if (!self.list[dindex].__isGrouping) {
-              value = DATA.getValue.call(self, dindex, doindex, column.key);
-            }
-          }
-
-          let editor = self.colGroup[_column.colIndex].editor;
-          if (U.isObject(editor)) {
-            inlineEdit.active.call(self, self.focusedColumn, e, value);
-          } else {
-            // 더블클릭 실행
-            if (self.config.body.onDBLClick) {
-              let that = {
-                self: self,
-                page: self.page,
-                list: self.list,
-                item: self.list[_column.dindex],
-                dindex: _column.dindex,
-                doindex: _column.doindex,
-                rowIndex: _column.rowIndex,
-                colIndex: _column.colIndex,
-                column: column,
-                value: self.list[_column.dindex][column.key]
-              };
-              self.config.body.onDBLClick.call(that);
-            }
-          }
-        },
-        "rowSelector": function (_column) {
-
-        },
-        "lineNumber": function (_column) {
-
-        }
-      };
-
-    panelName = this.getAttribute("data-ax6grid-panel-name");
-    attr = this.getAttribute("data-ax6grid-column-attr");
-    row = Number(this.getAttribute("data-ax6grid-column-row"));
-    col = Number(this.getAttribute("data-ax6grid-column-col"));
-    rowIndex = Number(this.getAttribute("data-ax6grid-column-rowIndex"));
-    colIndex = Number(this.getAttribute("data-ax6grid-column-colIndex"));
-    dindex = Number(this.getAttribute("data-ax6grid-data-index"));
-    doindex = Number(this.getAttribute("data-ax6grid-data-o-index"));
-
-    if (attr in targetDBLClick) {
-      targetDBLClick[attr]({
-        panelName: panelName,
-        attr: attr,
-        row: row,
-        col: col,
-        dindex: dindex,
-        doindex: doindex,
-        rowIndex: rowIndex,
-        colIndex: colIndex
-      });
-
-      U.stopEvent(e);
-    }
-  });
-
-  this.$["container"]["body"].on("click", '[data-ax6grid-column-attr]', function (e) {
-    let panelName, attr,
-      row, col, dindex, doindex, rowIndex, colIndex, disableSelection,
-      targetClick = {
-        "default": function (_column) {
-          let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
-            that = {
-              self: self,
-              page: self.page,
-              list: self.list,
-              item: self.list[_column.doindex],
-              dindex: _column.dindex,
-              doindex: _column.doindex,
-              rowIndex: _column.rowIndex,
-              colIndex: _column.colIndex,
-              column: column,
-              value: self.list[_column.dindex][column.key]
-            };
-
-          if (column.editor && column.editor.type == "checkbox") { // todo : INLINE_EDITOR에서 처리 할수 있도록 구문 변경 필요.
-            let value = DATA.getValue.call(self, _column.dindex, _column.doindex, column.key),
-              checked, newValue;
-
-            if (column.editor.config && column.editor.config.trueValue) {
-              if (checked = !(value == column.editor.config.trueValue)) {
-                newValue = column.editor.config.trueValue;
-              } else {
-                newValue = column.editor.config.falseValue;
-              }
-            } else {
-              newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
-            }
-
-            DATA.setValue.call(self, _column.dindex, _column.doindex, column.key, newValue);
-
-            updateRowState.call(self, ["cellChecked"], _column.dindex, _column.doindex, {
-              key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
-              editorConfig: column.editor.config, checked: checked
-            });
-          } else {
-            if (self.config.body.onClick) {
-              self.config.body.onClick.call(that);
-            }
-          }
-        },
-        "rowSelector": function (_column) {
-          let item = self.list[_column.doindex];
-          if (item[self.config.columnKeys.disableSelection]) {
-            return false;
-          }
-
-          if (!self.config.multipleSelect && self.selectedDataIndexs[0] !== _column.doindex) {
-            updateRowState.call(self, ["selectedClear"]);
-            DATA.clearSelect.call(self);
-          }
-
-          DATA.select.call(self, _column.dindex, _column.doindex, undefined, {
-            internalCall: true
-          });
-          updateRowState.call(self, ["selected"], _column.dindex, _column.doindex);
-        },
-        "lineNumber": function (_column) {
-
-        },
-        "tree-control": function (_column, _el) {
-          //console.log(_column);
-          toggleCollapse.call(self, _column.dindex, _column.doindex);
-        }
-      };
-
-    panelName = this.getAttribute("data-ax6grid-panel-name");
-    attr = this.getAttribute("data-ax6grid-column-attr");
-    row = Number(this.getAttribute("data-ax6grid-column-row"));
-    col = Number(this.getAttribute("data-ax6grid-column-col"));
-    rowIndex = Number(this.getAttribute("data-ax6grid-column-rowIndex"));
-    colIndex = Number(this.getAttribute("data-ax6grid-column-colIndex"));
-    dindex = Number(this.getAttribute("data-ax6grid-data-index"));
-    doindex = Number(this.getAttribute("data-ax6grid-data-o-index"));
-
-    if (attr in targetClick) {
-      targetClick[attr]({
-        panelName: panelName,
-        attr: attr,
-        row: row,
-        col: col,
-        dindex: dindex,
-        doindex: doindex,
-        rowIndex: rowIndex,
-        colIndex: colIndex
-      }, this);
-    }
-  });
-
-  this.$["container"]["body"].on("contextmenu", function (e) {
-    let target, dindex, doindex, rowIndex, colIndex, item, column, param = {};
-
-    target = U.findParentNode(e.target, function (t) {
-      if (t.getAttribute("data-ax6grid-column-attr")) {
-        return true;
-      }
-    });
-
-    if (target) {
-      // item 찾기
-      rowIndex = Number(target.getAttribute("data-ax6grid-column-rowIndex"));
-      colIndex = Number(target.getAttribute("data-ax6grid-column-colIndex"));
-      dindex = Number(target.getAttribute("data-ax6grid-data-index"));
-      doindex = Number(target.getAttribute("data-ax6grid-data-o-index"));
-      column = self.bodyRowMap[rowIndex + "_" + colIndex];
-      item = self.list[dindex];
-    }
-
-    if (self.config.body.onContextMenu) {
-      param = {
-        element: target,
-        dindex: dindex,
-        doindex: doindex,
-        rowIndex: rowIndex,
-        colIndex: colIndex,
-        item: item,
-        column: column,
-        gridSelf: self
-      };
-      self.config.body.onContextMenu.call({
-        self: self,
-        item: item,
-        column: column,
-        dindex: dindex,
-        doindex: doindex,
-        rowIndex: rowIndex,
-        colIndex: colIndex
-      }, e, param);
-    }
-
-    U.stopEvent(e.originalEvent);
-    target = null;
-    dindex = null;
-    doindex = null;
-    rowIndex = null;
-    colIndex = null;
-    item = null;
-    column = null;
-    param = null;
-  });
-
-  this.$["container"]["body"]
-    .on("mousedown", '[data-ax6grid-column-attr="default"]', function (e) {
-      if (self.xvar.touchmoved) return false;
-      if (this.getAttribute("data-ax6grid-column-rowIndex")) {
-        columnSelector.on.call(self, {
-          panelName: this.getAttribute("data-ax6grid-panel-name"),
-          dindex: Number(this.getAttribute("data-ax6grid-data-index")),
-          doindex: Number(this.getAttribute("data-ax6grid-data-o-index")),
-          rowIndex: Number(this.getAttribute("data-ax6grid-column-rowIndex")),
-          colIndex: Number(this.getAttribute("data-ax6grid-column-colIndex")),
-          colspan: Number(this.getAttribute("colspan"))
-        });
-      }
-    })
-    .on("dragstart", function (e) {
-      U.stopEvent(e);
-      return false;
-    });
-
-  resetFrozenColumn.call(this);
-
-  // 그리드 바디에 출력할 여유 카운트
-  this.xvar.paintRowCountMargin = this.config.virtualScrollYCountMargin;
-  this.xvar.paintRowCountTopMargin = this.config.virtualScrollYCountMargin - Math.floor(this.config.virtualScrollYCountMargin / 2);
-
-  if (this.config.virtualScrollAccelerated) {
-    this.__throttledScroll = U.throttle(function (css, opts) {
-      if (this.config.virtualScrollY && !opts.noRepaint && "top" in css) {
-        repaint.call(this);
-      } else if (this.config.virtualScrollX && !opts.noRepaint && "left" in css) {
-        repaint.call(this);
-      }
-      if (opts.callback) {
-        opts.callback();
-      }
-    }, this.config.virtualScrollAcceleratedDelayTime);
-  } else {
-    this.__throttledScroll = false;
-  }
-};
-
 const resetFrozenColumn = function () {
   let cfg = this.config,
     dividedBodyRowObj = UTIL.divideTableByFrozenColumnIndex(this.bodyRowTable, this.xvar.frozenColumnIndex);
@@ -844,6 +485,248 @@ const getSumFieldValue = function (_list, _col) {
       }
     } else {
       return "&nbsp;";
+    }
+  }
+};
+
+const inlineEdit = {
+  active(_focusedColumn, _e, _initValue) {
+    let self = this,
+      dindex, doindex, colIndex, rowIndex, panelName, colspan,
+      col, editor;
+
+    for (var key in _focusedColumn) {
+      panelName = _focusedColumn[key].panelName;
+      dindex = _focusedColumn[key].dindex;
+      doindex = _focusedColumn[key].doindex;
+      colIndex = _focusedColumn[key].colIndex;
+      rowIndex = _focusedColumn[key].rowIndex;
+      colspan = _focusedColumn[key].colspan;
+
+      // 인라인 에디팅을 멈춰야 하는 경우 조건
+      col = this.colGroup[colIndex];
+      if (!(editor = col.editor)) return this;
+
+      // editor disabled 체크
+      if (U.isFunction(editor.disabled)) {
+        if (editor.disabled.call({
+            list: this.list,
+            dindex: dindex,
+            item: this.list[dindex],
+            key: col.key,
+            value: _initValue
+          })) {
+          return this;
+        }
+      }
+
+      // 조건에 맞지 않는 에디팅 타입이면 반응 없음.
+      if (!(function (_editor, _type) {
+          if (_editor.type in INLINE_EDITOR) {
+            return (INLINE_EDITOR[_editor.type].editMode == "popup");
+          }
+        })(editor)) {
+        // 체크 박스 타입이면 값 변경 시도
+        if (editor.type == "checkbox") {
+          let checked, newValue;
+          if (editor.config && editor.config.trueValue) {
+            if (checked = !(_initValue == editor.config.trueValue)) {
+              newValue = editor.config.trueValue;
+            } else {
+              newValue = editor.config.falseValue;
+            }
+          } else {
+            newValue = checked = (_initValue == false || _initValue == "false" || _initValue < "1") ? "true" : "false";
+          }
+
+          DATA.setValue.call(self, dindex, doindex, col.key, newValue);
+          updateRowState.call(self, ["cellChecked"], dindex, doindex, {
+            key: col.key, rowIndex: rowIndex, colIndex: colIndex,
+            editorConfig: col.editor.config, checked: checked
+          });
+        }
+        return this;
+      }
+
+      if (this.list[dindex].__isGrouping) {
+        return false;
+      }
+      if (key in this.inlineEditing) {
+        return false;
+      }
+
+      this.inlineEditing[key] = {
+        editor: editor,
+        panelName: panelName,
+        columnKey: key,
+        column: _focusedColumn[key],
+        useReturnToSave: INLINE_EDITOR[editor.type].useReturnToSave
+      };
+      this.isInlineEditing = true;
+    }
+    if (this.isInlineEditing) {
+
+      let originalValue = DATA.getValue.call(self, dindex, doindex, col.key),
+        initValue = (function (__value, __editor) {
+          if (U.isNothing(__value)) {
+            __value = U.isNothing(originalValue) ? "" : originalValue;
+          }
+
+          if (__editor.type == "money") {
+            return U.number(__value, {"money": true});
+          }
+          else {
+            return __value;
+          }
+        }).call(this, _initValue, editor);
+
+      this.inlineEditing[key].$inlineEditorCell = this.$["panel"][panelName]
+        .find('[data-ax6grid-tr-data-index="' + dindex + '"]')
+        .find('[data-ax6grid-column-rowindex="' + rowIndex + '"][data-ax6grid-column-colindex="' + colIndex + '"]')
+        .find('[data-ax6grid-cellholder]');
+
+      this.inlineEditing[key].$inlineEditor = INLINE_EDITOR[editor.type].init(this, key, editor, this.inlineEditing[key].$inlineEditorCell, initValue);
+
+      return true;
+    }
+  },
+  deActive(_msg, _key, _value) {
+    // console.log(this.inlineEditing.column.dindex, this.inlineEditing.$inlineEditor.val());
+    if (!this.inlineEditing[_key]) return this;
+
+    let panelName = this.inlineEditing[_key].panelName,
+      dindex = this.inlineEditing[_key].column.dindex,
+      doindex = this.inlineEditing[_key].column.doindex,
+      rowIndex = this.inlineEditing[_key].column.rowIndex,
+      colIndex = this.inlineEditing[_key].column.colIndex,
+      column = this.bodyRowMap[this.inlineEditing[_key].column.rowIndex + "_" + this.inlineEditing[_key].column.colIndex],
+      editorValue = (function ($inlineEditor) {
+        if (typeof _value === "undefined") {
+          if ($inlineEditor.get(0).tagName == "SELECT" || $inlineEditor.get(0).tagName == "INPUT" || $inlineEditor.get(0).tagName == "TEXTAREA") {
+            return $inlineEditor.val();
+          } else {
+            _msg = "CANCEL";
+            return false;
+          }
+        } else {
+          return _value;
+        }
+      })(this.inlineEditing[_key].$inlineEditor),
+      newValue = (function (__value, __editor) {
+        if (__editor.type == "money") {
+          return U.number(__value);
+        }
+        else {
+          return __value;
+        }
+      }).call(this, editorValue, column.editor);
+
+    let action = {
+      "CANCEL"(_dindex, _column, _newValue) {
+        action["__clear"].call(this);
+      },
+      "RETURN"(_dindex, _doindex, _column, _newValue) {
+        if (DATA.setValue.call(this, _dindex, _doindex, _column.key, _newValue)) {
+          action["__clear"].call(this);
+          repaintCell.call(this, panelName, _dindex, _doindex, rowIndex, colIndex, _newValue);
+        } else {
+          action["__clear"].call(this);
+        }
+      },
+      "__clear"() {
+        this.isInlineEditing = false;
+        let bindedAx5ui = this.inlineEditing[_key].$inlineEditor.data("binded-ax5ui");
+        if (bindedAx5ui == "ax5picker") {
+          this.inlineEditing[_key].$inlineEditor.ax5picker("close");
+        } else if (bindedAx5ui == "ax5select") {
+          this.inlineEditing[_key].$inlineEditor.ax5select("close");
+        }
+
+        this.inlineEditing[_key].$inlineEditor.remove();
+        this.inlineEditing[_key].$inlineEditor = null;
+        this.inlineEditing[_key].$inlineEditorCell = null;
+        this.inlineEditing[_key] = undefined;
+        delete this.inlineEditing[_key]; // delete 지원안하는 브라우저 테스트..
+      }
+    };
+
+    if (_msg in action) {
+      action[_msg || "RETURN"].call(this, dindex, doindex, column, newValue);
+    } else {
+      action["__clear"].call(this);
+    }
+  },
+  keydown(key, columnKey, _options) {
+    let processor = {
+      "ESC"() {
+        for (var columnKey in this.inlineEditing) {
+          inlineEdit.deActive.call(this, "CANCEL", columnKey);
+        }
+      },
+      "RETURN"() {
+        if (this.isInlineEditing) {
+          if (this.inlineEditing[columnKey] && this.inlineEditing[columnKey].useReturnToSave) { // todo : 네이밍 검증 할 필요있음.
+            inlineEdit.deActive.call(this, "RETURN", columnKey);
+          } else {
+            return false;
+          }
+        } else {
+
+          for (var k in this.focusedColumn) {
+            let _column = this.focusedColumn[k],
+              column = this.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
+              dindex = _column.dindex,
+              doindex = _column.doindex,
+              value = "",
+              col = this.colGroup[_column.colIndex];
+
+            if (column) {
+              if (!this.list[dindex].__isGrouping) {
+                value = DATA.getValue.call(this, dindex, doindex, column.key);
+              }
+            }
+
+            if (col.editor && INLINE_EDITOR[col.editor.type].editMode === "inline") {
+              if (_options && _options.moveFocus) {
+
+              }
+              else {
+                if (column.editor && column.editor.type == "checkbox") {
+                  value = DATA.getValue.call(this, dindex, doindex, column.key);
+
+                  let checked, newValue;
+                  if (column.editor.config && column.editor.config.trueValue) {
+                    // console.log(value, column.editor.config.trueValue);
+
+                    if (value != column.editor.config.trueValue) {
+                      newValue = column.editor.config.trueValue;
+                      checked = true;
+                    } else {
+                      newValue = column.editor.config.falseValue;
+                      checked = false;
+                    }
+                  } else {
+                    newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
+                  }
+
+                  DATA.setValue.call(this, dindex, doindex, column.key, newValue);
+                  updateRowState.call(this, ["cellChecked"], dindex, doindex, {
+                    key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
+                    editorConfig: column.editor.config, checked: checked
+                  });
+                }
+              }
+            } else {
+              inlineEdit.active.call(this, this.focusedColumn, null, value);
+            }
+          }
+        }
+        return true;
+      }
+    };
+
+    if (key in processor) {
+      processor[key].call(this, key, columnKey, _options);
     }
   }
 };
@@ -1434,1409 +1317,1571 @@ const repaint = function (_reset) {
   PAGE.statusUpdate.call(this);
 };
 
-const repaintCell = function (_panelName, _dindex, _doindex, _rowIndex, _colIndex, _newValue) {
-  let self = this,
-    cfg = this.config,
-    list = this.list;
+/**
+ * @module AX6UIGrid_body
+ */
+export default {
+  /**
+   *
+   */
+  init: function () {
+    let self = this;
 
-  let updateCell = this.$["panel"][_panelName]
-    .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
-    .find('[data-ax6grid-column-rowindex="' + _rowIndex + '"][data-ax6grid-column-colindex="' + _colIndex + '"]')
-    .find('[data-ax6grid-cellholder]'),
-    colGroup = this.colGroup,
-    col = colGroup[_colIndex];
+    this.$["container"]["body"].on("dblclick", '[data-ax6grid-column-attr]', function (e) {
+      let panelName, attr,
+        row, col, dindex, doindex, rowIndex, colIndex,
+        targetDBLClick = {
+          "default": function (_column) {
+            if (self.isInlineEditing) {
+              for (let columnKey in self.inlineEditing) {
+                if (columnKey == _column.dindex + "_" + _column.colIndex + "_" + _column.rowIndex) {
+                  return this;
+                }
+              }
+            }
 
-  updateCell.html(getFieldValue.call(this, list, list[_dindex], _dindex, col));
+            let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex], value = "";
+            if (column) {
+              if (!self.list[dindex].__isGrouping) {
+                value = DATA.getValue.call(self, dindex, doindex, column.key);
+              }
+            }
 
-  if (col.editor && col.editor.updateWith) {
-    col.editor.updateWith.forEach(function (updateColumnKey) {
-      colGroup.forEach(function (col) {
-        if (col.key == updateColumnKey) {
-          let rowIndex = col.rowIndex, colIndex = col.colIndex,
-            panelName = UTIL.findPanelByColumnIndex.call(self, _dindex, colIndex, rowIndex).panelName,
-            updateWithCell = self.$["panel"][panelName]
-              .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
-              .find('[data-ax6grid-column-rowindex="' + rowIndex + '"][data-ax6grid-column-colindex="' + colIndex + '"]')
-              .find('[data-ax6grid-cellholder]');
+            let editor = self.colGroup[_column.colIndex].editor;
+            if (U.isObject(editor)) {
+              inlineEdit.active.call(self, self.focusedColumn, e, value);
+            } else {
+              // 더블클릭 실행
+              if (self.config.body.onDBLClick) {
+                let that = {
+                  self: self,
+                  page: self.page,
+                  list: self.list,
+                  item: self.list[_column.dindex],
+                  dindex: _column.dindex,
+                  doindex: _column.doindex,
+                  rowIndex: _column.rowIndex,
+                  colIndex: _column.colIndex,
+                  column: column,
+                  value: self.list[_column.dindex][column.key]
+                };
+                self.config.body.onDBLClick.call(that);
+              }
+            }
+          },
+          "rowSelector": function (_column) {
 
-          updateWithCell.html(getFieldValue.call(self, list, list[_dindex], _dindex, col));
+          },
+          "lineNumber": function (_column) {
+
+          }
+        };
+
+      panelName = this.getAttribute("data-ax6grid-panel-name");
+      attr = this.getAttribute("data-ax6grid-column-attr");
+      row = Number(this.getAttribute("data-ax6grid-column-row"));
+      col = Number(this.getAttribute("data-ax6grid-column-col"));
+      rowIndex = Number(this.getAttribute("data-ax6grid-column-rowIndex"));
+      colIndex = Number(this.getAttribute("data-ax6grid-column-colIndex"));
+      dindex = Number(this.getAttribute("data-ax6grid-data-index"));
+      doindex = Number(this.getAttribute("data-ax6grid-data-o-index"));
+
+      if (attr in targetDBLClick) {
+        targetDBLClick[attr]({
+          panelName: panelName,
+          attr: attr,
+          row: row,
+          col: col,
+          dindex: dindex,
+          doindex: doindex,
+          rowIndex: rowIndex,
+          colIndex: colIndex
+        });
+
+        U.stopEvent(e);
+      }
+    });
+
+    this.$["container"]["body"].on("click", '[data-ax6grid-column-attr]', function (e) {
+      let panelName, attr,
+        row, col, dindex, doindex, rowIndex, colIndex, disableSelection,
+        targetClick = {
+          "default": function (_column) {
+            let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
+              that = {
+                self: self,
+                page: self.page,
+                list: self.list,
+                item: self.list[_column.doindex],
+                dindex: _column.dindex,
+                doindex: _column.doindex,
+                rowIndex: _column.rowIndex,
+                colIndex: _column.colIndex,
+                column: column,
+                value: self.list[_column.dindex][column.key]
+              };
+
+            if (column.editor && column.editor.type == "checkbox") { // todo : INLINE_EDITOR에서 처리 할수 있도록 구문 변경 필요.
+              let value = DATA.getValue.call(self, _column.dindex, _column.doindex, column.key),
+                checked, newValue;
+
+              if (column.editor.config && column.editor.config.trueValue) {
+                if (checked = !(value == column.editor.config.trueValue)) {
+                  newValue = column.editor.config.trueValue;
+                } else {
+                  newValue = column.editor.config.falseValue;
+                }
+              } else {
+                newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
+              }
+
+              DATA.setValue.call(self, _column.dindex, _column.doindex, column.key, newValue);
+
+              updateRowState.call(self, ["cellChecked"], _column.dindex, _column.doindex, {
+                key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
+                editorConfig: column.editor.config, checked: checked
+              });
+            } else {
+              if (self.config.body.onClick) {
+                self.config.body.onClick.call(that);
+              }
+            }
+          },
+          "rowSelector": function (_column) {
+            let item = self.list[_column.doindex];
+            if (item[self.config.columnKeys.disableSelection]) {
+              return false;
+            }
+
+            if (!self.config.multipleSelect && self.selectedDataIndexs[0] !== _column.doindex) {
+              updateRowState.call(self, ["selectedClear"]);
+              DATA.clearSelect.call(self);
+            }
+
+            DATA.select.call(self, _column.dindex, _column.doindex, undefined, {
+              internalCall: true
+            });
+            updateRowState.call(self, ["selected"], _column.dindex, _column.doindex);
+          },
+          "lineNumber": function (_column) {
+
+          },
+          "tree-control": function (_column, _el) {
+            //console.log(_column);
+            toggleCollapse.call(self, _column.dindex, _column.doindex);
+          }
+        };
+
+      panelName = this.getAttribute("data-ax6grid-panel-name");
+      attr = this.getAttribute("data-ax6grid-column-attr");
+      row = Number(this.getAttribute("data-ax6grid-column-row"));
+      col = Number(this.getAttribute("data-ax6grid-column-col"));
+      rowIndex = Number(this.getAttribute("data-ax6grid-column-rowIndex"));
+      colIndex = Number(this.getAttribute("data-ax6grid-column-colIndex"));
+      dindex = Number(this.getAttribute("data-ax6grid-data-index"));
+      doindex = Number(this.getAttribute("data-ax6grid-data-o-index"));
+
+      if (attr in targetClick) {
+        targetClick[attr]({
+          panelName: panelName,
+          attr: attr,
+          row: row,
+          col: col,
+          dindex: dindex,
+          doindex: doindex,
+          rowIndex: rowIndex,
+          colIndex: colIndex
+        }, this);
+      }
+    });
+
+    this.$["container"]["body"].on("contextmenu", function (e) {
+      let target, dindex, doindex, rowIndex, colIndex, item, column, param = {};
+
+      target = U.findParentNode(e.target, function (t) {
+        if (t.getAttribute("data-ax6grid-column-attr")) {
+          return true;
         }
       });
+
+      if (target) {
+        // item 찾기
+        rowIndex = Number(target.getAttribute("data-ax6grid-column-rowIndex"));
+        colIndex = Number(target.getAttribute("data-ax6grid-column-colIndex"));
+        dindex = Number(target.getAttribute("data-ax6grid-data-index"));
+        doindex = Number(target.getAttribute("data-ax6grid-data-o-index"));
+        column = self.bodyRowMap[rowIndex + "_" + colIndex];
+        item = self.list[dindex];
+      }
+
+      if (self.config.body.onContextMenu) {
+        param = {
+          element: target,
+          dindex: dindex,
+          doindex: doindex,
+          rowIndex: rowIndex,
+          colIndex: colIndex,
+          item: item,
+          column: column,
+          gridSelf: self
+        };
+        self.config.body.onContextMenu.call({
+          self: self,
+          item: item,
+          column: column,
+          dindex: dindex,
+          doindex: doindex,
+          rowIndex: rowIndex,
+          colIndex: colIndex
+        }, e, param);
+      }
+
+      U.stopEvent(e.originalEvent);
+      target = null;
+      dindex = null;
+      doindex = null;
+      rowIndex = null;
+      colIndex = null;
+      item = null;
+      column = null;
+      param = null;
     });
-  }
 
-  /// ~~~~~~
+    this.$["container"]["body"]
+      .on("mousedown", '[data-ax6grid-column-attr="default"]', function (e) {
+        if (self.xvar.touchmoved) return false;
+        if (this.getAttribute("data-ax6grid-column-rowIndex")) {
+          columnSelector.on.call(self, {
+            panelName: this.getAttribute("data-ax6grid-panel-name"),
+            dindex: Number(this.getAttribute("data-ax6grid-data-index")),
+            doindex: Number(this.getAttribute("data-ax6grid-data-o-index")),
+            rowIndex: Number(this.getAttribute("data-ax6grid-column-rowIndex")),
+            colIndex: Number(this.getAttribute("data-ax6grid-column-colIndex")),
+            colspan: Number(this.getAttribute("colspan"))
+          });
+        }
+      })
+      .on("dragstart", function (e) {
+        U.stopEvent(e);
+        return false;
+      });
 
-  let paintStartRowIndex = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
-    headerColGroup = this.headerColGroup,
-    leftFootSumData = this.leftFootSumData,
-    footSumData = this.footSumData,
-    leftBodyGroupingData = this.leftBodyGroupingData,
-    bodyGroupingData = this.bodyGroupingData,
-    bodyAlign = cfg.body.align,
-    paintRowCount = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
-    scrollConfig = {
-      paintStartRowIndex: paintStartRowIndex,
-      paintRowCount: paintRowCount,
-      bodyTrHeight: this.xvar.bodyTrHeight
+    resetFrozenColumn.call(this);
+
+    // 그리드 바디에 출력할 여유 카운트
+    this.xvar.paintRowCountMargin = this.config.virtualScrollYCountMargin;
+    this.xvar.paintRowCountTopMargin = this.config.virtualScrollYCountMargin - Math.floor(this.config.virtualScrollYCountMargin / 2);
+
+    if (this.config.virtualScrollAccelerated) {
+      this.__throttledScroll = U.throttle(function (css, opts) {
+        if (this.config.virtualScrollY && !opts.noRepaint && "top" in css) {
+          repaint.call(this);
+        } else if (this.config.virtualScrollX && !opts.noRepaint && "left" in css) {
+          repaint.call(this);
+        }
+        if (opts.callback) {
+          opts.callback();
+        }
+      }, this.config.virtualScrollAcceleratedDelayTime);
+    } else {
+      this.__throttledScroll = false;
+    }
+  },
+  /**
+   *
+   * @param _reset
+   * @return {module:AX6UIGrid_body}
+   */
+  repaint: repaint,
+  /**
+   *
+   * @param _panelName
+   * @param _dindex
+   * @param _doindex
+   * @param _rowIndex
+   * @param _colIndex
+   * @param _newValue
+   */
+  repaintCell: function (_panelName, _dindex, _doindex, _rowIndex, _colIndex, _newValue) {
+    let self = this,
+      cfg = this.config,
+      list = this.list;
+
+    let updateCell = this.$["panel"][_panelName]
+      .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
+      .find('[data-ax6grid-column-rowindex="' + _rowIndex + '"][data-ax6grid-column-colindex="' + _colIndex + '"]')
+      .find('[data-ax6grid-cellholder]'),
+      colGroup = this.colGroup,
+      col = colGroup[_colIndex];
+
+    updateCell.html(getFieldValue.call(this, list, list[_dindex], _dindex, col));
+
+    if (col.editor && col.editor.updateWith) {
+      col.editor.updateWith.forEach(function (updateColumnKey) {
+        colGroup.forEach(function (col) {
+          if (col.key == updateColumnKey) {
+            let rowIndex = col.rowIndex, colIndex = col.colIndex,
+              panelName = UTIL.findPanelByColumnIndex.call(self, _dindex, colIndex, rowIndex).panelName,
+              updateWithCell = self.$["panel"][panelName]
+                .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
+                .find('[data-ax6grid-column-rowindex="' + rowIndex + '"][data-ax6grid-column-colindex="' + colIndex + '"]')
+                .find('[data-ax6grid-cellholder]');
+
+            updateWithCell.html(getFieldValue.call(self, list, list[_dindex], _dindex, col));
+          }
+        });
+      });
+    }
+
+    /// ~~~~~~
+
+    let paintStartRowIndex = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
+      headerColGroup = this.headerColGroup,
+      leftFootSumData = this.leftFootSumData,
+      footSumData = this.footSumData,
+      leftBodyGroupingData = this.leftBodyGroupingData,
+      bodyGroupingData = this.bodyGroupingData,
+      bodyAlign = cfg.body.align,
+      paintRowCount = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
+      scrollConfig = {
+        paintStartRowIndex: paintStartRowIndex,
+        paintRowCount: paintRowCount,
+        bodyTrHeight: this.xvar.bodyTrHeight
+      };
+
+    if (this.xvar.nopaintLeftColumnsWidth || this.xvar.nopaintRightColumnsWidth) {
+      headerColGroup = [].concat(headerColGroup).splice(this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex - this.xvar.paintStartColumnIndex + 1);
+      if (cfg.body.grouping) {
+        bodyGroupingData = UTIL.getTableByStartEndColumnIndex(bodyGroupingData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
+      }
+      if (cfg.footSum) {
+        footSumData = UTIL.getTableByStartEndColumnIndex(footSumData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
+      }
+    }
+
+    let repaintSum = function (_elTargetKey, _colGroup, _bodyRow, _list, _scrollConfig) {
+      let _elTarget = this.$.panel[_elTargetKey],
+        SS = [],
+        cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
+
+      SS.push('<table border="0" cellpadding="0" cellspacing="0">');
+      SS.push('<colgroup>');
+      for (cgi = 0, cgl = _colGroup.length; cgi < cgl; cgi++) {
+        SS.push('<col style="width:' + _colGroup[cgi]._width + 'px;"  />');
+      }
+      SS.push('<col  />');
+      SS.push('</colgroup>');
+
+      for (tri = 0, trl = _bodyRow.rows.length; tri < trl; tri++) {
+        SS.push('<tr class="tr-sum">');
+        for (ci = 0, cl = _bodyRow.rows[tri].cols.length; ci < cl; ci++) {
+          col = _bodyRow.rows[tri].cols[ci];
+          cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
+          colAlign = col.align || bodyAlign;
+
+          SS.push('<td ',
+            'data-ax6grid-panel-name="' + _elTargetKey + '" ',
+            'data-ax6grid-column-row="' + tri + '" ',
+            'data-ax6grid-column-col="' + ci + '" ',
+            'data-ax6grid-column-rowIndex="' + tri + '" ',
+            'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
+            'data-ax6grid-column-attr="' + (col.columnAttr || "sum") + '" ',
+            (function (_focusedColumn, _selectedColumn) {
+              var attrs = "";
+              if (_focusedColumn) {
+                attrs += 'data-ax6grid-column-focused="true" ';
+              }
+              if (_selectedColumn) {
+                attrs += 'data-ax6grid-column-selected="true" ';
+              }
+              return attrs;
+            })(this.focusedColumn["sum_" + col.colIndex + "_" + tri], this.selectedColumn["sum_" + col.colIndex + "_" + tri]),
+            'colspan="' + col.colspan + '" ',
+            'rowspan="' + col.rowspan + '" ',
+            'class="' + (function (_col) {
+              let tdCSS_class = "";
+              if (_col.styleClass) {
+                if (U.isFunction(_col.styleClass)) {
+                  tdCSS_class += _col.styleClass.call({
+                    column: _col,
+                    key: _col.key,
+                    isFootSum: true
+                  }) + " ";
+                } else {
+                  tdCSS_class += _col.styleClass + " ";
+                }
+              }
+              if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
+              if (ci == cl - 1) tdCSS_class += "isLastColumn ";
+              return tdCSS_class;
+            }).call(this, col) + '" ',
+            'style="height: ' + cellHeight + 'px;min-height: 1px;">');
+
+          SS.push((function (_cellHeight) {
+            let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
+            if (!col.multiLine) {
+              _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
+            }
+
+            return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
+              ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
+              '" style="height:' + _cellHeight + 'px;' + ((col.multiLine) ? '' : 'line-height: ' + lineHeight + 'px;') + '">';
+
+          })(cellHeight), getSumFieldValue.call(this, _list, col), '</span>');
+
+          SS.push('</td>');
+        }
+        SS.push('<td ',
+          'data-ax6grid-column-row="null" ',
+          'data-ax6grid-column-col="null" ',
+          'data-ax6grid-column-attr="' + ("sum") + '" ',
+          'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
+          '></td>');
+        SS.push('</tr>');
+      }
+
+      SS.push('</table>');
+
+      _elTarget.empty().get(0).innerHTML = SS.join('');
+      return true;
+    };
+    let replaceGroupTr = function (_elTargetKey, _colGroup, _groupRow, _list, _scrollConfig) {
+      let _elTarget = this.$.panel[_elTargetKey],
+        SS = [],
+        di, dl, tri, trl, ci, cl,
+        col, cellHeight, colAlign;
+
+      for (di = _scrollConfig.paintStartRowIndex, dl = (function () {
+        let len;
+        len = _list.length;
+        if (_scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex < len) {
+          len = _scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex;
+        }
+        return len;
+      })(); di < dl; di++) {
+        if (_list[di] && _groupRow && "__isGrouping" in _list[di]) {
+          let rowTable = _groupRow;
+          SS = [];
+          for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
+            for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
+              col = rowTable.rows[tri].cols[ci];
+              cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
+              colAlign = col.align || bodyAlign;
+
+              SS.push('<td ',
+                'data-ax6grid-panel-name="' + _elTargetKey + '" ',
+                'data-ax6grid-data-index="' + di + '" ',
+                'data-ax6grid-column-row="' + tri + '" ',
+                'data-ax6grid-column-col="' + ci + '" ',
+                'data-ax6grid-column-rowIndex="' + col.rowIndex + '" ',
+                'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
+                'data-ax6grid-column-attr="' + (col.columnAttr || "default") + '" ',
+                (function (_focusedColumn, _selectedColumn) {
+                  let attrs = "";
+                  if (_focusedColumn) {
+                    attrs += 'data-ax6grid-column-focused="true" ';
+                  }
+                  if (_selectedColumn) {
+                    attrs += 'data-ax6grid-column-selected="true" ';
+                  }
+                  return attrs;
+                })(this.focusedColumn[di + "_" + col.colIndex + "_" + col.rowIndex], this.selectedColumn[di + "_" + col.colIndex + "_" + col.rowIndex]),
+                'colspan="' + col.colspan + '" ',
+                'rowspan="' + col.rowspan + '" ',
+                'class="' + (function (_col) {
+                  let tdCSS_class = "";
+                  if (_col.styleClass) {
+                    if (U.isFunction(_col.styleClass)) {
+                      tdCSS_class += _col.styleClass.call({
+                        column: _col,
+                        key: _col.key,
+                        item: _list[di],
+                        index: di
+                      }) + " ";
+                    } else {
+                      tdCSS_class += _col.styleClass + " ";
+                    }
+                  }
+                  if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
+                  if (ci == cl - 1) tdCSS_class += "isLastColumn ";
+                  return tdCSS_class;
+                }).call(this, col) + '" ',
+                'style="height: ' + cellHeight + 'px;min-height: 1px;">');
+
+              SS.push((function (_cellHeight) {
+                let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
+                if (!col.multiLine) {
+                  _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
+                }
+
+                return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
+                  ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
+                  '" style="height:' + _cellHeight + 'px;' + ((col.multiLine) ? '' : 'line-height: ' + lineHeight + 'px;') + '">';
+
+              })(cellHeight), getGroupingValue.call(this, _list[di], di, col), '</span>');
+
+              SS.push('</td>');
+            }
+            SS.push('<td ',
+              'data-ax6grid-column-row="null" ',
+              'data-ax6grid-column-col="null" ',
+              'data-ax6grid-data-index="' + di + '" ',
+              'data-ax6grid-column-attr="' + ("default") + '" ',
+              'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
+              '></td>');
+          }
+          _elTarget.find('tr[data-ax6grid-tr-data-index="' + di + '"]').empty().get(0).innerHTML = SS.join('');
+        }
+      }
     };
 
-  if (this.xvar.nopaintLeftColumnsWidth || this.xvar.nopaintRightColumnsWidth) {
-    headerColGroup = [].concat(headerColGroup).splice(this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex - this.xvar.paintStartColumnIndex + 1);
+    // body.grouping tr 다시 그리기..
     if (cfg.body.grouping) {
-      bodyGroupingData = UTIL.getTableByStartEndColumnIndex(bodyGroupingData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
-    }
-    if (cfg.footSum) {
-      footSumData = UTIL.getTableByStartEndColumnIndex(footSumData, this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex);
-    }
-  }
-
-  let repaintSum = function (_elTargetKey, _colGroup, _bodyRow, _list, _scrollConfig) {
-    let _elTarget = this.$.panel[_elTargetKey],
-      SS = [],
-      cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
-
-    SS.push('<table border="0" cellpadding="0" cellspacing="0">');
-    SS.push('<colgroup>');
-    for (cgi = 0, cgl = _colGroup.length; cgi < cgl; cgi++) {
-      SS.push('<col style="width:' + _colGroup[cgi]._width + 'px;"  />');
-    }
-    SS.push('<col  />');
-    SS.push('</colgroup>');
-
-    for (tri = 0, trl = _bodyRow.rows.length; tri < trl; tri++) {
-      SS.push('<tr class="tr-sum">');
-      for (ci = 0, cl = _bodyRow.rows[tri].cols.length; ci < cl; ci++) {
-        col = _bodyRow.rows[tri].cols[ci];
-        cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
-        colAlign = col.align || bodyAlign;
-
-        SS.push('<td ',
-          'data-ax6grid-panel-name="' + _elTargetKey + '" ',
-          'data-ax6grid-column-row="' + tri + '" ',
-          'data-ax6grid-column-col="' + ci + '" ',
-          'data-ax6grid-column-rowIndex="' + tri + '" ',
-          'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
-          'data-ax6grid-column-attr="' + (col.columnAttr || "sum") + '" ',
-          (function (_focusedColumn, _selectedColumn) {
-            var attrs = "";
-            if (_focusedColumn) {
-              attrs += 'data-ax6grid-column-focused="true" ';
-            }
-            if (_selectedColumn) {
-              attrs += 'data-ax6grid-column-selected="true" ';
-            }
-            return attrs;
-          })(this.focusedColumn["sum_" + col.colIndex + "_" + tri], this.selectedColumn["sum_" + col.colIndex + "_" + tri]),
-          'colspan="' + col.colspan + '" ',
-          'rowspan="' + col.rowspan + '" ',
-          'class="' + (function (_col) {
-            let tdCSS_class = "";
-            if (_col.styleClass) {
-              if (U.isFunction(_col.styleClass)) {
-                tdCSS_class += _col.styleClass.call({
-                  column: _col,
-                  key: _col.key,
-                  isFootSum: true
-                }) + " ";
-              } else {
-                tdCSS_class += _col.styleClass + " ";
-              }
-            }
-            if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
-            if (ci == cl - 1) tdCSS_class += "isLastColumn ";
-            return tdCSS_class;
-          }).call(this, col) + '" ',
-          'style="height: ' + cellHeight + 'px;min-height: 1px;">');
-
-        SS.push((function (_cellHeight) {
-          let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
-          if (!col.multiLine) {
-            _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
-          }
-
-          return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
-            ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
-            '" style="height:' + _cellHeight + 'px;' + ((col.multiLine) ? '' : 'line-height: ' + lineHeight + 'px;') + '">';
-
-        })(cellHeight), getSumFieldValue.call(this, _list, col), '</span>');
-
-        SS.push('</td>');
-      }
-      SS.push('<td ',
-        'data-ax6grid-column-row="null" ',
-        'data-ax6grid-column-col="null" ',
-        'data-ax6grid-column-attr="' + ("sum") + '" ',
-        'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
-        '></td>');
-      SS.push('</tr>');
-    }
-
-    SS.push('</table>');
-
-    _elTarget.empty().get(0).innerHTML = SS.join('');
-    return true;
-  };
-  let replaceGroupTr = function (_elTargetKey, _colGroup, _groupRow, _list, _scrollConfig) {
-    let _elTarget = this.$.panel[_elTargetKey],
-      SS = [],
-      di, dl, tri, trl, ci, cl,
-      col, cellHeight, colAlign;
-
-    for (di = _scrollConfig.paintStartRowIndex, dl = (function () {
-      let len;
-      len = _list.length;
-      if (_scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex < len) {
-        len = _scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex;
-      }
-      return len;
-    })(); di < dl; di++) {
-      if (_list[di] && _groupRow && "__isGrouping" in _list[di]) {
-        let rowTable = _groupRow;
-        SS = [];
-        for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
-          for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
-            col = rowTable.rows[tri].cols[ci];
-            cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
-            colAlign = col.align || bodyAlign;
-
-            SS.push('<td ',
-              'data-ax6grid-panel-name="' + _elTargetKey + '" ',
-              'data-ax6grid-data-index="' + di + '" ',
-              'data-ax6grid-column-row="' + tri + '" ',
-              'data-ax6grid-column-col="' + ci + '" ',
-              'data-ax6grid-column-rowIndex="' + col.rowIndex + '" ',
-              'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
-              'data-ax6grid-column-attr="' + (col.columnAttr || "default") + '" ',
-              (function (_focusedColumn, _selectedColumn) {
-                let attrs = "";
-                if (_focusedColumn) {
-                  attrs += 'data-ax6grid-column-focused="true" ';
-                }
-                if (_selectedColumn) {
-                  attrs += 'data-ax6grid-column-selected="true" ';
-                }
-                return attrs;
-              })(this.focusedColumn[di + "_" + col.colIndex + "_" + col.rowIndex], this.selectedColumn[di + "_" + col.colIndex + "_" + col.rowIndex]),
-              'colspan="' + col.colspan + '" ',
-              'rowspan="' + col.rowspan + '" ',
-              'class="' + (function (_col) {
-                let tdCSS_class = "";
-                if (_col.styleClass) {
-                  if (U.isFunction(_col.styleClass)) {
-                    tdCSS_class += _col.styleClass.call({
-                      column: _col,
-                      key: _col.key,
-                      item: _list[di],
-                      index: di
-                    }) + " ";
-                  } else {
-                    tdCSS_class += _col.styleClass + " ";
-                  }
-                }
-                if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
-                if (ci == cl - 1) tdCSS_class += "isLastColumn ";
-                return tdCSS_class;
-              }).call(this, col) + '" ',
-              'style="height: ' + cellHeight + 'px;min-height: 1px;">');
-
-            SS.push((function (_cellHeight) {
-              let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
-              if (!col.multiLine) {
-                _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
-              }
-
-              return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
-                ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
-                '" style="height:' + _cellHeight + 'px;' + ((col.multiLine) ? '' : 'line-height: ' + lineHeight + 'px;') + '">';
-
-            })(cellHeight), getGroupingValue.call(this, _list[di], di, col), '</span>');
-
-            SS.push('</td>');
-          }
-          SS.push('<td ',
-            'data-ax6grid-column-row="null" ',
-            'data-ax6grid-column-col="null" ',
-            'data-ax6grid-data-index="' + di + '" ',
-            'data-ax6grid-column-attr="' + ("default") + '" ',
-            'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
-            '></td>');
+      // left
+      if (this.xvar.frozenColumnIndex > 0) {
+        if (this.xvar.frozenRowIndex > 0) {
+          // 상단 행고정
+          replaceGroupTr.call(this, "top-left-body", headerColGroup, leftBodyGroupingData, list.slice(0, this.xvar.frozenRowIndex), {
+            paintStartRowIndex: 0,
+            paintRowCount: this.xvar.frozenRowIndex,
+            bodyTrHeight: this.xvar.bodyTrHeight
+          });
         }
-        _elTarget.find('tr[data-ax6grid-tr-data-index="' + di + '"]').empty().get(0).innerHTML = SS.join('');
+        replaceGroupTr.call(this, "left-body-scroll", headerColGroup, leftBodyGroupingData, list, scrollConfig);
       }
-    }
-  };
 
-  // body.grouping tr 다시 그리기..
-  if (cfg.body.grouping) {
-    // left
-    if (this.xvar.frozenColumnIndex > 0) {
+      // body
       if (this.xvar.frozenRowIndex > 0) {
         // 상단 행고정
-        replaceGroupTr.call(this, "top-left-body", headerColGroup, leftBodyGroupingData, list.slice(0, this.xvar.frozenRowIndex), {
+        replaceGroupTr.call(this, "top-body-scroll", headerColGroup, bodyGroupingData, list.slice(0, this.xvar.frozenRowIndex), {
           paintStartRowIndex: 0,
           paintRowCount: this.xvar.frozenRowIndex,
           bodyTrHeight: this.xvar.bodyTrHeight
         });
       }
-      replaceGroupTr.call(this, "left-body-scroll", headerColGroup, leftBodyGroupingData, list, scrollConfig);
+
+      replaceGroupTr.call(this, "body-scroll", headerColGroup, bodyGroupingData, list, scrollConfig);
     }
 
-    // body
-    if (this.xvar.frozenRowIndex > 0) {
-      // 상단 행고정
-      replaceGroupTr.call(this, "top-body-scroll", headerColGroup, bodyGroupingData, list.slice(0, this.xvar.frozenRowIndex), {
-        paintStartRowIndex: 0,
-        paintRowCount: this.xvar.frozenRowIndex,
-        bodyTrHeight: this.xvar.bodyTrHeight
-      });
+    if (this.xvar.frozenColumnIndex > 0) {
+      if (cfg.footSum && this.needToPaintSum) {
+        // 바닥 요약
+        repaintSum.call(this, "bottom-left-body", headerColGroup, leftFootSumData, list);
+      }
     }
 
-    replaceGroupTr.call(this, "body-scroll", headerColGroup, bodyGroupingData, list, scrollConfig);
-  }
-
-  if (this.xvar.frozenColumnIndex > 0) {
     if (cfg.footSum && this.needToPaintSum) {
       // 바닥 요약
-      repaintSum.call(this, "bottom-left-body", headerColGroup, leftFootSumData, list);
+      repaintSum.call(this, "bottom-body-scroll", headerColGroup, footSumData, list, scrollConfig);
     }
-  }
+  },
+  /**
+   *
+   * @param _dindex
+   */
+  repaintRow: function (_dindex) {
+    let self = this,
+      cfg = this.config,
+      list = this.list;
+    /// ~~~~~~
 
-  if (cfg.footSum && this.needToPaintSum) {
-    // 바닥 요약
-    repaintSum.call(this, "bottom-body-scroll", headerColGroup, footSumData, list, scrollConfig);
-  }
-};
+    let paintStartRowIndex = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
+      asideBodyRowData = this.asideBodyRowData,
+      leftBodyRowData = this.leftBodyRowData,
+      bodyRowData = this.bodyRowData,
+      leftFootSumData = this.leftFootSumData,
+      footSumData = this.footSumData,
+      asideBodyGroupingData = this.asideBodyGroupingData,
+      leftBodyGroupingData = this.leftBodyGroupingData,
+      bodyGroupingData = this.bodyGroupingData,
+      bodyAlign = cfg.body.align,
+      paintRowCount = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
+      scrollConfig = {
+        paintStartRowIndex: paintStartRowIndex,
+        paintRowCount: paintRowCount,
+        bodyTrHeight: this.xvar.bodyTrHeight
+      };
 
-const repaintRow = function (_dindex) {
-  let self = this,
-    cfg = this.config,
-    list = this.list;
-  /// ~~~~~~
+    let repaintSum = function (_elTargetKey, _colGroup, _bodyRow, _list) {
+      let _elTarget = this.$.panel[_elTargetKey],
+        SS = [],
+        cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
 
-  let paintStartRowIndex = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
-    asideBodyRowData = this.asideBodyRowData,
-    leftBodyRowData = this.leftBodyRowData,
-    bodyRowData = this.bodyRowData,
-    leftFootSumData = this.leftFootSumData,
-    footSumData = this.footSumData,
-    asideBodyGroupingData = this.asideBodyGroupingData,
-    leftBodyGroupingData = this.leftBodyGroupingData,
-    bodyGroupingData = this.bodyGroupingData,
-    bodyAlign = cfg.body.align,
-    paintRowCount = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
-    scrollConfig = {
-      paintStartRowIndex: paintStartRowIndex,
-      paintRowCount: paintRowCount,
-      bodyTrHeight: this.xvar.bodyTrHeight
+      SS.push('<table border="0" cellpadding="0" cellspacing="0">');
+      SS.push('<colgroup>');
+      for (cgi = 0, cgl = _colGroup.length; cgi < cgl; cgi++) {
+        SS.push('<col style="width:' + _colGroup[cgi]._width + 'px;"  />');
+      }
+      SS.push('<col  />');
+      SS.push('</colgroup>');
+
+      for (tri = 0, trl = _bodyRow.rows.length; tri < trl; tri++) {
+        SS.push('<tr class="tr-sum">');
+        for (ci = 0, cl = _bodyRow.rows[tri].cols.length; ci < cl; ci++) {
+          col = _bodyRow.rows[tri].cols[ci];
+          cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
+          colAlign = col.align || bodyAlign;
+
+          SS.push('<td ',
+            'data-ax6grid-panel-name="' + _elTargetKey + '" ',
+            'data-ax6grid-column-row="' + tri + '" ',
+            'data-ax6grid-column-col="' + ci + '" ',
+            'data-ax6grid-column-rowIndex="' + tri + '" ',
+            'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
+            'data-ax6grid-column-attr="' + (col.columnAttr || "sum") + '" ',
+            (function (_focusedColumn, _selectedColumn) {
+              var attrs = "";
+              if (_focusedColumn) {
+                attrs += 'data-ax6grid-column-focused="true" ';
+              }
+              if (_selectedColumn) {
+                attrs += 'data-ax6grid-column-selected="true" ';
+              }
+              return attrs;
+            })(this.focusedColumn["sum_" + col.colIndex + "_" + tri], this.selectedColumn["sum_" + col.colIndex + "_" + tri]),
+            'colspan="' + col.colspan + '" ',
+            'rowspan="' + col.rowspan + '" ',
+            'class="' + (function (_col) {
+              var tdCSS_class = "";
+              if (_col.styleClass) {
+                if (U.isFunction(_col.styleClass)) {
+                  tdCSS_class += _col.styleClass.call({
+                    column: _col,
+                    key: _col.key,
+                    isFootSum: true
+                  }) + " ";
+                } else {
+                  tdCSS_class += _col.styleClass + " ";
+                }
+              }
+              if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
+              if (ci == cl - 1) tdCSS_class += "isLastColumn ";
+              return tdCSS_class;
+            }).call(this, col) + '" ',
+            'style="height: ' + cellHeight + 'px;min-height: 1px;">');
+
+          SS.push((function (_cellHeight) {
+            var lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
+            if (!col.multiLine) {
+              _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
+            }
+
+            return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
+              ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
+              '" style="height:' + _cellHeight + 'px;line-height: ' + lineHeight + 'px;">';
+
+          })(cellHeight), getSumFieldValue.call(this, _list, col), '</span>');
+
+          SS.push('</td>');
+        }
+        SS.push('<td ',
+          'data-ax6grid-column-row="null" ',
+          'data-ax6grid-column-col="null" ',
+          'data-ax6grid-column-attr="' + ("sum") + '" ',
+          'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
+          '></td>');
+        SS.push('</tr>');
+      }
+
+      SS.push('</table>');
+
+      _elTarget.empty().get(0).innerHTML = SS.join('');
+      return true;
+    };
+    let replaceGroupTr = function (_elTargetKey, _colGroup, _groupRow, _list, _scrollConfig) {
+      let _elTarget = this.$.panel[_elTargetKey],
+        SS = [],
+        di, dl, tri, trl, ci, cl, col, cellHeight, colAlign;
+
+      if (typeof _scrollConfig === "undefined" || typeof _scrollConfig['paintStartRowIndex'] === "undefined") {
+        _scrollConfig = {
+          paintStartRowIndex: 0,
+          paintRowCount: _list.length
+        };
+      }
+
+      for (di = _scrollConfig.paintStartRowIndex, dl = (function () {
+        let len;
+        len = _list.length;
+        if (_scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex < len) {
+          len = _scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex;
+        }
+        return len;
+      })(); di < dl; di++) {
+        if (_list[di] && _groupRow && "__isGrouping" in _list[di]) {
+          let rowTable = _groupRow;
+          SS = [];
+          for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
+            for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
+              col = rowTable.rows[tri].cols[ci];
+              cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
+              colAlign = col.align || bodyAlign;
+
+              SS.push('<td ',
+                'data-ax6grid-panel-name="' + _elTargetKey + '" ',
+                'data-ax6grid-data-index="' + di + '" ',
+                'data-ax6grid-column-row="' + tri + '" ',
+                'data-ax6grid-column-col="' + ci + '" ',
+                'data-ax6grid-column-rowIndex="' + col.rowIndex + '" ',
+                'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
+                'data-ax6grid-column-attr="' + (col.columnAttr || "default") + '" ',
+                (function (_focusedColumn, _selectedColumn) {
+                  let attrs = "";
+                  if (_focusedColumn) {
+                    attrs += 'data-ax6grid-column-focused="true" ';
+                  }
+                  if (_selectedColumn) {
+                    attrs += 'data-ax6grid-column-selected="true" ';
+                  }
+                  return attrs;
+                })(this.focusedColumn[di + "_" + col.colIndex + "_" + col.rowIndex], this.selectedColumn[di + "_" + col.colIndex + "_" + col.rowIndex]),
+                'colspan="' + col.colspan + '" ',
+                'rowspan="' + col.rowspan + '" ',
+                'class="' + (function (_col) {
+                  let tdCSS_class = "";
+                  if (_col.styleClass) {
+                    if (U.isFunction(_col.styleClass)) {
+                      tdCSS_class += _col.styleClass.call({
+                        column: _col,
+                        key: _col.key,
+                        item: _list[di],
+                        index: di
+                      }) + " ";
+                    } else {
+                      tdCSS_class += _col.styleClass + " ";
+                    }
+                  }
+                  if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
+                  if (ci == cl - 1) tdCSS_class += "isLastColumn ";
+                  return tdCSS_class;
+                }).call(this, col) + '" ',
+                'style="height: ' + cellHeight + 'px;min-height: 1px;">');
+
+              SS.push((function (_cellHeight) {
+                let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
+                if (!col.multiLine) {
+                  _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
+                }
+
+                return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
+                  ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
+                  '" style="height:' + _cellHeight + 'px;line-height: ' + lineHeight + 'px;">';
+
+              })(cellHeight), getGroupingValue.call(this, _list[di], di, col), '</span>');
+
+              SS.push('</td>');
+            }
+            SS.push('<td ',
+              'data-ax6grid-column-row="null" ',
+              'data-ax6grid-column-col="null" ',
+              'data-ax6grid-data-index="' + di + '" ',
+              'data-ax6grid-column-attr="' + ("default") + '" ',
+              'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
+              '></td>');
+          }
+          _elTarget.find('tr[data-ax6grid-tr-data-index="' + di + '"]').empty().get(0).innerHTML = SS.join('');
+        }
+      }
+    };
+    let replaceTr = function (_elTargetKey, _colGroup, _bodyRow, _list, di) {
+      let _elTarget = this.$.panel[_elTargetKey],
+        SS = [],
+        tri, trl, ci, cl, col, cellHeight, colAlign, rowTable = _bodyRow,
+        odi = (typeof _list[di].__origin_index__ !== "undefined") ? _list[di].__origin_index__ : di;
+
+      for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
+        for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
+          col = rowTable.rows[tri].cols[ci];
+          cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
+          colAlign = col.align || bodyAlign;
+
+          SS.push('<td ',
+            'data-ax6grid-panel-name="' + _elTargetKey + '" ',
+            'data-ax6grid-data-index="' + di + '" ',
+            'data-ax6grid-data-o-index="' + odi + '" ',
+            'data-ax6grid-column-row="' + tri + '" ',
+            'data-ax6grid-column-col="' + ci + '" ',
+            'data-ax6grid-column-rowIndex="' + col.rowIndex + '" ',
+            'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
+            'data-ax6grid-column-attr="' + (col.columnAttr || "default") + '" ',
+            (function (_focusedColumn, _selectedColumn) {
+              let attrs = "";
+              if (_focusedColumn) {
+                attrs += 'data-ax6grid-column-focused="true" ';
+              }
+              if (_selectedColumn) {
+                attrs += 'data-ax6grid-column-selected="true" ';
+              }
+              return attrs;
+            })(this.focusedColumn[di + "_" + col.colIndex + "_" + col.rowIndex], this.selectedColumn[di + "_" + col.colIndex + "_" + col.rowIndex]),
+            'colspan="' + col.colspan + '" ',
+            'rowspan="' + col.rowspan + '" ',
+            'class="' + (function (_col) {
+              let tdCSS_class = "";
+              if (_col.styleClass) {
+                if (U.isFunction(_col.styleClass)) {
+                  tdCSS_class += _col.styleClass.call({
+                    column: _col,
+                    key: _col.key,
+                    item: _list[di],
+                    index: di
+                  }) + " ";
+                } else {
+                  tdCSS_class += _col.styleClass + " ";
+                }
+              }
+              if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
+              if (ci == cl - 1) tdCSS_class += "isLastColumn ";
+              return tdCSS_class;
+            }).call(this, col) + '" ',
+            'style="height: ' + cellHeight + 'px;min-height: 1px;">');
+
+          SS.push((function (_cellHeight) {
+            let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
+            if (!col.multiLine) {
+              _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
+            }
+
+            return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
+              ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
+              '" style="height:' + _cellHeight + 'px;' + ((col.multiLine) ? '' : 'line-height: ' + lineHeight + 'px;') + '">';
+
+          })(cellHeight), getFieldValue.call(this, _list, _list[di], di, col), '</span>');
+          SS.push('</td>');
+        }
+        SS.push('<td ',
+          'data-ax6grid-column-row="null" ',
+          'data-ax6grid-column-col="null" ',
+          'data-ax6grid-data-index="' + di + '" ',
+          'data-ax6grid-column-attr="' + ("default") + '" ',
+          'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
+          '></td>');
+      }
+
+      _elTarget.find('tr[data-ax6grid-tr-data-index="' + di + '"]').empty().get(0).innerHTML = SS.join('');
     };
 
-  let repaintSum = function (_elTargetKey, _colGroup, _bodyRow, _list) {
-    let _elTarget = this.$.panel[_elTargetKey],
-      SS = [],
-      cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
-
-    SS.push('<table border="0" cellpadding="0" cellspacing="0">');
-    SS.push('<colgroup>');
-    for (cgi = 0, cgl = _colGroup.length; cgi < cgl; cgi++) {
-      SS.push('<col style="width:' + _colGroup[cgi]._width + 'px;"  />');
-    }
-    SS.push('<col  />');
-    SS.push('</colgroup>');
-
-    for (tri = 0, trl = _bodyRow.rows.length; tri < trl; tri++) {
-      SS.push('<tr class="tr-sum">');
-      for (ci = 0, cl = _bodyRow.rows[tri].cols.length; ci < cl; ci++) {
-        col = _bodyRow.rows[tri].cols[ci];
-        cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
-        colAlign = col.align || bodyAlign;
-
-        SS.push('<td ',
-          'data-ax6grid-panel-name="' + _elTargetKey + '" ',
-          'data-ax6grid-column-row="' + tri + '" ',
-          'data-ax6grid-column-col="' + ci + '" ',
-          'data-ax6grid-column-rowIndex="' + tri + '" ',
-          'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
-          'data-ax6grid-column-attr="' + (col.columnAttr || "sum") + '" ',
-          (function (_focusedColumn, _selectedColumn) {
-            var attrs = "";
-            if (_focusedColumn) {
-              attrs += 'data-ax6grid-column-focused="true" ';
-            }
-            if (_selectedColumn) {
-              attrs += 'data-ax6grid-column-selected="true" ';
-            }
-            return attrs;
-          })(this.focusedColumn["sum_" + col.colIndex + "_" + tri], this.selectedColumn["sum_" + col.colIndex + "_" + tri]),
-          'colspan="' + col.colspan + '" ',
-          'rowspan="' + col.rowspan + '" ',
-          'class="' + (function (_col) {
-            var tdCSS_class = "";
-            if (_col.styleClass) {
-              if (U.isFunction(_col.styleClass)) {
-                tdCSS_class += _col.styleClass.call({
-                  column: _col,
-                  key: _col.key,
-                  isFootSum: true
-                }) + " ";
-              } else {
-                tdCSS_class += _col.styleClass + " ";
-              }
-            }
-            if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
-            if (ci == cl - 1) tdCSS_class += "isLastColumn ";
-            return tdCSS_class;
-          }).call(this, col) + '" ',
-          'style="height: ' + cellHeight + 'px;min-height: 1px;">');
-
-        SS.push((function (_cellHeight) {
-          var lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
-          if (!col.multiLine) {
-            _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
-          }
-
-          return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
-            ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
-            '" style="height:' + _cellHeight + 'px;line-height: ' + lineHeight + 'px;">';
-
-        })(cellHeight), getSumFieldValue.call(this, _list, col), '</span>');
-
-        SS.push('</td>');
-      }
-      SS.push('<td ',
-        'data-ax6grid-column-row="null" ',
-        'data-ax6grid-column-col="null" ',
-        'data-ax6grid-column-attr="' + ("sum") + '" ',
-        'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
-        '></td>');
-      SS.push('</tr>');
-    }
-
-    SS.push('</table>');
-
-    _elTarget.empty().get(0).innerHTML = SS.join('');
-    return true;
-  };
-  let replaceGroupTr = function (_elTargetKey, _colGroup, _groupRow, _list, _scrollConfig) {
-    let _elTarget = this.$.panel[_elTargetKey],
-      SS = [],
-      di, dl, tri, trl, ci, cl, col, cellHeight, colAlign;
-
-    if (typeof _scrollConfig === "undefined" || typeof _scrollConfig['paintStartRowIndex'] === "undefined") {
-      _scrollConfig = {
-        paintStartRowIndex: 0,
-        paintRowCount: _list.length
-      };
-    }
-
-    for (di = _scrollConfig.paintStartRowIndex, dl = (function () {
-      let len;
-      len = _list.length;
-      if (_scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex < len) {
-        len = _scrollConfig.paintRowCount + _scrollConfig.paintStartRowIndex;
-      }
-      return len;
-    })(); di < dl; di++) {
-      if (_list[di] && _groupRow && "__isGrouping" in _list[di]) {
-        let rowTable = _groupRow;
-        SS = [];
-        for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
-          for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
-            col = rowTable.rows[tri].cols[ci];
-            cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
-            colAlign = col.align || bodyAlign;
-
-            SS.push('<td ',
-              'data-ax6grid-panel-name="' + _elTargetKey + '" ',
-              'data-ax6grid-data-index="' + di + '" ',
-              'data-ax6grid-column-row="' + tri + '" ',
-              'data-ax6grid-column-col="' + ci + '" ',
-              'data-ax6grid-column-rowIndex="' + col.rowIndex + '" ',
-              'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
-              'data-ax6grid-column-attr="' + (col.columnAttr || "default") + '" ',
-              (function (_focusedColumn, _selectedColumn) {
-                let attrs = "";
-                if (_focusedColumn) {
-                  attrs += 'data-ax6grid-column-focused="true" ';
-                }
-                if (_selectedColumn) {
-                  attrs += 'data-ax6grid-column-selected="true" ';
-                }
-                return attrs;
-              })(this.focusedColumn[di + "_" + col.colIndex + "_" + col.rowIndex], this.selectedColumn[di + "_" + col.colIndex + "_" + col.rowIndex]),
-              'colspan="' + col.colspan + '" ',
-              'rowspan="' + col.rowspan + '" ',
-              'class="' + (function (_col) {
-                let tdCSS_class = "";
-                if (_col.styleClass) {
-                  if (U.isFunction(_col.styleClass)) {
-                    tdCSS_class += _col.styleClass.call({
-                      column: _col,
-                      key: _col.key,
-                      item: _list[di],
-                      index: di
-                    }) + " ";
-                  } else {
-                    tdCSS_class += _col.styleClass + " ";
-                  }
-                }
-                if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
-                if (ci == cl - 1) tdCSS_class += "isLastColumn ";
-                return tdCSS_class;
-              }).call(this, col) + '" ',
-              'style="height: ' + cellHeight + 'px;min-height: 1px;">');
-
-            SS.push((function (_cellHeight) {
-              let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
-              if (!col.multiLine) {
-                _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
-              }
-
-              return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
-                ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
-                '" style="height:' + _cellHeight + 'px;line-height: ' + lineHeight + 'px;">';
-
-            })(cellHeight), getGroupingValue.call(this, _list[di], di, col), '</span>');
-
-            SS.push('</td>');
-          }
-          SS.push('<td ',
-            'data-ax6grid-column-row="null" ',
-            'data-ax6grid-column-col="null" ',
-            'data-ax6grid-data-index="' + di + '" ',
-            'data-ax6grid-column-attr="' + ("default") + '" ',
-            'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
-            '></td>');
-        }
-        _elTarget.find('tr[data-ax6grid-tr-data-index="' + di + '"]').empty().get(0).innerHTML = SS.join('');
-      }
-    }
-  };
-  let replaceTr = function (_elTargetKey, _colGroup, _bodyRow, _list, di) {
-    let _elTarget = this.$.panel[_elTargetKey],
-      SS = [],
-      tri, trl, ci, cl, col, cellHeight, colAlign, rowTable = _bodyRow,
-      odi = (typeof _list[di].__origin_index__ !== "undefined") ? _list[di].__origin_index__ : di;
-
-    for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
-      for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
-        col = rowTable.rows[tri].cols[ci];
-        cellHeight = cfg.body.columnHeight * col.rowspan - cfg.body.columnBorderWidth;
-        colAlign = col.align || bodyAlign;
-
-        SS.push('<td ',
-          'data-ax6grid-panel-name="' + _elTargetKey + '" ',
-          'data-ax6grid-data-index="' + di + '" ',
-          'data-ax6grid-data-o-index="' + odi + '" ',
-          'data-ax6grid-column-row="' + tri + '" ',
-          'data-ax6grid-column-col="' + ci + '" ',
-          'data-ax6grid-column-rowIndex="' + col.rowIndex + '" ',
-          'data-ax6grid-column-colIndex="' + col.colIndex + '" ',
-          'data-ax6grid-column-attr="' + (col.columnAttr || "default") + '" ',
-          (function (_focusedColumn, _selectedColumn) {
-            let attrs = "";
-            if (_focusedColumn) {
-              attrs += 'data-ax6grid-column-focused="true" ';
-            }
-            if (_selectedColumn) {
-              attrs += 'data-ax6grid-column-selected="true" ';
-            }
-            return attrs;
-          })(this.focusedColumn[di + "_" + col.colIndex + "_" + col.rowIndex], this.selectedColumn[di + "_" + col.colIndex + "_" + col.rowIndex]),
-          'colspan="' + col.colspan + '" ',
-          'rowspan="' + col.rowspan + '" ',
-          'class="' + (function (_col) {
-            let tdCSS_class = "";
-            if (_col.styleClass) {
-              if (U.isFunction(_col.styleClass)) {
-                tdCSS_class += _col.styleClass.call({
-                  column: _col,
-                  key: _col.key,
-                  item: _list[di],
-                  index: di
-                }) + " ";
-              } else {
-                tdCSS_class += _col.styleClass + " ";
-              }
-            }
-            if (cfg.body.columnBorderWidth) tdCSS_class += "hasBorder ";
-            if (ci == cl - 1) tdCSS_class += "isLastColumn ";
-            return tdCSS_class;
-          }).call(this, col) + '" ',
-          'style="height: ' + cellHeight + 'px;min-height: 1px;">');
-
-        SS.push((function (_cellHeight) {
-          let lineHeight = (cfg.body.columnHeight - cfg.body.columnPadding * 2 - cfg.body.columnBorderWidth);
-          if (!col.multiLine) {
-            _cellHeight = cfg.body.columnHeight - cfg.body.columnBorderWidth;
-          }
-
-          return '<span data-ax6grid-cellHolder="' + ((col.multiLine) ? 'multiLine' : '') + '" ' +
-            ((colAlign) ? 'data-ax6grid-text-align="' + colAlign + '"' : '') +
-            '" style="height:' + _cellHeight + 'px;' + ((col.multiLine) ? '' : 'line-height: ' + lineHeight + 'px;') + '">';
-
-        })(cellHeight), getFieldValue.call(this, _list, _list[di], di, col), '</span>');
-        SS.push('</td>');
-      }
-      SS.push('<td ',
-        'data-ax6grid-column-row="null" ',
-        'data-ax6grid-column-col="null" ',
-        'data-ax6grid-data-index="' + di + '" ',
-        'data-ax6grid-column-attr="' + ("default") + '" ',
-        'style="height: ' + (cfg.body.columnHeight) + 'px;min-height: 1px;" ',
-        '></td>');
-    }
-
-    _elTarget.find('tr[data-ax6grid-tr-data-index="' + di + '"]').empty().get(0).innerHTML = SS.join('');
-  };
-
-  // left
-  if (this.xvar.frozenColumnIndex > 0) {
-    if (this.xvar.frozenRowIndex > _dindex) {
-      // 상단 행고정
-      replaceTr.call(this, "top-left-body", this.leftHeaderColGroup, leftBodyRowData, list.slice(0, this.xvar.frozenRowIndex), _dindex);
-    } else {
-      replaceTr.call(this, "left-body-scroll", this.leftHeaderColGroup, leftBodyRowData, list, _dindex);
-    }
-  }
-
-  // body
-  if (this.xvar.frozenRowIndex > _dindex) {
-    // 상단 행고정
-    replaceTr.call(this, "top-body-scroll", this.headerColGroup, bodyRowData, list.slice(0, this.xvar.frozenRowIndex), _dindex);
-  } else {
-    replaceTr.call(this, "body-scroll", this.headerColGroup, bodyRowData, list, _dindex);
-  }
-
-  // body.grouping tr 다시 그리기..
-  if (cfg.body.grouping) {
     // left
     if (this.xvar.frozenColumnIndex > 0) {
       if (this.xvar.frozenRowIndex > _dindex) {
         // 상단 행고정
-        replaceGroupTr.call(this, "top-left-body", this.leftHeaderColGroup, leftBodyGroupingData, list.slice(0, this.xvar.frozenRowIndex));
-      }
-      else {
-        replaceGroupTr.call(this, "left-body-scroll", this.leftHeaderColGroup, leftBodyGroupingData, list, scrollConfig);
+        replaceTr.call(this, "top-left-body", this.leftHeaderColGroup, leftBodyRowData, list.slice(0, this.xvar.frozenRowIndex), _dindex);
+      } else {
+        replaceTr.call(this, "left-body-scroll", this.leftHeaderColGroup, leftBodyRowData, list, _dindex);
       }
     }
 
     // body
     if (this.xvar.frozenRowIndex > _dindex) {
       // 상단 행고정
-      replaceGroupTr.call(this, "top-body-scroll", this.headerColGroup, bodyGroupingData, list.slice(0, this.xvar.frozenRowIndex));
+      replaceTr.call(this, "top-body-scroll", this.headerColGroup, bodyRowData, list.slice(0, this.xvar.frozenRowIndex), _dindex);
+    } else {
+      replaceTr.call(this, "body-scroll", this.headerColGroup, bodyRowData, list, _dindex);
     }
-    else {
-      replaceGroupTr.call(this, "body-scroll", this.headerColGroup, bodyGroupingData, list, scrollConfig);
-    }
-  }
 
-  if (this.xvar.frozenColumnIndex > 0) {
+    // body.grouping tr 다시 그리기..
+    if (cfg.body.grouping) {
+      // left
+      if (this.xvar.frozenColumnIndex > 0) {
+        if (this.xvar.frozenRowIndex > _dindex) {
+          // 상단 행고정
+          replaceGroupTr.call(this, "top-left-body", this.leftHeaderColGroup, leftBodyGroupingData, list.slice(0, this.xvar.frozenRowIndex));
+        }
+        else {
+          replaceGroupTr.call(this, "left-body-scroll", this.leftHeaderColGroup, leftBodyGroupingData, list, scrollConfig);
+        }
+      }
+
+      // body
+      if (this.xvar.frozenRowIndex > _dindex) {
+        // 상단 행고정
+        replaceGroupTr.call(this, "top-body-scroll", this.headerColGroup, bodyGroupingData, list.slice(0, this.xvar.frozenRowIndex));
+      }
+      else {
+        replaceGroupTr.call(this, "body-scroll", this.headerColGroup, bodyGroupingData, list, scrollConfig);
+      }
+    }
+
+    if (this.xvar.frozenColumnIndex > 0) {
+      if (cfg.footSum && this.needToPaintSum) {
+        // 바닥 요약
+        repaintSum.call(this, "bottom-left-body", this.leftHeaderColGroup, leftFootSumData, list);
+      }
+    }
+
     if (cfg.footSum && this.needToPaintSum) {
       // 바닥 요약
-      repaintSum.call(this, "bottom-left-body", this.leftHeaderColGroup, leftFootSumData, list);
+      repaintSum.call(this, "bottom-body-scroll", this.headerColGroup, footSumData, list, scrollConfig);
     }
-  }
-
-  if (cfg.footSum && this.needToPaintSum) {
-    // 바닥 요약
-    repaintSum.call(this, "bottom-body-scroll", this.headerColGroup, footSumData, list, scrollConfig);
-  }
-};
-
-const scrollTo = function (css, opts) {
-  let self = this;
-  if (typeof opts === "undefined") opts = {timeoutUnUse: false};
-  if (this.isInlineEditing) {
-    for (var key in this.inlineEditing) {
-      //if(this.inlineEditing[key].editor.type === "select") {}
-      // 인라인 에디팅 인데 스크롤 이벤트가 발생하면 디액티브 처리
-      inlineEdit.deActive.call(this, "ESC", key);
-    }
-  }
-
-  if (this.config.asidePanelWidth > 0 && "top" in css) {
-    this.$.panel["aside-body-scroll"].css({top: css.top});
-  }
-  if (this.xvar.frozenColumnIndex > 0 && "top" in css) {
-    this.$.panel["left-body-scroll"].css({top: css.top});
-  }
-  if (this.xvar.frozenRowIndex > 0 && "left" in css) {
-    this.$.panel["top-body-scroll"].css({left: css.left});
-  }
-
-  this.$.panel["body-scroll"].css(css);
-
-  if (this.config.footSum && "left" in css) {
-    this.$.panel["bottom-body-scroll"].css({left: css.left});
-  }
-
-  // 바디 리페인팅 this.__throttledScroll 은 body init 에서 초기화
-  if (this.__throttledScroll) {
-    this.__throttledScroll(css, opts);
-  } else {
-    if (this.config.virtualScrollY && !opts.noRepaint && "top" in css) {
-      repaint.call(this);
-    } else if (this.config.virtualScrollX && !opts.noRepaint && "left" in css) {
-      repaint.call(this);
-    }
-    if (opts.callback) {
-      opts.callback();
-    }
-  }
-};
-
-const blur = function () {
-  columnSelect.focusClear.call(this);
-  columnSelect.clear.call(this);
-  if (this.isInlineEditing) {
-    inlineEdit.deActive.call(this);
-  }
-};
-
-const moveFocus = function (_position) {
-  let focus = {
-    "UD": function (_dy) {
-      let moveResult = true,
-        focusedColumn, originalColumn, while_i,
-        nPanelInfo;
-
-      for (let c in this.focusedColumn) {
-        focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
-        break;
-      }
-
-      if (!focusedColumn) return false;
-
-      originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
-      columnSelect.focusClear.call(this);
-      columnSelect.clear.call(this);
-
-      if (_dy > 0) {
-        // 아래로
-        if (focusedColumn.rowIndex + (originalColumn.rowspan - 1) + _dy > this.bodyRowTable.rows.length - 1) {
-          focusedColumn.dindex = focusedColumn.dindex + _dy;
-          focusedColumn.doindex = focusedColumn.doindex + _dy;
-          focusedColumn.rowIndex = 0;
-          if (focusedColumn.dindex > this.list.length - 1) {
-            focusedColumn.dindex = focusedColumn.doindex = this.list.length - 1;
-            moveResult = false;
+  },
+  /**
+   *
+   * @param _states
+   * @param _dindex
+   * @param _doindex
+   * @param _data
+   */
+  updateRowState: function (_states, _dindex, _doindex, _data) {
+    let self = this,
+      cfg = this.config,
+      processor = {
+        "selected": function (_dindex, _doindex) {
+          if (this.list[_doindex]) {
+            let i = this.$.livePanelKeys.length;
+            while (i--) {
+              this.$.panel[this.$.livePanelKeys[i]]
+                .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
+                .attr("data-ax6grid-selected", this.list[_doindex][cfg.columnKeys.selected]);
+            }
           }
-        } else {
-          focusedColumn.rowIndex = focusedColumn.rowIndex + _dy;
-        }
-      }
-      else {
-        // 위로
-        if (focusedColumn.rowIndex + _dy < 0) {
-          focusedColumn.dindex = focusedColumn.dindex + _dy;
-          focusedColumn.doindex = focusedColumn.doindex + _dy;
-          focusedColumn.rowIndex = this.bodyRowTable.rows.length - 1;
-          if (focusedColumn.dindex < 0) {
-            focusedColumn.dindex = focusedColumn.doindex = 0;
-            moveResult = false;
+        },
+        "selectedClear": function () {
+          let di = this.list.length;
+          let pi;
+
+          if (!this.proxyList) {
+            while (di--) {
+              if (this.list[di][cfg.columnKeys.selected]) {
+                pi = this.$.livePanelKeys.length;
+                while (pi--) {
+                  this.$.panel[this.$.livePanelKeys[pi]]
+                    .find('[data-ax6grid-tr-data-index="' + di + '"]')
+                    .attr("data-ax6grid-selected", false);
+                }
+              }
+              this.list[di][cfg.columnKeys.selected] = false;
+            }
+          } else {
+            while (di--) {
+              this.list[di][cfg.columnKeys.selected] = false;
+            }
+            di = this.proxyList.length;
+            while (di--) {
+              if (this.list[doi][cfg.columnKeys.selected]) {
+                pi = this.$.livePanelKeys.length;
+                while (pi--) {
+                  this.$.panel[this.$.livePanelKeys[pi]]
+                    .find('[data-ax6grid-tr-data-index="' + di + '"]')
+                    .attr("data-ax6grid-selected", false);
+                }
+              }
+
+              this.proxyList[di][cfg.columnKeys.selected] = false;
+              let doi = this.proxyList[di].__original_index__;
+            }
           }
-        } else {
-          focusedColumn.rowIndex = focusedColumn.rowIndex + _dy;
+        },
+        "cellChecked": function (_dindex, _doindex, _data) {
+          let key = _data.key,
+            rowIndex = _data.rowIndex,
+            colIndex = _data.colIndex;
+
+          let panelName = (function () {
+            let _panels = [];
+            if (this.xvar.frozenRowIndex > _dindex) _panels.push("top");
+            if (this.xvar.frozenColumnIndex > colIndex) _panels.push("left");
+            _panels.push("body");
+            if (_panels[0] !== "top") _panels.push("scroll");
+            return _panels.join("-");
+          }).call(this);
+
+          this.$.panel[panelName]
+            .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
+            .find('[data-ax6grid-column-rowIndex="' + rowIndex + '"][data-ax6grid-column-colIndex="' + colIndex + '"]')
+            .find('[data-ax6grid-editor="checkbox"]')
+            .attr("data-ax6grid-checked", '' + _data.checked);
         }
+      };
+
+    if (typeof _doindex === "undefined") _doindex = _dindex;
+
+    _states.forEach(function (_state) {
+      if (!processor[_state]) throw 'invaild state name';
+      processor[_state].call(self, _dindex, _doindex, _data);
+    });
+  },
+  /**
+   *
+   * @param _states
+   * @param _data
+   */
+  updateRowStateAll: function (_states, _data) {
+    let self = this,
+      cfg = this.config,
+      processor = {
+        "selected": function (_dindex) {
+          repaint.call(this, true);
+        }
+      };
+
+    _states.forEach(function (_state) {
+      if (!processor[_state]) throw 'invaild state name';
+      processor[_state].call(self, _data);
+    });
+  },
+  /**
+   *
+   * @param css
+   * @param opts
+   */
+  scrollTo: function (css, opts) {
+    let self = this;
+    if (typeof opts === "undefined") opts = {timeoutUnUse: false};
+    if (this.isInlineEditing) {
+      for (var key in this.inlineEditing) {
+        //if(this.inlineEditing[key].editor.type === "select") {}
+        // 인라인 에디팅 인데 스크롤 이벤트가 발생하면 디액티브 처리
+        inlineEdit.deActive.call(this, "ESC", key);
       }
+    }
 
-      while_i = 0;
-      while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
-        if (focusedColumn.rowIndex == 0 || while_i % 2 == ((_dy > 0) ? 0 : 1)) {
-          focusedColumn.colIndex--;
-        } else {
-          focusedColumn.rowIndex--;
-        }
+    if (this.config.asidePanelWidth > 0 && "top" in css) {
+      this.$.panel["aside-body-scroll"].css({top: css.top});
+    }
+    if (this.xvar.frozenColumnIndex > 0 && "top" in css) {
+      this.$.panel["left-body-scroll"].css({top: css.top});
+    }
+    if (this.xvar.frozenRowIndex > 0 && "left" in css) {
+      this.$.panel["top-body-scroll"].css({left: css.left});
+    }
 
-        if (focusedColumn.rowIndex <= 0 && focusedColumn.colIndex <= 0) {
-          // find fail
-          moveResult = false;
+    this.$.panel["body-scroll"].css(css);
+
+    if (this.config.footSum && "left" in css) {
+      this.$.panel["bottom-body-scroll"].css({left: css.left});
+    }
+
+    // 바디 리페인팅 this.__throttledScroll 은 body init 에서 초기화
+    if (this.__throttledScroll) {
+      this.__throttledScroll(css, opts);
+    } else {
+      if (this.config.virtualScrollY && !opts.noRepaint && "top" in css) {
+        repaint.call(this);
+      } else if (this.config.virtualScrollX && !opts.noRepaint && "left" in css) {
+        repaint.call(this);
+      }
+      if (opts.callback) {
+        opts.callback();
+      }
+    }
+  },
+  /**
+   *
+   */
+  blur: function () {
+    columnSelect.focusClear.call(this);
+    columnSelect.clear.call(this);
+    if (this.isInlineEditing) {
+      inlineEdit.deActive.call(this);
+    }
+  },
+  /**
+   *
+   * @param _position
+   * @return {*}
+   */
+  moveFocus: function (_position) {
+    let focus = {
+      "UD": function (_dy) {
+        let moveResult = true,
+          focusedColumn, originalColumn, while_i,
+          nPanelInfo;
+
+        for (let c in this.focusedColumn) {
+          focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
           break;
         }
-        while_i++;
-      }
 
-      nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+        if (!focusedColumn) return false;
 
-      // if mergeCells
-      if (this.config.body.mergeCells && this.list.length) {
-        while (!this.$.panel[nPanelInfo.panelName]
-          .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
-          .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]').get(0)) {
+        originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
+        columnSelect.focusClear.call(this);
+        columnSelect.clear.call(this);
 
-          if (_dy > 0) {
-            focusedColumn.dindex++;
+        if (_dy > 0) {
+          // 아래로
+          if (focusedColumn.rowIndex + (originalColumn.rowspan - 1) + _dy > this.bodyRowTable.rows.length - 1) {
+            focusedColumn.dindex = focusedColumn.dindex + _dy;
+            focusedColumn.doindex = focusedColumn.doindex + _dy;
+            focusedColumn.rowIndex = 0;
+            if (focusedColumn.dindex > this.list.length - 1) {
+              focusedColumn.dindex = focusedColumn.doindex = this.list.length - 1;
+              moveResult = false;
+            }
           } else {
-            focusedColumn.dindex--;
+            focusedColumn.rowIndex = focusedColumn.rowIndex + _dy;
+          }
+        }
+        else {
+          // 위로
+          if (focusedColumn.rowIndex + _dy < 0) {
+            focusedColumn.dindex = focusedColumn.dindex + _dy;
+            focusedColumn.doindex = focusedColumn.doindex + _dy;
+            focusedColumn.rowIndex = this.bodyRowTable.rows.length - 1;
+            if (focusedColumn.dindex < 0) {
+              focusedColumn.dindex = focusedColumn.doindex = 0;
+              moveResult = false;
+            }
+          } else {
+            focusedColumn.rowIndex = focusedColumn.rowIndex + _dy;
+          }
+        }
+
+        while_i = 0;
+        while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
+          if (focusedColumn.rowIndex == 0 || while_i % 2 == ((_dy > 0) ? 0 : 1)) {
+            focusedColumn.colIndex--;
+          } else {
+            focusedColumn.rowIndex--;
           }
 
-          if (focusedColumn.dindex < 0 || focusedColumn.dindex > this.list.length - 1) {
+          if (focusedColumn.rowIndex <= 0 && focusedColumn.colIndex <= 0) {
+            // find fail
+            moveResult = false;
             break;
           }
+          while_i++;
         }
+
         nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
-      }
 
-      focusedColumn.panelName = nPanelInfo.panelName;
+        // if mergeCells
+        if (this.config.body.mergeCells && this.list.length) {
+          while (!this.$.panel[nPanelInfo.panelName]
+            .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
+            .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]').get(0)) {
 
-      // 포커스 컬럼의 위치에 따라 스크롤 처리.ㅊㅇ
+            if (_dy > 0) {
+              focusedColumn.dindex++;
+            } else {
+              focusedColumn.dindex--;
+            }
 
-      if (focusedColumn.dindex + 1 > this.xvar.frozenRowIndex) {
-        if (focusedColumn.dindex <= this.xvar.virtualPaintStartRowIndex) {
-          let newTop = (focusedColumn.dindex - this.xvar.frozenRowIndex - 1) * this.xvar.bodyTrHeight;
-          if (newTop < 0) newTop = 0;
-          scrollTo.call(this, {top: -newTop, timeoutUnUse: false});
-          SCROLLER.resize.call(this);
-        }
-        else if (focusedColumn.dindex + 1 > this.xvar.virtualPaintStartRowIndex + (this.xvar.virtualPaintRowCount - 2)) {
-          scrollTo.call(this, {top: (this.xvar.virtualPaintRowCount - 2 - focusedColumn.dindex) * this.xvar.bodyTrHeight, timeoutUnUse: false});
-          SCROLLER.resize.call(this);
-        }
-      }
-
-      this.focusedColumn[focusedColumn.dindex + "_" + focusedColumn.colIndex + "_" + focusedColumn.rowIndex] = focusedColumn;
-      this.$.panel[focusedColumn.panelName]
-        .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
-        .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]')
-        .attr('data-ax6grid-column-focused', "true");
-
-      return moveResult;
-    },
-    "LR": function (_dx) {
-      let moveResult = true,
-        focusedColumn, originalColumn,
-        while_i = 0, isScrollPanel = false, containerPanelName = "", nPanelInfo;
-
-      for (var c in this.focusedColumn) {
-        focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
-        break;
-      }
-      if (!focusedColumn) return false;
-
-      originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
-
-      columnSelect.focusClear.call(this);
-      columnSelect.clear.call(this);
-
-      if (_dx < 0) {
-        focusedColumn.colIndex = focusedColumn.colIndex + _dx;
-        if (focusedColumn.colIndex < 0) {
-          focusedColumn.colIndex = 0;
-          moveResult = false;
-        }
-      }
-      else {
-        focusedColumn.colIndex = focusedColumn.colIndex + _dx;
-        if (focusedColumn.colIndex > this.colGroup.length - 1) {
-          focusedColumn.colIndex = this.colGroup.length - 1;
-          moveResult = false;
-        }
-      }
-
-      if (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
-        focusedColumn.rowIndex = 0;
-      }
-
-      if (this.list[focusedColumn.dindex] && this.list[focusedColumn.dindex].__isGrouping) {
-        if (_dx < 0) {
-          while (typeof this.bodyGroupingMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
-            focusedColumn.colIndex--;
-            if (focusedColumn.colIndex <= 0) {
-              // find fail
-              moveResult = false;
+            if (focusedColumn.dindex < 0 || focusedColumn.dindex > this.list.length - 1) {
               break;
             }
           }
-        } else {
-          while (typeof this.bodyGroupingMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
-            focusedColumn.colIndex++;
-            if (focusedColumn.colIndex >= this.colGroup.length) {
-              // find fail
-              moveResult = false;
-              break;
-            }
-          }
-        }
-      }
-      else {
-        if (_dx < 0) {
-          while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
-            focusedColumn.colIndex--;
-            if (focusedColumn.colIndex <= 0) {
-              // find fail
-              moveResult = false;
-              break;
-            }
-          }
-        } else {
-          while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
-            focusedColumn.colIndex++;
-            if (focusedColumn.colIndex >= this.colGroup.length) {
-              // find fail
-              moveResult = false;
-              break;
-            }
-          }
-        }
-      }
-
-      nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
-
-      // if mergeCells
-      if (this.config.body.mergeCells && this.list.length && focusedColumn.dindex > 1) {
-        while (!this.$.panel[nPanelInfo.panelName]
-          .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
-          .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]').get(0)) {
-
-          focusedColumn.dindex--;
-
-          if (focusedColumn.dindex < 0 || focusedColumn.dindex > this.list.length - 1) {
-            break;
-          }
-        }
-        nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
-      }
-
-      focusedColumn.panelName = nPanelInfo.panelName;
-
-      // 포커스 컬럼의 위치에 따라 스크롤 처리
-      let isScrollTo = (function () {
-        if (!this.config.virtualScrollX) return false;
-        let scrollLeft = 0;
-        if (focusedColumn.colIndex + 1 > this.xvar.frozenColumnIndex) {
-          if (focusedColumn.colIndex <= this.xvar.paintStartColumnIndex && this.colGroup[focusedColumn.colIndex]) {
-            scrollLeft = -this.colGroup[Number(focusedColumn.colIndex)]._sx;
-            scrollTo.call(this, {left: scrollLeft});
-            HEADER.scrollTo.call(this, {left: scrollLeft});
-            SCROLLER.resize.call(this);
-            return true;
-          }
-          else if (focusedColumn.colIndex >= this.xvar.paintEndColumnIndex && this.colGroup[Number(focusedColumn.colIndex)]) {
-            if (this.colGroup[Number(focusedColumn.colIndex)]._ex > this.xvar.bodyWidth) {
-              scrollLeft = (this.colGroup[Number(focusedColumn.colIndex)]._ex - this.xvar.bodyWidth);
-              scrollTo.call(this, {left: -scrollLeft});
-              HEADER.scrollTo.call(this, {left: -scrollLeft});
-              SCROLLER.resize.call(this);
-            }
-            return true;
-          }
-        }
-        scrollLeft = null;
-        return false;
-      }).call(this);
-
-      containerPanelName = nPanelInfo.containerPanelName;
-      isScrollPanel = nPanelInfo.isScrollPanel;
-
-      this.focusedColumn[focusedColumn.dindex + "_" + focusedColumn.colIndex + "_" + focusedColumn.rowIndex] = focusedColumn;
-
-      var $column = this.$.panel[focusedColumn.panelName]
-        .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
-        .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]')
-        .attr('data-ax6grid-column-focused', "true");
-
-      if (!isScrollTo && $column && isScrollPanel) {// 스크롤 패널 이라면~
-        // todo : 컬럼이동할 때에도 scrollTo 체크
-        var newLeft = (function () {
-          if ($column.position().left + $column.outerWidth() > Math.abs(this.$.panel[focusedColumn.panelName].position().left) + this.$.panel[containerPanelName].width()) {
-            return $column.position().left + $column.outerWidth() - this.$.panel[containerPanelName].width();
-          } else if (Math.abs(this.$.panel[focusedColumn.panelName].position().left) > $column.position().left) {
-            return $column.position().left;
-          } else {
-            return;
-          }
-        }).call(this);
-
-        if (typeof newLeft !== "undefined") {
-          HEADER.scrollTo.call(this, {left: -newLeft});
-          scrollTo.call(this, {left: -newLeft});
-          SCROLLER.resize.call(this);
-        }
-      }
-
-      return moveResult;
-    },
-    "INDEX": function (_dindex) {
-      let moveResult = true,
-        focusedColumn, originalColumn,
-        while_i;
-
-      for (let c in this.focusedColumn) {
-        focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
-        break;
-      }
-      if (!focusedColumn) {
-        focusedColumn = {
-          rowIndex: 0,
-          colIndex: 0
-        }
-      }
-      originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
-
-      columnSelect.focusClear.call(this);
-      columnSelect.clear.call(this);
-
-
-      if (_dindex == "end") {
-        _dindex = this.list.length - 1;
-      }
-
-      focusedColumn.dindex = _dindex;
-      focusedColumn.rowIndex = 0;
-
-      while_i = 0;
-      while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
-        if (focusedColumn.rowIndex == 0 || while_i % 2 == ((_dy > 0) ? 0 : 1)) {
-          focusedColumn.colIndex--;
-        } else {
-          focusedColumn.rowIndex--;
+          nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
         }
 
-        if (focusedColumn.rowIndex <= 0 && focusedColumn.colIndex <= 0) {
-          // find fail
-          break;
-        }
-        while_i++;
-      }
+        focusedColumn.panelName = nPanelInfo.panelName;
 
-      let nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
-      focusedColumn.panelName = nPanelInfo.panelName;
+        // 포커스 컬럼의 위치에 따라 스크롤 처리.ㅊㅇ
 
-      // 포커스 컬럼의 위치에 따라 스크롤 처리.
-      (function () {
         if (focusedColumn.dindex + 1 > this.xvar.frozenRowIndex) {
-          if (focusedColumn.dindex < this.xvar.virtualPaintStartRowIndex) {
-            scrollTo.call(this, {top: -(focusedColumn.dindex - this.xvar.frozenRowIndex) * this.xvar.bodyTrHeight});
+          if (focusedColumn.dindex <= this.xvar.virtualPaintStartRowIndex) {
+            let newTop = (focusedColumn.dindex - this.xvar.frozenRowIndex - 1) * this.xvar.bodyTrHeight;
+            if (newTop < 0) newTop = 0;
+            scrollTo.call(this, {top: -newTop, timeoutUnUse: false});
             SCROLLER.resize.call(this);
           }
           else if (focusedColumn.dindex + 1 > this.xvar.virtualPaintStartRowIndex + (this.xvar.virtualPaintRowCount - 2)) {
-            scrollTo.call(this, {top: -(focusedColumn.dindex - this.xvar.frozenRowIndex - this.xvar.virtualPaintRowCount + 3) * this.xvar.bodyTrHeight});
+            scrollTo.call(this, {top: (this.xvar.virtualPaintRowCount - 2 - focusedColumn.dindex) * this.xvar.bodyTrHeight, timeoutUnUse: false});
             SCROLLER.resize.call(this);
           }
         }
-      }).call(this);
 
-      this.focusedColumn[focusedColumn.dindex + "_" + focusedColumn.colIndex + "_" + focusedColumn.rowIndex] = focusedColumn;
-      this.$.panel[focusedColumn.panelName]
-        .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
-        .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]')
-        .attr('data-ax6grid-column-focused', "true");
+        this.focusedColumn[focusedColumn.dindex + "_" + focusedColumn.colIndex + "_" + focusedColumn.rowIndex] = focusedColumn;
+        this.$.panel[focusedColumn.panelName]
+          .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
+          .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]')
+          .attr('data-ax6grid-column-focused', "true");
 
-      return moveResult;
-    }
-  };
+        return moveResult;
+      },
+      "LR": function (_dx) {
+        let moveResult = true,
+          focusedColumn, originalColumn,
+          while_i = 0, isScrollPanel = false, containerPanelName = "", nPanelInfo;
 
-  let processor = {
-    "UP": function () {
-      return focus["UD"].call(this, -1);
-    },
-    "DOWN": function () {
-      return focus["UD"].call(this, 1);
-    },
-    "LEFT": function () {
-      return focus["LR"].call(this, -1);
-    },
-    "RIGHT": function () {
-      return focus["LR"].call(this, 1);
-    },
-    "HOME": function () {
-      return focus["INDEX"].call(this, 0);
-    },
-    "END": function () {
-      return focus["INDEX"].call(this, "end");
-    },
-    "position": function (_position) {
-      return focus["INDEX"].call(this, _position);
-    }
-  };
-
-  if (_position in processor) {
-    return processor[_position].call(this);
-  } else {
-    return processor["position"].call(this, _position);
-  }
-};
-
-const inlineEdit = {
-  active(_focusedColumn, _e, _initValue) {
-    let self = this,
-      dindex, doindex, colIndex, rowIndex, panelName, colspan,
-      col, editor;
-
-    for (var key in _focusedColumn) {
-      panelName = _focusedColumn[key].panelName;
-      dindex = _focusedColumn[key].dindex;
-      doindex = _focusedColumn[key].doindex;
-      colIndex = _focusedColumn[key].colIndex;
-      rowIndex = _focusedColumn[key].rowIndex;
-      colspan = _focusedColumn[key].colspan;
-
-      // 인라인 에디팅을 멈춰야 하는 경우 조건
-      col = this.colGroup[colIndex];
-      if (!(editor = col.editor)) return this;
-
-      // editor disabled 체크
-      if (U.isFunction(editor.disabled)) {
-        if (editor.disabled.call({
-            list: this.list,
-            dindex: dindex,
-            item: this.list[dindex],
-            key: col.key,
-            value: _initValue
-          })) {
-          return this;
+        for (var c in this.focusedColumn) {
+          focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
+          break;
         }
-      }
+        if (!focusedColumn) return false;
 
-      // 조건에 맞지 않는 에디팅 타입이면 반응 없음.
-      if (!(function (_editor, _type) {
-          if (_editor.type in INLINE_EDITOR) {
-            return (INLINE_EDITOR[_editor.type].editMode == "popup");
+        originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
+
+        columnSelect.focusClear.call(this);
+        columnSelect.clear.call(this);
+
+        if (_dx < 0) {
+          focusedColumn.colIndex = focusedColumn.colIndex + _dx;
+          if (focusedColumn.colIndex < 0) {
+            focusedColumn.colIndex = 0;
+            moveResult = false;
           }
-        })(editor)) {
-        // 체크 박스 타입이면 값 변경 시도
-        if (editor.type == "checkbox") {
-          let checked, newValue;
-          if (editor.config && editor.config.trueValue) {
-            if (checked = !(_initValue == editor.config.trueValue)) {
-              newValue = editor.config.trueValue;
-            } else {
-              newValue = editor.config.falseValue;
-            }
-          } else {
-            newValue = checked = (_initValue == false || _initValue == "false" || _initValue < "1") ? "true" : "false";
-          }
-
-          DATA.setValue.call(self, dindex, doindex, col.key, newValue);
-          updateRowState.call(self, ["cellChecked"], dindex, doindex, {
-            key: col.key, rowIndex: rowIndex, colIndex: colIndex,
-            editorConfig: col.editor.config, checked: checked
-          });
-        }
-        return this;
-      }
-
-      if (this.list[dindex].__isGrouping) {
-        return false;
-      }
-      if (key in this.inlineEditing) {
-        return false;
-      }
-
-      this.inlineEditing[key] = {
-        editor: editor,
-        panelName: panelName,
-        columnKey: key,
-        column: _focusedColumn[key],
-        useReturnToSave: INLINE_EDITOR[editor.type].useReturnToSave
-      };
-      this.isInlineEditing = true;
-    }
-    if (this.isInlineEditing) {
-
-      let originalValue = DATA.getValue.call(self, dindex, doindex, col.key),
-        initValue = (function (__value, __editor) {
-          if (U.isNothing(__value)) {
-            __value = U.isNothing(originalValue) ? "" : originalValue;
-          }
-
-          if (__editor.type == "money") {
-            return U.number(__value, {"money": true});
-          }
-          else {
-            return __value;
-          }
-        }).call(this, _initValue, editor);
-
-      this.inlineEditing[key].$inlineEditorCell = this.$["panel"][panelName]
-        .find('[data-ax6grid-tr-data-index="' + dindex + '"]')
-        .find('[data-ax6grid-column-rowindex="' + rowIndex + '"][data-ax6grid-column-colindex="' + colIndex + '"]')
-        .find('[data-ax6grid-cellholder]');
-
-      this.inlineEditing[key].$inlineEditor = INLINE_EDITOR[editor.type].init(this, key, editor, this.inlineEditing[key].$inlineEditorCell, initValue);
-
-      return true;
-    }
-  },
-  deActive(_msg, _key, _value) {
-    // console.log(this.inlineEditing.column.dindex, this.inlineEditing.$inlineEditor.val());
-    if (!this.inlineEditing[_key]) return this;
-
-    let panelName = this.inlineEditing[_key].panelName,
-      dindex = this.inlineEditing[_key].column.dindex,
-      doindex = this.inlineEditing[_key].column.doindex,
-      rowIndex = this.inlineEditing[_key].column.rowIndex,
-      colIndex = this.inlineEditing[_key].column.colIndex,
-      column = this.bodyRowMap[this.inlineEditing[_key].column.rowIndex + "_" + this.inlineEditing[_key].column.colIndex],
-      editorValue = (function ($inlineEditor) {
-        if (typeof _value === "undefined") {
-          if ($inlineEditor.get(0).tagName == "SELECT" || $inlineEditor.get(0).tagName == "INPUT" || $inlineEditor.get(0).tagName == "TEXTAREA") {
-            return $inlineEditor.val();
-          } else {
-            _msg = "CANCEL";
-            return false;
-          }
-        } else {
-          return _value;
-        }
-      })(this.inlineEditing[_key].$inlineEditor),
-      newValue = (function (__value, __editor) {
-        if (__editor.type == "money") {
-          return U.number(__value);
         }
         else {
-          return __value;
-        }
-      }).call(this, editorValue, column.editor);
-
-    let action = {
-      "CANCEL"(_dindex, _column, _newValue) {
-        action["__clear"].call(this);
-      },
-      "RETURN"(_dindex, _doindex, _column, _newValue) {
-        if (DATA.setValue.call(this, _dindex, _doindex, _column.key, _newValue)) {
-          action["__clear"].call(this);
-          repaintCell.call(this, panelName, _dindex, _doindex, rowIndex, colIndex, _newValue);
-        } else {
-          action["__clear"].call(this);
-        }
-      },
-      "__clear"() {
-        this.isInlineEditing = false;
-        let bindedAx5ui = this.inlineEditing[_key].$inlineEditor.data("binded-ax5ui");
-        if (bindedAx5ui == "ax5picker") {
-          this.inlineEditing[_key].$inlineEditor.ax5picker("close");
-        } else if (bindedAx5ui == "ax5select") {
-          this.inlineEditing[_key].$inlineEditor.ax5select("close");
+          focusedColumn.colIndex = focusedColumn.colIndex + _dx;
+          if (focusedColumn.colIndex > this.colGroup.length - 1) {
+            focusedColumn.colIndex = this.colGroup.length - 1;
+            moveResult = false;
+          }
         }
 
-        this.inlineEditing[_key].$inlineEditor.remove();
-        this.inlineEditing[_key].$inlineEditor = null;
-        this.inlineEditing[_key].$inlineEditorCell = null;
-        this.inlineEditing[_key] = undefined;
-        delete this.inlineEditing[_key]; // delete 지원안하는 브라우저 테스트..
+        if (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
+          focusedColumn.rowIndex = 0;
+        }
+
+        if (this.list[focusedColumn.dindex] && this.list[focusedColumn.dindex].__isGrouping) {
+          if (_dx < 0) {
+            while (typeof this.bodyGroupingMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
+              focusedColumn.colIndex--;
+              if (focusedColumn.colIndex <= 0) {
+                // find fail
+                moveResult = false;
+                break;
+              }
+            }
+          } else {
+            while (typeof this.bodyGroupingMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
+              focusedColumn.colIndex++;
+              if (focusedColumn.colIndex >= this.colGroup.length) {
+                // find fail
+                moveResult = false;
+                break;
+              }
+            }
+          }
+        }
+        else {
+          if (_dx < 0) {
+            while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
+              focusedColumn.colIndex--;
+              if (focusedColumn.colIndex <= 0) {
+                // find fail
+                moveResult = false;
+                break;
+              }
+            }
+          } else {
+            while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
+              focusedColumn.colIndex++;
+              if (focusedColumn.colIndex >= this.colGroup.length) {
+                // find fail
+                moveResult = false;
+                break;
+              }
+            }
+          }
+        }
+
+        nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+
+        // if mergeCells
+        if (this.config.body.mergeCells && this.list.length && focusedColumn.dindex > 1) {
+          while (!this.$.panel[nPanelInfo.panelName]
+            .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
+            .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]').get(0)) {
+
+            focusedColumn.dindex--;
+
+            if (focusedColumn.dindex < 0 || focusedColumn.dindex > this.list.length - 1) {
+              break;
+            }
+          }
+          nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+        }
+
+        focusedColumn.panelName = nPanelInfo.panelName;
+
+        // 포커스 컬럼의 위치에 따라 스크롤 처리
+        let isScrollTo = (function () {
+          if (!this.config.virtualScrollX) return false;
+          let scrollLeft = 0;
+          if (focusedColumn.colIndex + 1 > this.xvar.frozenColumnIndex) {
+            if (focusedColumn.colIndex <= this.xvar.paintStartColumnIndex && this.colGroup[focusedColumn.colIndex]) {
+              scrollLeft = -this.colGroup[Number(focusedColumn.colIndex)]._sx;
+              scrollTo.call(this, {left: scrollLeft});
+              HEADER.scrollTo.call(this, {left: scrollLeft});
+              SCROLLER.resize.call(this);
+              return true;
+            }
+            else if (focusedColumn.colIndex >= this.xvar.paintEndColumnIndex && this.colGroup[Number(focusedColumn.colIndex)]) {
+              if (this.colGroup[Number(focusedColumn.colIndex)]._ex > this.xvar.bodyWidth) {
+                scrollLeft = (this.colGroup[Number(focusedColumn.colIndex)]._ex - this.xvar.bodyWidth);
+                scrollTo.call(this, {left: -scrollLeft});
+                HEADER.scrollTo.call(this, {left: -scrollLeft});
+                SCROLLER.resize.call(this);
+              }
+              return true;
+            }
+          }
+          scrollLeft = null;
+          return false;
+        }).call(this);
+
+        containerPanelName = nPanelInfo.containerPanelName;
+        isScrollPanel = nPanelInfo.isScrollPanel;
+
+        this.focusedColumn[focusedColumn.dindex + "_" + focusedColumn.colIndex + "_" + focusedColumn.rowIndex] = focusedColumn;
+
+        var $column = this.$.panel[focusedColumn.panelName]
+          .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
+          .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]')
+          .attr('data-ax6grid-column-focused', "true");
+
+        if (!isScrollTo && $column && isScrollPanel) {// 스크롤 패널 이라면~
+          // todo : 컬럼이동할 때에도 scrollTo 체크
+          var newLeft = (function () {
+            if ($column.position().left + $column.outerWidth() > Math.abs(this.$.panel[focusedColumn.panelName].position().left) + this.$.panel[containerPanelName].width()) {
+              return $column.position().left + $column.outerWidth() - this.$.panel[containerPanelName].width();
+            } else if (Math.abs(this.$.panel[focusedColumn.panelName].position().left) > $column.position().left) {
+              return $column.position().left;
+            } else {
+              return;
+            }
+          }).call(this);
+
+          if (typeof newLeft !== "undefined") {
+            HEADER.scrollTo.call(this, {left: -newLeft});
+            scrollTo.call(this, {left: -newLeft});
+            SCROLLER.resize.call(this);
+          }
+        }
+
+        return moveResult;
+      },
+      "INDEX": function (_dindex) {
+        let moveResult = true,
+          focusedColumn, originalColumn,
+          while_i;
+
+        for (let c in this.focusedColumn) {
+          focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
+          break;
+        }
+        if (!focusedColumn) {
+          focusedColumn = {
+            rowIndex: 0,
+            colIndex: 0
+          }
+        }
+        originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
+
+        columnSelect.focusClear.call(this);
+        columnSelect.clear.call(this);
+
+
+        if (_dindex == "end") {
+          _dindex = this.list.length - 1;
+        }
+
+        focusedColumn.dindex = _dindex;
+        focusedColumn.rowIndex = 0;
+
+        while_i = 0;
+        while (typeof this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex] === "undefined") {
+          if (focusedColumn.rowIndex == 0 || while_i % 2 == ((_dy > 0) ? 0 : 1)) {
+            focusedColumn.colIndex--;
+          } else {
+            focusedColumn.rowIndex--;
+          }
+
+          if (focusedColumn.rowIndex <= 0 && focusedColumn.colIndex <= 0) {
+            // find fail
+            break;
+          }
+          while_i++;
+        }
+
+        let nPanelInfo = UTIL.findPanelByColumnIndex.call(this, focusedColumn.dindex, focusedColumn.colIndex);
+        focusedColumn.panelName = nPanelInfo.panelName;
+
+        // 포커스 컬럼의 위치에 따라 스크롤 처리.
+        (function () {
+          if (focusedColumn.dindex + 1 > this.xvar.frozenRowIndex) {
+            if (focusedColumn.dindex < this.xvar.virtualPaintStartRowIndex) {
+              scrollTo.call(this, {top: -(focusedColumn.dindex - this.xvar.frozenRowIndex) * this.xvar.bodyTrHeight});
+              SCROLLER.resize.call(this);
+            }
+            else if (focusedColumn.dindex + 1 > this.xvar.virtualPaintStartRowIndex + (this.xvar.virtualPaintRowCount - 2)) {
+              scrollTo.call(this, {top: -(focusedColumn.dindex - this.xvar.frozenRowIndex - this.xvar.virtualPaintRowCount + 3) * this.xvar.bodyTrHeight});
+              SCROLLER.resize.call(this);
+            }
+          }
+        }).call(this);
+
+        this.focusedColumn[focusedColumn.dindex + "_" + focusedColumn.colIndex + "_" + focusedColumn.rowIndex] = focusedColumn;
+        this.$.panel[focusedColumn.panelName]
+          .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
+          .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]')
+          .attr('data-ax6grid-column-focused', "true");
+
+        return moveResult;
       }
     };
 
-    if (_msg in action) {
-      action[_msg || "RETURN"].call(this, dindex, doindex, column, newValue);
+    let processor = {
+      "UP": function () {
+        return focus["UD"].call(this, -1);
+      },
+      "DOWN": function () {
+        return focus["UD"].call(this, 1);
+      },
+      "LEFT": function () {
+        return focus["LR"].call(this, -1);
+      },
+      "RIGHT": function () {
+        return focus["LR"].call(this, 1);
+      },
+      "HOME": function () {
+        return focus["INDEX"].call(this, 0);
+      },
+      "END": function () {
+        return focus["INDEX"].call(this, "end");
+      },
+      "position": function (_position) {
+        return focus["INDEX"].call(this, _position);
+      }
+    };
+
+    if (_position in processor) {
+      return processor[_position].call(this);
     } else {
-      action["__clear"].call(this);
+      return processor["position"].call(this, _position);
     }
   },
-  keydown(key, columnKey, _options) {
-    let processor = {
-      "ESC"() {
-        for (var columnKey in this.inlineEditing) {
-          inlineEdit.deActive.call(this, "CANCEL", columnKey);
-        }
-      },
-      "RETURN"() {
-        if (this.isInlineEditing) {
-          if (this.inlineEditing[columnKey] && this.inlineEditing[columnKey].useReturnToSave) { // todo : 네이밍 검증 할 필요있음.
-            inlineEdit.deActive.call(this, "RETURN", columnKey);
-          } else {
-            return false;
-          }
+  inlineEdit: inlineEdit,
+  /**
+   *
+   * @return {string}
+   */
+  getExcelString: function () {
+    let cfg = this.config,
+      list = this.list,
+      bodyRowData = this.bodyRowTable,
+      footSumData = this.footSumTable,
+      bodyGroupingData = this.bodyGroupingTable;
+
+    // body-scroll 의 포지션에 의존적이므로..
+    let getBody = function (_colGroup, _bodyRow, _groupRow, _list) {
+      let SS = [],
+        di, dl,
+        tri, trl,
+        ci, cl,
+        col, val;
+
+      //SS.push('<table border="1">');
+      for (di = 0, dl = _list.length; di < dl; di++) {
+        let isGroupingRow = false, rowTable;
+
+        if (_groupRow && "__isGrouping" in _list[di]) {
+          rowTable = _groupRow;
+          isGroupingRow = true;
         } else {
-
-          for (var k in this.focusedColumn) {
-            let _column = this.focusedColumn[k],
-              column = this.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
-              dindex = _column.dindex,
-              doindex = _column.doindex,
-              value = "",
-              col = this.colGroup[_column.colIndex];
-
-            if (column) {
-              if (!this.list[dindex].__isGrouping) {
-                value = DATA.getValue.call(this, dindex, doindex, column.key);
-              }
-            }
-
-            if (col.editor && INLINE_EDITOR[col.editor.type].editMode === "inline") {
-              if (_options && _options.moveFocus) {
-
-              }
-              else {
-                if (column.editor && column.editor.type == "checkbox") {
-                  value = DATA.getValue.call(this, dindex, doindex, column.key);
-
-                  let checked, newValue;
-                  if (column.editor.config && column.editor.config.trueValue) {
-                    // console.log(value, column.editor.config.trueValue);
-
-                    if (value != column.editor.config.trueValue) {
-                      newValue = column.editor.config.trueValue;
-                      checked = true;
-                    } else {
-                      newValue = column.editor.config.falseValue;
-                      checked = false;
-                    }
-                  } else {
-                    newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
-                  }
-
-                  DATA.setValue.call(this, dindex, doindex, column.key, newValue);
-                  updateRowState.call(this, ["cellChecked"], dindex, doindex, {
-                    key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
-                    editorConfig: column.editor.config, checked: checked
-                  });
-                }
-              }
-            } else {
-              inlineEdit.active.call(this, this.focusedColumn, null, value);
-            }
-          }
+          rowTable = _bodyRow;
         }
-        return true;
+
+        for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
+          SS.push('\n<tr>');
+          for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
+            col = rowTable.rows[tri].cols[ci];
+
+            SS.push('<td ',
+              'colspan="' + col.colspan + '" ',
+              'rowspan="' + col.rowspan + '" ',
+              '>', (isGroupingRow) ? getGroupingValue.call(this, _list[di], di, col) : getFieldValue.call(this, _list, _list[di], di, col, val, "text"), '&nbsp;</td>');
+          }
+          SS.push('\n</tr>');
+        }
       }
+      //SS.push('</table>');
+      return SS.join('');
     };
+    let getSum = function (_colGroup, _bodyRow, _list) {
+      let SS = [],
+        tri, trl,
+        ci, cl,
+        col;
 
-    if (key in processor) {
-      processor[key].call(this, key, columnKey, _options);
-    }
-  }
-};
-
-const getExcelString = function () {
-  let cfg = this.config,
-    list = this.list,
-    bodyRowData = this.bodyRowTable,
-    footSumData = this.footSumTable,
-    bodyGroupingData = this.bodyGroupingTable;
-
-  // body-scroll 의 포지션에 의존적이므로..
-  let getBody = function (_colGroup, _bodyRow, _groupRow, _list) {
-    let SS = [],
-      di, dl,
-      tri, trl,
-      ci, cl,
-      col, val;
-
-    //SS.push('<table border="1">');
-    for (di = 0, dl = _list.length; di < dl; di++) {
-      let isGroupingRow = false, rowTable;
-
-      if (_groupRow && "__isGrouping" in _list[di]) {
-        rowTable = _groupRow;
-        isGroupingRow = true;
-      } else {
-        rowTable = _bodyRow;
-      }
-
-      for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
+      //SS.push('<table border="1">');
+      for (tri = 0, trl = _bodyRow.rows.length; tri < trl; tri++) {
         SS.push('\n<tr>');
-        for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
-          col = rowTable.rows[tri].cols[ci];
-
+        for (ci = 0, cl = _bodyRow.rows[tri].cols.length; ci < cl; ci++) {
+          col = _bodyRow.rows[tri].cols[ci];
           SS.push('<td ',
             'colspan="' + col.colspan + '" ',
             'rowspan="' + col.rowspan + '" ',
-            '>', (isGroupingRow) ? getGroupingValue.call(this, _list[di], di, col) : getFieldValue.call(this, _list, _list[di], di, col, val, "text"), '&nbsp;</td>');
+            '>', getSumFieldValue.call(this, _list, col), '</td>');
         }
         SS.push('\n</tr>');
       }
+      //SS.push('</table>');
+
+      return SS.join('');
+    };
+
+    let po = [];
+    po.push(getBody.call(this, this.headerColGroup, bodyRowData, bodyGroupingData, list));
+    if (cfg.footSum) {
+      // 바닥 요약
+      po.push(getSum.call(this, this.headerColGroup, footSumData, list));
     }
-    //SS.push('</table>');
-    return SS.join('');
-  };
-  let getSum = function (_colGroup, _bodyRow, _list) {
-    let SS = [],
-      tri, trl,
-      ci, cl,
-      col;
 
-    //SS.push('<table border="1">');
-    for (tri = 0, trl = _bodyRow.rows.length; tri < trl; tri++) {
-      SS.push('\n<tr>');
-      for (ci = 0, cl = _bodyRow.rows[tri].cols.length; ci < cl; ci++) {
-        col = _bodyRow.rows[tri].cols[ci];
-        SS.push('<td ',
-          'colspan="' + col.colspan + '" ',
-          'rowspan="' + col.rowspan + '" ',
-          '>', getSumFieldValue.call(this, _list, col), '</td>');
-      }
-      SS.push('\n</tr>');
+    // right
+    if (cfg.rightSum) {
+      // todo : right 표현 정리
     }
-    //SS.push('</table>');
 
-    return SS.join('');
-  };
+    return po.join('');
+  },
+  /**
+   *
+   * @param _dindex
+   * @param _doindex
+   * @param _collapse
+   */
+  toggleCollapse: function (_dindex, _doindex, _collapse) {
+    if (DATA.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
+      this.proxyList = DATA.getProxyList.call(this, this.list);
+      repaint.call(this);
+    }
+  },
+  /**
+   *
+   * @param _dindex
+   * @param _doindex
+   */
+  click: function (_dindex, _doindex) {
+    let that = {
+      self: this,
+      page: this.page,
+      list: this.list,
+      item: this.list[_dindex],
+      dindex: _dindex
+    };
 
-  let po = [];
-  po.push(getBody.call(this, this.headerColGroup, bodyRowData, bodyGroupingData, list));
-  if (cfg.footSum) {
-    // 바닥 요약
-    po.push(getSum.call(this, this.headerColGroup, footSumData, list));
+    moveFocus.call(this, _dindex);
+
+    if (this.config.body.onClick) {
+      this.config.body.onClick.call(that);
+    }
+
+    that = null;
+    // console.log(this.$["panel"]["body-scroll"].find('[data-ax6grid-tr-data-index="' + _dindex + '"]>td:first-child'));
+  },
+  /**
+   *
+   * @param _dindex
+   * @param _doindex
+   */
+  dblClick: function (_dindex, _doindex) {
+    let that = {
+      self: this,
+      page: this.page,
+      list: this.list,
+      item: this.list[_dindex],
+      dindex: _dindex
+    };
+
+    moveFocus.call(this, _dindex);
+
+    if (this.config.body.onDBLClick) {
+      this.config.body.onDBLClick.call(that);
+    }
+
+    that = null;
   }
-
-  // right
-  if (cfg.rightSum) {
-    // todo : right 표현 정리
-  }
-
-  return po.join('');
-};
-
-const toggleCollapse = function (_dindex, _doindex, _collapse) {
-  if (DATA.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
-    this.proxyList = DATA.getProxyList.call(this, this.list);
-    repaint.call(this);
-  }
-};
-
-const click = function (_dindex, _doindex) {
-  let that = {
-    self: this,
-    page: this.page,
-    list: this.list,
-    item: this.list[_dindex],
-    dindex: _dindex
-  };
-
-  moveFocus.call(this, _dindex);
-
-  if (this.config.body.onClick) {
-    this.config.body.onClick.call(that);
-  }
-
-  that = null;
-  // console.log(this.$["panel"]["body-scroll"].find('[data-ax6grid-tr-data-index="' + _dindex + '"]>td:first-child'));
-};
-
-const dblClick = function (_dindex, _doindex) {
-  let that = {
-    self: this,
-    page: this.page,
-    list: this.list,
-    item: this.list[_dindex],
-    dindex: _dindex
-  };
-
-  moveFocus.call(this, _dindex);
-
-  if (this.config.body.onDBLClick) {
-    this.config.body.onDBLClick.call(that);
-  }
-
-  that = null;
-};
-
-export default {
-  init: init,
-  repaint: repaint,
-  repaintCell: repaintCell,
-  repaintRow: repaintRow,
-  updateRowState: updateRowState,
-  updateRowStateAll: updateRowStateAll,
-  scrollTo: scrollTo,
-  blur: blur,
-  moveFocus: moveFocus,
-  inlineEdit: inlineEdit,
-  getExcelString: getExcelString,
-  toggleCollapse: toggleCollapse,
-  click: click,
-  dblClick: dblClick
 };

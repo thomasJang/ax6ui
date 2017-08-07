@@ -67,20 +67,22 @@ var ctrlKeys = {
   //"106" : "NUMPAD_MULTIPLY",
   //"109" : "NUMPAD_SUBTRACT"
 };
+var tmpl = {
+  "display": function display(columnKeys) {
+    return "\n<a {{^tabIndex}}href=\"#ax6ui-select-{{id}}\" {{/tabIndex}}{{#tabIndex}}tabindex=\"{{tabIndex}}\" {{/tabIndex}}class=\"ax6ui-select-display {{theme}}\" \ndata-ax6ui-select-display=\"{{id}}\" data-ax6ui-select-instance=\"{{instanceId}}\" style=\"height: {{height}}px;\">\n    <div class=\"ax6ui-select-display-table\" data-els=\"display-table\">\n        <div data-ax6ui-select-display=\"label\">{{label}}</div>\n        <div data-ax6ui-select-display=\"addon\"> \n            {{#multiple}}{{#reset}}\n            <span class=\"addon-icon-reset\" data-selected-clear=\"true\">{{{.}}}</span>\n            {{/reset}}{{/multiple}}\n            {{#icons}}\n            <span class=\"addon-icon-closed\">{{clesed}}</span>\n            <span class=\"addon-icon-opened\">{{opened}}</span>\n            {{/icons}}\n            {{^icons}}\n            <span class=\"addon-icon-closed\"><span class=\"addon-icon-arrow\"></span></span>\n            <span class=\"addon-icon-opened\"><span class=\"addon-icon-arrow\"></span></span>\n            {{/icons}}\n        </div>\n    </div>\n    <input type=\"text\" tabindex=\"-1\" data-ax6ui-select-display=\"input\" \n    style=\"position:absolute;z-index:0;left:0px;top:0px;font-size:1px;opacity: 0;width:1px;height:1px;border: 0 none;color : transparent;text-indent: -9999em;\" />\n</a>\n";
+  },
+  "select": function select(columnKeys) {
+    return "\n<select tabindex=\"-1\" class=\"\" name=\"{{name}}\" {{#multiple}}multiple=\"multiple\"{{/multiple}} style=\"height: {{height}}px;\"></select>\n";
+  },
+  "optionGroup": function optionGroup(columnKeys) {
+    return "\n<div class=\"ax6ui-select-option-group {{theme}}\" data-ax6ui-select-option-group=\"{{id}}\">\n    <div class=\"ax-select-body\">\n        <div class=\"ax-select-option-group-content\" data-els=\"content\"></div>\n    </div>\n    <div class=\"ax-select-arrow\"></div> \n</div>\n";
+  },
+  "options": function options(columnKeys) {
+    return "\n{{#waitOptions}}\n    <div class=\"ax-select-option-item\">\n            <div class=\"ax-select-option-item-holder\">\n                <span class=\"ax-select-option-item-cell ax-select-option-item-label\">\n                    {{{lang.loading}}}\n                </span>\n            </div>\n        </div>\n{{/waitOptions}}\n{{^waitOptions}}\n    {{#options}}\n        {{#optgroup}}\n            <div class=\"ax-select-option-group\">\n                <div class=\"ax-select-option-item-holder\">\n                    <span class=\"ax-select-option-group-label\">\n                        {{{.}}}\n                    </span>\n                </div>\n                {{#options}}\n                <div class=\"ax-select-option-item\" data-option-focus-index=\"{{@findex}}\" data-option-group-index=\"{{@gindex}}\" data-option-index=\"{{@index}}\" \n                data-option-value=\"{{" + columnKeys.optionValue + "}}\" \n                {{#" + columnKeys.optionSelected + "}}data-option-selected=\"true\"{{/" + columnKeys.optionSelected + "}}>\n                    <div class=\"ax-select-option-item-holder\">\n                        {{#multiple}}\n                        <span class=\"ax-select-option-item-cell ax-select-option-item-checkbox\">\n                            <span class=\"item-checkbox-wrap useCheckBox\" data-option-checkbox-index=\"{{@i}}\"></span>\n                        </span>\n                        {{/multiple}}\n                        <span class=\"ax-select-option-item-cell ax-select-option-item-label\">{{{" + columnKeys.optionText + "}}}</span>\n                    </div>\n                </div>\n                {{/options}}\n            </div>                            \n        {{/optgroup}}\n        {{^optgroup}}\n        <div class=\"ax-select-option-item\" data-option-focus-index=\"{{@findex}}\" data-option-index=\"{{@index}}\" data-option-value=\"{{" + columnKeys.optionValue + "}}\" {{#" + columnKeys.optionSelected + "}}data-option-selected=\"true\"{{/" + columnKeys.optionSelected + "}}>\n            <div class=\"ax-select-option-item-holder\">\n                {{#multiple}}\n                <span class=\"ax-select-option-item-cell ax-select-option-item-checkbox\">\n                    <span class=\"item-checkbox-wrap useCheckBox\" data-option-checkbox-index=\"{{@i}}\"></span>\n                </span>\n                {{/multiple}}\n                <span class=\"ax-select-option-item-cell ax-select-option-item-label\">{{{" + columnKeys.optionText + "}}}</span>\n            </div>\n        </div>\n        {{/optgroup}}\n    {{/options}}\n    {{^options}}\n        <div class=\"ax-select-option-item\">\n            <div class=\"ax-select-option-item-holder\">\n                <span class=\"ax-select-option-item-cell ax-select-option-item-label\">\n                    {{{lang.noOptions}}}\n                </span>\n            </div>\n        </div>\n    {{/options}}\n{{/waitOptions}}\n";
+  }
+};
 
 var $window = (0, _jqmin2.default)(window);
-var displayTmpl = function displayTmpl(columnKeys) {
-  return "\n<a {{^tabIndex}}href=\"#ax6select-{{id}}\" {{/tabIndex}}{{#tabIndex}}tabindex=\"{{tabIndex}}\" {{/tabIndex}}class=\"ax6select-display {{theme}}\" \ndata-ax6ui-select-display=\"{{id}}\" data-ax6ui-select-instance=\"{{instanceId}}\" style=\"height: {{height}}px;\">\n    <div class=\"ax6select-display-table\" data-els=\"display-table\">\n        <div data-ax6ui-select-display=\"label\">{{label}}</div>\n        <div data-ax6ui-select-display=\"addon\"> \n            {{#multiple}}{{#reset}}\n            <span class=\"addon-icon-reset\" data-selected-clear=\"true\">{{{.}}}</span>\n            {{/reset}}{{/multiple}}\n            {{#icons}}\n            <span class=\"addon-icon-closed\">{{clesed}}</span>\n            <span class=\"addon-icon-opened\">{{opened}}</span>\n            {{/icons}}\n            {{^icons}}\n            <span class=\"addon-icon-closed\"><span class=\"addon-icon-arrow\"></span></span>\n            <span class=\"addon-icon-opened\"><span class=\"addon-icon-arrow\"></span></span>\n            {{/icons}}\n        </div>\n    </div>\n    <input type=\"text\" tabindex=\"-1\" data-ax6ui-select-display=\"input\" \n    style=\"position:absolute;z-index:0;left:0px;top:0px;font-size:1px;opacity: 0;width:1px;height:1px;border: 0 none;color : transparent;text-indent: -9999em;\" />\n</a>\n";
-};
-var selectTmpl = function selectTmpl(columnKeys) {
-  return "\n<select tabindex=\"-1\" class=\"\" name=\"{{name}}\" {{#multiple}}multiple=\"multiple\"{{/multiple}} style=\"height: {{height}}px;\"></select>\n";
-};
-var optionGroupTmpl = function optionGroupTmpl(columnKeys) {
-  return "\n<div class=\"ax6select-option-group {{theme}}\" data-ax6ui-select-option-group=\"{{id}}\">\n    <div class=\"ax-select-body\">\n        <div class=\"ax-select-option-group-content\" data-els=\"content\"></div>\n    </div>\n    <div class=\"ax-select-arrow\"></div> \n</div>\n";
-};
-var optionsTmpl = function optionsTmpl(columnKeys) {
-  return "\n{{#waitOptions}}\n    <div class=\"ax-select-option-item\">\n            <div class=\"ax-select-option-item-holder\">\n                <span class=\"ax-select-option-item-cell ax-select-option-item-label\">\n                    {{{lang.loading}}}\n                </span>\n            </div>\n        </div>\n{{/waitOptions}}\n{{^waitOptions}}\n    {{#options}}\n        {{#optgroup}}\n            <div class=\"ax-select-option-group\">\n                <div class=\"ax-select-option-item-holder\">\n                    <span class=\"ax-select-option-group-label\">\n                        {{{.}}}\n                    </span>\n                </div>\n                {{#options}}\n                <div class=\"ax-select-option-item\" data-option-focus-index=\"{{@findex}}\" data-option-group-index=\"{{@gindex}}\" data-option-index=\"{{@index}}\" \n                data-option-value=\"{{" + columnKeys.optionValue + "}}\" \n                {{#" + columnKeys.optionSelected + "}}data-option-selected=\"true\"{{/" + columnKeys.optionSelected + "}}>\n                    <div class=\"ax-select-option-item-holder\">\n                        {{#multiple}}\n                        <span class=\"ax-select-option-item-cell ax-select-option-item-checkbox\">\n                            <span class=\"item-checkbox-wrap useCheckBox\" data-option-checkbox-index=\"{{@i}}\"></span>\n                        </span>\n                        {{/multiple}}\n                        <span class=\"ax-select-option-item-cell ax-select-option-item-label\">{{{" + columnKeys.optionText + "}}}</span>\n                    </div>\n                </div>\n                {{/options}}\n            </div>                            \n        {{/optgroup}}\n        {{^optgroup}}\n        <div class=\"ax-select-option-item\" data-option-focus-index=\"{{@findex}}\" data-option-index=\"{{@index}}\" data-option-value=\"{{" + columnKeys.optionValue + "}}\" {{#" + columnKeys.optionSelected + "}}data-option-selected=\"true\"{{/" + columnKeys.optionSelected + "}}>\n            <div class=\"ax-select-option-item-holder\">\n                {{#multiple}}\n                <span class=\"ax-select-option-item-cell ax-select-option-item-checkbox\">\n                    <span class=\"item-checkbox-wrap useCheckBox\" data-option-checkbox-index=\"{{@i}}\"></span>\n                </span>\n                {{/multiple}}\n                <span class=\"ax-select-option-item-cell ax-select-option-item-label\">{{{" + columnKeys.optionText + "}}}</span>\n            </div>\n        </div>\n        {{/optgroup}}\n    {{/options}}\n    {{^options}}\n        <div class=\"ax-select-option-item\">\n            <div class=\"ax-select-option-item-holder\">\n                <span class=\"ax-select-option-item-cell ax-select-option-item-label\">\n                    {{{lang.noOptions}}}\n                </span>\n            </div>\n        </div>\n    {{/options}}\n{{/waitOptions}}\n";
-};
 var onStateChanged = function onStateChanged(item, that) {
   if (item && item.onStateChanged) {
     item.onStateChanged.call(that, that);
@@ -437,7 +439,7 @@ var bindSelectTarget = function bindSelectTarget(queIdx) {
     data.height = item.height;
     data.label = getLabel.call(this, queIdx);
 
-    item.$display = (0, _jqmin2.default)(_AX6Mustache2.default.render(displayTmpl.call(this), data));
+    item.$display = (0, _jqmin2.default)(_AX6Mustache2.default.render(tmpl.display.call(this), data));
     //item.$display.css({height: item.height});
     item.$displayLabel = item.$display.find('[data-ax6ui-select-display="label"]');
 
@@ -453,7 +455,7 @@ var bindSelectTarget = function bindSelectTarget(queIdx) {
         item.$select.attr("multiple", "multiple");
       }
     } else {
-      item.$select = (0, _jqmin2.default)(_AX6Mustache2.default.render(selectTmpl.call(this), data));
+      item.$select = (0, _jqmin2.default)(_AX6Mustache2.default.render(tmpl.select.call(this), data));
       item.$target.append(item.$select);
       // select append
     }
@@ -464,7 +466,7 @@ var bindSelectTarget = function bindSelectTarget(queIdx) {
 
     alignSelectDisplay.call(this);
 
-    item.$displayInput.off("blur.ax6select").on("blur.ax6select", selectEvent.blur.bind(this, queIdx)).off('keyup.ax6select').on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx)).off("keydown.ax6select").on("keydown.ax6select", selectEvent.keyDown.bind(this, queIdx));
+    item.$displayInput.off("blur.ax6ui-select").on("blur.ax6ui-select", selectEvent.blur.bind(this, queIdx)).off('keyup.ax6ui-select').on('keyup.ax6ui-select', selectEvent.keyUp.bind(this, queIdx)).off("keydown.ax6ui-select").on("keydown.ax6ui-select", selectEvent.keyDown.bind(this, queIdx));
   } else {
     item.$displayLabel.html(getLabel.call(this, queIdx));
     item.options = syncSelectOptions.call(this, queIdx, item.options);
@@ -472,10 +474,10 @@ var bindSelectTarget = function bindSelectTarget(queIdx) {
     alignSelectDisplay.call(this);
   }
 
-  item.$display.off('click.ax6select').on('click.ax6select', selectEvent.click.bind(this, queIdx)).off('keyup.ax6select').on('keyup.ax6select', selectEvent.keyUp.bind(this, queIdx));
+  item.$display.off('click.ax6ui-select').on('click.ax6ui-select', selectEvent.click.bind(this, queIdx)).off('keyup.ax6ui-select').on('keyup.ax6ui-select', selectEvent.keyUp.bind(this, queIdx));
 
   // select 태그에 대한 change 이벤트 감시
-  item.$select.off('change.ax6select').on('change.ax6select', selectEvent.selectChange.bind(this, queIdx));
+  item.$select.off('change.ax6ui-select').on('change.ax6ui-select', selectEvent.selectChange.bind(this, queIdx));
 
   data = null;
   item = null;
@@ -582,7 +584,7 @@ var getQueIdx = function getQueIdx(boundID) {
     boundID = (0, _jqmin2.default)(boundID).data("data-ax6ui-select-id");
   }
   if (!_AX6Util2.default.isString(boundID)) {
-    console.log(_AX6Info2.default.getError("ax6select", "402", "getQueIdx"));
+    console.log(_AX6Info2.default.getError("ax6ui-select", "402", "getQueIdx"));
     return;
   }
   return _AX6Util2.default.search(this.queue, function () {
@@ -610,6 +612,7 @@ var AX6UISelect = function (_AX6UICore) {
      * @param config
      * @param [config.theme='default']
      * @param [config.animateTime=100]
+     * @param [config.height=34]
      * @param [config.lang] - 메세지들
      * @param [config.lang.noSelected='']
      * @param [config.lang.noOptions='no options']
@@ -708,7 +711,7 @@ var AX6UISelect = function (_AX6UICore) {
       this.initialized = true;
 
       // throttledResize
-      $window.on("resize.ax6select-display-" + this.instanceId, _AX6Util2.default.throttle(function (e) {
+      $window.on("resize.ax6ui-select-display-" + this.instanceId, _AX6Util2.default.throttle(function (e) {
         alignSelectDisplay.call(this, e || window.event);
         alignSelectOptionGroup.call(this);
       }, 100).bind(this));
@@ -727,14 +730,14 @@ var AX6UISelect = function (_AX6UICore) {
       item = _jqmin2.default.extend(true, {}, this.config, item);
 
       if (!item.target) {
-        console.log(_AX6Info2.default.getError("ax6select", "401", "bind"));
+        console.log(_AX6Info2.default.getError("ax6ui-select", "401", "bind"));
         return this;
       }
       item.$target = (0, _jqmin2.default)(item.target);
 
       if (!item.id) item.id = item.$target.data("data-ax6ui-select-id");
       if (!item.id) {
-        item.id = 'ax6select-' + _AX6UICore3.default.getInstanceId();
+        item.id = 'ax6ui-select-' + _AX6UICore3.default.getInstanceId();
         item.$target.data("data-ax6ui-select-id", item.id);
       }
       item.name = item.$target.attr("data-ax6ui-select");
@@ -815,11 +818,10 @@ var AX6UISelect = function (_AX6UICore) {
             /// 템플릿에 전달할 오브젝트 선언
             _data.id = _item2.id;
             _data.theme = _item2.theme;
-            _data.size = "ax6select-option-group-" + _item2.size;
             _data.multiple = _item2.multiple;
             _data.lang = _item2.lang;
             _data.options = _item2.options;
-            _this4.activeSelectOptionGroup.find('[data-els="content"]').html(_AX6Mustache2.default.render(optionsTmpl.call(_this4, _item2.columnKeys), _data));
+            _this4.activeSelectOptionGroup.find('[data-els="content"]').html(_AX6Mustache2.default.render(tmpl.options.call(_this4, _item2.columnKeys), _data));
           }
         });
       };
@@ -859,12 +861,10 @@ var AX6UISelect = function (_AX6UICore) {
       /// 템플릿에 전달할 오브젝트 선언
       data.id = item.id;
       data.theme = item.theme;
-      data.size = "ax6select-option-group-" + item.size;
       data.multiple = item.multiple;
 
       data.lang = item.lang;
       item.$display.attr("data-select-option-group-opened", "true");
-      //console.log(data.lang);
 
       if (item.onExpand) {
         // onExpand 인 경우 UI 대기모드 추가
@@ -872,8 +872,8 @@ var AX6UISelect = function (_AX6UICore) {
       }
 
       data.options = item.options;
-      this.activeSelectOptionGroup = (0, _jqmin2.default)(_AX6Mustache2.default.render(optionGroupTmpl.call(this), data));
-      this.activeSelectOptionGroup.find('[data-els="content"]').html(_AX6Mustache2.default.render(optionsTmpl.call(this, item.columnKeys), data));
+      this.activeSelectOptionGroup = (0, _jqmin2.default)(_AX6Mustache2.default.render(tmpl.optionGroup.call(this), data));
+      this.activeSelectOptionGroup.find('[data-els="content"]').html(_AX6Mustache2.default.render(tmpl.options.call(this, item.columnKeys), data));
       this.activeSelectQueueIndex = queIdx;
 
       alignSelectOptionGroup.call(this, "append"); // alignSelectOptionGroup 에서 body append
@@ -895,13 +895,13 @@ var AX6UISelect = function (_AX6UICore) {
 
         item.$displayInput.trigger("focus");
 
-        (0, _jqmin2.default)(window).on("keyup.ax6select-" + _this5.instanceId, function (e) {
+        (0, _jqmin2.default)(window).on("keyup.ax6ui-select-" + _this5.instanceId, function (e) {
           e = e || window.event;
           onBodyKeyup.call(this, e);
           _AX6Util2.default.stopEvent(e);
         }.bind(_this5));
 
-        (0, _jqmin2.default)(window).on("click.ax6select-" + _this5.instanceId, function (e) {
+        (0, _jqmin2.default)(window).on("click.ax6ui-select-" + _this5.instanceId, function (e) {
           e = e || window.event;
           onBodyClick.call(this, e);
           _AX6Util2.default.stopEvent(e);
@@ -1027,7 +1027,7 @@ var AX6UISelect = function (_AX6UICore) {
           if (optionIndex > -1) {
             item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
           } else {
-            console.log(_AX6Info2.default.getError("ax6select", "501", "val"));
+            console.log(_AX6Info2.default.getError("ax6ui-select", "501", "val"));
             return;
           }
 
@@ -1042,7 +1042,7 @@ var AX6UISelect = function (_AX6UICore) {
           if (optionIndex > -1) {
             item.options[optionIndex][item.columnKeys.optionSelected] = getSelected(item, item.options[optionIndex][item.columnKeys.optionSelected], selected);
           } else {
-            console.log(_AX6Info2.default.getError("ax6select", "501", "val"));
+            console.log(_AX6Info2.default.getError("ax6ui-select", "501", "val"));
             return;
           }
 
@@ -1123,7 +1123,7 @@ var AX6UISelect = function (_AX6UICore) {
 
       this.activeSelectOptionGroup.addClass("destroy");
 
-      (0, _jqmin2.default)(window).off("resize.ax6select-" + this.instanceId).off("click.ax6select-" + this.instanceId).off("keyup.ax6select-" + this.instanceId);
+      (0, _jqmin2.default)(window).off("resize.ax6ui-select-" + this.instanceId).off("click.ax6ui-select-" + this.instanceId).off("keyup.ax6ui-select-" + this.instanceId);
 
       this.closeTimer = setTimeout(function () {
         if (_this7.activeSelectOptionGroup) _this7.activeSelectOptionGroup.remove();

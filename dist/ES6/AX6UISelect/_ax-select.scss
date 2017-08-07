@@ -33,7 +33,7 @@ $hover-types: (
   }
 }
 
-@mixin ax6select-display-theme($base-color, $back-color, $theme-color) {
+@mixin ax6ui-select-display-theme($base-color, $back-color, $theme-color) {
   &:hover, &:active, &:focus, &[data-select-option-group-opened] {
     &:not([disabled]) {
       border-color: $theme-color;
@@ -65,7 +65,7 @@ $hover-types: (
   }
 }
 
-@mixin ax6select-option-group-theme($base-color, $back-color, $theme-color, $hover-type) {
+@mixin ax6ui-select-option-group-theme($base-color, $back-color, $theme-color, $hover-type) {
   border-color: $theme-color;
   color: $base-color;
 
@@ -149,7 +149,7 @@ $hover-types: (
   }
 }
 
-@mixin ax6select-option-group($padding, $font-size) {
+@mixin ax6ui-select-option-group($padding, $font-size) {
   .ax-select-body {
     padding: $ax6select-option-group-body-padding;
     $ax6select-option-item-height: $font-size + 5;
@@ -263,6 +263,8 @@ $hover-types: (
   }
 }
 
+
+
 // select group
 [data-ax6ui-select] {
   position: relative;
@@ -285,7 +287,7 @@ $hover-types: (
 }
 
 /// select-display
-.ax6select-display {
+.ax6ui-select-display {
   position: relative;
   z-index: 2;
   padding: 0;
@@ -307,7 +309,7 @@ $hover-types: (
     text-decoration: none;
   }
 
-  .ax6select-display-table {
+  .ax6ui-select-display-table {
     width: 100%;
     height: 100%;
     display: table;
@@ -375,7 +377,7 @@ $hover-types: (
   &[data-select-option-group-opened] {
     @include box-shadow(inset 1px 1px 3px rgba(0, 0, 0, 0.2));
     background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-    .ax6select-display-table [data-ax6ui-select-display="addon"] {
+    .ax6ui-select-display-table [data-ax6ui-select-display="addon"] {
       .addon-icon-reset {
         display: block;
         position: absolute;
@@ -394,13 +396,13 @@ $hover-types: (
 
   @each $theme in $base-colors {
     &.#{nth($theme, 1)} {
-      @include ax6select-display-theme(map_get($base-colors, nth($theme, 1)), $ax6select-option-group-bg, map_get($theme-colors, nth($theme, 1)));
+      @include ax6ui-select-display-theme(map_get($base-colors, nth($theme, 1)), $ax6select-option-group-bg, map_get($theme-colors, nth($theme, 1)));
     }
   }
 }
 
 /// select-option-group
-.ax6select-option-group {
+.ax6ui-select-option-group {
   box-sizing: border-box;
   z-index: $ax6select-option-group-z-index;
   position: absolute;
@@ -427,9 +429,9 @@ $hover-types: (
 
   @each $theme in $base-colors {
     &.#{nth($theme, 1)} {
-      @include ax6select-option-group-theme(map_get($base-colors, nth($theme, 1)), $ax6select-option-group-bg, map_get($theme-colors, nth($theme, 1)), map_get($hover-types, nth($theme, 1)));
+      @include ax6ui-select-option-group-theme(map_get($base-colors, nth($theme, 1)), $ax6select-option-group-bg, map_get($theme-colors, nth($theme, 1)), map_get($hover-types, nth($theme, 1)));
     }
   }
 
-  @include ax6select-option-group($ax6select-option-item-padding, $ax6select-option-item-font-size);
+  @include ax6ui-select-option-group($ax6select-option-item-padding, $ax6select-option-item-font-size);
 }

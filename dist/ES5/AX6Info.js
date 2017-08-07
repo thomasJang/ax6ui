@@ -7,18 +7,18 @@ var win = window;
 var doc = win ? win.document : null;
 var docElem = win ? win.document.documentElement : null;
 
-var onerror = function onerror() {
-  console.error(arguments);
-};
-
 var eventKeys = {
   BACKSPACE: 8, TAB: 9,
   RETURN: 13, ESC: 27, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, DELETE: 46,
   HOME: 36, END: 35, PAGEUP: 33, PAGEDOWN: 34, INSERT: 45, SPACE: 32
 };
-
 var weekNames = [{ label: "SUN" }, { label: "MON" }, { label: "TUE" }, { label: "WED" }, { label: "THU" }, { label: "FRI" }, { label: "SAT" }];
+var wheelEnm = win && /Firefox/i.test(navigator.userAgent) ? "DOMMouseScroll" : "mousewheel";
+var errorMsg = {};
 
+var onerror = function onerror() {
+  console.error(arguments);
+};
 var browser = function (ua, mobile, browserName, match, browser, browserVersion) {
   if (!win || !win.navigator) return {};
 
@@ -47,13 +47,7 @@ var browser = function (ua, mobile, browserName, match, browser, browserVersion)
   }
   ua = null, mobile = null, browserName = null, match = null, browser = null, browserVersion = null;
 }();
-
 var isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && win.document);
-
-var wheelEnm = win && /Firefox/i.test(navigator.userAgent) ? "DOMMouseScroll" : "mousewheel";
-
-var errorMsg = {};
-
 var urlUtil = function urlUtil(url, urls) {
   url = {
     href: win.location.href,
@@ -74,7 +68,6 @@ var urlUtil = function urlUtil(url, urls) {
 
   return url;
 };
-
 var getError = function getError(className, errorCode, methodName) {
   if (errorMsg && errorMsg[className]) {
     return {
@@ -87,9 +80,7 @@ var getError = function getError(className, errorCode, methodName) {
     return { className: className, errorCode: errorCode, methodName: methodName };
   }
 };
-
 var supportTouch = win ? 'ontouchstart' in win || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 : false;
-
 var supportFileApi = win ? win.FileReader && win.File && win.FileList && win.Blob : false;
 
 /**
@@ -107,8 +98,8 @@ exports.default = {
    * @example
    * ```
    * AX6Info.onerror = function(){
-     *  console.log(arguments);
-     * }
+   *  console.log(arguments);
+   * }
    * ```
    */
   onerror: onerror,

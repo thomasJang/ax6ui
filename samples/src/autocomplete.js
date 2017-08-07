@@ -52,17 +52,17 @@ autocomplete.bind({
   height: 40,
   optionItemHeight: 30,
   onSearch: function (callback) {
-    var searchWord = this.searchWord;
+    let searchWord = this.searchWord;
 
     setTimeout(function () {
-      var regExp = new RegExp(searchWord);
-      var myOptions = [];
+      let regExp = new RegExp(searchWord);
+      let myOptions = [];
       options.forEach(function (n) {
         if (n.text.match(regExp)) {
           myOptions.push({
             value: n.value,
             text: n.text
-          })
+          });
         }
       });
 

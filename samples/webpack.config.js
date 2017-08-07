@@ -42,6 +42,7 @@ for (let k in entry) {
       menu: menu,
       title: "AX6UI SAMPLE (" + k + ")",
       filename: k + '.html',
+      favicon: './src/assets/favicon.ico',
       template: './src/assets/sample.ejs'
     };
     plugins.push(new HtmlWebpackPlugin(obj));

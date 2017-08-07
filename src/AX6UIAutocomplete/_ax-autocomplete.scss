@@ -352,7 +352,8 @@ $hover-types: (
         box-sizing: border-box;
         @include ax-background(top, $ax6autocomplete-label-bg-colors);
 
-        border-collapse: collapse;
+        border-collapse: separate;
+        border: 0 none;
 
         &:first-child {
           margin-left: 0;
@@ -367,11 +368,13 @@ $hover-types: (
           border: $ax6autocomplete-label-border;
 
           &:first-child{
-            border-bottom-left-radius: 10px;
+            border-top-left-radius: $ax6autocomplete-label-border-radius;
+            border-bottom-left-radius: $ax6autocomplete-label-border-radius;
             border-right: 0 none;
           }
           &:last-child{
-            border-bottom-right-radius: 10px;
+            border-top-right-radius: $ax6autocomplete-label-border-radius;
+            border-bottom-right-radius: $ax6autocomplete-label-border-radius;
             border-left: 0 none;
             padding-left:0;
           }

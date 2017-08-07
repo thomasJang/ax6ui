@@ -571,15 +571,16 @@ const bindAutocompleteTarget = function (queIdx) {
         U.stopEvent(e);
         return this;
       }
-      if (e.which == info.eventKeys.TAB) {
+      else if (e.which == info.eventKeys.TAB) {
         // nothing
-
         this.close();
         return this;
       }
-      if (this.activeautocompleteQueueIndex != queIdx) { // 닫힌 상태 인경우
+      else if (this.activeautocompleteQueueIndex != queIdx && e.which != info.eventKeys.BACKSPACE) { // 닫힌 상태 인경우
         this.open(queIdx); // open and align
+        debouncedFocusWord(queIdx);
       }
+
       if (ctrlKeys[e.which]) {
         U.stopEvent(e);
       }
@@ -596,7 +597,6 @@ const bindAutocompleteTarget = function (queIdx) {
           U.stopEvent(e);
         } else {
           debouncedFocusWord(queIdx);
-
         }
       }
     },

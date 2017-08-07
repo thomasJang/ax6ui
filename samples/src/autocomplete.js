@@ -1,4 +1,5 @@
 import $ from "jqmin";
+import U from "../../src/AX6Util";
 import Autocomplete from "../../src/AX6UIAutocomplete";
 import "../../src/AX6UIAutocomplete/style.scss";
 
@@ -52,6 +53,7 @@ autocomplete.bind({
   optionItemHeight: 30,
   onSearch: function (callback) {
     var searchWord = this.searchWord;
+
     setTimeout(function () {
       var regExp = new RegExp(searchWord);
       var myOptions = [];
@@ -63,10 +65,10 @@ autocomplete.bind({
           })
         }
       });
+
       callback({
         options: myOptions
       });
     }, 150);
-
   }
 });

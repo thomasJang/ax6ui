@@ -899,7 +899,7 @@ var AX6UIUploader = function (_AX6UICore) {
     key: "send",
     value: function send() {
       // 업로드 시작
-      if (_AX6Util2.default.isFunction(this.config.validateSelectedFiles)) {
+      if (this.selectedFiles.length && _AX6Util2.default.isFunction(this.config.validateSelectedFiles)) {
         var that = {
           self: this,
           uploadedFiles: this.uploadedFiles,

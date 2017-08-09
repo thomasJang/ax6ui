@@ -932,7 +932,7 @@ class AX6UIUploader extends AX6UICore {
    */
   send() {
     // 업로드 시작
-    if (U.isFunction(this.config.validateSelectedFiles)) {
+    if (this.selectedFiles.length && U.isFunction(this.config.validateSelectedFiles)) {
       let that = {
         self: this,
         uploadedFiles: this.uploadedFiles,

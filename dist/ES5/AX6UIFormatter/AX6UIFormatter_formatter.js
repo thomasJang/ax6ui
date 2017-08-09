@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var TODAY = new Date();
 
 /**
- * @module AX6Formatter_formatter
+ * @module AX6UIFormatter_formatter
  */
 
 var ctrlKeys = {

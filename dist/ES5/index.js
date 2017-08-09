@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AX6UIUploader = exports.AX6UIModal = exports.AX6UIToast = exports.AX6UIMenu = exports.AX6UIGrid = exports.AX6UISelect = exports.AX6UICalendar = exports.AX6UIPicker = exports.AX6UIDialog = exports.AX6UIPalette = exports.AX6UIMask = exports.AX6UIFormatter = exports.AX6Mustache = exports.AX6UICore = exports.AX6Util = exports.AX6Info = undefined;
+exports.AX6UIAutocomplete = exports.AX6UIUploader = exports.AX6UIModal = exports.AX6UIToast = exports.AX6UIMenu = exports.AX6UIGrid = exports.AX6UISelect = exports.AX6UICalendar = exports.AX6UIPicker = exports.AX6UIDialog = exports.AX6UIPalette = exports.AX6UIMask = exports.AX6UIFormatter = exports.AX6Mustache = exports.AX6UICore = exports.AX6Util = exports.AX6Info = undefined;
 
 var _AX6Info = require("./AX6Info");
 
@@ -69,6 +69,10 @@ var _AX6UIUploader = require("./AX6UIUploader");
 
 var _AX6UIUploader2 = _interopRequireDefault(_AX6UIUploader);
 
+var _AX6UIAutocomplete = require("./AX6UIAutocomplete");
+
+var _AX6UIAutocomplete2 = _interopRequireDefault(_AX6UIAutocomplete);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -90,6 +94,7 @@ exports.AX6UIMenu = _AX6UIMenu2.default;
 exports.AX6UIToast = _AX6UIToast2.default;
 exports.AX6UIModal = _AX6UIModal2.default;
 exports.AX6UIUploader = _AX6UIUploader2.default;
+exports.AX6UIAutocomplete = _AX6UIAutocomplete2.default;
 exports.default = {
   AX6Info: _AX6Info2.default,
   AX6Util: _AX6Util2.default,
@@ -106,5 +111,6 @@ exports.default = {
   AX6UIMenu: _AX6UIMenu2.default,
   AX6UIToast: _AX6UIToast2.default,
   AX6UIModal: _AX6UIModal2.default,
-  AX6UIUploader: _AX6UIUploader2.default
+  AX6UIUploader: _AX6UIUploader2.default,
+  AX6UIAutocomplete: _AX6UIAutocomplete2.default
 };

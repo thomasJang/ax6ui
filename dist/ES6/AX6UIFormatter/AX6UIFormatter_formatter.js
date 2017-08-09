@@ -3,7 +3,7 @@ import U from "../AX6Util";
 let TODAY = new Date();
 
 /**
- * @module AX6Formatter_formatter
+ * @module AX6UIFormatter_formatter
  */
 
 let ctrlKeys = {

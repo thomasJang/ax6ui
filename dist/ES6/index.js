@@ -14,6 +14,7 @@ import AX6UIMenu from "./AX6UIMenu";
 import AX6UIToast from "./AX6UIToast";
 import AX6UIModal from "./AX6UIModal";
 import AX6UIUploader from "./AX6UIUploader";
+import AX6UIAutocomplete from "./AX6UIAutocomplete";
 
 /**
  * @module AX6UI
@@ -81,44 +82,114 @@ AX6UIFormatter,
 AX6UIMask,
 /**
  * AX6UI.AX6UIPalette
+ * @example
+ * ```js
+ * import AX6UIPalette from "ax6ui/AX6UIPalette";
+ * // or
+ * import { AX6UIPalette } from "ax6ui";
+ * ```
  */
 AX6UIPalette,
 /**
  * AX6UI.AX6UIDialog
+ * @example
+ * ```js
+ * import AX6UIDialog from "ax6ui/AX6UIDialog";
+ * // or
+ * import { AX6UIDialog } from "ax6ui";
+ * ```
  */
 AX6UIDialog,
 /**
  * AX6UI.AX6UIPicker
+ * @example
+ * ```js
+ * import AX6UIPicker from "ax6ui/AX6UIPicker";
+ * // or
+ * import { AX6UIPicker } from "ax6ui";
+ * ```
  */
 AX6UIPicker,
 /**
  * AX6UI.AX6UICalendar
+ * @example
+ * ```js
+ * import AX6UICalendar from "ax6ui/AX6UICalendar";
+ * // or
+ * import { AX6UICalendar } from "ax6ui";
+ * ```
  */
 AX6UICalendar,
 /**
  * AX6UI.AX6UISelect
+ * @example
+ * ```js
+ * import AX6UISelect from "ax6ui/AX6UISelect";
+ * // or
+ * import { AX6UISelect } from "ax6ui";
+ * ```
  */
 AX6UISelect,
 /**
  * AX6UI.AX6UIGrid
+ * @example
+ * ```js
+ * import AX6UIGrid from "ax6ui/AX6UIGrid";
+ * // or
+ * import { AX6UIGrid } from "ax6ui";
+ * ```
  */
 AX6UIGrid,
 /**
  * AX6UI.AX6UIMenu
+ * @example
+ * ```js
+ * import AX6UIMenu from "ax6ui/AX6UIMenu";
+ * // or
+ * import { AX6UIMenu } from "ax6ui";
+ * ```
  */
 AX6UIMenu,
 /**
  * AX6UI.AX6UIToast
+ * @example
+ * ```js
+ * import AX6UIToast from "ax6ui/AX6UIToast";
+ * // or
+ * import { AX6UIToast } from "ax6ui";
+ * ```
  */
 AX6UIToast,
 /**
  * AX6UI.AX6UIModal
+ * @example
+ * ```js
+ * import AX6UIModal from "ax6ui/AX6UIModal";
+ * // or
+ * import { AX6UIModal } from "ax6ui";
+ * ```
  */
 AX6UIModal,
 /**
  * AX6UI.AX6UIUploader
+ * @example
+ * ```js
+ * import AX6UIUploader from "ax6ui/AX6UIUploader";
+ * // or
+ * import { AX6UIUploader } from "ax6ui";
+ * ```
  */
-AX6UIUploader };
+AX6UIUploader,
+/**
+ * AX6UI.AX6UIAutocomplete
+ * @example
+ * ```js
+ * import AX6UIAutocomplete from "ax6ui/AX6UIAutocomplete";
+ * // or
+ * import { AX6UIAutocomplete } from "ax6ui";
+ * ```
+ */
+AX6UIAutocomplete };
 
 export default {
   AX6Info,
@@ -136,5 +207,6 @@ export default {
   AX6UIMenu,
   AX6UIToast,
   AX6UIModal,
-  AX6UIUploader
+  AX6UIUploader,
+  AX6UIAutocomplete
 };

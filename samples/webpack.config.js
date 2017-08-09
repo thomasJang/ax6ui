@@ -19,6 +19,7 @@ let entry = {
   grid: './src/grid.js',
   modal: './src/modal.js',
   uploader: './src/uploader.js',
+  tooltip: './src/tooltip.js',
 };
 
 let plugins = [

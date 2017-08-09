@@ -6,7 +6,7 @@
     box-sizing: border-box;
   }
 
-  z-index: $ax6menu-z-index;
+  z-index: $ax6ui-menu-z-index;
   position: fixed;
   left: 0px;
   top: 0px;
@@ -17,17 +17,17 @@
 
 @mixin menu-variant($text-color, $border-color, $heading-bg-color, $item-bg, $item-color, $item-hover-bg, $item-hover-color) {
   @include ax-background($item-bg);
-  border: $ax6menu-inner-border;
+  border: $ax6ui-menu-inner-border;
   border-color: $border-color;
-  border-radius: $ax6menu-border-radius;
-  box-shadow: $ax6menu-box-shadow;
+  border-radius: $ax6ui-menu-border-radius;
+  box-shadow: $ax6ui-menu-box-shadow;
   color: $text-color;
 
   .ax-menu-heading {
     font-weight: 600;
-    padding: $ax6menu-heading-padding;
+    padding: $ax6ui-menu-heading-padding;
     border-bottom: 1px solid transparent;
-    @include border-top-radius($ax6menu-border-radius - 1);
+    @include border-top-radius($ax6ui-menu-border-radius - 1);
 
     color: $text-color;
     @include ax-background($heading-bg-color);
@@ -38,19 +38,19 @@
     }
   }
   .ax-menu-body {
-    padding: $ax6menu-body-padding;
+    padding: $ax6ui-menu-body-padding;
     text-align: center;
     position: relative;
     overflow: hidden;
 
-    $ax-menu-item-height: $ax6menu-item-font-size + 5;
+    $ax-menu-item-height: $ax6ui-menu-item-font-size + 5;
     .ax-menu-item {
-      padding: $ax6menu-item-padding;
+      padding: $ax6ui-menu-item-padding;
       text-align: left;
       background: $item-bg;
       color: $item-color;
       cursor: pointer;
-      font-size: $ax6menu-item-font-size;
+      font-size: $ax6ui-menu-item-font-size;
 
       display: table;
       position: relative;
@@ -66,7 +66,7 @@
         display: table-cell;
         vertical-align: middle;
         white-space: nowrap;
-        font-size: $ax6menu-item-font-size;
+        font-size: $ax6ui-menu-item-font-size;
         line-height: $ax-menu-item-height;
         padding: 0px 0px 0px 0px;
 
@@ -74,12 +74,12 @@
 
         &.ax-menu-item-checkbox {
           overflow: hidden;
-          width: $ax6menu-item-checkbox-width;
+          width: $ax6ui-menu-item-checkbox-width;
           text-align: center;
           .item-checkbox-wrap {
             position: relative;
             display: block;
-            width: $ax6menu-item-checkbox-width;
+            width: $ax6ui-menu-item-checkbox-width;
             height: $ax-menu-item-height;
 
             &.useCheckBox {
@@ -123,7 +123,7 @@
         }
         &.ax-menu-item-handle {
           overflow: hidden;
-          width: $ax6menu-item-handle-width;
+          width: $ax6ui-menu-item-handle-width;
           text-align: center;
         }
       }
@@ -143,12 +143,12 @@
       }
     }
     .ax-menu-item-divide {
-      border-top: $ax6menu-inner-border;
+      border-top: $ax6ui-menu-inner-border;
       border-color: lighten($border-color, 0%);
-      margin: $ax6menu-body-padding;
+      margin: $ax6ui-menu-body-padding;
     }
     .ax-menu-item-html {
-      padding: $ax6menu-item-html-padding;
+      padding: $ax6ui-menu-item-html-padding;
       text-align: left;
     }
     .ax-menu-buttons {
@@ -162,41 +162,41 @@
 
   &.direction-top {
     @include ax-border-radius(0, "top");
-    @include ax-border-radius($ax6menu-border-radius, "bottom");
+    @include ax-border-radius($ax6ui-menu-border-radius, "bottom");
 
     &.with-arrow {
       .ax-menu-arrow {
-        @include menu-arrow($ax6menu-arrow-size, $ax6menu-arrow-border-width, $border-color, top);
+        @include menu-arrow($ax6ui-menu-arrow-size, $ax6ui-menu-arrow-border-width, $border-color, top);
       }
     }
   }
   &.direction-right {
     @include ax-border-radius(0, "right");
-    @include ax-border-radius($ax6menu-border-radius, "left");
+    @include ax-border-radius($ax6ui-menu-border-radius, "left");
 
     &.with-arrow {
       .ax-menu-arrow {
-        @include menu-arrow($ax6menu-arrow-size, $ax6menu-arrow-border-width, $border-color, right);
+        @include menu-arrow($ax6ui-menu-arrow-size, $ax6ui-menu-arrow-border-width, $border-color, right);
       }
     }
   }
   &.direction-bottom {
     @include ax-border-radius(0, "bottom");
-    @include ax-border-radius($ax6menu-border-radius, "top");
+    @include ax-border-radius($ax6ui-menu-border-radius, "top");
 
     &.with-arrow {
       .ax-menu-arrow {
-        @include menu-arrow($ax6menu-arrow-size, $ax6menu-arrow-border-width, $border-color, bottom);
+        @include menu-arrow($ax6ui-menu-arrow-size, $ax6ui-menu-arrow-border-width, $border-color, bottom);
       }
     }
   }
   &.direction-left {
     @include ax-border-radius(0, "right");
-    @include ax-border-radius($ax6menu-border-radius, "right");
+    @include ax-border-radius($ax6ui-menu-border-radius, "right");
 
     &.with-arrow {
       .ax-menu-arrow {
-        @include menu-arrow($ax6menu-arrow-size, $ax6menu-arrow-border-width, $border-color, left);
+        @include menu-arrow($ax6ui-menu-arrow-size, $ax6ui-menu-arrow-border-width, $border-color, left);
       }
     }
   }
@@ -204,8 +204,8 @@
 
 @mixin menu-arrow($arrow-size, $arrow-border-width, $border-color, $arrow-direction) {
 
-  //@debug( nth($ax6menu-inner-border, 3) );
-  $arrow-bg: nth($ax6menu-bg, 1);
+  //@debug( nth($ax6ui-menu-inner-border, 3) );
+  $arrow-bg: nth($ax6ui-menu-bg, 1);
   $arrow-border-color: $border-color;
 
   position: absolute;
@@ -311,7 +311,7 @@
       box-sizing: border-box;
       padding: $ax6menubar-item-padding;
       cursor: pointer;
-      font-size: $ax6menu-item-font-size;
+      font-size: $ax6ui-menu-item-font-size;
 
       .ax-menu-item-cell {
         white-space: nowrap;
@@ -370,7 +370,7 @@
   @include perspective(1000px);
   @include transform-style(preserve-3d);
 
-  @include animation(ax-menu $ax6menu-easing-time-open $ease-out-back);
+  @include animation(ax-menu $ax6ui-menu-easing-time-open $ease-out-back);
   @include transform(translateZ(0));
   @include transform-origin(center top);
   /* flip type
@@ -378,11 +378,11 @@
   @include transform(translateY(0%) rotateX(0deg));
   */
 
-  @include menu-variant($ax6menu-default-text, $ax6menu-default-border-color, $ax6menu-default-heading-bg,
-      $ax6menu-default-item-bg, $ax6menu-default-item-text, $ax6menu-default-item-hover-bg, $ax6menu-default-item-hover-text);
+  @include menu-variant($ax6ui-menu-default-text, $ax6ui-menu-default-border-color, $ax6ui-menu-default-heading-bg,
+      $ax6ui-menu-default-item-bg, $ax6ui-menu-default-item-text, $ax6ui-menu-default-item-hover-bg, $ax6ui-menu-default-item-hover-text);
 
   &.destroy {
-    @include animation(ax-menu-destroy $ax6menu-easing-time-close $ease-in-back forwards);
+    @include animation(ax-menu-destroy $ax6ui-menu-easing-time-close $ease-in-back forwards);
   }
   &.direction-top {
     @include transform-origin(center top);
@@ -401,6 +401,6 @@
 
 [data-ax6ui-menubar] {
   @include ax-menubar();
-  @include menubar-variant($ax6menu-default-text, $ax6menu-default-border-color, $ax6menu-default-heading-bg,
-      $ax6menu-default-item-bg, $ax6menu-default-item-text, $ax6menu-default-item-hover-bg, $ax6menu-default-item-hover-text);
+  @include menubar-variant($ax6ui-menu-default-text, $ax6ui-menu-default-border-color, $ax6ui-menu-default-heading-bg,
+      $ax6ui-menu-default-item-bg, $ax6ui-menu-default-item-text, $ax6ui-menu-default-item-hover-bg, $ax6ui-menu-default-item-hover-text);
 }

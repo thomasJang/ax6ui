@@ -10,35 +10,35 @@
     &:hover {
       [data-panel="color-preview"] {
         [data-panel="color-box"] {
-          background: $ax6palette-hover-color;
-          border-color: $ax6palette-hover-border-color;
+          background: $ax6ui-palette-hover-color;
+          border-color: $ax6ui-palette-hover-border-color;
         }
         [data-panel="color"] {
-          border-color: $ax6palette-hover-border-color;
+          border-color: $ax6ui-palette-hover-border-color;
         }
       }
       [data-panel="color-label"] {
-        color: $ax6palette-hover-color;
+        color: $ax6ui-palette-hover-color;
       }
     }
     &:active {
       [data-panel="color-preview"] {
         [data-panel="color-box"] {
-          background: $ax6palette-active-color;
-          border-color: $ax6palette-active-border-color;
+          background: $ax6ui-palette-active-color;
+          border-color: $ax6ui-palette-active-border-color;
         }
         [data-panel="color"] {
-          border-color: $ax6palette-active-border-color;
+          border-color: $ax6ui-palette-active-border-color;
         }
       }
       [data-panel="color-label"] {
-        color: $ax6palette-active-color;
+        color: $ax6ui-palette-active-color;
       }
     }
 
     [data-panel="color-preview"] {
       display: table-cell;
-      padding: $ax6palette-preview-padding;
+      padding: $ax6ui-palette-preview-padding;
       cursor: pointer;
       [data-panel="color-box"] {
         border-radius: $box-border-radius;
@@ -124,7 +124,7 @@
     [data-ax6palette-container="colors"] {
       display: table;
       width: 100%;
-      @include color-item($ax6palette-border-color, $ax6palette-box-bg-color, $ax6palette-box-border-radius);
+      @include color-item($ax6ui-palette-border-color, $ax6ui-palette-box-bg-color, $ax6ui-palette-box-border-radius);
     }
     [data-ax6palette-container="controls"] {
 

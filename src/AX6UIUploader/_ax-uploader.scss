@@ -1,7 +1,7 @@
 @mixin ax-progressbox() {
-  box-sizing: $ax6uploader-box-model;
+  box-sizing: $ax6ui-uploader-box-model;
 
-  z-index: $ax6uploader-z-index;
+  z-index: $ax6ui-uploader-z-index;
   position: absolute;
   left: 0px;
   top: 0px;
@@ -46,25 +46,25 @@
 
 @mixin progressbox-variant($text-color, $border-color, $heading-bg-color) {
 
-  @include ax-background($ax6uploader-bg);
-  border: $ax6uploader-inner-border;
+  @include ax-background($ax6ui-uploader-bg);
+  border: $ax6ui-uploader-inner-border;
   border-color: $border-color;
-  border-radius: $ax6uploader-border-radius;
-  box-shadow: $ax6uploader-box-shadow;
+  border-radius: $ax6ui-uploader-border-radius;
+  box-shadow: $ax6ui-uploader-box-shadow;
 
   .ax-progressbox-body {
-    padding: $ax6uploader-body-padding;
+    padding: $ax6ui-uploader-body-padding;
     text-align: center;
     .ax-pregressbox-content {
       min-width: 50px;
     }
     .ax-progressbox-buttons {
       text-align: right;
-      padding: $ax6uploader-buttons-padding;
+      padding: $ax6ui-uploader-buttons-padding;
       button {
         &.btn {
-          padding: $ax6uploader-button-padding;
-          font-size: $ax6uploader-button-font-size;
+          padding: $ax6ui-uploader-button-padding;
+          font-size: $ax6ui-uploader-button-font-size;
         }
         &:not(:last-child) {
           margin-right: 3px;
@@ -75,22 +75,22 @@
 
   &.direction-top {
     .ax-progressbox-arrow {
-      @include progressbox-arrow($ax6uploader-arrow-size, $ax6uploader-arrow-border-width, $border-color, top);
+      @include progressbox-arrow($ax6ui-uploader-arrow-size, $ax6ui-uploader-arrow-border-width, $border-color, top);
     }
   }
   &.direction-right {
     .ax-progressbox-arrow {
-      @include progressbox-arrow($ax6uploader-arrow-size, $ax6uploader-arrow-border-width, $border-color, right);
+      @include progressbox-arrow($ax6ui-uploader-arrow-size, $ax6ui-uploader-arrow-border-width, $border-color, right);
     }
   }
   &.direction-bottom {
     .ax-progressbox-arrow {
-      @include progressbox-arrow($ax6uploader-arrow-size, $ax6uploader-arrow-border-width, $border-color, bottom);
+      @include progressbox-arrow($ax6ui-uploader-arrow-size, $ax6ui-uploader-arrow-border-width, $border-color, bottom);
     }
   }
   &.direction-left {
     .ax-progressbox-arrow {
-      @include progressbox-arrow($ax6uploader-arrow-size, $ax6uploader-arrow-border-width, $border-color, left);
+      @include progressbox-arrow($ax6ui-uploader-arrow-size, $ax6ui-uploader-arrow-border-width, $border-color, left);
     }
   }
 
@@ -99,8 +99,8 @@
 @mixin progressbox-arrow($arrow-size, $arrow-border-width, $border-color, $arrow-direction) {
 
   //
-  //@debug( nth($ax6uploader-inner-border, 3) );
-  $arrow-bg: nth($ax6uploader-bg, 1);
+  //@debug( nth($ax6ui-uploader-inner-border, 3) );
+  $arrow-bg: nth($ax6ui-uploader-bg, 1);
   $arrow-border-color: $border-color;
 
   position: absolute;
@@ -238,44 +238,44 @@
   }
 
   [data-ax6ui-uploader-dropzone] {
-    background: $ax6uploader-dropzone-bg;
-    border: $ax6uploader-dropzone-border;
-    border-radius: $ax6uploader-dropzone-border-radius;
-    margin: $ax6uploader-dropzone-margin;
-    padding: $ax6uploader-dropzone-padding;
+    background: $ax6ui-uploader-dropzone-bg;
+    border: $ax6ui-uploader-dropzone-border;
+    border-radius: $ax6ui-uploader-dropzone-border-radius;
+    margin: $ax6ui-uploader-dropzone-margin;
+    padding: $ax6ui-uploader-dropzone-padding;
     cursor: pointer;
     &.dragover {
-      background: $ax6uploader-dropzone-dragover-bg;
-      border: $ax6uploader-dropzone-dragover-border;
+      background: $ax6ui-uploader-dropzone-dragover-bg;
+      border: $ax6ui-uploader-dropzone-dragover-border;
       opacity: 0.6;
     }
   }
 }
 
 [data-ax6ui-uploader-uploaded-box] {
-  background: $ax6uploader-uploaded-box-bg;
-  border: $ax6uploader-uploaded-box-border;
-  border-radius: $ax6uploader-uploaded-box-border-radius;
-  margin: $ax6uploader-uploaded-box-margin;
-  padding: $ax6uploader-uploaded-box-padding;
-  min-height: $ax6uploader-uploaded-box-min-height;
+  background: $ax6ui-uploader-uploaded-box-bg;
+  border: $ax6ui-uploader-uploaded-box-border;
+  border-radius: $ax6ui-uploader-uploaded-box-border-radius;
+  margin: $ax6ui-uploader-uploaded-box-margin;
+  padding: $ax6ui-uploader-uploaded-box-padding;
+  min-height: $ax6ui-uploader-uploaded-box-min-height;
 
   &[data-ax6ui-uploader-uploaded-box] {
-    margin: $ax6uploader-uploaded-box-margin;
+    margin: $ax6ui-uploader-uploaded-box-margin;
     position: relative;
     [data-ax6ui-uploader-uploaded-item] {
       display: block;
-      color: $ax6uploader-uploaded-item-color;
-      border: $ax6uploader-uploaded-item-border;
-      border-radius: $ax6uploader-uploaded-item-border-radius;
-      padding: $ax6uploader-uploaded-item-padding;
-      margin: $ax6uploader-uploaded-item-margin;
-      background: $ax6uploader-uploaded-item-bg;
+      color: $ax6ui-uploader-uploaded-item-color;
+      border: $ax6ui-uploader-uploaded-item-border;
+      border-radius: $ax6ui-uploader-uploaded-item-border-radius;
+      padding: $ax6ui-uploader-uploaded-item-padding;
+      margin: $ax6ui-uploader-uploaded-item-margin;
+      background: $ax6ui-uploader-uploaded-item-bg;
 
       &:hover,
       &:focus,
       &.focus {
-        color: $ax6uploader-uploaded-item-color;
+        color: $ax6ui-uploader-uploaded-item-color;
         text-decoration: none;
       }
 
@@ -302,7 +302,7 @@
 
         .uploaded-item-cell {
           display: table-cell;
-          padding: $ax6uploader-uploaded-item-cell-padding;
+          padding: $ax6ui-uploader-uploaded-item-cell-padding;
         }
         @mixin item-cell-link($color) {
           &:hover,
@@ -319,11 +319,11 @@
         }
         [data-uploaded-item-cell="download"] {
           cursor: pointer;
-          @include item-cell-link($ax6uploader-uploaded-item-cell-hover-color);
+          @include item-cell-link($ax6ui-uploader-uploaded-item-cell-hover-color);
         }
         [data-uploaded-item-cell="delete"] {
           cursor: pointer;
-          @include item-cell-link($ax6uploader-uploaded-item-cell-hover-color);
+          @include item-cell-link($ax6ui-uploader-uploaded-item-cell-hover-color);
         }
         [data-uploaded-item-cell="filename"] {
 
@@ -335,7 +335,7 @@
       }
     }
     [data-ax6ui-uploader-emptyList-msg] {
-      min-height: $ax6uploader-uploaded-box-min-height - ($ax6uploader-uploaded-box-padding * 2);
+      min-height: $ax6ui-uploader-uploaded-box-min-height - ($ax6ui-uploader-uploaded-box-padding * 2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -365,7 +365,7 @@
     [data-ax6ui-uploader-uploaded-item] {
       display: block;
       float: left;
-      width: $ax6uploader-uploaded-item-preview-width;
+      width: $ax6ui-uploader-uploaded-item-preview-width;
       padding: 0;
       background: transparent;
 
@@ -379,13 +379,13 @@
       .uploaded-item-preview {
         display: block;
         &.no-image {
-          width: $ax6uploader-uploaded-item-preview-width;
-          height: $ax6uploader-uploaded-item-preview-height;
-          border: $ax6uploader-uploaded-item-border;
-          border-radius: $ax6uploader-uploaded-item-border-radius;
+          width: $ax6ui-uploader-uploaded-item-preview-width;
+          height: $ax6ui-uploader-uploaded-item-preview-height;
+          border: $ax6ui-uploader-uploaded-item-border;
+          border-radius: $ax6ui-uploader-uploaded-item-border-radius;
           @include ax-background(20deg, #66b4fb, #ff78b2);
           text-align: center;
-          line-height: $ax6uploader-uploaded-item-preview-height;
+          line-height: $ax6ui-uploader-uploaded-item-preview-height;
           color: #fff;
           &:before {
 
@@ -396,10 +396,10 @@
           }
         }
         img {
-          width: $ax6uploader-uploaded-item-preview-width;
-          height: $ax6uploader-uploaded-item-preview-height;
-          border: $ax6uploader-uploaded-item-border;
-          border-radius: $ax6uploader-uploaded-item-border-radius;
+          width: $ax6ui-uploader-uploaded-item-preview-width;
+          height: $ax6ui-uploader-uploaded-item-preview-height;
+          border: $ax6ui-uploader-uploaded-item-border;
+          border-radius: $ax6ui-uploader-uploaded-item-border-radius;
         }
       }
       .uploaded-item-holder {
@@ -414,22 +414,22 @@
         }
         [data-uploaded-item-cell="download"] {
           position: absolute;
-          left: $ax6uploader-uploaded-item-preview-cell-padding;
-          top: -$ax6uploader-uploaded-item-preview-height + $ax6uploader-uploaded-item-preview-cell-padding;
+          left: $ax6ui-uploader-uploaded-item-preview-cell-padding;
+          top: -$ax6ui-uploader-uploaded-item-preview-height + $ax6ui-uploader-uploaded-item-preview-cell-padding;
           cursor: pointer;
           background: #fff;
-          border-radius: $ax6uploader-uploaded-item-border-radius;
+          border-radius: $ax6ui-uploader-uploaded-item-border-radius;
         }
         [data-uploaded-item-cell="delete"] {
           position: absolute;
-          right: $ax6uploader-uploaded-item-preview-cell-padding;
-          top: -$ax6uploader-uploaded-item-preview-height + $ax6uploader-uploaded-item-preview-cell-padding;
+          right: $ax6ui-uploader-uploaded-item-preview-cell-padding;
+          top: -$ax6ui-uploader-uploaded-item-preview-height + $ax6ui-uploader-uploaded-item-preview-cell-padding;
           cursor: pointer;
           background: #fff;
-          border-radius: $ax6uploader-uploaded-item-border-radius;
+          border-radius: $ax6ui-uploader-uploaded-item-border-radius;
         }
         [data-uploaded-item-cell="filename"] {
-          padding-top: $ax6uploader-uploaded-item-preview-cell-padding;
+          padding-top: $ax6ui-uploader-uploaded-item-preview-cell-padding;
         }
       }
     }
@@ -451,14 +451,14 @@
   @include perspective(1000px);
   @include transform-style(preserve-3d);
 
-  @include animation(ax-progressbox $ax6uploader-easing-time-open);
+  @include animation(ax-progressbox $ax6ui-uploader-easing-time-open);
   @include transform(translateZ(0));
   @include transform-origin(center top);
 
-  @include progressbox-variant($ax6uploader-default-text, $ax6uploader-default-border-color, $ax6uploader-default-heading-bg);
+  @include progressbox-variant($ax6ui-uploader-default-text, $ax6ui-uploader-default-border-color, $ax6ui-uploader-default-heading-bg);
 
   &.destroy {
-    @include animation(ax-progressbox-destroy $ax6uploader-easing-time-close $ease-in-back forwards);
+    @include animation(ax-progressbox-destroy $ax6ui-uploader-easing-time-close $ease-in-back forwards);
   }
   &.direction-top {
     @include transform-origin(center top);

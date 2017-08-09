@@ -1,13 +1,13 @@
 
 // themes
 $base-colors: (
-    default: $ax6autocomplete-default-base-color
+    default: $ax6ui-autocomplete-default-base-color
 );
 $theme-colors: (
-    default: $ax6autocomplete-default-theme-color
+    default: $ax6ui-autocomplete-default-theme-color
 );
 $hover-types: (
-    default: $ax6autocomplete-default-hover-type
+    default: $ax6ui-autocomplete-default-hover-type
 );
 
 @include keyframes(ax-autocomplete-option-group) {
@@ -152,11 +152,11 @@ $hover-types: (
 
 @mixin ax6ui-autocomplete-option-group-size($padding, $font-size) {
   .ax-autocomplete-body {
-    padding: $ax6autocomplete-option-group-body-padding;
-    $ax6autocomplete-option-item-height: $font-size + 5;
-    $ax6autocomplete-option-item-checkbox-size: $font-size - 4;
+    padding: $ax6ui-autocomplete-option-group-body-padding;
+    $ax6ui-autocomplete-option-item-height: $font-size + 5;
+    $ax6ui-autocomplete-option-item-checkbox-size: $font-size - 4;
     .ax-autocomplete-option-group-content {
-      max-height: $ax6autocomplete-option-item-height * 10;
+      max-height: $ax6ui-autocomplete-option-item-height * 10;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       position: relative;
@@ -177,7 +177,7 @@ $hover-types: (
           overflow: hidden;
           //table-layout: fixed;
           width: 100%;
-          height: $ax6autocomplete-option-item-height;
+          height: $ax6ui-autocomplete-option-item-height;
 
           .ax-autocomplete-option-item-cell {
             box-sizing: border-box;
@@ -185,7 +185,7 @@ $hover-types: (
             vertical-align: middle;
             white-space: nowrap;
             font-size: $font-size;
-            line-height: $ax6autocomplete-option-item-height;
+            line-height: $ax6ui-autocomplete-option-item-height;
             padding: 0 0 0 0;
             user-select: none;
 
@@ -197,16 +197,16 @@ $hover-types: (
                 position: relative;
                 display: block;
                 width: $font-size;
-                height: $ax6autocomplete-option-item-height;
+                height: $ax6ui-autocomplete-option-item-height;
 
                 &.useCheckBox {
                   &:after {
                     box-sizing: border-box;
                     content: '';
-                    width: $ax6autocomplete-option-item-checkbox-size;
-                    height: $ax6autocomplete-option-item-checkbox-size / 2;
+                    width: $ax6ui-autocomplete-option-item-checkbox-size;
+                    height: $ax6ui-autocomplete-option-item-checkbox-size / 2;
                     position: absolute;
-                    top: ($ax6autocomplete-option-item-height) / 4;
+                    top: ($ax6ui-autocomplete-option-item-height) / 4;
                     right: 0;
                     border: 2px solid #000;
                     border-top: none;
@@ -219,8 +219,8 @@ $hover-types: (
               }
             }
             &.ax-autocomplete-option-item-label {
-              padding: $ax6autocomplete-label-padding;
-              padding-right: $ax6autocomplete-option-item-checkbox-size;
+              padding: $ax6ui-autocomplete-label-padding;
+              padding-right: $ax6ui-autocomplete-option-item-checkbox-size;
             }
           }
         }
@@ -242,7 +242,7 @@ $hover-types: (
           overflow: hidden;
           //table-layout: fixed;
           width: 100%;
-          height: $ax6autocomplete-option-item-height;
+          height: $ax6ui-autocomplete-option-item-height;
 
           .ax-autocomplete-option-group-label {
             box-sizing: border-box;
@@ -250,7 +250,7 @@ $hover-types: (
             vertical-align: middle;
             white-space: nowrap;
             font-size: $font-size;
-            line-height: $ax6autocomplete-option-item-height;
+            line-height: $ax6ui-autocomplete-option-item-height;
 
             padding: 5px 10px; // todo : theme 정리 나중에
             user-select: none;
@@ -290,10 +290,10 @@ $hover-types: (
   font-size: $ax-font-size-base;
   border-radius: $ax-input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
 
-  @include ax-background(top, $ax6autocomplete-label-bg-colors);
+  @include ax-background(top, $ax6ui-autocomplete-label-bg-colors);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-  border: $ax6autocomplete-label-border;
-  color: $ax6autocomplete-label-color;
+  border: $ax6ui-autocomplete-label-border;
+  color: $ax6ui-autocomplete-label-color;
 
   text-decoration: none;
 
@@ -327,7 +327,7 @@ $hover-types: (
       display: block;
       white-space: nowrap;
       overflow: hidden;
-      padding: $ax6autocomplete-label-padding;
+      padding: $ax6ui-autocomplete-label-padding;
       text-decoration: none;
 
       &:focus {
@@ -348,9 +348,9 @@ $hover-types: (
         float: left;
         background: transparent;
         margin: 1px 3px 1px 0;
-        color: $ax6autocomplete-label-color;
+        color: $ax6ui-autocomplete-label-color;
         box-sizing: border-box;
-        @include ax-background(top, $ax6autocomplete-label-bg-colors);
+        @include ax-background(top, $ax6ui-autocomplete-label-bg-colors);
 
         border-collapse: separate;
         border: 0 none;
@@ -365,16 +365,16 @@ $hover-types: (
           vertical-align: middle;
 
           border: 1px solid transparent;
-          border: $ax6autocomplete-label-border;
+          border: $ax6ui-autocomplete-label-border;
 
           &:first-child{
-            border-top-left-radius: $ax6autocomplete-label-border-radius;
-            border-bottom-left-radius: $ax6autocomplete-label-border-radius;
+            border-top-left-radius: $ax6ui-autocomplete-label-border-radius;
+            border-bottom-left-radius: $ax6ui-autocomplete-label-border-radius;
             border-right: 0 none;
           }
           &:last-child{
-            border-top-right-radius: $ax6autocomplete-label-border-radius;
-            border-bottom-right-radius: $ax6autocomplete-label-border-radius;
+            border-top-right-radius: $ax6ui-autocomplete-label-border-radius;
+            border-bottom-right-radius: $ax6ui-autocomplete-label-border-radius;
             border-left: 0 none;
             padding-left:0;
           }
@@ -383,7 +383,7 @@ $hover-types: (
         [data-ax6ui-autocomplete-remove] {
           cursor: pointer;
           &:hover {
-            color: $ax6autocomplete-label-hover-color;
+            color: $ax6ui-autocomplete-label-hover-color;
           }
         }
       }
@@ -401,7 +401,7 @@ $hover-types: (
     [data-ax6ui-autocomplete-display="addon"] {
       display: table-cell;
       vertical-align: middle;
-      width: $ax6autocomplete-addon-icon-height * 2 + $ax6autocomplete-addon-icon-padding-right;
+      width: $ax6ui-autocomplete-addon-icon-height * 2 + $ax6ui-autocomplete-addon-icon-padding-right;
       text-align: center;
 
       .addon-icon-reset {
@@ -416,7 +416,7 @@ $hover-types: (
       .addon-icon-reset {
         display: block;
         position: absolute;
-        right: $ax6autocomplete-addon-icon-height * 2 + $ax6autocomplete-addon-icon-padding-right * 2;
+        right: $ax6ui-autocomplete-addon-icon-height * 2 + $ax6ui-autocomplete-addon-icon-padding-right * 2;
         top: 0;
         height: 100%;
       }
@@ -425,7 +425,7 @@ $hover-types: (
 
   @each $theme in $base-colors {
     &.#{nth($theme, 1)} {
-      @include ax6ui-autocomplete-display-theme(map_get($base-colors, nth($theme, 1)), $ax6autocomplete-option-group-bg, map_get($theme-colors, nth($theme, 1)));
+      @include ax6ui-autocomplete-display-theme(map_get($base-colors, nth($theme, 1)), $ax6ui-autocomplete-option-group-bg, map_get($theme-colors, nth($theme, 1)));
     }
   }
 }
@@ -433,22 +433,22 @@ $hover-types: (
 /// select-option-group
 .ax6ui-autocomplete-option-group {
   box-sizing: border-box;
-  z-index: $ax6autocomplete-option-group-z-index;
+  z-index: $ax6ui-autocomplete-option-group-z-index;
   position: absolute;
   left: 0;
   top: 0;
-  border-radius: $ax6autocomplete-option-group-border-radius;
-  box-shadow: $ax6autocomplete-option-group-box-shadow;
-  border: $ax6autocomplete-option-group-inner-border;
+  border-radius: $ax6ui-autocomplete-option-group-border-radius;
+  box-shadow: $ax6ui-autocomplete-option-group-box-shadow;
+  border: $ax6ui-autocomplete-option-group-inner-border;
   overflow: hidden;
 
-  @include ax-background($ax6autocomplete-option-group-bg);
-  @include animation(ax-autocomplete-option-group $ax6autocomplete-option-group-easing-time-open ease-out);
+  @include ax-background($ax6ui-autocomplete-option-group-bg);
+  @include animation(ax-autocomplete-option-group $ax6ui-autocomplete-option-group-easing-time-open ease-out);
   @include transform(translateZ(0));
   @include transform-origin(center top);
 
   &.destroy {
-    @include animation(ax-autocomplete-option-group-destroy $ax6autocomplete-option-group-easing-time-close $ease-in-back forwards);
+    @include animation(ax-autocomplete-option-group-destroy $ax6ui-autocomplete-option-group-easing-time-close $ease-in-back forwards);
   }
   &.direction-top {
     @include transform-origin(center top);
@@ -459,9 +459,9 @@ $hover-types: (
 
   @each $theme in $base-colors {
     &.#{nth($theme, 1)} {
-      @include ax6ui-autocomplete-option-group-theme(map_get($base-colors, nth($theme, 1)), $ax6autocomplete-option-group-bg, map_get($theme-colors, nth($theme, 1)), map_get($hover-types, nth($theme, 1)));
+      @include ax6ui-autocomplete-option-group-theme(map_get($base-colors, nth($theme, 1)), $ax6ui-autocomplete-option-group-bg, map_get($theme-colors, nth($theme, 1)), map_get($hover-types, nth($theme, 1)));
     }
   }
 
-  @include ax6ui-autocomplete-option-group-size($ax6autocomplete-option-item-padding, $ax6autocomplete-option-item-font-size);
+  @include ax6ui-autocomplete-option-group-size($ax6ui-autocomplete-option-item-padding, $ax6ui-autocomplete-option-item-font-size);
 }

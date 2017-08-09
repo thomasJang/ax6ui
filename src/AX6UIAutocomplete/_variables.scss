@@ -1,41 +1,41 @@
-$ax6autocomplete-label-padding: 0px 5px !default;
+$ax6ui-autocomplete-label-padding: 0px 5px !default;
 
-$ax6autocomplete-label-bg-colors: (#fff, #fff) !default;
-$ax6autocomplete-label-border: 1px solid #ccc !default;
-$ax6autocomplete-label-border-radius: 4px !default;
-$ax6autocomplete-label-color: #444 !default;
-$ax6autocomplete-label-hover-color: #e97259 !default;
+$ax6ui-autocomplete-label-bg-colors: (#fff, #fff) !default;
+$ax6ui-autocomplete-label-border: 1px solid #ccc !default;
+$ax6ui-autocomplete-label-border-radius: 4px !default;
+$ax6ui-autocomplete-label-color: #444 !default;
+$ax6ui-autocomplete-label-hover-color: #e97259 !default;
 
-$ax6autocomplete-addon-icon-height: 4.5px !default;
-$ax6autocomplete-addon-icon-padding-right: 7px !default;
+$ax6ui-autocomplete-addon-icon-height: 4.5px !default;
+$ax6ui-autocomplete-addon-icon-padding-right: 7px !default;
 
 ///== option group
-$ax6autocomplete-option-group-z-index: 2000 !default;
-$ax6autocomplete-option-group-box-model: border-box !default;
-$ax6autocomplete-option-group-bg: lighten(#eee, 5%) !default;
-$ax6autocomplete-option-group-inner-border: 1px solid !default;
-$ax6autocomplete-option-group-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.175) !default;
-$ax6autocomplete-option-group-border-radius: 5px !default;
-$ax6autocomplete-option-group-body-padding: 0px !default;
+$ax6ui-autocomplete-option-group-z-index: 2000 !default;
+$ax6ui-autocomplete-option-group-box-model: border-box !default;
+$ax6ui-autocomplete-option-group-bg: lighten(#eee, 5%) !default;
+$ax6ui-autocomplete-option-group-inner-border: 1px solid !default;
+$ax6ui-autocomplete-option-group-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.175) !default;
+$ax6ui-autocomplete-option-group-border-radius: 5px !default;
+$ax6ui-autocomplete-option-group-body-padding: 0px !default;
 
-$ax6autocomplete-option-group-easing-time-open: 0.1s !default;
-$ax6autocomplete-option-group-easing-time-close: 0.1s !default;
-$ax6autocomplete-option-group-arrow-size: 10px !default;
-$ax6autocomplete-option-group-arrow-border-width: 1px !default;
+$ax6ui-autocomplete-option-group-easing-time-open: 0.1s !default;
+$ax6ui-autocomplete-option-group-easing-time-close: 0.1s !default;
+$ax6ui-autocomplete-option-group-arrow-size: 10px !default;
+$ax6ui-autocomplete-option-group-arrow-border-width: 1px !default;
 
-$ax6autocomplete-option-item-padding: 3px 0px !default;
-$ax6autocomplete-option-item-font-size: 13px !default;
+$ax6ui-autocomplete-option-item-padding: 3px 0px !default;
+$ax6ui-autocomplete-option-item-font-size: 13px !default;
 
-$ax6autocomplete-option-item-padding-lg: 5px 0px !default;
-$ax6autocomplete-option-item-font-size-lg: $ax6autocomplete-option-item-font-size * 1.3 !default;
+$ax6ui-autocomplete-option-item-padding-lg: 5px 0px !default;
+$ax6ui-autocomplete-option-item-font-size-lg: $ax6ui-autocomplete-option-item-font-size * 1.3 !default;
 
-$ax6autocomplete-option-item-padding-sm: 2px 0px !default;
-$ax6autocomplete-option-item-font-size-sm: $ax6autocomplete-option-item-font-size * 0.9 !default;
+$ax6ui-autocomplete-option-item-padding-sm: 2px 0px !default;
+$ax6ui-autocomplete-option-item-font-size-sm: $ax6ui-autocomplete-option-item-font-size * 0.9 !default;
 
-$ax6autocomplete-option-item-padding-xs: 1px 0px !default;
-$ax6autocomplete-option-item-font-size-xs: $ax6autocomplete-option-item-font-size * 0.8 !default;
+$ax6ui-autocomplete-option-item-padding-xs: 1px 0px !default;
+$ax6ui-autocomplete-option-item-font-size-xs: $ax6ui-autocomplete-option-item-font-size * 0.8 !default;
 
 ///~~ theme
-$ax6autocomplete-default-base-color: #444 !default;
-$ax6autocomplete-default-theme-color: #ccc !default;
-$ax6autocomplete-default-hover-type: darken, 20% !default;
+$ax6ui-autocomplete-default-base-color: #444 !default;
+$ax6ui-autocomplete-default-theme-color: #ccc !default;
+$ax6ui-autocomplete-default-hover-type: darken, 20% !default;

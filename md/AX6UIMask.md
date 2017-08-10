@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UIMask">AX6UIMask</a></dt>
-<dd></dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#getBodyTmpl">getBodyTmpl()</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UIMask"></a>
 
 ## AX6UIMask
@@ -38,12 +23,6 @@
 | Param |
 | --- |
 | config | 
-| [config.theme] | 
-| [config.target] | 
-| [config.animateTime] | 
-| [config.onStateChanged] | 
-| [config.onClick] | 
-| [config.content] | 
 
 <a name="AX6UIMask+config"></a>
 
@@ -116,9 +95,3 @@ myMask.open();
 
 ### aX6UIMask.align() ⇒ <code>[AX6UIMask](#AX6UIMask)</code>
 **Kind**: instance method of <code>[AX6UIMask](#AX6UIMask)</code>  
-<a name="getBodyTmpl"></a>
-
-## getBodyTmpl()
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global function  

@@ -11,7 +11,7 @@ import PAGE from "./AX6UIGrid/AX6UIGrid_page";
 import TMPL from "./AX6UIGrid/AX6UIGrid_tmpl";
 import UTIL from "./AX6UIGrid/AX6UIGrid_util";
 
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 let formatter = {};
 let collector = {};
@@ -481,7 +481,7 @@ const sortColumns = function (_sortInfo) {
   }
 };
 
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

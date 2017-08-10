@@ -3,7 +3,7 @@ import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
 import info from "./AX6Info";
 import mustache from "./AX6Mustache";
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 
 let tmpl = {
@@ -664,7 +664,7 @@ const attachFileTag = function () {
       onSelectFile.call(this, e);
     });
 };
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

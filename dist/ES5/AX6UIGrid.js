@@ -260,6 +260,7 @@ var initBodyGroup = function initBodyGroup(_grouping) {
 var alignGrid = function alignGrid(_isFirst) {
   var _this2 = this;
 
+  var list = this.proxyList ? this.proxyList : this.list;
   // 대상이 크기가 컬럼의 최소 크기 보다 작업 금지
   if (Math.min(this.$target.innerWidth(), this.$target.innerHeight()) < 5) {
     return false;
@@ -298,7 +299,7 @@ var alignGrid = function alignGrid(_isFirst) {
       pageHeight = this.config.page.display ? this.config.page.height : 0;
 
   {
-    verticalScrollerWidth = CT_HEIGHT - headerHeight - pageHeight - footSumHeight < this.list.length * this.xvar.bodyTrHeight ? this.config.scroller.size : 0;
+    verticalScrollerWidth = CT_HEIGHT - headerHeight - pageHeight - footSumHeight < list.length * this.xvar.bodyTrHeight ? this.config.scroller.size : 0;
     // 남은 너비가 colGroup의 너비보다 넓을때. 수평 스크롤 활성화.
     horizontalScrollerHeight = function () {
       var totalColGroupWidth = 0;
@@ -312,7 +313,7 @@ var alignGrid = function alignGrid(_isFirst) {
     }();
 
     if (horizontalScrollerHeight > 0) {
-      verticalScrollerWidth = CT_HEIGHT - headerHeight - pageHeight - footSumHeight - horizontalScrollerHeight < this.list.length * this.xvar.bodyTrHeight ? this.config.scroller.size : 0;
+      verticalScrollerWidth = CT_HEIGHT - headerHeight - pageHeight - footSumHeight - horizontalScrollerHeight < list.length * this.xvar.bodyTrHeight ? this.config.scroller.size : 0;
     }
   }
 
@@ -522,6 +523,7 @@ var sortColumns = function sortColumns(_sortInfo) {
     _AX6UIGrid_scroller2.default.resize.call(this);
   }
 };
+
 /** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
@@ -1037,7 +1039,7 @@ var AX6UIGrid = function (_AX6UICore) {
         _AX6UIGrid_scroller2.default.init.call(this);
         _AX6UIGrid_scroller2.default.resize.call(this);
 
-        (0, _jqmin2.default)(window).on("resize.ax6grid-" + this.id, _AX6Util2.default.throttle(function (e) {
+        (0, _jqmin2.default)(window).off("resize.ax6grid-" + this.instanceId).off("keydown.ax6grid-" + this.instanceId).on("resize.ax6grid-" + this.instanceId, _AX6Util2.default.throttle(function (e) {
           alignGrid.call(this);
           _AX6UIGrid_scroller2.default.resize.call(this);
           _AX6UIGrid_body2.default.repaint.call(this); // window resize시 repaint 함수 호출
@@ -1083,7 +1085,7 @@ var AX6UIGrid = function (_AX6UICore) {
           }
         });
 
-        (0, _jqmin2.default)(document.body).on("click.ax6grid-" + this.id, function (e) {
+        (0, _jqmin2.default)(document.body).off("click.ax6grid-" + this.instanceId).on("click.ax6grid-" + this.instanceId, function (e) {
           var isPickerClick = false,
               target = _AX6Util2.default.findParentNode(e.target, function (_target) {
             if (isPickerClick = _target.getAttribute("data-ax6grid-inline-edit-picker")) {
@@ -1315,10 +1317,10 @@ var AX6UIGrid = function (_AX6UICore) {
       var isFirstPaint = typeof this.xvar.paintStartRowIndex === "undefined";
 
       _AX6UIGrid_data2.default.set.call(this, _data);
-      alignGrid.call(this);
       _AX6UIGrid_body2.default.repaint.call(this);
       if (!isFirstPaint) _AX6UIGrid_body2.default.scrollTo.call(this, { top: 0 });
 
+      alignGrid.call(this);
       _AX6UIGrid_scroller2.default.resize.call(this);
       _AX6UIGrid_page2.default.navigationUpdate.call(this);
 

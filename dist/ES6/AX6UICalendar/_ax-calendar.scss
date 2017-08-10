@@ -1,6 +1,6 @@
 @mixin extend-item-theme() {
   &.holiday {
-    color: $ax6calendar-sun-text-color;
+    color: $ax6ui-calendar-sun-text-color;
   }
 }
 
@@ -33,12 +33,12 @@
   .calendar-control {
     position: relative;
     box-sizing: content-box;
-    @include ax-background($ax6calendar-control-bg);
-    border: $ax6calendar-control-border;
-    border-radius: $ax6calendar-control-border-radius;
-    font-size: $ax6calendar-control-font-size;
+    @include ax-background($ax6ui-calendar-control-bg);
+    border: $ax6ui-calendar-control-border;
+    border-radius: $ax6ui-calendar-control-border-radius;
+    font-size: $ax6ui-calendar-control-font-size;
     margin-bottom: 5px;
-    padding: $ax6calendar-control-padding;
+    padding: $ax6ui-calendar-control-padding;
 
     .date-move-left, .date-move-right {
       display: block;
@@ -46,10 +46,10 @@
       overflow: hidden;
 
       text-align: center;
-      font-size: ceil($ax6calendar-control-font-size * 1.2);
+      font-size: ceil($ax6ui-calendar-control-font-size * 1.2);
       cursor: pointer;
       text-decoration: none;
-      padding: $ax6calendar-control-padding;
+      padding: $ax6ui-calendar-control-padding;
       i, span {
         line-height: inherit;
       }
@@ -72,21 +72,21 @@
       }
     }
 
-    color: $ax6calendar-control-text-color;
+    color: $ax6ui-calendar-control-text-color;
     a {
-      color: $ax6calendar-control-text-color;
+      color: $ax6ui-calendar-control-text-color;
     }
     a:hover {
-      color: $ax6calendar-control-hover-text-color;
+      color: $ax6ui-calendar-control-hover-text-color;
     }
   }
   .calendar-body {
     &.fadein {
-      @include animation($ax6calendar-body-animation-in 0.3s $ease-out-sine);
+      @include animation($ax6ui-calendar-body-animation-in 0.3s $ease-out-sine);
       opacity: 1.0;
     }
     &.fadeout {
-      @include animation($ax6calendar-body-animation-out 0.3s $ease-out-sine);
+      @include animation($ax6ui-calendar-body-animation-out 0.3s $ease-out-sine);
       opacity: 0.0;
     }
 
@@ -104,18 +104,18 @@
           line-height: 1em;
           cursor: pointer;
           text-align: center;
-          font-size: $ax6calendar-header-font-size;
-          padding: $ax6calendar-header-padding;
-          border: $ax6calendar-header-border;
+          font-size: $ax6ui-calendar-header-font-size;
+          padding: $ax6ui-calendar-header-padding;
+          border: $ax6ui-calendar-header-border;
           overflow: hidden;
-          @include ax-background($ax6calendar-header-bg);
+          @include ax-background($ax6ui-calendar-header-bg);
 
-          color: $ax6calendar-live-text-color;
+          color: $ax6ui-calendar-live-text-color;
           &.calendar-col-0 {
-            color: $ax6calendar-sun-text-color;
+            color: $ax6ui-calendar-sun-text-color;
           }
           &.calendar-col-6 {
-            color: $ax6calendar-sat-text-color;
+            color: $ax6ui-calendar-sat-text-color;
           }
         }
       }
@@ -127,10 +127,10 @@
           line-height: 1em;
           cursor: pointer;
           text-align: center;
-          font-size: $ax6calendar-body-font-size;
+          font-size: $ax6ui-calendar-body-font-size;
 
-          border: $ax6calendar-body-border;
-          @include ax-background($ax6calendar-body-bg);
+          border: $ax6ui-calendar-body-border;
+          @include ax-background($ax6ui-calendar-body-bg);
 
           overflow: hidden;
           .calendar-item-day {
@@ -139,19 +139,19 @@
             width: 100%;
             height: 100%;
             vertical-align: middle;
-            border-radius: $ax6calendar-item-day-radius;
+            border-radius: $ax6ui-calendar-item-day-radius;
             overflow: hidden;
             line-height: inherit;
-            @include ax-background($ax6calendar-date-bg);
-            color: $ax6calendar-date-text-color;
-            font-size: $ax6calendar-body-font-size;
+            @include ax-background($ax6ui-calendar-date-bg);
+            color: $ax6ui-calendar-date-text-color;
+            font-size: $ax6ui-calendar-body-font-size;
 
             span.addon {
               position: absolute;
               width: 100%;
               text-align: center;
-              line-height: $ax6calendar-body-font-size * 0.8;
-              font-size: $ax6calendar-body-font-size * 0.8;
+              line-height: $ax6ui-calendar-body-font-size * 0.8;
+              font-size: $ax6ui-calendar-body-font-size * 0.8;
 
               &.addon-header {
                 left: 0px;
@@ -164,49 +164,49 @@
             }
 
             &.live {
-              @include ax-background($ax6calendar-live-bg);
-              color: $ax6calendar-live-text-color;
+              @include ax-background($ax6ui-calendar-live-bg);
+              color: $ax6ui-calendar-live-text-color;
               span.addon {
                 color: #A1A1A1;
               }
               &.sunday {
-                color: $ax6calendar-sun-text-color;
+                color: $ax6ui-calendar-sun-text-color;
               }
               &.saturday {
-                color: $ax6calendar-sat-text-color;
+                color: $ax6ui-calendar-sat-text-color;
               }
             }
             &.focus {
-              @include ax-background($ax6calendar-focus-bg);
-              color: $ax6calendar-focus-text-color;
+              @include ax-background($ax6ui-calendar-focus-bg);
+              color: $ax6ui-calendar-focus-text-color;
               span.addon {
-                color: $ax6calendar-focus-text-color;
+                color: $ax6ui-calendar-focus-text-color;
               }
               &.hover {
-                @include ax-background($ax6calendar-hover-bg);
-                color: $ax6calendar-hover-text-color !important;
+                @include ax-background($ax6ui-calendar-hover-bg);
+                color: $ax6ui-calendar-hover-text-color !important;
                 span.addon {
-                  color: $ax6calendar-hover-text-color;
+                  color: $ax6ui-calendar-hover-text-color;
                 }
               }
             }
             &.period {
-              @include ax-background($ax6calendar-period-bg);
-              color: $ax6calendar-period-text-color !important;
+              @include ax-background($ax6ui-calendar-period-bg);
+              color: $ax6ui-calendar-period-text-color !important;
               span.addon {
-                color: $ax6calendar-period-text-color;
+                color: $ax6ui-calendar-period-text-color;
               }
             }
             &.selected-day {
-              @include ax-background($ax6calendar-hover-bg);
-              color: $ax6calendar-hover-text-color !important;
+              @include ax-background($ax6ui-calendar-hover-bg);
+              color: $ax6ui-calendar-hover-text-color !important;
               span.addon {
-                color: $ax6calendar-hover-text-color;
+                color: $ax6ui-calendar-hover-text-color;
               }
             }
             &.disable {
-              @include ax-background($ax6calendar-date-bg);
-              color: lighten($ax6calendar-date-text-color, 10%);
+              @include ax-background($ax6ui-calendar-date-bg);
+              color: lighten($ax6ui-calendar-date-text-color, 10%);
             }
 
             @include extend-item-theme();
@@ -216,38 +216,38 @@
             width: 100%;
             height: 100%;
             vertical-align: middle;
-            border-radius: $ax6calendar-item-month-radius;
+            border-radius: $ax6ui-calendar-item-month-radius;
             overflow: hidden;
             line-height: inherit;
-            @include ax-background($ax6calendar-date-bg);
-            color: $ax6calendar-date-text-color;
-            font-size: $ax6calendar-body-font-size;
+            @include ax-background($ax6ui-calendar-date-bg);
+            color: $ax6ui-calendar-date-text-color;
+            font-size: $ax6ui-calendar-body-font-size;
 
             &.live {
-              @include ax-background($ax6calendar-live-bg);
-              color: $ax6calendar-live-text-color;
+              @include ax-background($ax6ui-calendar-live-bg);
+              color: $ax6ui-calendar-live-text-color;
             }
             &.hover {
-              @include ax-background($ax6calendar-hover-bg);
-              color: $ax6calendar-hover-text-color;
+              @include ax-background($ax6ui-calendar-hover-bg);
+              color: $ax6ui-calendar-hover-text-color;
             }
             &.focus {
-              @include ax-background($ax6calendar-focus-bg);
-              color: $ax6calendar-focus-text-color;
+              @include ax-background($ax6ui-calendar-focus-bg);
+              color: $ax6ui-calendar-focus-text-color;
             }
             &.selected-month {
-              @include ax-background($ax6calendar-hover-bg);
-              color: $ax6calendar-hover-text-color !important;
+              @include ax-background($ax6ui-calendar-hover-bg);
+              color: $ax6ui-calendar-hover-text-color !important;
               span.addon {
-                color: $ax6calendar-hover-text-color;
+                color: $ax6ui-calendar-hover-text-color;
               }
               span.lunar {
-                color: $ax6calendar-hover-text-color;
+                color: $ax6ui-calendar-hover-text-color;
               }
             }
             &.disable {
-              @include ax-background($ax6calendar-date-bg);
-              color: lighten($ax6calendar-date-text-color, 10%);
+              @include ax-background($ax6ui-calendar-date-bg);
+              color: lighten($ax6ui-calendar-date-text-color, 10%);
             }
             @include extend-item-theme();
           }
@@ -256,38 +256,38 @@
             width: 100%;
             height: 100%;
             vertical-align: middle;
-            border-radius: $ax6calendar-item-year-radius;
+            border-radius: $ax6ui-calendar-item-year-radius;
             overflow: hidden;
             line-height: inherit;
-            @include ax-background($ax6calendar-date-bg);
-            color: $ax6calendar-date-text-color;
-            font-size: $ax6calendar-body-font-size;
+            @include ax-background($ax6ui-calendar-date-bg);
+            color: $ax6ui-calendar-date-text-color;
+            font-size: $ax6ui-calendar-body-font-size;
 
             &.live {
-              @include ax-background($ax6calendar-live-bg);
-              color: $ax6calendar-live-text-color;
+              @include ax-background($ax6ui-calendar-live-bg);
+              color: $ax6ui-calendar-live-text-color;
             }
             &.hover {
-              @include ax-background($ax6calendar-hover-bg);
-              color: $ax6calendar-hover-text-color;
+              @include ax-background($ax6ui-calendar-hover-bg);
+              color: $ax6ui-calendar-hover-text-color;
             }
             &.focus {
-              @include ax-background($ax6calendar-focus-bg);
-              color: $ax6calendar-focus-text-color;
+              @include ax-background($ax6ui-calendar-focus-bg);
+              color: $ax6ui-calendar-focus-text-color;
             }
             &.selected-year {
-              @include ax-background($ax6calendar-hover-bg);
-              color: $ax6calendar-hover-text-color !important;
+              @include ax-background($ax6ui-calendar-hover-bg);
+              color: $ax6ui-calendar-hover-text-color !important;
               span.addon {
-                color: $ax6calendar-hover-text-color;
+                color: $ax6ui-calendar-hover-text-color;
               }
               span.lunar {
-                color: $ax6calendar-hover-text-color;
+                color: $ax6ui-calendar-hover-text-color;
               }
             }
             &.disable {
-              @include ax-background($ax6calendar-date-bg);
-              color: lighten($ax6calendar-date-text-color, 10%);
+              @include ax-background($ax6ui-calendar-date-bg);
+              color: lighten($ax6ui-calendar-date-text-color, 10%);
             }
             @include extend-item-theme();
           }
@@ -295,13 +295,13 @@
           /*
           &.calendar-col-0 {
               .calendar-item-day.live {
-                  color: $ax6calendar-sun-text-color;
+                  color: $ax6ui-calendar-sun-text-color;
                   @include extend-item-theme();
               }
           }
           &.calendar-col-6 {
               .calendar-item-day.live {
-                  color: $ax6calendar-sat-text-color;
+                  color: $ax6ui-calendar-sat-text-color;
                   @include extend-item-theme();
               }
           }

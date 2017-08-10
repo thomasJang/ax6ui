@@ -10,13 +10,13 @@
   overflow: hidden;
   position: relative;
   padding: 0;
-  font-size: $ax6grid-font-size;
+  font-size: $ax6ui-grid-font-size;
   border: 0 none;
   border-radius: 0;
 
   &.hasBorder {
-    border-right: $ax6grid-column-border;
-    border-bottom: $ax6grid-column-border;
+    border-right: $ax6ui-grid-column-border;
+    border-bottom: $ax6ui-grid-column-border;
   }
   &.isLastColumn {
 
@@ -25,14 +25,14 @@
 
   }
   &.focused {
-    box-shadow: $ax6grid-cell-focused-box-shadow;
+    box-shadow: $ax6ui-grid-cell-focused-box-shadow;
   }
 
   @if ($container == "header") {
     cursor: pointer;
-    box-shadow: $ax6grid-header-column-box-shadow;
+    box-shadow: $ax6ui-grid-header-column-box-shadow;
     &:hover {
-      @include ax-background(top, $ax6grid-header-column-hover-bg-colors);
+      @include ax-background(top, $ax6ui-grid-header-column-hover-bg-colors);
     }
     &[data-ax6grid-column-row="null"] {
       box-shadow: none;
@@ -44,29 +44,29 @@
   }
 
   &[data-ax6grid-column-selected] {
-    background: $ax6grid-cell-selected-bg;
-    border-color: $ax6grid-cell-selected-border-color;
-    color: $ax6grid-cell-selected-color;
+    background: $ax6ui-grid-cell-selected-bg;
+    border-color: $ax6ui-grid-cell-selected-border-color;
+    color: $ax6ui-grid-cell-selected-color;
   }
 
   &[data-ax6grid-column-focused] {
-    box-shadow: $ax6grid-cell-focused-box-shadow;
-    background: $ax6grid-cell-focused-bg;
-    color: $ax6grid-cell-focused-color;
+    box-shadow: $ax6ui-grid-cell-focused-box-shadow;
+    background: $ax6ui-grid-cell-focused-bg;
+    color: $ax6ui-grid-cell-focused-color;
   }
 
   &[data-ax6grid-column-attr="rowSelector"] {
     cursor: pointer;
     [data-ax6grid-cellHolder] {
-      padding: $ax6grid-cell-padding-row-selector;
+      padding: $ax6ui-grid-cell-padding-row-selector;
     }
 
     .checkBox {
       display: inline-block;
       position: relative;
-      border: $ax6grid-cell-checkbox-border;
-      border-radius: $ax6grid-cell-checkbox-border-radius;
-      @include ax-background(top, $ax6grid-cell-checkbox-bg-colors);
+      border: $ax6ui-grid-cell-checkbox-border;
+      border-radius: $ax6ui-grid-cell-checkbox-border-radius;
+      @include ax-background(top, $ax6ui-grid-cell-checkbox-bg-colors);
       height: 100%;
       width: 100%;
       &:after {
@@ -76,7 +76,7 @@
         position: absolute;
         top: 20%;
         right: 20%;
-        border: 0.2em solid $ax6grid-cell-checkbox-arrow-color;
+        border: 0.2em solid $ax6ui-grid-cell-checkbox-arrow-color;
         border-top: none;
         border-right: none;
         background: transparent;
@@ -100,8 +100,8 @@
     // 그리드 셀표현 : 그리드의 컬럼텍스트가 여기에 출력됨
     display: block;
     box-sizing: border-box;
-    padding: $ax6grid-cell-padding;
-    font-size: $ax6grid-font-size;
+    padding: $ax6ui-grid-cell-padding;
+    font-size: $ax6ui-grid-font-size;
 
     white-space: nowrap;
     overflow: hidden;
@@ -131,7 +131,7 @@
       width: 100%;
       height: 100%;
       border: 0 none;
-      background: $ax6grid-bg;
+      background: $ax6ui-grid-bg;
       &::-ms-clear {
         display: none;
       }
@@ -145,7 +145,7 @@
       width: 100%;
       height: 100%;
       border: 0 none;
-      background: $ax6grid-bg;
+      background: $ax6ui-grid-bg;
       .ax5select-display {
         height: 100%;
         border-radius: 0;
@@ -155,9 +155,9 @@
     [data-ax6grid-editor="checkbox"] {
       display: inline-block;
       position: relative;
-      border: $ax6grid-cell-checkbox-border;
-      border-radius: $ax6grid-cell-checkbox-border-radius;
-      @include ax-background(top, $ax6grid-cell-checkbox-bg-colors);
+      border: $ax6ui-grid-cell-checkbox-border;
+      border-radius: $ax6ui-grid-cell-checkbox-border-radius;
+      @include ax-background(top, $ax6ui-grid-cell-checkbox-bg-colors);
       height: 100%;
       &:after {
         content: '';
@@ -166,7 +166,7 @@
         position: absolute;
         top: 20%;
         right: 20%;
-        border: 0.2em solid $ax6grid-cell-checkbox-arrow-color;
+        border: 0.2em solid $ax6ui-grid-cell-checkbox-arrow-color;
         border-top: none;
         border-right: none;
         background: transparent;
@@ -205,25 +205,25 @@
 
 @mixin gridRowBackground() {
   &.tr-0 {
-    background: $ax6grid-row-bg-0;
+    background: $ax6ui-grid-row-bg-0;
   }
   &.tr-1 {
-    background: $ax6grid-row-bg-1;
+    background: $ax6ui-grid-row-bg-1;
   }
   &.tr-2 {
-    background: $ax6grid-row-bg-2;
+    background: $ax6ui-grid-row-bg-2;
   }
   &.tr-3 {
-    background: $ax6grid-row-bg-3;
+    background: $ax6ui-grid-row-bg-3;
   }
   &.hover {
-    background: $ax6grid-row-hover-bg;
+    background: $ax6ui-grid-row-hover-bg;
   }
   &[data-ax6grid-grouping-tr="true"] {
-    background: $ax6grid-row-grouping-bg;
+    background: $ax6ui-grid-row-grouping-bg;
   }
   &[data-ax6grid-selected="true"] {
-    background: $ax6grid-row-selected;
+    background: $ax6ui-grid-row-selected;
     td {
       //color: #fff;
       //box-shadow: inset 1px 1px 0 0 #fff;
@@ -241,12 +241,12 @@
     }
   }
   &[data-ax6grid-disable-selection="true"] {
-    // background: $ax6grid-row-selected;
+    // background: $ax6ui-grid-row-selected;
     td {
       &[data-ax6grid-column-attr="rowSelector"] {
         .checkBox {
           cursor: not-allowed;
-          @include ax-background(top, $ax6grid-cell-disable-checkbox-bg-colors);
+          @include ax-background(top, $ax6ui-grid-cell-disable-checkbox-bg-colors);
           &:after {
             opacity: 0;
           }
@@ -257,7 +257,7 @@
 
   // mergeCells 대상 컬럼 배경생 통일.
   td.merged {
-    background: $ax6grid-row-bg-1;
+    background: $ax6ui-grid-row-bg-1;
   }
 }
 
@@ -292,7 +292,7 @@
     }
 
     &[data-ax6grid-panel="aside-header"] {
-      border-right: $ax6grid-aside-border;
+      border-right: $ax6ui-grid-aside-border;
       table {
         tr {
           td {
@@ -304,14 +304,14 @@
     &[data-ax6grid-panel="top-aside-body"],
     &[data-ax6grid-panel="aside-body"],
     &[data-ax6grid-panel="bottom-aside-body"] {
-      border-right: $ax6grid-aside-border;
-      background: $ax6grid-aside-bg;
+      border-right: $ax6ui-grid-aside-border;
+      background: $ax6ui-grid-aside-bg;
       table {
         tr {
-          background: $ax6grid-aside-bg;
+          background: $ax6ui-grid-aside-bg;
           td {
             text-align: center;
-            box-shadow: $ax6grid-aside-column-shadow;
+            box-shadow: $ax6ui-grid-aside-column-shadow;
           }
         }
       }
@@ -321,28 +321,28 @@
     &[data-ax6grid-panel="top-left-body"],
     &[data-ax6grid-panel="left-body"],
     &[data-ax6grid-panel="bottom-left-body"] {
-      border-right: $ax6grid-frozen-line-border; /// frozen Line color
+      border-right: $ax6ui-grid-frozen-line-border; /// frozen Line color
     }
 
     &[data-ax6grid-panel="top-aside-body"],
     &[data-ax6grid-panel="top-left-body"],
     &[data-ax6grid-panel="top-body"],
     &[data-ax6grid-panel="top-right-body"] {
-      border-bottom: $ax6grid-frozen-line-border; /// frozen Line color
+      border-bottom: $ax6ui-grid-frozen-line-border; /// frozen Line color
     }
 
     &[data-ax6grid-panel="bottom-aside-body"],
     &[data-ax6grid-panel="bottom-left-body"],
     &[data-ax6grid-panel="bottom-body"],
     &[data-ax6grid-panel="bottom-right-body"] {
-      border-top: $ax6grid-footsum-line-border; /// footSum Line color
+      border-top: $ax6ui-grid-footsum-line-border; /// footSum Line color
     }
 
     &[data-ax6grid-panel="bottom-aside-body"],
     &[data-ax6grid-panel="bottom-left-body"],
     &[data-ax6grid-panel="bottom-body"],
     &[data-ax6grid-panel="bottom-right-body"] {
-      background: $ax6grid-footsum-bg;
+      background: $ax6ui-grid-footsum-bg;
     }
 
     [data-ax6grid-panel-scroll] {
@@ -357,11 +357,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  @include border-top-radius($ax6grid-scroll-bar-border-radius);
-  @include border-bottom-radius($ax6grid-scroll-bar-border-radius);
+  @include border-top-radius($ax6ui-grid-scroll-bar-border-radius);
+  @include border-bottom-radius($ax6ui-grid-scroll-bar-border-radius);
   box-sizing: border-box;
-  border: $ax6grid-scroll-bar-border;
-  background: $ax6grid-scroll-bar-bg;
+  border: $ax6ui-grid-scroll-bar-border;
+  background: $ax6ui-grid-scroll-bar-bg;
 
   @if ($type == "vertical-bar") {
     cursor: ns-resize;
@@ -370,8 +370,8 @@
   }
 
   &:hover {
-    border: $ax6grid-scroll-bar-hover-border;
-    background: $ax6grid-scroll-bar-hover-bg;
+    border: $ax6ui-grid-scroll-bar-hover-border;
+    background: $ax6ui-grid-scroll-bar-hover-bg;
   }
 }
 
@@ -382,16 +382,16 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: $ax6grid-resizer-color;
+    background: $ax6ui-grid-resizer-color;
     opacity: 0.5;
 
     @if ($type == "vertical") {
-      height: $ax6grid-resizer-size;
+      height: $ax6ui-grid-resizer-size;
       width: 100%;
       cursor: row-resize;
     } @else {
       height: 100%;
-      width: $ax6grid-resizer-size;
+      width: $ax6ui-grid-resizer-size;
       cursor: col-resize;
     }
 
@@ -410,8 +410,8 @@
   [data-ax6grid-container="root"] {
     @include gridBoxModal();
     position: relative;
-    background: $ax6grid-bg;
-    border: $ax6grid-border;
+    background: $ax6ui-grid-bg;
+    border: $ax6ui-grid-border;
     overflow: hidden;
 
     [data-ax6grid-container="hidden"] {
@@ -429,20 +429,20 @@
       @include gridBoxModal();
       position: relative;
       overflow: hidden;
-      @include ax-background(top, $ax6grid-header-column-bg-colors);
+      @include ax-background(top, $ax6ui-grid-header-column-bg-colors);
       border: 0 none;
-      border-bottom: $ax6grid-header-column-border;
+      border-bottom: $ax6ui-grid-header-column-border;
       @include gridPanel("header");
-      color: $ax6grid-header-column-color;
+      color: $ax6ui-grid-header-column-color;
       [data-ax6grid-column-resizer] {
         position: absolute;
         right: 0;
         top: 0;
-        width: $ax6grid-header-column-resizer-size;
+        width: $ax6ui-grid-header-column-resizer-size;
         height: 100%;
         cursor: col-resize;
         &:hover {
-          background: $ax6grid-header-column-resizer-color;
+          background: $ax6ui-grid-header-column-resizer-color;
           opacity: 0.5;
         }
       }
@@ -474,19 +474,19 @@
         &:before {
           top: 0;
           left: 0;
-          @include sort-arrow($ax6grid-header-sorter-size, 2.5, 2.2, $ax6grid-header-sorter-color, 0.3, "up");
+          @include sort-arrow($ax6ui-grid-header-sorter-size, 2.5, 2.2, $ax6ui-grid-header-sorter-color, 0.3, "up");
         }
         &:after {
           bottom: 0;
           left: 0;
-          @include sort-arrow($ax6grid-header-sorter-size, 2.5, 2.2, $ax6grid-header-sorter-color, 0.3, "down");
+          @include sort-arrow($ax6ui-grid-header-sorter-size, 2.5, 2.2, $ax6ui-grid-header-sorter-color, 0.3, "down");
         }
 
         &[data-ax6grid-column-sort-order="asc"] {
           &:before {
             top: 2px;
             left: 0;
-            @include sort-arrow($ax6grid-header-sorter-size + 1, 2.5, 2.0, $ax6grid-header-sorter-color, 0.8, "up");
+            @include sort-arrow($ax6ui-grid-header-sorter-size + 1, 2.5, 2.0, $ax6ui-grid-header-sorter-color, 0.8, "up");
           }
           &:after {
             display: none;
@@ -499,7 +499,7 @@
           &:after {
             bottom: 2px;
             left: 0;
-            @include sort-arrow($ax6grid-header-sorter-size + 1, 2.5, 2.0, $ax6grid-header-sorter-color, 0.8, "down");
+            @include sort-arrow($ax6ui-grid-header-sorter-size + 1, 2.5, 2.0, $ax6ui-grid-header-sorter-color, 0.8, "down");
           }
         }
 
@@ -558,9 +558,9 @@
       left: 0;
       width: 100%;
       overflow: hidden;
-      @include ax-background(top, $ax6grid-page-bg-colors);
+      @include ax-background(top, $ax6ui-grid-page-bg-colors);
       border: 0 none;
-      border-top: $ax6grid-page-border;
+      border-top: $ax6ui-grid-page-border;
 
       [data-ax6grid-page="holder"] {
         @include gridBoxModal();
@@ -573,8 +573,8 @@
           display: table-cell;
           vertical-align: middle;
           text-align: left;
-          padding-left: $ax6grid-page-navigation-padding;
-          font-size: $ax6grid-page-navigation-font-size;
+          padding-left: $ax6ui-grid-page-navigation-padding;
+          font-size: $ax6ui-grid-page-navigation-font-size;
 
           [data-ax6grid-page-navigation="holder"] {
             display: table;
@@ -583,23 +583,23 @@
               vertical-align: middle;
             }
             [data-ax6grid-page-navigation="cell-paging"] {
-              padding: 0 $ax6grid-page-navigation-padding;
+              padding: 0 $ax6ui-grid-page-navigation-padding;
             }
 
             [data-ax6grid-page-move] {
               box-sizing: border-box;
-              min-width: $ax6grid-page-navigation-btn-min-width;
-              border-radius: $ax6grid-page-navigation-btn-border-radius;
+              min-width: $ax6ui-grid-page-navigation-btn-min-width;
+              border-radius: $ax6ui-grid-page-navigation-btn-border-radius;
               padding: 1px;
-              border: $ax6grid-page-navigation-btn-border;
-              background: $ax6grid-page-navigation-btn-bg;
-              font-size: $ax6grid-page-navigation-btn-font-size;
-              color: $ax6grid-page-navigation-btn-color;
+              border: $ax6ui-grid-page-navigation-btn-border;
+              background: $ax6ui-grid-page-navigation-btn-bg;
+              font-size: $ax6ui-grid-page-navigation-btn-font-size;
+              color: $ax6ui-grid-page-navigation-btn-color;
               outline: 0;
 
               &[data-ax6grid-page-selected="true"], &:active {
-                background-color: $ax6grid-page-navigation-btn-hover-bg;
-                color: $ax6grid-page-navigation-btn-hover-color;
+                background-color: $ax6ui-grid-page-navigation-btn-hover-bg;
+                color: $ax6ui-grid-page-navigation-btn-hover-color;
               }
               &:hover {
                 text-decoration: underline;
@@ -613,9 +613,9 @@
           display: table-cell;
           text-align: right;
           vertical-align: middle;
-          padding-right: $ax6grid-page-status-padding;
-          font-size: $ax6grid-page-status-font-size;
-          color: $ax6grid-page-status-color;
+          padding-right: $ax6ui-grid-page-status-padding;
+          font-size: $ax6ui-grid-page-status-font-size;
+          color: $ax6ui-grid-page-status-color;
         }
       }
     }
@@ -635,8 +635,8 @@
         bottom: 0;
         width: $scroller-size;
         height: 100%;
-        background: $ax6grid-scroll-track-bg;
-        border-left: $ax6grid-scroll-track-border;
+        background: $ax6ui-grid-scroll-track-bg;
+        border-left: $ax6ui-grid-scroll-track-border;
 
         [data-ax6grid-scroller="vertical-bar"] {
           @include scrollBar("vertical-bar");
@@ -650,8 +650,8 @@
         bottom: 0;
         height: $scroller-size;
         width: 100%;
-        background: $ax6grid-scroll-track-bg;
-        border-top: $ax6grid-scroll-track-border;
+        background: $ax6ui-grid-scroll-track-bg;
+        border-top: $ax6ui-grid-scroll-track-border;
 
         [data-ax6grid-scroller="horizontal-bar"] {
           @include scrollBar("horizontal-bar");
@@ -665,9 +665,9 @@
         width: $scroller-size;
         height: $scroller-size;
 
-        background: $ax6grid-scroll-corner-bg;
-        border-top: $ax6grid-scroll-track-border;
-        border-left: $ax6grid-scroll-track-border;
+        background: $ax6ui-grid-scroll-corner-bg;
+        border-top: $ax6ui-grid-scroll-track-border;
+        border-left: $ax6ui-grid-scroll-track-border;
       }
     }
 

@@ -1,34 +1,34 @@
 @mixin ax-toast() {
-  box-sizing: $ax6toast-box-model;
-  border: $ax6toast-border;
-  opacity: $ax6toast-opacity;
+  box-sizing: $ax6ui-toast-box-model;
+  border: $ax6ui-toast-border;
+  opacity: $ax6ui-toast-opacity;
 
-  @include ax-border-radius($ax6toast-border-radius);
-  box-shadow: $ax6toast-box-shadow;
+  @include ax-border-radius($ax6ui-toast-border-radius);
+  box-shadow: $ax6ui-toast-box-shadow;
   position: relative;
-  margin: $ax6toast-box-margin;
+  margin: $ax6ui-toast-box-margin;
 }
 
 @mixin ax-toast-section() {
   display: table;
-  padding: $ax6toast-body-padding;
+  padding: $ax6ui-toast-body-padding;
   .ax-toast-icon {
     display: table-cell;
-    padding: $ax6toast-body-padding;
+    padding: $ax6ui-toast-body-padding;
     text-align: left;
-    font-size: $ax6toast-icon-size;
-    width: $ax6toast-icon-size;
+    font-size: $ax6ui-toast-icon-size;
+    width: $ax6ui-toast-icon-size;
     vertical-align: middle;
   }
   .ax-toast-body {
     display: table-cell;
-    padding: $ax6toast-body-padding;
+    padding: $ax6ui-toast-body-padding;
     text-align: left;
     vertical-align: middle;
   }
   .ax-toast-buttons {
     display: table-cell;
-    padding: $ax6toast-body-padding;
+    padding: $ax6ui-toast-body-padding;
     text-align: right;
     vertical-align: middle;
     button {
@@ -39,7 +39,7 @@
   }
   .ax-toast-close {
     display: table-cell;
-    padding: $ax6toast-body-padding;
+    padding: $ax6ui-toast-body-padding;
     text-align: right;
     vertical-align: top;
     text-decoration: none;
@@ -113,12 +113,12 @@
 // mixins --------------------------------------------- end
 
 [data-ax6ui-toast-container] {
-  z-index: $ax6toast-z-index;
+  z-index: $ax6ui-toast-z-index;
   position: fixed;
   //width: 0;
-  width: $ax6toast-container-width;
+  width: $ax6ui-toast-container-width;
   max-width: 100%;
-  padding: $ax6toast-container-padding;
+  padding: $ax6ui-toast-container-padding;
 
   box-sizing: border-box;
   *,
@@ -130,8 +130,8 @@
   [data-ax6ui-toast] {
     @include ax-toast();
     @include ax-toast-section();
-    //@include transition(all $ax6toast-easing-time ease-in-out);
-    @include toast-variant($ax6toast-default-text, $ax6toast-default-bg, $ax6toast-default-color);
+    //@include transition(all $ax6ui-toast-easing-time ease-in-out);
+    @include toast-variant($ax6ui-toast-default-text, $ax6ui-toast-default-bg, $ax6ui-toast-default-color);
   }
 
   &[data-toast-container-position="bottom-left"] {
@@ -139,12 +139,12 @@
     bottom: 0;
 
     [data-ax6ui-toast] {
-      @include animation(ax-toast-top $ax6toast-easing-time $ease-out-back);
+      @include animation(ax-toast-top $ax6ui-toast-easing-time $ease-out-back);
       &.removed {
-        @include animation(ax-toast-removed-bottom $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-removed-bottom $ax6ui-toast-easing-time ease forwards);
       }
       &.destroy {
-        @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-destroy $ax6ui-toast-easing-time ease forwards);
       }
     }
   }
@@ -153,12 +153,12 @@
     bottom: 0;
 
     [data-ax6ui-toast] {
-      @include animation(ax-toast-top $ax6toast-easing-time $ease-out-back);
+      @include animation(ax-toast-top $ax6ui-toast-easing-time $ease-out-back);
       &.removed {
-        @include animation(ax-toast-removed-bottom $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-removed-bottom $ax6ui-toast-easing-time ease forwards);
       }
       &.destroy {
-        @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-destroy $ax6ui-toast-easing-time ease forwards);
       }
     }
   }
@@ -169,12 +169,12 @@
     [data-ax6ui-toast] {
       position: relative;
       left: -50%;
-      @include animation(ax-toast-top $ax6toast-easing-time $ease-out-back);
+      @include animation(ax-toast-top $ax6ui-toast-easing-time $ease-out-back);
       &.removed {
-        @include animation(ax-toast-removed-bottom $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-removed-bottom $ax6ui-toast-easing-time ease forwards);
       }
       &.destroy {
-        @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-destroy $ax6ui-toast-easing-time ease forwards);
       }
     }
   }
@@ -184,13 +184,13 @@
     top: 0;
 
     [data-ax6ui-toast] {
-      @include animation(ax-toast-bottom $ax6toast-easing-time $ease-out-back);
+      @include animation(ax-toast-bottom $ax6ui-toast-easing-time $ease-out-back);
 
       &.removed {
-        @include animation(ax-toast-removed-top $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-removed-top $ax6ui-toast-easing-time ease forwards);
       }
       &.destroy {
-        @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-destroy $ax6ui-toast-easing-time ease forwards);
       }
     }
   }
@@ -200,12 +200,12 @@
     top: 0;
 
     [data-ax6ui-toast] {
-      @include animation(ax-toast-bottom $ax6toast-easing-time $ease-out-back);
+      @include animation(ax-toast-bottom $ax6ui-toast-easing-time $ease-out-back);
       &.removed {
-        @include animation(ax-toast-removed-top $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-removed-top $ax6ui-toast-easing-time ease forwards);
       }
       &.destroy {
-        @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-destroy $ax6ui-toast-easing-time ease forwards);
       }
     }
   }
@@ -216,13 +216,13 @@
 
     [data-ax6ui-toast] {
       left: -50%;
-      @include animation(ax-toast-bottom $ax6toast-easing-time $ease-out-back);
+      @include animation(ax-toast-bottom $ax6ui-toast-easing-time $ease-out-back);
 
       &.removed {
-        @include animation(ax-toast-removed-top $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-removed-top $ax6ui-toast-easing-time ease forwards);
       }
       &.destroy {
-        @include animation(ax-toast-destroy $ax6toast-easing-time ease forwards);
+        @include animation(ax-toast-destroy $ax6ui-toast-easing-time ease forwards);
       }
     }
   }

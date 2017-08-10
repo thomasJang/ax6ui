@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UIMenu">AX6UIMenu</a></dt>
-<dd></dd>
-</dl>
-
-## Members
-
-<dl>
-<dt><a href="#tmpl">tmpl</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UIMenu"></a>
 
 ## AX6UIMenu
@@ -125,9 +110,3 @@
 ### aX6UIMenu.getCheckValue() ⇒ <code>Object</code>
 **Kind**: instance method of <code>[AX6UIMenu](#AX6UIMenu)</code>  
 **Returns**: <code>Object</code> - statusCheckItem  
-<a name="tmpl"></a>
-
-## tmpl
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global variable  

@@ -2,7 +2,7 @@ import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
 import mustache from "./AX6Mustache.js";
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 const getBodyTmpl = function (data, columnKeys) {
   const defaultMask = function (columnKeys) {
@@ -34,7 +34,7 @@ const onStateChanged = function (opts, that) {
 const setBody = function (content) {
   this.maskContent = content;
 };
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

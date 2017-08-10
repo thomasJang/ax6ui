@@ -6,7 +6,7 @@
     box-sizing: border-box;
   }
 
-  z-index: $ax6picker-z-index;
+  z-index: $ax6ui-picker-z-index;
   position: absolute;
   left: 0;
   top: 0;
@@ -15,17 +15,17 @@
 
 @mixin picker-variant($text-color, $border-color, $heading-bg-color) {
 
-  @include ax-background($ax6picker-bg);
-  border: $ax6picker-inner-border;
+  @include ax-background($ax6ui-picker-bg);
+  border: $ax6ui-picker-inner-border;
   border-color: $border-color;
-  border-radius: $ax6picker-border-radius;
-  box-shadow: $ax6picker-box-shadow;
+  border-radius: $ax6ui-picker-border-radius;
+  box-shadow: $ax6ui-picker-box-shadow;
 
   .ax-picker-heading {
     font-weight: 600;
-    padding: $ax6picker-heading-padding;
+    padding: $ax6ui-picker-heading-padding;
     border-bottom: 1px solid transparent;
-    @include border-top-radius($ax6picker-border-radius - 1);
+    @include border-top-radius($ax6ui-picker-border-radius - 1);
 
     color: $text-color;
     @include ax-background($heading-bg-color);
@@ -36,21 +36,21 @@
     }
   }
   .ax-picker-body {
-    padding: $ax6picker-body-padding;
+    padding: $ax6ui-picker-body-padding;
     text-align: center;
     .ax-picker-content {
       min-width: 50px;
 
       .ax-picker-content-box {
-        border: $ax6picker-content-border;
-        border-color: $ax6picker-content-border-color;
-        border-radius: $ax6picker-content-border-radius;
-        padding: $ax6picker-content-padding;
+        border: $ax6ui-picker-content-border;
+        border-color: $ax6ui-picker-content-border-color;
+        border-radius: $ax6ui-picker-content-border-radius;
+        padding: $ax6ui-picker-content-padding;
         overflow: hidden;
       }
     }
     .ax-picker-buttons {
-      padding: $ax6picker-buttons-padding;
+      padding: $ax6ui-picker-buttons-padding;
       button {
         &:not(:last-child) {
           margin-right: 3px;
@@ -61,22 +61,22 @@
 
   &.direction-top {
     .ax-picker-arrow {
-      @include picker-arrow($ax6picker-arrow-size, $ax6picker-arrow-border-width, $border-color, top);
+      @include picker-arrow($ax6ui-picker-arrow-size, $ax6ui-picker-arrow-border-width, $border-color, top);
     }
   }
   &.direction-right {
     .ax-picker-arrow {
-      @include picker-arrow($ax6picker-arrow-size, $ax6picker-arrow-border-width, $border-color, right);
+      @include picker-arrow($ax6ui-picker-arrow-size, $ax6ui-picker-arrow-border-width, $border-color, right);
     }
   }
   &.direction-bottom {
     .ax-picker-arrow {
-      @include picker-arrow($ax6picker-arrow-size, $ax6picker-arrow-border-width, $border-color, bottom);
+      @include picker-arrow($ax6ui-picker-arrow-size, $ax6ui-picker-arrow-border-width, $border-color, bottom);
     }
   }
   &.direction-left {
     .ax-picker-arrow {
-      @include picker-arrow($ax6picker-arrow-size, $ax6picker-arrow-border-width, $border-color, left);
+      @include picker-arrow($ax6ui-picker-arrow-size, $ax6ui-picker-arrow-border-width, $border-color, left);
     }
   }
 
@@ -85,8 +85,8 @@
 @mixin picker-arrow($arrow-size, $arrow-border-width, $border-color, $arrow-direction) {
 
   //
-  //@debug( nth($ax6picker-inner-border, 3) );
-  $arrow-bg: nth($ax6picker-bg, 1);
+  //@debug( nth($ax6ui-picker-inner-border, 3) );
+  $arrow-bg: nth($ax6ui-picker-bg, 1);
   $arrow-border-color: $border-color;
 
   position: absolute;
@@ -202,7 +202,7 @@
   @include ax-picker();
   @include perspective(1000);
   @include transform-style(preserve-3d);
-  @include animation(ax-picker $ax6picker-easing-time-open $ease-in-cubic forwards);
+  @include animation(ax-picker $ax6ui-picker-easing-time-open $ease-in-cubic forwards);
   @include transform(translateZ(0));
   @include transform-origin(center top);
   /* flip type
@@ -210,10 +210,10 @@
   @include transform(translateY(0%) rotateX(0deg));
   */
 
-  @include picker-variant($ax6picker-default-text, $ax6picker-default-border-color, $ax6picker-default-heading-bg);
+  @include picker-variant($ax6ui-picker-default-text, $ax6ui-picker-default-border-color, $ax6ui-picker-default-heading-bg);
 
   &.destroy {
-    @include animation(ax-picker-destroy $ax6picker-easing-time-close $ease-out-cubic forwards);
+    @include animation(ax-picker-destroy $ax6ui-picker-easing-time-close $ease-out-cubic forwards);
   }
   &.direction-top {
     @include transform-origin(center top);

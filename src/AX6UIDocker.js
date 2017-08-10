@@ -1,7 +1,7 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 
 let debouncer = {
@@ -943,7 +943,7 @@ const arrangePanel = function () {
   repaintPanels();
 };
 
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class
@@ -1582,7 +1582,7 @@ class AX6UIDocker extends AX6UICore {
    * @returns {AX6UIDocker}
    */
   align() {
-    alignStackPane.call(this, );
+    alignStackPane.call(this);
     return this;
   };
 

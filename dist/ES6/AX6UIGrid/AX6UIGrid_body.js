@@ -798,7 +798,9 @@ const repaint = function (_reset) {
   }
 
   /// 스크롤 컨텐츠의 높이 : 그리드 스크롤의 실제 크기와는 관계 없이 데이터 갯수에 따라 스크롤 컨텐츠 높이값 구해서 저장해두기.
-  this.xvar.scrollContentHeight = this.xvar.bodyTrHeight * (this.list.length - this.xvar.frozenRowIndex);
+  this.xvar.scrollContentHeight = this.xvar.bodyTrHeight * (list.length - this.xvar.frozenRowIndex);
+  if (this.xvar.scrollContentHeight < 0) this.xvar.scrollContentHeight = 0;
+
   /// 사용된 패널들의 키 모음
   this.$.livePanelKeys = [];
 
@@ -1212,7 +1214,7 @@ const repaint = function (_reset) {
 
 
   /// mergeCells
-  if (cfg.body.mergeCells && this.list.length) {
+  if (cfg.body.mergeCells && list.length) {
     // left
     if (this.xvar.frozenColumnIndex > 0) {
       if (this.xvar.frozenRowIndex > 0) {
@@ -1243,6 +1245,83 @@ const repaint = function (_reset) {
   this.needToPaintSum = false;
 
   PAGE.statusUpdate.call(this);
+};
+
+const updateRowState = function (_states, _dindex, _doindex, _data) {
+  let self = this,
+      cfg = this.config,
+      processor = {
+    "selected": function (_dindex, _doindex) {
+      if (this.list[_doindex]) {
+        let i = this.$.livePanelKeys.length;
+        while (i--) {
+          this.$.panel[this.$.livePanelKeys[i]].find('[data-ax6grid-tr-data-index="' + _dindex + '"]').attr("data-ax6grid-selected", this.list[_doindex][cfg.columnKeys.selected]);
+        }
+      }
+    },
+    "selectedClear": function () {
+      let di = this.list.length;
+      let pi;
+
+      if (!this.proxyList) {
+        while (di--) {
+          if (this.list[di][cfg.columnKeys.selected]) {
+            pi = this.$.livePanelKeys.length;
+            while (pi--) {
+              this.$.panel[this.$.livePanelKeys[pi]].find('[data-ax6grid-tr-data-index="' + di + '"]').attr("data-ax6grid-selected", false);
+            }
+          }
+          this.list[di][cfg.columnKeys.selected] = false;
+        }
+      } else {
+        while (di--) {
+          this.list[di][cfg.columnKeys.selected] = false;
+        }
+        di = this.proxyList.length;
+        while (di--) {
+          if (this.list[doi][cfg.columnKeys.selected]) {
+            pi = this.$.livePanelKeys.length;
+            while (pi--) {
+              this.$.panel[this.$.livePanelKeys[pi]].find('[data-ax6grid-tr-data-index="' + di + '"]').attr("data-ax6grid-selected", false);
+            }
+          }
+
+          this.proxyList[di][cfg.columnKeys.selected] = false;
+          let doi = this.proxyList[di].__original_index__;
+        }
+      }
+    },
+    "cellChecked": function (_dindex, _doindex, _data) {
+      let key = _data.key,
+          rowIndex = _data.rowIndex,
+          colIndex = _data.colIndex;
+
+      let panelName = function () {
+        let _panels = [];
+        if (this.xvar.frozenRowIndex > _dindex) _panels.push("top");
+        if (this.xvar.frozenColumnIndex > colIndex) _panels.push("left");
+        _panels.push("body");
+        if (_panels[0] !== "top") _panels.push("scroll");
+        return _panels.join("-");
+      }.call(this);
+
+      this.$.panel[panelName].find('[data-ax6grid-tr-data-index="' + _dindex + '"]').find('[data-ax6grid-column-rowIndex="' + rowIndex + '"][data-ax6grid-column-colIndex="' + colIndex + '"]').find('[data-ax6grid-editor="checkbox"]').attr("data-ax6grid-checked", '' + _data.checked);
+    }
+  };
+
+  if (typeof _doindex === "undefined") _doindex = _dindex;
+
+  _states.forEach(function (_state) {
+    if (!processor[_state]) throw 'invaild state name';
+    processor[_state].call(self, _dindex, _doindex, _data);
+  });
+};
+
+const toggleCollapse = function (_dindex, _doindex, _collapse) {
+  if (DATA.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
+    this.proxyList = DATA.getProxyList.call(this, this.list);
+    this.align();
+  }
 };
 
 /**
@@ -2093,75 +2172,7 @@ export default {
    * @param _doindex
    * @param _data
    */
-  updateRowState: function (_states, _dindex, _doindex, _data) {
-    let self = this,
-        cfg = this.config,
-        processor = {
-      "selected": function (_dindex, _doindex) {
-        if (this.list[_doindex]) {
-          let i = this.$.livePanelKeys.length;
-          while (i--) {
-            this.$.panel[this.$.livePanelKeys[i]].find('[data-ax6grid-tr-data-index="' + _dindex + '"]').attr("data-ax6grid-selected", this.list[_doindex][cfg.columnKeys.selected]);
-          }
-        }
-      },
-      "selectedClear": function () {
-        let di = this.list.length;
-        let pi;
-
-        if (!this.proxyList) {
-          while (di--) {
-            if (this.list[di][cfg.columnKeys.selected]) {
-              pi = this.$.livePanelKeys.length;
-              while (pi--) {
-                this.$.panel[this.$.livePanelKeys[pi]].find('[data-ax6grid-tr-data-index="' + di + '"]').attr("data-ax6grid-selected", false);
-              }
-            }
-            this.list[di][cfg.columnKeys.selected] = false;
-          }
-        } else {
-          while (di--) {
-            this.list[di][cfg.columnKeys.selected] = false;
-          }
-          di = this.proxyList.length;
-          while (di--) {
-            if (this.list[doi][cfg.columnKeys.selected]) {
-              pi = this.$.livePanelKeys.length;
-              while (pi--) {
-                this.$.panel[this.$.livePanelKeys[pi]].find('[data-ax6grid-tr-data-index="' + di + '"]').attr("data-ax6grid-selected", false);
-              }
-            }
-
-            this.proxyList[di][cfg.columnKeys.selected] = false;
-            let doi = this.proxyList[di].__original_index__;
-          }
-        }
-      },
-      "cellChecked": function (_dindex, _doindex, _data) {
-        let key = _data.key,
-            rowIndex = _data.rowIndex,
-            colIndex = _data.colIndex;
-
-        let panelName = function () {
-          let _panels = [];
-          if (this.xvar.frozenRowIndex > _dindex) _panels.push("top");
-          if (this.xvar.frozenColumnIndex > colIndex) _panels.push("left");
-          _panels.push("body");
-          if (_panels[0] !== "top") _panels.push("scroll");
-          return _panels.join("-");
-        }.call(this);
-
-        this.$.panel[panelName].find('[data-ax6grid-tr-data-index="' + _dindex + '"]').find('[data-ax6grid-column-rowIndex="' + rowIndex + '"][data-ax6grid-column-colIndex="' + colIndex + '"]').find('[data-ax6grid-editor="checkbox"]').attr("data-ax6grid-checked", '' + _data.checked);
-      }
-    };
-
-    if (typeof _doindex === "undefined") _doindex = _dindex;
-
-    _states.forEach(function (_state) {
-      if (!processor[_state]) throw 'invaild state name';
-      processor[_state].call(self, _dindex, _doindex, _data);
-    });
-  },
+  updateRowState: updateRowState,
   /**
    *
    * @param _states
@@ -2608,8 +2619,16 @@ export default {
     // body-scroll 의 포지션에 의존적이므로..
     let getBody = function (_colGroup, _bodyRow, _groupRow, _list) {
       let SS = [],
-          di, dl, tri, trl, ci, cl, col, val;
+          di,
+          dl,
+          tri,
+          trl,
+          ci,
+          cl,
+          col,
+          val;
 
+      //SS.push('<table border="1">');
       for (di = 0, dl = _list.length; di < dl; di++) {
         let isGroupingRow = false,
             rowTable;
@@ -2625,14 +2644,13 @@ export default {
           SS.push('\n<tr>');
           for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
             col = rowTable.rows[tri].cols[ci];
-            SS.push('<td ', 'colspan="' + col.colspan + '" ', 'rowspan="' + col.rowspan + '" ', '>',
-              ((isGroupingRow ? getGroupingValue.call(this, _list[di], di, col) : getFieldValue.call(this, _list, _list[di], di, col, val, "text")) || '&nbsp;'),
-              '</td>');
+
+            SS.push('<td ', 'colspan="' + col.colspan + '" ', 'rowspan="' + col.rowspan + '" ', '>', isGroupingRow ? getGroupingValue.call(this, _list[di], di, col) : getFieldValue.call(this, _list, _list[di], di, col, val, "text"), '&nbsp;</td>');
           }
           SS.push('\n</tr>');
         }
       }
-
+      //SS.push('</table>');
       return SS.join('');
     };
     let getSum = function (_colGroup, _bodyRow, _list) {
@@ -2677,12 +2695,7 @@ export default {
    * @param _doindex
    * @param _collapse
    */
-  toggleCollapse: function (_dindex, _doindex, _collapse) {
-    if (DATA.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
-      this.proxyList = DATA.getProxyList.call(this, this.list);
-      repaint.call(this);
-    }
-  },
+  toggleCollapse: toggleCollapse,
   /**
    *
    * @param _dindex

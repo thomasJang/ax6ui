@@ -3,7 +3,7 @@ import AX6UICore from "./AX6UICore";
 import U from "./AX6Util";
 import info from "./AX6Info";
 import FORMATTER from "./AX6UIFormatter/AX6UIFormatter_formatter";
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 let formatter = {};
 
@@ -176,7 +176,7 @@ const getQueIdx = function (boundID) {
     return this.id == boundID;
   });
 };
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

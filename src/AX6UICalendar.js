@@ -3,7 +3,7 @@ import AX6UICore from "./AX6UICore";
 import info from "./AX6Info";
 import U from "./AX6Util";
 import mustache from "./AX6Mustache";
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 let tmpl = {
   frame(columnKeys) {
@@ -715,7 +715,7 @@ const clearPeriodMap = function () {
     }
   }
 };
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

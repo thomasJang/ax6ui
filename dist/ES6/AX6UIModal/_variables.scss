@@ -1,29 +1,29 @@
 //==============
 //== modal
-$ax6modal-z-index: 2000 !default;
-$ax6modal-box-model: border-box !default;
-$ax6modal-bg: #fff !default;
-$ax6modal-border: 1px solid #ddd !default;
-$ax6modal-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.60) !default;
-$ax6modal-body-padding: 0px !default;
-$ax6modal-header-padding: 10px 15px !default;
+$ax6ui-modal-z-index: 2000 !default;
+$ax6ui-modal-box-model: border-box !default;
+$ax6ui-modal-bg: #fff !default;
+$ax6ui-modal-border: 1px solid #ddd !default;
+$ax6ui-modal-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.60) !default;
+$ax6ui-modal-body-padding: 0px !default;
+$ax6ui-modal-header-padding: 10px 15px !default;
 
-$ax6modal-header-addon-padding: 10px 10px !default;
-$ax6modal-header-addon-btn-padding: 0px 2px !default;
+$ax6ui-modal-header-addon-padding: 10px 10px !default;
+$ax6ui-modal-header-addon-btn-padding: 0px 2px !default;
 
-$ax6modal-border-radius: 4px !default;
-$ax6modal-easing-time-open: 0.3s !default;
-$ax6modal-easing-time-close: 0.3s !default;
-$ax6modal-easing-open: $ease-out-back !default;
-$ax6modal-easing-close: $ease-out-back !default;
+$ax6ui-modal-border-radius: 4px !default;
+$ax6ui-modal-easing-time-open: 0.3s !default;
+$ax6ui-modal-easing-time-close: 0.3s !default;
+$ax6ui-modal-easing-open: $ease-out-back !default;
+$ax6ui-modal-easing-close: $ease-out-back !default;
 
 //== modal resizer
-$ax6modal-resizer-bg: #ccc !default;
-$ax6modal-resizer-border: 1px solid #ff0000 !default;
-$ax6modal-resizer-box-shaodw: 0px 0px 5px 0px rgba(0, 0, 0, 0.60) !default;
-$ax6modal-resizer-opacity: 0.3 !default;
+$ax6ui-modal-resizer-bg: #ccc !default;
+$ax6ui-modal-resizer-border: 1px solid #ff0000 !default;
+$ax6ui-modal-resizer-box-shaodw: 0px 0px 5px 0px rgba(0, 0, 0, 0.60) !default;
+$ax6ui-modal-resizer-opacity: 0.3 !default;
 
 //** Border color for elements within dialog
-$ax6modal-default-text: #333 !default;
-$ax6modal-default-border: 1px solid #ddd !default;
-$ax6modal-default-header-bg: #f5f5f5 !default;
+$ax6ui-modal-default-text: #333 !default;
+$ax6ui-modal-default-border: 1px solid #ddd !default;
+$ax6ui-modal-default-header-bg: #f5f5f5 !default;

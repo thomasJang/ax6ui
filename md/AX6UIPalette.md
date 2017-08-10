@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UIPalette">AX6UIPalette</a></dt>
-<dd></dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#frameTmpl">frameTmpl()</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UIPalette"></a>
 
 ## AX6UIPalette
@@ -181,9 +166,3 @@ myPalette = new Palette({
 | --- |
 | selectedColor | 
 
-<a name="frameTmpl"></a>
-
-## frameTmpl()
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global function  

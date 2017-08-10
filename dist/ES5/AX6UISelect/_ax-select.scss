@@ -1,12 +1,12 @@
 // themes
 $base-colors: (
-    default: $ax6select-default-base-color
+    default: $ax6ui-select-default-base-color
 );
 $theme-colors: (
-    default: $ax6select-default-theme-color
+    default: $ax6ui-select-default-theme-color
 );
 $hover-types: (
-    default: $ax6select-default-hover-type
+    default: $ax6ui-select-default-hover-type
 );
 
 @include keyframes(ax-select-option-group) {
@@ -151,11 +151,11 @@ $hover-types: (
 
 @mixin ax6ui-select-option-group($padding, $font-size) {
   .ax-select-body {
-    padding: $ax6select-option-group-body-padding;
-    $ax6select-option-item-height: $font-size + 5;
-    $ax6select-option-item-checkbox-size: $font-size - 4;
+    padding: $ax6ui-select-option-group-body-padding;
+    $ax6ui-select-option-item-height: $font-size + 5;
+    $ax6ui-select-option-item-checkbox-size: $font-size - 4;
     .ax-select-option-group-content {
-      max-height: $ax6select-option-item-height * 10;
+      max-height: $ax6ui-select-option-item-height * 10;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       position: relative;
@@ -176,7 +176,7 @@ $hover-types: (
           overflow: hidden;
           //table-layout: fixed;
           width: 100%;
-          height: $ax6select-option-item-height;
+          height: $ax6ui-select-option-item-height;
 
           .ax-select-option-item-cell {
             box-sizing: border-box;
@@ -184,7 +184,7 @@ $hover-types: (
             vertical-align: middle;
             white-space: nowrap;
             font-size: $font-size;
-            line-height: $ax6select-option-item-height;
+            line-height: $ax6ui-select-option-item-height;
             padding: 0px 0px 0px 0px;
             user-select: none;
 
@@ -196,15 +196,15 @@ $hover-types: (
                 position: relative;
                 display: block;
                 width: $font-size;
-                height: $ax6select-option-item-height;
+                height: $ax6ui-select-option-item-height;
 
                 &.useCheckBox {
                   &:after {
                     content: '';
-                    width: $ax6select-option-item-checkbox-size;
-                    height: $ax6select-option-item-checkbox-size / 2;
+                    width: $ax6ui-select-option-item-checkbox-size;
+                    height: $ax6ui-select-option-item-checkbox-size / 2;
                     position: absolute;
-                    top: ($ax6select-option-item-height) / 4;
+                    top: ($ax6ui-select-option-item-height) / 4;
                     right: 0px;
                     border: 2px solid #000;
                     border-top: none;
@@ -217,8 +217,8 @@ $hover-types: (
               }
             }
             &.ax-select-option-item-label {
-              padding: $ax6select-label-padding;
-              padding-right: $ax6select-option-item-checkbox-size;
+              padding: $ax6ui-select-label-padding;
+              padding-right: $ax6ui-select-option-item-checkbox-size;
             }
           }
         }
@@ -240,7 +240,7 @@ $hover-types: (
           overflow: hidden;
           //table-layout: fixed;
           width: 100%;
-          height: $ax6select-option-item-height;
+          height: $ax6ui-select-option-item-height;
 
           .ax-select-option-group-label {
             box-sizing: border-box;
@@ -248,7 +248,7 @@ $hover-types: (
             vertical-align: middle;
             white-space: nowrap;
             font-size: $font-size;
-            line-height: $ax6select-option-item-height;
+            line-height: $ax6ui-select-option-item-height;
 
             padding: 5px 10px; // todo : theme 정리 나중에
             user-select: none;
@@ -297,9 +297,9 @@ $hover-types: (
   font-size: $ax-font-size-base;
   border-radius: $ax-input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
 
-  @include ax-background(top, $ax6select-label-bg-colors);
-  border: $ax6select-label-border;
-  color: $ax6select-label-color;
+  @include ax-background(top, $ax6ui-select-label-bg-colors);
+  border: $ax6ui-select-label-border;
+  color: $ax6ui-select-label-color;
 
   text-decoration: none;
   @include box-shadow(none);
@@ -320,14 +320,14 @@ $hover-types: (
     [data-ax6ui-select-display="label"] {
       display: table-cell;
       vertical-align: middle;
-      padding: $ax6select-label-padding;
-      color: $ax6select-label-color;
+      padding: $ax6ui-select-label-padding;
+      color: $ax6ui-select-label-color;
       white-space: nowrap;
     }
     [data-ax6ui-select-display="addon"] {
       display: table-cell;
       vertical-align: middle;
-      width: $ax6select-addon-icon-height * 2 + $ax6select-addon-icon-padding-right;
+      width: $ax6ui-select-addon-icon-height * 2 + $ax6ui-select-addon-icon-padding-right;
       text-align: center;
 
       .addon-icon-reset {
@@ -340,33 +340,33 @@ $hover-types: (
         display: none;
       }
       .addon-icon-closed {
-        width: $ax6select-addon-icon-height * 2 + $ax6select-addon-icon-padding-right;
+        width: $ax6ui-select-addon-icon-height * 2 + $ax6ui-select-addon-icon-padding-right;
         text-align: left;
-        line-height: ($ax6select-addon-icon-height * 1.414);
+        line-height: ($ax6ui-select-addon-icon-height * 1.414);
         .addon-icon-arrow {
           content: '';
           width: 0px;
           height: 0px;
           display: inline-block;
-          border-left: $ax6select-addon-icon-height solid transparent;
-          border-right: $ax6select-addon-icon-height solid transparent;
-          border-top: ($ax6select-addon-icon-height * 1.414) solid $ax6select-addon-icon-color;
+          border-left: $ax6ui-select-addon-icon-height solid transparent;
+          border-right: $ax6ui-select-addon-icon-height solid transparent;
+          border-top: ($ax6ui-select-addon-icon-height * 1.414) solid $ax6ui-select-addon-icon-color;
           background: transparent;
           opacity: 1;
         }
       }
       .addon-icon-opened {
-        width: $ax6select-addon-icon-height * 2 + $ax6select-addon-icon-padding-right;
+        width: $ax6ui-select-addon-icon-height * 2 + $ax6ui-select-addon-icon-padding-right;
         text-align: left;
-        line-height: ($ax6select-addon-icon-height * 1.414);
+        line-height: ($ax6ui-select-addon-icon-height * 1.414);
         .addon-icon-arrow {
           content: '';
           width: 0px;
           height: 0px;
           display: inline-block;
-          border-left: $ax6select-addon-icon-height solid transparent;
-          border-right: $ax6select-addon-icon-height solid transparent;
-          border-bottom: ($ax6select-addon-icon-height * 1.414) solid $ax6select-addon-icon-color;
+          border-left: $ax6ui-select-addon-icon-height solid transparent;
+          border-right: $ax6ui-select-addon-icon-height solid transparent;
+          border-bottom: ($ax6ui-select-addon-icon-height * 1.414) solid $ax6ui-select-addon-icon-color;
           background: transparent;
           opacity: 1;
         }
@@ -381,7 +381,7 @@ $hover-types: (
       .addon-icon-reset {
         display: block;
         position: absolute;
-        right: $ax6select-addon-icon-height * 2 + $ax6select-addon-icon-padding-right * 2;
+        right: $ax6ui-select-addon-icon-height * 2 + $ax6ui-select-addon-icon-padding-right * 2;
         top: 0px;
         height: 100%;
       }
@@ -396,7 +396,7 @@ $hover-types: (
 
   @each $theme in $base-colors {
     &.#{nth($theme, 1)} {
-      @include ax6ui-select-display-theme(map_get($base-colors, nth($theme, 1)), $ax6select-option-group-bg, map_get($theme-colors, nth($theme, 1)));
+      @include ax6ui-select-display-theme(map_get($base-colors, nth($theme, 1)), $ax6ui-select-option-group-bg, map_get($theme-colors, nth($theme, 1)));
     }
   }
 }
@@ -404,21 +404,21 @@ $hover-types: (
 /// select-option-group
 .ax6ui-select-option-group {
   box-sizing: border-box;
-  z-index: $ax6select-option-group-z-index;
+  z-index: $ax6ui-select-option-group-z-index;
   position: absolute;
   left: 0;
   top: 0;
-  border-radius: $ax6select-option-group-border-radius;
-  box-shadow: $ax6select-option-group-box-shadow;
-  border: $ax6select-option-group-inner-border;
+  border-radius: $ax6ui-select-option-group-border-radius;
+  box-shadow: $ax6ui-select-option-group-box-shadow;
+  border: $ax6ui-select-option-group-inner-border;
   overflow: hidden;
-  @include ax-background($ax6select-option-group-bg);
-  @include animation(ax-select-option-group $ax6select-option-group-easing-time-open $ease-out-expo forwards);
+  @include ax-background($ax6ui-select-option-group-bg);
+  @include animation(ax-select-option-group $ax6ui-select-option-group-easing-time-open $ease-out-expo forwards);
   @include transform(translateZ(0));
   @include transform-origin(center top);
 
   &.destroy {
-    @include animation(ax-select-option-group-destroy $ax6select-option-group-easing-time-close $ease-in-expo forwards);
+    @include animation(ax-select-option-group-destroy $ax6ui-select-option-group-easing-time-close $ease-in-expo forwards);
   }
   &.direction-top {
     @include transform-origin(center top);
@@ -429,9 +429,9 @@ $hover-types: (
 
   @each $theme in $base-colors {
     &.#{nth($theme, 1)} {
-      @include ax6ui-select-option-group-theme(map_get($base-colors, nth($theme, 1)), $ax6select-option-group-bg, map_get($theme-colors, nth($theme, 1)), map_get($hover-types, nth($theme, 1)));
+      @include ax6ui-select-option-group-theme(map_get($base-colors, nth($theme, 1)), $ax6ui-select-option-group-bg, map_get($theme-colors, nth($theme, 1)), map_get($hover-types, nth($theme, 1)));
     }
   }
 
-  @include ax6ui-select-option-group($ax6select-option-item-padding, $ax6select-option-item-font-size);
+  @include ax6ui-select-option-group($ax6ui-select-option-item-padding, $ax6ui-select-option-item-font-size);
 }

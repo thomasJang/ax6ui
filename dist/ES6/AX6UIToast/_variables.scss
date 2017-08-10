@@ -1,19 +1,19 @@
 //============== toast
-$ax6toast-z-index: 2000;
+$ax6ui-toast-z-index: 2000;
 // 0:left,top / 1:right,top / 2:right,bottom / 3:left,bottom
-$ax6toast-container-width: auto !default;
-$ax6toast-container-padding: 10px 0 !default;
-$ax6toast-box-model: border-box !default;
-$ax6toast-border: 1px solid #c6c6c6 !default;
-$ax6toast-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.175) !default;
-$ax6toast-body-padding: 6px !default;
-$ax6toast-border-radius: 1px !default;
-$ax6toast-opacity: 0.9 !default;
-$ax6toast-box-margin: 5px 0px 5px 0px !default;
-$ax6toast-icon-size: 24px;
-$ax6toast-easing-time: 0.3s;
+$ax6ui-toast-container-width: auto !default;
+$ax6ui-toast-container-padding: 10px 0 !default;
+$ax6ui-toast-box-model: border-box !default;
+$ax6ui-toast-border: 1px solid #c6c6c6 !default;
+$ax6ui-toast-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.175) !default;
+$ax6ui-toast-body-padding: 6px !default;
+$ax6ui-toast-border-radius: 1px !default;
+$ax6ui-toast-opacity: 0.9 !default;
+$ax6ui-toast-box-margin: 5px 0px 5px 0px !default;
+$ax6ui-toast-icon-size: 24px;
+$ax6ui-toast-easing-time: 0.3s;
 
 //** Border color for elements within toast
-$ax6toast-default-text: #333 !default;
-$ax6toast-default-bg: #eee !default;
-$ax6toast-default-color: #333 !default;
+$ax6ui-toast-default-text: #333 !default;
+$ax6ui-toast-default-bg: #eee !default;
+$ax6ui-toast-default-color: #333 !default;

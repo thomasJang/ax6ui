@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UISelect">AX6UISelect</a></dt>
-<dd></dd>
-</dl>
-
-## Members
-
-<dl>
-<dt><a href="#ctrlKeys">ctrlKeys</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UISelect"></a>
 
 ## AX6UISelect
@@ -193,9 +178,3 @@ bind를 통해 연결된 select가 저장되는 변수
 | --- |
 | boundID | 
 
-<a name="ctrlKeys"></a>
-
-## ctrlKeys
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global variable  

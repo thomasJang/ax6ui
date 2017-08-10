@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UIPicker">AX6UIPicker</a></dt>
-<dd></dd>
-</dl>
-
-## Members
-
-<dl>
-<dt><a href="#tmpl">tmpl</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UIPicker"></a>
 
 ## AX6UIPicker
@@ -197,9 +182,3 @@ picker.bind({
 | item | 
 | state | 
 
-<a name="tmpl"></a>
-
-## tmpl
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global variable  

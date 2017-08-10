@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UICalendar">AX6UICalendar</a></dt>
-<dd></dd>
-</dl>
-
-## Members
-
-<dl>
-<dt><a href="#tmpl">tmpl</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UICalendar"></a>
 
 ## AX6UICalendar
@@ -173,9 +158,3 @@ myCalendar.setPeriod({
  ]
 });
 ```
-<a name="tmpl"></a>
-
-## tmpl
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global variable  

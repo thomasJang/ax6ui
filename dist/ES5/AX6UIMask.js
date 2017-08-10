@@ -64,12 +64,6 @@ var AX6UIMask = function (_AX6UICore) {
   /**
    * @constructor
    * @param config
-   * @param [config.theme]
-   * @param [config.target]
-   * @param [config.animateTime]
-   * @param [config.onStateChanged]
-   * @param [config.onClick]
-   * @param [config.content]
    */
   function AX6UIMask(config) {
     _classCallCheck(this, AX6UIMask);

@@ -4,7 +4,7 @@ import info from "./AX6Info";
 import U from "./AX6Util";
 import mustache from "./AX6Mustache";
 
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 let ctrlKeys = {
   "18": "KEY_ALT",
@@ -1006,7 +1006,7 @@ const setSelected = function (boundID, value, selected, _option) {
   return this;
 };
 
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

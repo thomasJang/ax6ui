@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UIFormatter">AX6UIFormatter</a></dt>
-<dd></dd>
-</dl>
-
-## Members
-
-<dl>
-<dt><a href="#formatter">formatter</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UIFormatter"></a>
 
 ## AX6UIFormatter
@@ -138,9 +123,3 @@ var myFormatter = new Formatter({
 
 ### AX6UIFormatter.getNumKeys() ⇒ <code>Object</code>
 **Kind**: static method of <code>[AX6UIFormatter](#AX6UIFormatter)</code>  
-<a name="formatter"></a>
-
-## formatter
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global variable  

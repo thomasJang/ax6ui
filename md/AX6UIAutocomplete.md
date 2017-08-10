@@ -1,18 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#AX6UIAutocomplete">AX6UIAutocomplete</a></dt>
-<dd></dd>
-</dl>
-
-## Members
-
-<dl>
-<dt><a href="#ctrlKeys">ctrlKeys</a></dt>
-<dd><p><del>~</del><del>~</del><del>~</del><del>~ end of import  ~</del><del>~</del><del>~</del><del>~</del>~~</p>
-</dd>
-</dl>
-
 <a name="AX6UIAutocomplete"></a>
 
 ## AX6UIAutocomplete
@@ -219,9 +204,3 @@ myAutocomplete.setText($('[data-ax6ui-autocomplete="autocomplete1"]'), ["substri
 
 ### aX6UIAutocomplete.align() ⇒ <code>[AX6UIAutocomplete](#AX6UIAutocomplete)</code>
 **Kind**: instance method of <code>[AX6UIAutocomplete](#AX6UIAutocomplete)</code>  
-<a name="ctrlKeys"></a>
-
-## ctrlKeys
-~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~
-
-**Kind**: global variable  

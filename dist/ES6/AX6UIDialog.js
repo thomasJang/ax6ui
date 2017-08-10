@@ -3,6 +3,7 @@ import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util.js";
 import info from "./AX6Info.js";
 import mustache from "./AX6Mustache.js";
+
 /** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 const dialogTmpl = function (columnKeys) {
@@ -256,6 +257,7 @@ const onKeyup = function (e, opts, callback, target, k) {
   target = null;
   k = null;
 };
+
 /** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**

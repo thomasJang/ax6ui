@@ -10,6 +10,7 @@ import SCROLLER from "./AX6UIGrid/AX6UIGrid_scroller";
 import PAGE from "./AX6UIGrid/AX6UIGrid_page";
 import TMPL from "./AX6UIGrid/AX6UIGrid_tmpl";
 import UTIL from "./AX6UIGrid/AX6UIGrid_util";
+
 /** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 let formatter = {};
@@ -136,16 +137,16 @@ const onResetColumns = function () {
 };
 const resetColGroupWidth = function () {
   /// !! 그리드 target의 크기가 변경되면 이 함수를 호출하려 this.colGroup의 _width 값을 재 계산 하여야 함. [tom]
-  let CT_WIDTH = this.$["container"]["root"].width() - (() => {
-      let width = 0;
-      if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
-      if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
-      width += this.config.scroller.size;
-      return width;
-    })(),
-    totalWidth = 0, computedWidth, autoWidthColgroupIndexs = [],
-    colGroup = this.colGroup,
-    i, l;
+  let CT_WIDTH                                               = this.$["container"]["root"].width() - (() => {
+        let width = 0;
+        if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
+        if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
+        width += this.config.scroller.size;
+        return width;
+      })(),
+      totalWidth = 0, computedWidth, autoWidthColgroupIndexs = [],
+      colGroup                                               = this.colGroup,
+      i, l;
 
   for (i = 0, l = colGroup.length; i < l; i++) {
     if (U.isNumber(colGroup[i].width)) {
@@ -210,31 +211,31 @@ const alignGrid = function (_isFirst) {
     this.$["container"]["root"].css({height: this.config._height = this.$target.height()});
   }
 
-  let CT_WIDTH = this.$["container"]["root"].width(),
-    CT_HEIGHT = this.$["container"]["root"].height(),
-    CT_INNER_WIDTH = CT_WIDTH,
-    CT_INNER_HEIGHT = CT_HEIGHT,
-    asidePanelWidth = this.config.asidePanelWidth = (() => {
-      let width = 0;
-      if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
-      if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
-      return width;
-    })(),
-    frozenPanelWidth = this.config.frozenPanelWidth = ((colGroup, endIndex) => {
-      let width = 0;
-      for (let i = 0, l = endIndex; i < l; i++) {
-        width += colGroup[i]._width;
-      }
-      return width;
-    })(this.colGroup, this.config.frozenColumnIndex),
-    verticalScrollerWidth, horizontalScrollerHeight, bodyHeight;
+  let CT_WIDTH        = this.$["container"]["root"].width(),
+      CT_HEIGHT       = this.$["container"]["root"].height(),
+      CT_INNER_WIDTH  = CT_WIDTH,
+      CT_INNER_HEIGHT = CT_HEIGHT,
+      asidePanelWidth = this.config.asidePanelWidth = (() => {
+        let width = 0;
+        if (this.config.showLineNumber) width += this.config.lineNumberColumnWidth;
+        if (this.config.showRowSelector) width += this.config.rowSelectorColumnWidth;
+        return width;
+      })(),
+      frozenPanelWidth = this.config.frozenPanelWidth = ((colGroup, endIndex) => {
+        let width = 0;
+        for (let i = 0, l = endIndex; i < l; i++) {
+          width += colGroup[i]._width;
+        }
+        return width;
+      })(this.colGroup, this.config.frozenColumnIndex),
+      verticalScrollerWidth, horizontalScrollerHeight, bodyHeight;
 
   // todo : 우측 함계컬럼 너비 계산
   let rightPanelWidth = 0,
-    frozenRowHeight = this.config.frozenRowIndex * this.xvar.bodyTrHeight,
-    footSumHeight = this.footSumColumns.length * this.xvar.bodyTrHeight,
-    headerHeight = (this.config.header.display) ? this.headerTable.rows.length * this.config.header.columnHeight : 0,
-    pageHeight = (this.config.page.display) ? this.config.page.height : 0;
+      frozenRowHeight = this.config.frozenRowIndex * this.xvar.bodyTrHeight,
+      footSumHeight   = this.footSumColumns.length * this.xvar.bodyTrHeight,
+      headerHeight    = (this.config.header.display) ? this.headerTable.rows.length * this.config.header.columnHeight : 0,
+      pageHeight      = (this.config.page.display) ? this.config.page.height : 0;
 
   {
     verticalScrollerWidth = ((CT_HEIGHT - headerHeight - pageHeight - footSumHeight) < this.list.length * this.xvar.bodyTrHeight) ? this.config.scroller.size : 0;
@@ -263,10 +264,10 @@ const alignGrid = function (_isFirst) {
   bodyHeight = CT_INNER_HEIGHT - headerHeight;
 
   const panelDisplayProcess = function (panel, vPosition, hPosition, containerType) {
-    let css = {
-        display: "block"
-      },
-      isHide = false;
+    let css    = {
+          display: "block"
+        },
+        isHide = false;
 
     switch (hPosition) {
       case "aside":
@@ -355,10 +356,10 @@ const alignGrid = function (_isFirst) {
     return this;
   };
   const scrollerDisplayProcess = function (panel, scrollerWidth, scrollerHeight, containerType) {
-    let css = {
-        display: "block"
-      },
-      isHide = false;
+    let css    = {
+          display: "block"
+        },
+        isHide = false;
 
     switch (containerType) {
       case "vertical":
@@ -478,6 +479,7 @@ const sortColumns = function (_sortInfo) {
     SCROLLER.resize.call(this);
   }
 };
+
 /** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**
@@ -959,7 +961,9 @@ class AX6UIGrid extends AX6UICore {
       SCROLLER.resize.call(this);
 
       jQuery(window)
-        .on("resize.ax6grid-" + this.id, U.throttle(function (e) {
+        .off("resize.ax6grid-" + this.instanceId)
+        .off("keydown.ax6grid-" + this.instanceId)
+        .on("resize.ax6grid-" + this.instanceId, U.throttle(function (e) {
           alignGrid.call(this);
           SCROLLER.resize.call(this);
           BODY.repaint.call(this);  // window resize시 repaint 함수 호출
@@ -1010,23 +1014,24 @@ class AX6UIGrid extends AX6UICore {
           }
         });
 
-      jQuery(document.body).on("click.ax6grid-" + this.id, (e) => {
-        let isPickerClick = false,
-          target = U.findParentNode(e.target, function (_target) {
-            if (isPickerClick = _target.getAttribute("data-ax6grid-inline-edit-picker")) {
-              return true;
-            }
-            return _target.getAttribute("data-ax6grid-container") === "root";
-          });
+      jQuery(document.body)
+        .off("click.ax6grid-" + this.instanceId)
+        .on("click.ax6grid-" + this.instanceId, (e) => {
+          let isPickerClick = false,
+              target        = U.findParentNode(e.target, function (_target) {
+                if (isPickerClick = _target.getAttribute("data-ax6grid-inline-edit-picker")) {
+                  return true;
+                }
+                return _target.getAttribute("data-ax6grid-container") === "root";
+              });
 
-        if (target && target.getAttribute("data-ax6grid-instance") === this.id) {
-          this.focused = true;
-        } else {
-          this.focused = false;
-          BODY.blur.call(this);
-        }
-      });
-
+          if (target && target.getAttribute("data-ax6grid-instance") === this.id) {
+            this.focused = true;
+          } else {
+            this.focused = false;
+            BODY.blur.call(this);
+          }
+        });
 
       // 그리드 레이아웃이 모든 준비를 마친시점에 onLoad존재 여부를 확인하고 호출하여 줍니다.
       setTimeout(() => {
@@ -1146,9 +1151,9 @@ class AX6UIGrid extends AX6UICore {
    */
   copySelect() {
     let copysuccess,
-      $clipBoard = this.$["form"]["clipboard"],
-      copyTextArray = [], copyText = "",
-      _rowIndex, _colIndex, _dindex, _di = 0;
+        $clipBoard                         = this.$["form"]["clipboard"],
+        copyTextArray                      = [], copyText = "",
+        _rowIndex, _colIndex, _dindex, _di = 0;
 
     for (let c in this.selectedColumn) {
       let _column = this.selectedColumn[c];

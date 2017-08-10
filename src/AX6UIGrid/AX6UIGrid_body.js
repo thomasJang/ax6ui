@@ -116,8 +116,8 @@ const columnSelect = {
       for (; rowIndex < trl; rowIndex++) {
         colIndex = range.c.s;
         for (; colIndex <= range.c.e; colIndex++) {
-          var _panels = [],
-            panelName = "";
+          var _panels   = [],
+              panelName = "";
 
           if (self.xvar.frozenRowIndex > dindex) _panels.push("top");
           if (self.xvar.frozenColumnIndex > colIndex) _panels.push("left");
@@ -207,8 +207,8 @@ const columnSelector = {
 };
 
 const resetFrozenColumn = function () {
-  let cfg = this.config,
-    dividedBodyRowObj = UTIL.divideTableByFrozenColumnIndex(this.bodyRowTable, this.xvar.frozenColumnIndex);
+  let cfg               = this.config,
+      dividedBodyRowObj = UTIL.divideTableByFrozenColumnIndex(this.bodyRowTable, this.xvar.frozenColumnIndex);
 
 
   this.asideBodyRowData = (function (dataTable) {
@@ -376,9 +376,9 @@ const getFieldValue = function (_list, _item, _index, _col, _value, _returnPlain
         });
       },
       "treeControl": function (__value) {
-        let cfg = this.config,
-          keys = this.config.tree.columnKeys,
-          indentNodeHtml = '';
+        let cfg            = this.config,
+            keys           = this.config.tree.columnKeys,
+            indentNodeHtml = '';
 
         if (_item[keys.children].length) {
           indentNodeHtml += '<a ' +
@@ -492,8 +492,8 @@ const getSumFieldValue = function (_list, _col) {
 const inlineEdit = {
   active(_focusedColumn, _e, _initValue) {
     let self = this,
-      dindex, doindex, colIndex, rowIndex, panelName, colspan,
-      col, editor;
+        dindex, doindex, colIndex, rowIndex, panelName, colspan,
+        col, editor;
 
     for (var key in _focusedColumn) {
       panelName = _focusedColumn[key].panelName;
@@ -567,18 +567,18 @@ const inlineEdit = {
     if (this.isInlineEditing) {
 
       let originalValue = DATA.getValue.call(self, dindex, doindex, col.key),
-        initValue = (function (__value, __editor) {
-          if (U.isNothing(__value)) {
-            __value = U.isNothing(originalValue) ? "" : originalValue;
-          }
+          initValue     = (function (__value, __editor) {
+            if (U.isNothing(__value)) {
+              __value = U.isNothing(originalValue) ? "" : originalValue;
+            }
 
-          if (__editor.type == "money") {
-            return U.number(__value, {"money": true});
-          }
-          else {
-            return __value;
-          }
-        }).call(this, _initValue, editor);
+            if (__editor.type == "money") {
+              return U.number(__value, {"money": true});
+            }
+            else {
+              return __value;
+            }
+          }).call(this, _initValue, editor);
 
       this.inlineEditing[key].$inlineEditorCell = this.$["panel"][panelName]
         .find('[data-ax6grid-tr-data-index="' + dindex + '"]')
@@ -594,32 +594,32 @@ const inlineEdit = {
     // console.log(this.inlineEditing.column.dindex, this.inlineEditing.$inlineEditor.val());
     if (!this.inlineEditing[_key]) return this;
 
-    let panelName = this.inlineEditing[_key].panelName,
-      dindex = this.inlineEditing[_key].column.dindex,
-      doindex = this.inlineEditing[_key].column.doindex,
-      rowIndex = this.inlineEditing[_key].column.rowIndex,
-      colIndex = this.inlineEditing[_key].column.colIndex,
-      column = this.bodyRowMap[this.inlineEditing[_key].column.rowIndex + "_" + this.inlineEditing[_key].column.colIndex],
-      editorValue = (function ($inlineEditor) {
-        if (typeof _value === "undefined") {
-          if ($inlineEditor.get(0).tagName == "SELECT" || $inlineEditor.get(0).tagName == "INPUT" || $inlineEditor.get(0).tagName == "TEXTAREA") {
-            return $inlineEditor.val();
+    let panelName   = this.inlineEditing[_key].panelName,
+        dindex      = this.inlineEditing[_key].column.dindex,
+        doindex     = this.inlineEditing[_key].column.doindex,
+        rowIndex    = this.inlineEditing[_key].column.rowIndex,
+        colIndex    = this.inlineEditing[_key].column.colIndex,
+        column      = this.bodyRowMap[this.inlineEditing[_key].column.rowIndex + "_" + this.inlineEditing[_key].column.colIndex],
+        editorValue = (function ($inlineEditor) {
+          if (typeof _value === "undefined") {
+            if ($inlineEditor.get(0).tagName == "SELECT" || $inlineEditor.get(0).tagName == "INPUT" || $inlineEditor.get(0).tagName == "TEXTAREA") {
+              return $inlineEditor.val();
+            } else {
+              _msg = "CANCEL";
+              return false;
+            }
           } else {
-            _msg = "CANCEL";
-            return false;
+            return _value;
           }
-        } else {
-          return _value;
-        }
-      })(this.inlineEditing[_key].$inlineEditor),
-      newValue = (function (__value, __editor) {
-        if (__editor.type == "money") {
-          return U.number(__value);
-        }
-        else {
-          return __value;
-        }
-      }).call(this, editorValue, column.editor);
+        })(this.inlineEditing[_key].$inlineEditor),
+        newValue    = (function (__value, __editor) {
+          if (__editor.type == "money") {
+            return U.number(__value);
+          }
+          else {
+            return __value;
+          }
+        }).call(this, editorValue, column.editor);
 
     let action = {
       "CANCEL"(_dindex, _column, _newValue) {
@@ -674,11 +674,11 @@ const inlineEdit = {
 
           for (var k in this.focusedColumn) {
             let _column = this.focusedColumn[k],
-              column = this.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
-              dindex = _column.dindex,
-              doindex = _column.doindex,
-              value = "",
-              col = this.colGroup[_column.colIndex];
+                column  = this.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
+                dindex  = _column.dindex,
+                doindex = _column.doindex,
+                value   = "",
+                col     = this.colGroup[_column.colIndex];
 
             if (column) {
               if (!this.list[dindex].__isGrouping) {
@@ -786,18 +786,18 @@ const repaint = function (_reset) {
     this.$.panel["bottom-body-scroll"].css({"padding-left": nopaintLeftColumnsWidth, "padding-right": nopaintRightColumnsWidth});
   }
 
-  let isFirstPaint = (typeof this.xvar.paintStartRowIndex === "undefined"),
-    headerColGroup = this.headerColGroup,
-    asideBodyRowData = this.asideBodyRowData,
-    leftBodyRowData = this.leftBodyRowData,
-    bodyRowData = this.bodyRowData,
-    leftFootSumData = this.leftFootSumData,
-    footSumData = this.footSumData,
-    asideBodyGroupingData = this.asideBodyGroupingData,
-    leftBodyGroupingData = this.leftBodyGroupingData,
-    bodyGroupingData = this.bodyGroupingData,
-    bodyAlign = cfg.body.align,
-    paintRowCount, virtualPaintRowCount;
+  let isFirstPaint          = (typeof this.xvar.paintStartRowIndex === "undefined"),
+      headerColGroup        = this.headerColGroup,
+      asideBodyRowData      = this.asideBodyRowData,
+      leftBodyRowData       = this.leftBodyRowData,
+      bodyRowData           = this.bodyRowData,
+      leftFootSumData       = this.leftFootSumData,
+      footSumData           = this.footSumData,
+      asideBodyGroupingData = this.asideBodyGroupingData,
+      leftBodyGroupingData  = this.leftBodyGroupingData,
+      bodyGroupingData      = this.bodyGroupingData,
+      bodyAlign             = cfg.body.align,
+      paintRowCount, virtualPaintRowCount;
 
   if (!this.config.virtualScrollY) {
     virtualPaintRowCount = paintRowCount = list.length;
@@ -858,23 +858,23 @@ const repaint = function (_reset) {
       return false;
     }
 
-    let SS = [],
-      cgi, cgl, di, dl, tri, trl, ci, cl, col,
-      cellHeight,
-      colAlign,
-      isScrolled = (function () {
-        // 스크롤값이 변경되거나 처음 호출되었습니까?
-        if (typeof _scrollConfig === "undefined" || typeof _scrollConfig['paintStartRowIndex'] === "undefined") {
-          _scrollConfig = {
-            paintStartRowIndex: 0,
-            paintRowCount: _list.length
-          };
-          return false;
-        } else {
-          return true;
-        }
-      })(),
-      stripeString = '#fff 0px, #fff ' + (cfg.body.columnHeight - cfg.body.columnBorderWidth) + 'px, #eee ' + (cfg.body.columnHeight - cfg.body.columnBorderWidth) + 'px, #eee ' + (cfg.body.columnHeight) + 'px';
+    let SS           = [],
+        cgi, cgl, di, dl, tri, trl, ci, cl, col,
+        cellHeight,
+        colAlign,
+        isScrolled   = (function () {
+          // 스크롤값이 변경되거나 처음 호출되었습니까?
+          if (typeof _scrollConfig === "undefined" || typeof _scrollConfig['paintStartRowIndex'] === "undefined") {
+            _scrollConfig = {
+              paintStartRowIndex: 0,
+              paintRowCount: _list.length
+            };
+            return false;
+          } else {
+            return true;
+          }
+        })(),
+        stripeString = '#fff 0px, #fff ' + (cfg.body.columnHeight - cfg.body.columnBorderWidth) + 'px, #eee ' + (cfg.body.columnHeight - cfg.body.columnBorderWidth) + 'px, #eee ' + (cfg.body.columnHeight) + 'px';
 
     if (isScrolled) {
       SS.push('<div style="background:repeating-linear-gradient(to top, ' + stripeString + ');' +
@@ -1317,6 +1317,86 @@ const repaint = function (_reset) {
   PAGE.statusUpdate.call(this);
 };
 
+const updateRowState = function (_states, _dindex, _doindex, _data) {
+  let self      = this,
+      cfg       = this.config,
+      processor = {
+        "selected": function (_dindex, _doindex) {
+          if (this.list[_doindex]) {
+            let i = this.$.livePanelKeys.length;
+            while (i--) {
+              this.$.panel[this.$.livePanelKeys[i]]
+                .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
+                .attr("data-ax6grid-selected", this.list[_doindex][cfg.columnKeys.selected]);
+            }
+          }
+        },
+        "selectedClear": function () {
+          let di = this.list.length;
+          let pi;
+
+          if (!this.proxyList) {
+            while (di--) {
+              if (this.list[di][cfg.columnKeys.selected]) {
+                pi = this.$.livePanelKeys.length;
+                while (pi--) {
+                  this.$.panel[this.$.livePanelKeys[pi]]
+                    .find('[data-ax6grid-tr-data-index="' + di + '"]')
+                    .attr("data-ax6grid-selected", false);
+                }
+              }
+              this.list[di][cfg.columnKeys.selected] = false;
+            }
+          } else {
+            while (di--) {
+              this.list[di][cfg.columnKeys.selected] = false;
+            }
+            di = this.proxyList.length;
+            while (di--) {
+              if (this.list[doi][cfg.columnKeys.selected]) {
+                pi = this.$.livePanelKeys.length;
+                while (pi--) {
+                  this.$.panel[this.$.livePanelKeys[pi]]
+                    .find('[data-ax6grid-tr-data-index="' + di + '"]')
+                    .attr("data-ax6grid-selected", false);
+                }
+              }
+
+              this.proxyList[di][cfg.columnKeys.selected] = false;
+              let doi = this.proxyList[di].__original_index__;
+            }
+          }
+        },
+        "cellChecked": function (_dindex, _doindex, _data) {
+          let key      = _data.key,
+              rowIndex = _data.rowIndex,
+              colIndex = _data.colIndex;
+
+          let panelName = (function () {
+            let _panels = [];
+            if (this.xvar.frozenRowIndex > _dindex) _panels.push("top");
+            if (this.xvar.frozenColumnIndex > colIndex) _panels.push("left");
+            _panels.push("body");
+            if (_panels[0] !== "top") _panels.push("scroll");
+            return _panels.join("-");
+          }).call(this);
+
+          this.$.panel[panelName]
+            .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
+            .find('[data-ax6grid-column-rowIndex="' + rowIndex + '"][data-ax6grid-column-colIndex="' + colIndex + '"]')
+            .find('[data-ax6grid-editor="checkbox"]')
+            .attr("data-ax6grid-checked", '' + _data.checked);
+        }
+      };
+
+  if (typeof _doindex === "undefined") _doindex = _dindex;
+
+  _states.forEach(function (_state) {
+    if (!processor[_state]) throw 'invaild state name';
+    processor[_state].call(self, _dindex, _doindex, _data);
+  });
+};
+
 /**
  * @module AX6UIGrid_body
  */
@@ -1329,53 +1409,53 @@ export default {
 
     this.$["container"]["body"].on("dblclick", '[data-ax6grid-column-attr]', function (e) {
       let panelName, attr,
-        row, col, dindex, doindex, rowIndex, colIndex,
-        targetDBLClick = {
-          "default": function (_column) {
-            if (self.isInlineEditing) {
-              for (let columnKey in self.inlineEditing) {
-                if (columnKey == _column.dindex + "_" + _column.colIndex + "_" + _column.rowIndex) {
-                  return this;
+          row, col, dindex, doindex, rowIndex, colIndex,
+          targetDBLClick = {
+            "default": function (_column) {
+              if (self.isInlineEditing) {
+                for (let columnKey in self.inlineEditing) {
+                  if (columnKey == _column.dindex + "_" + _column.colIndex + "_" + _column.rowIndex) {
+                    return this;
+                  }
                 }
               }
-            }
 
-            let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex], value = "";
-            if (column) {
-              if (!self.list[dindex].__isGrouping) {
-                value = DATA.getValue.call(self, dindex, doindex, column.key);
+              let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex], value = "";
+              if (column) {
+                if (!self.list[dindex].__isGrouping) {
+                  value = DATA.getValue.call(self, dindex, doindex, column.key);
+                }
               }
-            }
 
-            let editor = self.colGroup[_column.colIndex].editor;
-            if (U.isObject(editor)) {
-              inlineEdit.active.call(self, self.focusedColumn, e, value);
-            } else {
-              // 더블클릭 실행
-              if (self.config.body.onDBLClick) {
-                let that = {
-                  self: self,
-                  page: self.page,
-                  list: self.list,
-                  item: self.list[_column.dindex],
-                  dindex: _column.dindex,
-                  doindex: _column.doindex,
-                  rowIndex: _column.rowIndex,
-                  colIndex: _column.colIndex,
-                  column: column,
-                  value: self.list[_column.dindex][column.key]
-                };
-                self.config.body.onDBLClick.call(that);
+              let editor = self.colGroup[_column.colIndex].editor;
+              if (U.isObject(editor)) {
+                inlineEdit.active.call(self, self.focusedColumn, e, value);
+              } else {
+                // 더블클릭 실행
+                if (self.config.body.onDBLClick) {
+                  let that = {
+                    self: self,
+                    page: self.page,
+                    list: self.list,
+                    item: self.list[_column.dindex],
+                    dindex: _column.dindex,
+                    doindex: _column.doindex,
+                    rowIndex: _column.rowIndex,
+                    colIndex: _column.colIndex,
+                    column: column,
+                    value: self.list[_column.dindex][column.key]
+                  };
+                  self.config.body.onDBLClick.call(that);
+                }
               }
+            },
+            "rowSelector": function (_column) {
+
+            },
+            "lineNumber": function (_column) {
+
             }
-          },
-          "rowSelector": function (_column) {
-
-          },
-          "lineNumber": function (_column) {
-
-          }
-        };
+          };
 
       panelName = this.getAttribute("data-ax6grid-panel-name");
       attr = this.getAttribute("data-ax6grid-column-attr");
@@ -1404,73 +1484,73 @@ export default {
 
     this.$["container"]["body"].on("click", '[data-ax6grid-column-attr]', function (e) {
       let panelName, attr,
-        row, col, dindex, doindex, rowIndex, colIndex, disableSelection,
-        targetClick = {
-          "default": function (_column) {
-            let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
-              that = {
-                self: self,
-                page: self.page,
-                list: self.list,
-                item: self.list[_column.doindex],
-                dindex: _column.dindex,
-                doindex: _column.doindex,
-                rowIndex: _column.rowIndex,
-                colIndex: _column.colIndex,
-                column: column,
-                value: self.list[_column.dindex][column.key]
-              };
+          row, col, dindex, doindex, rowIndex, colIndex, disableSelection,
+          targetClick = {
+            "default": function (_column) {
+              let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],
+                  that   = {
+                    self: self,
+                    page: self.page,
+                    list: self.list,
+                    item: self.list[_column.doindex],
+                    dindex: _column.dindex,
+                    doindex: _column.doindex,
+                    rowIndex: _column.rowIndex,
+                    colIndex: _column.colIndex,
+                    column: column,
+                    value: self.list[_column.dindex][column.key]
+                  };
 
-            if (column.editor && column.editor.type == "checkbox") { // todo : INLINE_EDITOR에서 처리 할수 있도록 구문 변경 필요.
-              let value = DATA.getValue.call(self, _column.dindex, _column.doindex, column.key),
-                checked, newValue;
+              if (column.editor && column.editor.type == "checkbox") { // todo : INLINE_EDITOR에서 처리 할수 있도록 구문 변경 필요.
+                let value = DATA.getValue.call(self, _column.dindex, _column.doindex, column.key),
+                    checked, newValue;
 
-              if (column.editor.config && column.editor.config.trueValue) {
-                if (checked = !(value == column.editor.config.trueValue)) {
-                  newValue = column.editor.config.trueValue;
+                if (column.editor.config && column.editor.config.trueValue) {
+                  if (checked = !(value == column.editor.config.trueValue)) {
+                    newValue = column.editor.config.trueValue;
+                  } else {
+                    newValue = column.editor.config.falseValue;
+                  }
                 } else {
-                  newValue = column.editor.config.falseValue;
+                  newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
                 }
+
+                DATA.setValue.call(self, _column.dindex, _column.doindex, column.key, newValue);
+
+                updateRowState.call(self, ["cellChecked"], _column.dindex, _column.doindex, {
+                  key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
+                  editorConfig: column.editor.config, checked: checked
+                });
               } else {
-                newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
+                if (self.config.body.onClick) {
+                  self.config.body.onClick.call(that);
+                }
+              }
+            },
+            "rowSelector": function (_column) {
+              let item = self.list[_column.doindex];
+              if (item[self.config.columnKeys.disableSelection]) {
+                return false;
               }
 
-              DATA.setValue.call(self, _column.dindex, _column.doindex, column.key, newValue);
+              if (!self.config.multipleSelect && self.selectedDataIndexs[0] !== _column.doindex) {
+                updateRowState.call(self, ["selectedClear"]);
+                DATA.clearSelect.call(self);
+              }
 
-              updateRowState.call(self, ["cellChecked"], _column.dindex, _column.doindex, {
-                key: column.key, rowIndex: _column.rowIndex, colIndex: _column.colIndex,
-                editorConfig: column.editor.config, checked: checked
+              DATA.select.call(self, _column.dindex, _column.doindex, undefined, {
+                internalCall: true
               });
-            } else {
-              if (self.config.body.onClick) {
-                self.config.body.onClick.call(that);
-              }
-            }
-          },
-          "rowSelector": function (_column) {
-            let item = self.list[_column.doindex];
-            if (item[self.config.columnKeys.disableSelection]) {
-              return false;
-            }
+              updateRowState.call(self, ["selected"], _column.dindex, _column.doindex);
+            },
+            "lineNumber": function (_column) {
 
-            if (!self.config.multipleSelect && self.selectedDataIndexs[0] !== _column.doindex) {
-              updateRowState.call(self, ["selectedClear"]);
-              DATA.clearSelect.call(self);
+            },
+            "tree-control": function (_column, _el) {
+              //console.log(_column);
+              toggleCollapse.call(self, _column.dindex, _column.doindex);
             }
-
-            DATA.select.call(self, _column.dindex, _column.doindex, undefined, {
-              internalCall: true
-            });
-            updateRowState.call(self, ["selected"], _column.dindex, _column.doindex);
-          },
-          "lineNumber": function (_column) {
-
-          },
-          "tree-control": function (_column, _el) {
-            //console.log(_column);
-            toggleCollapse.call(self, _column.dindex, _column.doindex);
-          }
-        };
+          };
 
       panelName = this.getAttribute("data-ax6grid-panel-name");
       attr = this.getAttribute("data-ax6grid-column-attr");
@@ -1604,15 +1684,15 @@ export default {
    */
   repaintCell: function (_panelName, _dindex, _doindex, _rowIndex, _colIndex, _newValue) {
     let self = this,
-      cfg = this.config,
-      list = this.list;
+        cfg  = this.config,
+        list = this.list;
 
     let updateCell = this.$["panel"][_panelName]
       .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
       .find('[data-ax6grid-column-rowindex="' + _rowIndex + '"][data-ax6grid-column-colindex="' + _colIndex + '"]')
       .find('[data-ax6grid-cellholder]'),
-      colGroup = this.colGroup,
-      col = colGroup[_colIndex];
+        colGroup   = this.colGroup,
+        col        = colGroup[_colIndex];
 
     updateCell.html(getFieldValue.call(this, list, list[_dindex], _dindex, col));
 
@@ -1621,11 +1701,11 @@ export default {
         colGroup.forEach(function (col) {
           if (col.key == updateColumnKey) {
             let rowIndex = col.rowIndex, colIndex = col.colIndex,
-              panelName = UTIL.findPanelByColumnIndex.call(self, _dindex, colIndex, rowIndex).panelName,
-              updateWithCell = self.$["panel"][panelName]
-                .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
-                .find('[data-ax6grid-column-rowindex="' + rowIndex + '"][data-ax6grid-column-colindex="' + colIndex + '"]')
-                .find('[data-ax6grid-cellholder]');
+                panelName                         = UTIL.findPanelByColumnIndex.call(self, _dindex, colIndex, rowIndex).panelName,
+                updateWithCell                    = self.$["panel"][panelName]
+                  .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
+                  .find('[data-ax6grid-column-rowindex="' + rowIndex + '"][data-ax6grid-column-colindex="' + colIndex + '"]')
+                  .find('[data-ax6grid-cellholder]');
 
             updateWithCell.html(getFieldValue.call(self, list, list[_dindex], _dindex, col));
           }
@@ -1635,19 +1715,19 @@ export default {
 
     /// ~~~~~~
 
-    let paintStartRowIndex = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
-      headerColGroup = this.headerColGroup,
-      leftFootSumData = this.leftFootSumData,
-      footSumData = this.footSumData,
-      leftBodyGroupingData = this.leftBodyGroupingData,
-      bodyGroupingData = this.bodyGroupingData,
-      bodyAlign = cfg.body.align,
-      paintRowCount = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
-      scrollConfig = {
-        paintStartRowIndex: paintStartRowIndex,
-        paintRowCount: paintRowCount,
-        bodyTrHeight: this.xvar.bodyTrHeight
-      };
+    let paintStartRowIndex   = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
+        headerColGroup       = this.headerColGroup,
+        leftFootSumData      = this.leftFootSumData,
+        footSumData          = this.footSumData,
+        leftBodyGroupingData = this.leftBodyGroupingData,
+        bodyGroupingData     = this.bodyGroupingData,
+        bodyAlign            = cfg.body.align,
+        paintRowCount        = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
+        scrollConfig         = {
+          paintStartRowIndex: paintStartRowIndex,
+          paintRowCount: paintRowCount,
+          bodyTrHeight: this.xvar.bodyTrHeight
+        };
 
     if (this.xvar.nopaintLeftColumnsWidth || this.xvar.nopaintRightColumnsWidth) {
       headerColGroup = [].concat(headerColGroup).splice(this.xvar.paintStartColumnIndex, this.xvar.paintEndColumnIndex - this.xvar.paintStartColumnIndex + 1);
@@ -1661,8 +1741,8 @@ export default {
 
     let repaintSum = function (_elTargetKey, _colGroup, _bodyRow, _list, _scrollConfig) {
       let _elTarget = this.$.panel[_elTargetKey],
-        SS = [],
-        cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
+          SS        = [],
+          cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
 
       SS.push('<table border="0" cellpadding="0" cellspacing="0">');
       SS.push('<colgroup>');
@@ -1747,9 +1827,9 @@ export default {
     };
     let replaceGroupTr = function (_elTargetKey, _colGroup, _groupRow, _list, _scrollConfig) {
       let _elTarget = this.$.panel[_elTargetKey],
-        SS = [],
-        di, dl, tri, trl, ci, cl,
-        col, cellHeight, colAlign;
+          SS        = [],
+          di, dl, tri, trl, ci, cl,
+          col, cellHeight, colAlign;
 
       for (di = _scrollConfig.paintStartRowIndex, dl = (function () {
         let len;
@@ -1881,31 +1961,31 @@ export default {
    */
   repaintRow: function (_dindex) {
     let self = this,
-      cfg = this.config,
-      list = this.list;
+        cfg  = this.config,
+        list = this.list;
     /// ~~~~~~
 
-    let paintStartRowIndex = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
-      asideBodyRowData = this.asideBodyRowData,
-      leftBodyRowData = this.leftBodyRowData,
-      bodyRowData = this.bodyRowData,
-      leftFootSumData = this.leftFootSumData,
-      footSumData = this.footSumData,
-      asideBodyGroupingData = this.asideBodyGroupingData,
-      leftBodyGroupingData = this.leftBodyGroupingData,
-      bodyGroupingData = this.bodyGroupingData,
-      bodyAlign = cfg.body.align,
-      paintRowCount = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
-      scrollConfig = {
-        paintStartRowIndex: paintStartRowIndex,
-        paintRowCount: paintRowCount,
-        bodyTrHeight: this.xvar.bodyTrHeight
-      };
+    let paintStartRowIndex    = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
+        asideBodyRowData      = this.asideBodyRowData,
+        leftBodyRowData       = this.leftBodyRowData,
+        bodyRowData           = this.bodyRowData,
+        leftFootSumData       = this.leftFootSumData,
+        footSumData           = this.footSumData,
+        asideBodyGroupingData = this.asideBodyGroupingData,
+        leftBodyGroupingData  = this.leftBodyGroupingData,
+        bodyGroupingData      = this.bodyGroupingData,
+        bodyAlign             = cfg.body.align,
+        paintRowCount         = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
+        scrollConfig          = {
+          paintStartRowIndex: paintStartRowIndex,
+          paintRowCount: paintRowCount,
+          bodyTrHeight: this.xvar.bodyTrHeight
+        };
 
     let repaintSum = function (_elTargetKey, _colGroup, _bodyRow, _list) {
       let _elTarget = this.$.panel[_elTargetKey],
-        SS = [],
-        cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
+          SS        = [],
+          cgi, cgl, tri, trl, ci, cl, col, cellHeight, colAlign;
 
       SS.push('<table border="0" cellpadding="0" cellspacing="0">');
       SS.push('<colgroup>');
@@ -1990,8 +2070,8 @@ export default {
     };
     let replaceGroupTr = function (_elTargetKey, _colGroup, _groupRow, _list, _scrollConfig) {
       let _elTarget = this.$.panel[_elTargetKey],
-        SS = [],
-        di, dl, tri, trl, ci, cl, col, cellHeight, colAlign;
+          SS        = [],
+          di, dl, tri, trl, ci, cl, col, cellHeight, colAlign;
 
       if (typeof _scrollConfig === "undefined" || typeof _scrollConfig['paintStartRowIndex'] === "undefined") {
         _scrollConfig = {
@@ -2084,10 +2164,10 @@ export default {
       }
     };
     let replaceTr = function (_elTargetKey, _colGroup, _bodyRow, _list, di) {
-      let _elTarget = this.$.panel[_elTargetKey],
-        SS = [],
-        tri, trl, ci, cl, col, cellHeight, colAlign, rowTable = _bodyRow,
-        odi = (typeof _list[di].__origin_index__ !== "undefined") ? _list[di].__origin_index__ : di;
+      let _elTarget                                             = this.$.panel[_elTargetKey],
+          SS                                                    = [],
+          tri, trl, ci, cl, col, cellHeight, colAlign, rowTable = _bodyRow,
+          odi                                                   = (typeof _list[di].__origin_index__ !== "undefined") ? _list[di].__origin_index__ : di;
 
       for (tri = 0, trl = rowTable.rows.length; tri < trl; tri++) {
         for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
@@ -2221,98 +2301,20 @@ export default {
    * @param _doindex
    * @param _data
    */
-  updateRowState: function (_states, _dindex, _doindex, _data) {
-    let self = this,
-      cfg = this.config,
-      processor = {
-        "selected": function (_dindex, _doindex) {
-          if (this.list[_doindex]) {
-            let i = this.$.livePanelKeys.length;
-            while (i--) {
-              this.$.panel[this.$.livePanelKeys[i]]
-                .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
-                .attr("data-ax6grid-selected", this.list[_doindex][cfg.columnKeys.selected]);
-            }
-          }
-        },
-        "selectedClear": function () {
-          let di = this.list.length;
-          let pi;
-
-          if (!this.proxyList) {
-            while (di--) {
-              if (this.list[di][cfg.columnKeys.selected]) {
-                pi = this.$.livePanelKeys.length;
-                while (pi--) {
-                  this.$.panel[this.$.livePanelKeys[pi]]
-                    .find('[data-ax6grid-tr-data-index="' + di + '"]')
-                    .attr("data-ax6grid-selected", false);
-                }
-              }
-              this.list[di][cfg.columnKeys.selected] = false;
-            }
-          } else {
-            while (di--) {
-              this.list[di][cfg.columnKeys.selected] = false;
-            }
-            di = this.proxyList.length;
-            while (di--) {
-              if (this.list[doi][cfg.columnKeys.selected]) {
-                pi = this.$.livePanelKeys.length;
-                while (pi--) {
-                  this.$.panel[this.$.livePanelKeys[pi]]
-                    .find('[data-ax6grid-tr-data-index="' + di + '"]')
-                    .attr("data-ax6grid-selected", false);
-                }
-              }
-
-              this.proxyList[di][cfg.columnKeys.selected] = false;
-              let doi = this.proxyList[di].__original_index__;
-            }
-          }
-        },
-        "cellChecked": function (_dindex, _doindex, _data) {
-          let key = _data.key,
-            rowIndex = _data.rowIndex,
-            colIndex = _data.colIndex;
-
-          let panelName = (function () {
-            let _panels = [];
-            if (this.xvar.frozenRowIndex > _dindex) _panels.push("top");
-            if (this.xvar.frozenColumnIndex > colIndex) _panels.push("left");
-            _panels.push("body");
-            if (_panels[0] !== "top") _panels.push("scroll");
-            return _panels.join("-");
-          }).call(this);
-
-          this.$.panel[panelName]
-            .find('[data-ax6grid-tr-data-index="' + _dindex + '"]')
-            .find('[data-ax6grid-column-rowIndex="' + rowIndex + '"][data-ax6grid-column-colIndex="' + colIndex + '"]')
-            .find('[data-ax6grid-editor="checkbox"]')
-            .attr("data-ax6grid-checked", '' + _data.checked);
-        }
-      };
-
-    if (typeof _doindex === "undefined") _doindex = _dindex;
-
-    _states.forEach(function (_state) {
-      if (!processor[_state]) throw 'invaild state name';
-      processor[_state].call(self, _dindex, _doindex, _data);
-    });
-  },
+  updateRowState: updateRowState,
   /**
    *
    * @param _states
    * @param _data
    */
   updateRowStateAll: function (_states, _data) {
-    let self = this,
-      cfg = this.config,
-      processor = {
-        "selected": function (_dindex) {
-          repaint.call(this, true);
-        }
-      };
+    let self      = this,
+        cfg       = this.config,
+        processor = {
+          "selected": function (_dindex) {
+            repaint.call(this, true);
+          }
+        };
 
     _states.forEach(function (_state) {
       if (!processor[_state]) throw 'invaild state name';
@@ -2384,8 +2386,8 @@ export default {
     let focus = {
       "UD": function (_dy) {
         let moveResult = true,
-          focusedColumn, originalColumn, while_i,
-          nPanelInfo;
+            focusedColumn, originalColumn, while_i,
+            nPanelInfo;
 
         for (let c in this.focusedColumn) {
           focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
@@ -2490,9 +2492,9 @@ export default {
         return moveResult;
       },
       "LR": function (_dx) {
-        let moveResult = true,
-          focusedColumn, originalColumn,
-          while_i = 0, isScrollPanel = false, containerPanelName = "", nPanelInfo;
+        let moveResult                                             = true,
+            focusedColumn, originalColumn,
+            while_i = 0, isScrollPanel = false, containerPanelName = "", nPanelInfo;
 
         for (var c in this.focusedColumn) {
           focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
@@ -2645,8 +2647,8 @@ export default {
       },
       "INDEX": function (_dindex) {
         let moveResult = true,
-          focusedColumn, originalColumn,
-          while_i;
+            focusedColumn, originalColumn,
+            while_i;
 
         for (let c in this.focusedColumn) {
           focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
@@ -2749,19 +2751,19 @@ export default {
    * @return {string}
    */
   getExcelString: function () {
-    let cfg = this.config,
-      list = this.list,
-      bodyRowData = this.bodyRowTable,
-      footSumData = this.footSumTable,
-      bodyGroupingData = this.bodyGroupingTable;
+    let cfg              = this.config,
+        list             = this.list,
+        bodyRowData      = this.bodyRowTable,
+        footSumData      = this.footSumTable,
+        bodyGroupingData = this.bodyGroupingTable;
 
     // body-scroll 의 포지션에 의존적이므로..
     let getBody = function (_colGroup, _bodyRow, _groupRow, _list) {
       let SS = [],
-        di, dl,
-        tri, trl,
-        ci, cl,
-        col, val;
+          di, dl,
+          tri, trl,
+          ci, cl,
+          col, val;
 
       //SS.push('<table border="1">');
       for (di = 0, dl = _list.length; di < dl; di++) {
@@ -2792,9 +2794,9 @@ export default {
     };
     let getSum = function (_colGroup, _bodyRow, _list) {
       let SS = [],
-        tri, trl,
-        ci, cl,
-        col;
+          tri, trl,
+          ci, cl,
+          col;
 
       //SS.push('<table border="1">');
       for (tri = 0, trl = _bodyRow.rows.length; tri < trl; tri++) {

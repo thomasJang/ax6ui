@@ -3,6 +3,7 @@ import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util.js";
 import info from "./AX6Info.js";
 import mustache from "./AX6Mustache.js";
+
 /** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
 
 const dialogTmpl = function (columnKeys) {
@@ -83,9 +84,9 @@ const getContent = function (dialogId, opts) {
 };
 const open = function (opts, callback) {
   let pos = {},
-    box = {
-      width: opts.width
-    };
+      box = {
+        width: opts.width
+      };
 
   this.dialogConfig = opts;
   this.$activeDialog = jQuery(getContent.call(this, opts.id, opts));
@@ -120,7 +121,6 @@ const open = function (opts, callback) {
     .find(opts.dialogType === "prompt" ? "[data-dialog-prompt]" : "[data-dialog-btn]").trigger("focus");
 
 
-
   // bind key event
   jQuery(window)
     .on("keydown.ax6dialog", (e) => {
@@ -147,10 +147,10 @@ const open = function (opts, callback) {
 const align = function (e) {
   if (!this.$activeDialog) return this;
   let opts = this.dialogConfig,
-    box = {
-      width: opts.width,
-      height: opts.height
-    };
+      box  = {
+        width: opts.width,
+        height: opts.height
+      };
 
   //- position 정렬
   if (typeof opts.position === "undefined" || opts.position === "center") {
@@ -173,7 +173,7 @@ const align = function (e) {
 };
 const btnOnClick = function (e, opts, callback, target, k) {
   let that,
-    emptyKey = null;
+      emptyKey = null;
 
   if (e.srcElement) e.target = e.srcElement;
 
@@ -232,7 +232,7 @@ const btnOnClick = function (e, opts, callback, target, k) {
 };
 const onKeyup = function (e, opts, callback, target, k) {
   let that,
-    emptyKey = null;
+      emptyKey = null;
 
   if (e.keyCode == info.eventKeys.ESC) {
     this.close();
@@ -270,6 +270,7 @@ const onKeyup = function (e, opts, callback, target, k) {
   target = null;
   k = null;
 };
+
 /** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
 
 /**

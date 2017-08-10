@@ -20,6 +20,7 @@ let entry = {
   modal: './src/modal.js',
   uploader: './src/uploader.js',
   tooltip: './src/tooltip.js',
+  docker: './src/docker.js',
 };
 
 let plugins = [

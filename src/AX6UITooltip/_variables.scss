@@ -9,6 +9,6 @@ $ax6ui-tooltip-arrow-size: 5px !default;
 $ax6ui-tooltip-bg-color: rgba(1, 1, 1, 0.5) !default;
 $ax6ui-tooltip-border-radius: 3px !default;
 
-$ax6ui-tooltip-appear-duration: 0.2s  !default;
-$ax6ui-tooltip-appear-ease: $ease-out-cubic !default;
-$ax6ui-tooltip-appear-delay: 0.4s !default;
+$ax6ui-tooltip-appear-duration: 0.1s  !default;
+$ax6ui-tooltip-appear-ease: $ease-in-expo !default;
+$ax6ui-tooltip-appear-delay: 0.3s !default;

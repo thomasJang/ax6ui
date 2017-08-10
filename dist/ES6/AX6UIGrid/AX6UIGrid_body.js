@@ -2608,16 +2608,8 @@ export default {
     // body-scroll 의 포지션에 의존적이므로..
     let getBody = function (_colGroup, _bodyRow, _groupRow, _list) {
       let SS = [],
-          di,
-          dl,
-          tri,
-          trl,
-          ci,
-          cl,
-          col,
-          val;
+          di, dl, tri, trl, ci, cl, col, val;
 
-      //SS.push('<table border="1">');
       for (di = 0, dl = _list.length; di < dl; di++) {
         let isGroupingRow = false,
             rowTable;
@@ -2633,13 +2625,14 @@ export default {
           SS.push('\n<tr>');
           for (ci = 0, cl = rowTable.rows[tri].cols.length; ci < cl; ci++) {
             col = rowTable.rows[tri].cols[ci];
-
-            SS.push('<td ', 'colspan="' + col.colspan + '" ', 'rowspan="' + col.rowspan + '" ', '>', isGroupingRow ? getGroupingValue.call(this, _list[di], di, col) : getFieldValue.call(this, _list, _list[di], di, col, val, "text"), '&nbsp;</td>');
+            SS.push('<td ', 'colspan="' + col.colspan + '" ', 'rowspan="' + col.rowspan + '" ', '>',
+              ((isGroupingRow ? getGroupingValue.call(this, _list[di], di, col) : getFieldValue.call(this, _list, _list[di], di, col, val, "text")) || '&nbsp;'),
+              '</td>');
           }
           SS.push('\n</tr>');
         }
       }
-      //SS.push('</table>');
+
       return SS.join('');
     };
     let getSum = function (_colGroup, _bodyRow, _list) {

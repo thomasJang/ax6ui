@@ -836,7 +836,9 @@ const repaint = function (_reset) {
   }
 
   /// 스크롤 컨텐츠의 높이 : 그리드 스크롤의 실제 크기와는 관계 없이 데이터 갯수에 따라 스크롤 컨텐츠 높이값 구해서 저장해두기.
-  this.xvar.scrollContentHeight = this.xvar.bodyTrHeight * (this.list.length - this.xvar.frozenRowIndex);
+  this.xvar.scrollContentHeight = this.xvar.bodyTrHeight * (list.length - this.xvar.frozenRowIndex);
+  if (this.xvar.scrollContentHeight < 0) this.xvar.scrollContentHeight = 0;
+
   /// 사용된 패널들의 키 모음
   this.$.livePanelKeys = [];
 
@@ -1286,7 +1288,7 @@ const repaint = function (_reset) {
   }
 
   /// mergeCells
-  if (cfg.body.mergeCells && this.list.length) {
+  if (cfg.body.mergeCells && list.length) {
     // left
     if (this.xvar.frozenColumnIndex > 0) {
       if (this.xvar.frozenRowIndex > 0) { // 상단 행고정
@@ -1395,6 +1397,13 @@ const updateRowState = function (_states, _dindex, _doindex, _data) {
     if (!processor[_state]) throw 'invaild state name';
     processor[_state].call(self, _dindex, _doindex, _data);
   });
+};
+
+const toggleCollapse = function (_dindex, _doindex, _collapse) {
+  if (DATA.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
+    this.proxyList = DATA.getProxyList.call(this, this.list);
+    this.align();
+  }
 };
 
 /**
@@ -2835,12 +2844,7 @@ export default {
    * @param _doindex
    * @param _collapse
    */
-  toggleCollapse: function (_dindex, _doindex, _collapse) {
-    if (DATA.toggleCollapse.call(this, _dindex, _doindex, _collapse)) {
-      this.proxyList = DATA.getProxyList.call(this, this.list);
-      repaint.call(this);
-    }
-  },
+  toggleCollapse: toggleCollapse,
   /**
    *
    * @param _dindex

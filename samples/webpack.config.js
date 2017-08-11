@@ -4,42 +4,53 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let entry = {
-  common: './src/assets/common.js',
+  //common: './src/assets/common.js',
   index: './src/index.js',
-  mask: './src/mask.js',
-  formatter: './src/formatter.js',
-  calendar: './src/calendar.js',
-  picker: './src/picker.js',
-  palette: './src/palette.js',
-  dialog: './src/dialog.js',
-  toast: './src/toast.js',
-  select: './src/select.js',
-  autocomplete: './src/autocomplete.js',
-  menu: './src/menu.js',
-  grid: './src/grid.js',
-  modal: './src/modal.js',
-  uploader: './src/uploader.js',
-  tooltip: './src/tooltip.js',
-  docker: './src/docker.js',
+  //mask: './src/mask.js',
+  //formatter: './src/formatter.js',
+  //calendar: './src/calendar.js',
+  //picker: './src/picker.js',
+  //palette: './src/palette.js',
+  //dialog: './src/dialog.js',
+  //toast: './src/toast.js',
+  //select: './src/select.js',
+  //autocomplete: './src/autocomplete.js',
+  //menu: './src/menu.js',
+  //grid: './src/grid.js',
+  //modal: './src/modal.js',
+  //uploader: './src/uploader.js',
+  //tooltip: './src/tooltip.js',
+  //docker: './src/docker.js',
 };
 
 let plugins = [
   //new CleanWebpackPlugin(['dist'])
 ];
 
-let menu = [];
+let menu = [
+  'AX6Util',
+  'AX6UIMask',
+  'AX6UIFormatter',
+  'AX6UICalendar',
+  'AX6UIPicker',
+  'AX6UIPalette',
+  'AX6UIDialog',
+  'AX6UIToast',
+  'AX6UISelect',
+  'AX6UIAutocomplete',
+  'AX6UIMenu',
+  'AX6UIGrid',
+  'AX6UIModal',
+  'AX6UIUploader',
+  'AX6UITooltip',
+  'AX6UIDocker',
+];
 
 for (let k in entry) {
-  if(k != 'common') {
-    menu.push(k + '.html');
-  }
-}
-
-for (let k in entry) {
-  if(k != 'common') {
+  if (k != 'common') {
     let obj = {
       inject: false,
-      commonChunks: ['common.js'],
+      commonChunks: [],
       chunks: [k],
       menu: menu,
       title: "AX6UI SAMPLE (" + k + ")",

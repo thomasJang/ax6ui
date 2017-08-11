@@ -5,7 +5,7 @@ import "../../src/AX6UIDocker/style.scss";
 
 const $body = $("#sample-body");
 let el = `
-<div data-ax5docker="docker1" style="height: 500px;background: #eee;padding: 5px;"></div>
+<div data-ax6ui-docker="docker1" style="height: 500px;background: #eee;padding: 5px;"></div>
 
 <div style="padding: 20px 0;">
     <form class="form-inline" onsubmit="return false;">
@@ -30,9 +30,8 @@ $body.append(el);
 
 
 /////~~~~~~~~~~~~~~~~~~
-let docker = new Docker();
 
-var _panel = {
+let rowPanel = {
   type: "row", // type : row, column, stack
   panels: [
     {
@@ -75,68 +74,9 @@ var _panel = {
     }
   ]
 };
-
-var __panel = {
+let statckPanel = {
   type: "stack",
   panels: [
-    /*
-    {
-        type: "panel",
-        name: "my name 1 ~~ long name i'm long",
-        moduleName: "content",
-        moduleState: {
-            data1: "data1"
-        }
-    },
-    {
-        type: "panel",
-        name: "my name 1 ~~ long name i'm long",
-        moduleName: "content",
-        moduleState: {
-            data1: "data1"
-        }
-    },
-    {
-        type: "panel",
-        name: "my name 2",
-        moduleName: "content",
-        moduleState: {
-            data1: "data2"
-        }
-    },
-    {
-        type: "panel",
-        name: "my name 3",
-        moduleName: "content",
-        moduleState: {
-            data1: "data3"
-        }
-    },
-    {
-        type: "panel",
-        name: "my name 3",
-        moduleName: "content",
-        moduleState: {
-            data1: "data3"
-        }
-    },
-    {
-        type: "panel",
-        name: "my name 3",
-        moduleName: "content",
-        moduleState: {
-            data1: "data3"
-        }
-    },
-    {
-        type: "panel",
-        name: "my name 3",
-        moduleName: "content",
-        moduleState: {
-            data1: "data3"
-        }
-    },
-    */
     {
       type: "panel",
       name: "my name 3",
@@ -158,65 +98,8 @@ var __panel = {
   ]
 };
 
-
-docker.setConfig({
-  target: $('[data-ax5docker="docker1"]'),
-  icons: {
-    close: '<i class="fa fa-times" aria-hidden="true"></i>',
-    more: '<i class="fa fa-chevron-circle-down" aria-hidden="true"></i>'
-  },
-  panels: [
-    __panel
-  ],
-  disableClosePanel: false,
-  disableDragPanel: false,
-  control: {
-    before: function (that, callback) {
-      if (that.controlType === "destroy") {
-        if (confirm("정말 삭제 할까요?")) {
-          setTimeout(function () {
-            callback(true);
-          }, 300);
-
-          return;
-        }else{
-          callback(false);
-        }
-      } else {
-        callback(true);
-        return;
-      }
-    }
-  },
-  menu: {
-    theme: 'default',
-    position: "absolute",
-    icons: {
-      'arrow': '▸'
-    }
-  }
-});
-
-docker.onResize = function (e) {
-  console.log(e);
-};
-
-docker.addModule({
-  "content": {
-    init: function (container, state) {
-      container["$element"].html(JSON.stringify(state));
-      // console.log(state, "init");
-    },
-    active: function (container, state) {
-      // console.log(state, "active");
-    },
-    deactive: function (container, state) {
-      // console.log(state, "deactive");
-    },
-    destroy: function (container, state) {
-      // console.log(state, "destroy");
-    }
-  }
+let docker = new Docker({
+  target: $('[data-ax6ui-docker="docker1"]')
 });
 
 docker.repaint();

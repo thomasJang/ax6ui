@@ -34,6 +34,7 @@ const onStateChanged = function (opts, that) {
 const setBody = function (content) {
   this.maskContent = content;
 };
+
 /* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
@@ -124,20 +125,20 @@ class AX6UIMask extends AX6UICore {
     if (this.status === "on") this.close();
     setBody.call(this, (options) ? options.content || "" : "");
 
-    let _cfg = jQuery.extend(true, this.config, options),
-      target = _cfg.target,
-      $target = jQuery(target),
-      maskId = 'ax-mask-' + this.instanceId,
-      $mask,
-      css = {},
-      that = {},
-      templateName = _cfg.templateName,
-      body = getBodyTmpl({
-        theme: _cfg.theme,
-        maskId: maskId,
-        body: this.maskContent,
-        templateName: templateName
-      }).trim();
+    let _cfg         = jQuery.extend(true, this.config, options),
+        target       = _cfg.target,
+        $target      = jQuery(target),
+        maskId       = 'ax-mask-' + this.instanceId,
+        $mask,
+        css          = {},
+        that         = {},
+        templateName = _cfg.templateName,
+        body         = getBodyTmpl({
+          theme: _cfg.theme,
+          maskId: maskId,
+          body: this.maskContent,
+          templateName: templateName
+        }).trim();
 
     jQuery(document.body).append(body);
 
@@ -154,9 +155,11 @@ class AX6UIMask extends AX6UICore {
       $target.addClass("ax-masking");
 
       // 마스크의 타겟이 html body가 아닌경우 window resize 이벤트를 추적하여 엘리먼트 마스크의 CSS 속성 변경
-      jQuery(window).on("resize.ax5mask-" + this.instanceId, U.throttle(function (e) {
-        this.align();
-      }, 100).bind(this));
+      jQuery(window)
+        .off("resize.ax6ui-mask-" + this.instanceId)
+        .on("resize.ax6ui-mask-" + this.instanceId, U.throttle(function (e) {
+          this.align();
+        }, 100).bind(this));
     }
 
     if (typeof _cfg.zIndex !== "undefined") {
@@ -219,7 +222,7 @@ class AX6UIMask extends AX6UICore {
           state: "close"
         });
 
-        jQuery(window).off("resize.ax5mask-" + this.instanceId);
+        jQuery(window).off("resize.ax6ui-mask-" + this.instanceId);
       };
 
       if (delay) {
@@ -249,7 +252,8 @@ class AX6UIMask extends AX6UICore {
           state: "close"
         });
 
-        jQuery(window).off("resize.ax5mask-" + this.instanceId);
+        jQuery(window)
+          .off("resize.ax6ui-mask-" + this.instanceId);
       };
 
 
@@ -282,6 +286,12 @@ class AX6UIMask extends AX6UICore {
       }
     }
     return this;
+  }
+
+  destory(){
+    if(this.$mask) this.$mask.remove();
+    if(this.$target) this.$target.removeClass("ax-masking");
+    jQuery(window).off("resize.ax6ui-mask-" + this.instanceId);
   }
 }
 

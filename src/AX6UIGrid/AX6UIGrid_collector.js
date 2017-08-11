@@ -1,6 +1,5 @@
 import U from "../AX6Util";
 
-
 let sum = function () {
   let value = 0,
     i = this.list.length;
@@ -24,8 +23,16 @@ let avg = function () {
   return U.number(value / (listLength || 1), {"round": 2});
 };
 
-
+/**
+ * @module AX6UIGrid_collector
+ */
 export default {
+  /**
+   *
+   */
   sum: sum,
+  /**
+   *
+   */
   avg: avg
 };

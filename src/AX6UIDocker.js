@@ -1,8 +1,8 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
 import U from "./AX6Util";
+import mustache from "./AX6Mustache";
 /* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
-
 
 let debouncer = {
   resizeDebouncedFn: null,
@@ -25,7 +25,7 @@ let tmpl = {
 </div>`;
     }
   },
-  panel_label() {
+  panel_label(columnKeys) {
     return `<li data-ax6ui-docker-pane-tab="{{pIndex}}" data-ax6ui-docker-id="{{id}}" data-ax6ui-docker-path="{{panelPath}}" class="{{#hasLabelColor}}hasLabelColor{{/hasLabelColor}}">
     <div class="label-icon" style="{{#color}}background: {{color}};{{/color}}{{#borderColor}}border-color: {{borderColor}};{{/borderColor}}"></div>
     <div class="title">{{{name}}}</div>
@@ -248,14 +248,14 @@ const controlPanel = function (_panel, _control, _callback) {
     processor[_control]();
     module = null;
 
-    if (U.isFunction(cfg.control.after)) {
-      cfg.control.after.call(that, that);
+    if (U.isFunction(this.config.control.after)) {
+      this.config.control.after.call(that, that);
     }
   };
 
   if (processor[_control]) {
-    if (U.isFunction(cfg.control.before)) {
-      cfg.control.before.call(that, that, function (result) {
+    if (U.isFunction(this.config.control.before)) {
+      this.config.control.before.call(that, that, function (result) {
         if (typeof result === "undefined") result = true;
         if (result) runProcessor();
 
@@ -279,32 +279,36 @@ const repaintPanels = function () {
     stack($parent, parent, myself, pIndex) {
 
       let $dom, activeIndex = -1;
-      myself.panelPath = getPanelPath(parent, pIndex);
+      myself.panelPath = getPanelPath.call(this, parent, pIndex);
 
-      $dom = jQuery(DOCKER.tmpl.get.call(this, "stack-panel", {
-        id: self.instanceId,
-        name: myself.name,
-        hasLabelColor: !U.isNothing(myself.color),
-        color: myself.color,
-        borderColor: myself.borderColor,
-        panelPath: myself.panelPath,
-        icons: cfg.icons,
-        labelDirection: myself.labelDirection || cfg.labelDirection,
-        disableClosePanel: cfg.disableClosePanel,
-        disableDragPanel: cfg.disableDragPanel,
-      }, {}));
+      $dom = jQuery(
+        mustache.render(tmpl.stack_panel.call(this, this.config.columnKeys, {
+          labelDirection: myself.labelDirection || this.config.labelDirection
+        }), {
+          id: this.instanceId,
+          name: myself.name,
+          hasLabelColor: !U.isNothing(myself.color),
+          color: myself.color,
+          borderColor: myself.borderColor,
+          panelPath: myself.panelPath,
+          icons: this.config.icons,
+          labelDirection: myself.labelDirection || this.config.labelDirection,
+          disableClosePanel: this.config.disableClosePanel,
+          disableDragPanel: this.config.disableDragPanel,
+        })
+      );
       $parent.append($dom);
 
       if (U.isArray(myself.panels)) {
-        myself.panels.forEach(function (P, pIndex) {
+        myself.panels.forEach((P, pIndex) => {
           if (P.active) activeIndex = pIndex;
         });
         if (activeIndex === -1) activeIndex = 0;
         myself.panels[activeIndex].active = true;
 
-        myself.panels.forEach(function (P, _pIndex) {
+        myself.panels.forEach((P, _pIndex) => {
           P.panelIndex = _pIndex;
-          appendProcessor[P.type]($dom, myself, P, _pIndex);
+          appendProcessor[P.type].call(this, $dom, myself, P, _pIndex);
         });
       }
 
@@ -313,22 +317,24 @@ const repaintPanels = function () {
     },
     panel($parent, parent, myself, pIndex) {
       let $dom;
-      myself.panelPath = getPanelPath(parent, pIndex);
-      myself.$label = jQuery(DOCKER.tmpl.get.call(this, "panel-label", {
-        id: self.instanceId,
-        pIndex: pIndex,
-        name: myself.name,
-        hasLabelColor: !U.isNothing(myself.color),
-        color: myself.color,
-        borderColor: myself.borderColor,
-        panelPath: myself.panelPath,
-        icons: cfg.icons,
-        disableClosePanel: cfg.disableClosePanel,
-        disableDragPanel: cfg.disableDragPanel,
-      }, {}));
+      myself.panelPath = getPanelPath.call(this, parent, pIndex);
+      myself.$label = jQuery(
+        mustache.render(tmpl.panel_label.call(this, this.config.columnKeys), {
+          id: this.instanceId,
+          pIndex: pIndex,
+          name: myself.name,
+          hasLabelColor: !U.isNothing(myself.color),
+          color: myself.color,
+          borderColor: myself.borderColor,
+          panelPath: myself.panelPath,
+          icons: this.config.icons,
+          disableClosePanel: this.config.disableClosePanel,
+          disableDragPanel: this.config.disableDragPanel,
+        })
+      );
 
       if (!myself.$item) {
-        myself.$item = jQuery('<div data-ax6ui-docker-pane-item="' + pIndex + '" data-ax6ui-docker-id="' + self.instanceId + '" data-ax6ui-docker-pane-id="' + getPanelId() + '" data-ax6ui-docker-path="' + myself.panelPath + '"></div>');
+        myself.$item = jQuery('<div data-ax6ui-docker-pane-item="' + pIndex + '" data-ax6ui-docker-id="' + this.instanceId + '" data-ax6ui-docker-pane-id="' + getPanelId.call(this) + '" data-ax6ui-docker-path="' + myself.panelPath + '"></div>');
       } else {
         myself.$item.attr("data-ax6ui-docker-path", myself.panelPath);
         myself.$item.attr("data-ax6ui-docker-pane-item", pIndex);
@@ -339,28 +345,28 @@ const repaintPanels = function () {
           if (!myself.builded) controlPanel(myself, "init");
           controlPanel(myself, "active");
         }
-        $parent.find('[data-ax6ui-docker-pane-tabs="' + self.instanceId + '"]').append(myself.$label);
-        $parent.find('[data-ax6ui-docker-pane-item-views="' + self.instanceId + '"]').append(myself.$item);
+        $parent.find('[data-ax6ui-docker-pane-tabs="' + this.instanceId + '"]').append(myself.$label);
+        $parent.find('[data-ax6ui-docker-pane-item-views="' + this.instanceId + '"]').append(myself.$item);
       } else {
         $dom = jQuery(DOCKER.tmpl.get.call(this, "stack-panel", {
-          id: self.instanceId,
+          id: this.instanceId,
           name: myself.name,
           hasLabelColor: !U.isNothing(myself.color),
           color: myself.color,
           borderColor: myself.borderColor,
           panelPath: myself.panelPath,
           flexGrow: myself.flexGrow,
-          icons: cfg.icons,
-          labelDirection: myself.labelDirection || cfg.labelDirection,
-          disableClosePanel: cfg.disableClosePanel,
-          disableDragPanel: cfg.disableDragPanel,
+          icons: this.config.icons,
+          labelDirection: myself.labelDirection || this.config.labelDirection,
+          disableClosePanel: this.config.disableClosePanel,
+          disableDragPanel: this.config.disableDragPanel,
         }, {}));
 
         if (!myself.builded) controlPanel(myself, "init");
         controlPanel(myself, "active");
 
-        $dom.find('[data-ax6ui-docker-pane-tabs="' + self.instanceId + '"]').append(myself.$label);
-        $dom.find('[data-ax6ui-docker-pane-item-views="' + self.instanceId + '"]').append(myself.$item);
+        $dom.find('[data-ax6ui-docker-pane-tabs="' + this.instanceId + '"]').append(myself.$label);
+        $dom.find('[data-ax6ui-docker-pane-item-views="' + this.instanceId + '"]').append(myself.$item);
 
         $parent.append($dom);
       }
@@ -368,24 +374,24 @@ const repaintPanels = function () {
       $dom = null;
     },
     resizeHandle($parent, parent, myself, pIndex) {
-      let $dom = jQuery('<div data-ax6ui-docker-id="' + self.instanceId + '" data-ax6ui-docker-resize-handle="' + parent.type + "/" + parent.panelPath + "/" + pIndex + '"></div>');
+      let $dom = jQuery('<div data-ax6ui-docker-id="' + this.instanceId + '" data-ax6ui-docker-resize-handle="' + parent.type + "/" + parent.panelPath + "/" + pIndex + '"></div>');
       $parent.append($dom);
       $dom = null;
     },
     row($parent, parent, myself, pIndex) {
       let $dom;
-      myself.panelPath = getPanelPath(parent, pIndex);
+      myself.panelPath = getPanelPath.call(this, parent, pIndex);
       if (parent && parent.type == "stack") {
         throw "The 'stack' type child nodes are allowed only for the 'panel' type.";
       }
-      $dom = jQuery('<div data-ax6ui-docker-pane-axis="row" data-ax6ui-docker-id="' + self.instanceId + '" data-ax6ui-docker-path="' + myself.panelPath + '" style="flex-grow: ' + (myself.flexGrow || 1) + ';"></div>');
+      $dom = jQuery('<div data-ax6ui-docker-pane-axis="row" data-ax6ui-docker-id="' + this.instanceId + '" data-ax6ui-docker-path="' + myself.panelPath + '" style="flex-grow: ' + (myself.flexGrow || 1) + ';"></div>');
       $parent.append($dom);
 
       if (U.isArray(myself.panels)) {
-        myself.panels.forEach(function (P, _pIndex) {
-          if (_pIndex > 0) appendProcessor["resizeHandle"]($dom, myself, P, _pIndex);
+        myself.panels.forEach((P, _pIndex) => {
+          if (_pIndex > 0) appendProcessor["resizeHandle"].call(this, $dom, myself, P, _pIndex);
           P.panelIndex = _pIndex;
-          appendProcessor[P.type]($dom, myself, P, _pIndex);
+          appendProcessor[P.type].call(this, $dom, myself, P, _pIndex);
         });
       }
 
@@ -393,18 +399,18 @@ const repaintPanels = function () {
     },
     column($parent, parent, myself, pIndex) {
       let $dom;
-      myself.panelPath = getPanelPath(parent, pIndex);
+      myself.panelPath = getPanelPath.call(this, parent, pIndex);
       if (parent && parent.type == "stack") {
         throw "The 'stack' type child nodes are allowed only for the 'panel' type.";
       }
-      $dom = jQuery('<div data-ax6ui-docker-pane-axis="column" data-ax6ui-docker-id="' + self.instanceId + '" data-ax6ui-docker-path="' + myself.panelPath + '" style="flex-grow: ' + (myself.flexGrow || 1) + ';"></div>');
+      $dom = jQuery('<div data-ax6ui-docker-pane-axis="column" data-ax6ui-docker-id="' + this.instanceId + '" data-ax6ui-docker-path="' + myself.panelPath + '" style="flex-grow: ' + (myself.flexGrow || 1) + ';"></div>');
       $parent.append($dom);
 
       if (U.isArray(myself.panels)) {
-        myself.panels.forEach(function (P, _pIndex) {
+        myself.panels.forEach((P, _pIndex) => {
           if (_pIndex > 0) appendProcessor["resizeHandle"]($dom, myself, P, _pIndex);
           P.panelIndex = _pIndex;
-          appendProcessor[P.type]($dom, myself, P, _pIndex);
+          appendProcessor[P.type].call(this, $dom, myself, P, _pIndex);
         });
       }
 
@@ -413,23 +419,23 @@ const repaintPanels = function () {
   };
 
   let $root = jQuery('<div data-ax6ui-docker-panes="' + this.instanceId + '"></div>');
-  if (this.panels[0]) appendProcessor[this.panels[0].type]($root, null, this.panels[0], 0);
+  if (this.panels[0]) appendProcessor[this.panels[0].type].call(this, $root, null, this.panels[0], 0);
   this.$target.html($root);
 
   this.$target
     .off("click.ax5docker-pane")
-    .on("click.ax5docker-pane", '[data-ax6ui-docker-id="' + self.instanceId + '"][data-ax6ui-docker-pane-tab] .close-icon', function (e) {
-      self.removePanel($(this).parents('[data-ax6ui-docker-pane-tab]').attr("data-ax6ui-docker-path"));
+    .on("click.ax5docker-pane", '[data-ax6ui-docker-id="' + this.instanceId + '"][data-ax6ui-docker-pane-tab] .close-icon', e => {
+      this.removePanel($(e.currentTarget).parents('[data-ax6ui-docker-pane-tab]').attr("data-ax6ui-docker-path"));
       U.stopEvent(e);
     })
-    .on("click.ax5docker-pane", '[data-ax6ui-docker-id="' + self.instanceId + '"][data-ax6ui-docker-pane-tab]', function (e) {
+    .on("click.ax5docker-pane", '[data-ax6ui-docker-id="' + this.instanceId + '"][data-ax6ui-docker-pane-tab]', e => {
       // pane, panelIndex 인자 변경.
-      let $clickedLabel = jQuery(this);
-      let pane = getPanel($clickedLabel.parents('[data-ax6ui-docker-pane]').attr("data-ax6ui-docker-path"));
+      let $clickedLabel = jQuery(e.currentTarget);
+      let pane = getPanel.call(this, $clickedLabel.parents('[data-ax6ui-docker-pane]').attr("data-ax6ui-docker-path"));
       let panelIndex = $clickedLabel.attr("data-ax6ui-docker-pane-tab");
 
       if (!$clickedLabel.hasClass("active")) {
-        changeActiveStackPanel(pane, panelIndex);
+        changeActiveStackPanel.call(this, pane, panelIndex);
       }
 
       $clickedLabel = null;
@@ -437,313 +443,52 @@ const repaintPanels = function () {
       panelIndex = null;
       U.stopEvent(e);
     })
-    .on("click.ax5docker-pane", '[data-ax6ui-docker-pane-tabs-more="' + this.instanceId + '"]', function (e) {
-      openStackPanelMore($(this).parents('[data-ax6ui-docker-pane]'), e);
+    .on("click.ax5docker-pane", '[data-ax6ui-docker-pane-tabs-more="' + this.instanceId + '"]', e => {
+      openStackPanelMore.call(this, $(e.currentTarget).parents('[data-ax6ui-docker-pane]'), e);
       U.stopEvent(e);
     });
 
   this.$target
     .off("mousedown.ax5docker-pane-resize")
     .off("dragstart.ax5docker-pane-resize")
-    .on("dragstart.ax5docker-pane-resize", '[data-ax6ui-docker-id="' + self.instanceId + '"][data-ax6ui-docker-pane-tab]', function (e) {
-      if (!cfg.disableDragPanel) {
-        panelTabDragEvent.on(this);
+    .on("dragstart.ax5docker-pane-resize", '[data-ax6ui-docker-id="' + this.instanceId + '"][data-ax6ui-docker-pane-tab]', e => {
+      if (!this.config.disableDragPanel) {
+        this.panelTabDragEvent.on(e.currentTarget);
       }
     })
-    .on("mousedown.ax5docker-pane-resize", '[data-ax6ui-docker-id="' + self.instanceId + '"][data-ax6ui-docker-resize-handle]', function (e) {
+    .on("mousedown.ax5docker-pane-resize", '[data-ax6ui-docker-id="' + this.instanceId + '"][data-ax6ui-docker-resize-handle]', e => {
       let datas = this.getAttribute("data-ax6ui-docker-resize-handle").split(/\//g);
 
       // panelResizerEvent.init
-      self.xvar.mousePosition = getMousePosition(e);
-      self.xvar.resizerType = datas[0];
-      self.xvar.resizerPath = datas[1];
-      self.xvar.resizerIndex = datas[2];
+      this.xvar.mousePosition = getMousePosition(e);
+      this.xvar.resizerType = datas[0];
+      this.xvar.resizerPath = datas[1];
+      this.xvar.resizerIndex = datas[2];
       // 주변 패널들
-      self.xvar.resizer$dom = $(this);
-      self.xvar.resizerParent$dom = self.xvar.resizer$dom.parent();
-      self.xvar.resizerPrevGrow = U.number(self.xvar.resizer$dom.prev().css("flex-grow"));
-      self.xvar.resizerNextGrow = U.number(self.xvar.resizer$dom.next().css("flex-grow"));
+      this.xvar.resizer$dom = $(this);
+      this.xvar.resizerParent$dom = this.xvar.resizer$dom.parent();
+      this.xvar.resizerPrevGrow = U.number(this.xvar.resizer$dom.prev().css("flex-grow"));
+      this.xvar.resizerNextGrow = U.number(this.xvar.resizer$dom.next().css("flex-grow"));
 
-      if (self.xvar.resizerType == "row") {
+      if (this.xvar.resizerType == "row") {
         //self.xvar.resizerCanvasWidth = self.xvar.resizerParent$dom.innerWidth();
-        self.xvar.resizerCanvasWidth = self.xvar.resizer$dom.prev().innerWidth() + self.xvar.resizer$dom.next().innerWidth() + self.xvar.resizer$dom.width();
+        this.xvar.resizerCanvasWidth = this.xvar.resizer$dom.prev().innerWidth() + this.xvar.resizer$dom.next().innerWidth() + this.xvar.resizer$dom.width();
       } else {
         //self.xvar.resizerCanvasHeight = self.xvar.resizerParent$dom.innerHeight();
-        self.xvar.resizerCanvasHeight = self.xvar.resizer$dom.prev().innerHeight() + self.xvar.resizer$dom.next().innerHeight() + self.xvar.resizer$dom.height();
+        this.xvar.resizerCanvasHeight = this.xvar.resizer$dom.prev().innerHeight() + this.xvar.resizer$dom.next().innerHeight() + this.xvar.resizer$dom.height();
       }
 
-      panelResizerEvent.on(this);
+      this.panelResizerEvent.on(e.currentTarget);
       U.stopEvent(e);
     })
-    .on("dragstart.ax5docker-pane-resize", '[data-ax6ui-docker-id="' + self.instanceId + '"][data-ax6ui-docker-resize-handle]', function (e) {
+    .on("dragstart.ax5docker-pane-resize", '[data-ax6ui-docker-id="' + this.instanceId + '"][data-ax6ui-docker-resize-handle]', e => {
       U.stopEvent(e);
       return false;
     });
 
   // stackPane tabs 스크롤처리
-  alignStackPane();
+  alignStackPane.call(this);
   $root = null;
-};
-
-/**
- * repaintPanels이 작동할 때. 패널탭에 dragStart 이벤트를 연결합니다.
- * 발생된 이벤트가 panelTabDragEvent.on를 작동.
- */
-const panelTabDragEvent = {
-  "on": (dragPanel) => {
-    if (this.panels[0] && this.panels[0].panels && this.panels[0].panels.length) {
-
-      this.xvar.dragger = {
-        dragPanel: dragPanel,
-        target: null,
-        dragOverVertical: null,
-        dragOverHorizontal: null,
-      };
-
-      this.$target
-        .on("dragover.ax5docker-" + this.instanceId, '[data-ax6ui-docker-id="' + this.instanceId + '"][data-ax6ui-docker-path]', function (e) {
-          // todo : dragover 구현
-          // console.log("dargover", getMousePosition(e));
-          // console.log(e.target);
-          panelTabDragEvent.dragover(this, e);
-          U.stopEvent(e);
-        })
-        .on("drop.ax5docker-" + this.instanceId, function (e) {
-          panelTabDragEvent.off("drop");
-          U.stopEvent(e);
-        })
-        .on("dragend.ax5docker-" + this.instanceId, function (e) {
-          panelTabDragEvent.off();
-          U.stopEvent(e);
-        });
-    }
-  },
-  "dragover": (dragoverDom, e) => {
-
-    let $dragoverDom = jQuery(dragoverDom),
-        box          = {},
-        mouse        = getMousePosition(e),
-        dragOverVertical,
-        dragOverHorizontal;
-
-    if (this.xvar.dragger.target == null || this.xvar.dragger.target.get(0) != $dragoverDom.get(0)) {
-      if (this.xvar.dragger.target) this.xvar.dragger.target.removeAttr("data-dropper");
-
-      this.xvar.dragger.target = $dragoverDom;
-      this.xvar.dragger.dragOverVertical = null;
-      this.xvar.dragger.dragOverHorizontal = null;
-    }
-
-    box = $dragoverDom.offset();
-    box.width = $dragoverDom.width();
-    box.height = $dragoverDom.height();
-
-    if ($dragoverDom.attr("data-ax6ui-docker-pane-tab")) {
-      let halfWidth = box.width / 2;
-      if (box.left <= mouse.clientX && (box.left + halfWidth) >= mouse.clientX) {
-        dragOverHorizontal = "left";
-      }
-      else if ((box.left + halfWidth) <= mouse.clientX && (box.left + halfWidth * 2) >= mouse.clientX) {
-        dragOverHorizontal = "right";
-      }
-      if (this.xvar.dragger.dragOverHorizontal != dragOverHorizontal && typeof dragOverHorizontal != "undefined") {
-        this.xvar.dragger.dragOverHorizontal = dragOverHorizontal;
-        const draggerProcessor = {
-          "left"($target) {
-            $target.attr("data-dropper", "left");
-          },
-          "right"($target) {
-            $target.attr("data-dropper", "right");
-          },
-        };
-        if (this.xvar.dragger.dragOverHorizontal in draggerProcessor) {
-          draggerProcessor[this.xvar.dragger.dragOverHorizontal](this.xvar.dragger.target);
-        }
-      }
-      halfWidth = null;
-    }
-    else if ($dragoverDom.attr("data-ax6ui-docker-pane-tabs")) {
-      //this.xvar.dragger.dragOverVertical = "center";
-      this.xvar.dragger.dragOverHorizontal = "last-child";
-      this.xvar.dragger.target.attr("data-dropper", "true");
-    }
-    else if ($dragoverDom.attr("data-ax6ui-docker-pane-item")) {
-      // panel dragover 포지션 구하기
-      let threeQuarterHeight = box.height / 3;
-      let threeQuarterWidth = box.width / 3;
-
-      if (box.top <= mouse.clientY && (box.top + threeQuarterHeight) >= mouse.clientY) {
-        dragOverVertical = "top";
-      }
-      else if ((box.top + threeQuarterHeight) <= mouse.clientY && (box.top + threeQuarterHeight * 2) >= mouse.clientY) {
-        dragOverVertical = "middle";
-      }
-      else if ((box.top + threeQuarterHeight * 2) <= mouse.clientY && (box.top + threeQuarterHeight * 3) >= mouse.clientY) {
-        dragOverVertical = "bottom";
-      }
-
-      if (box.left <= mouse.clientX && (box.left + threeQuarterWidth) >= mouse.clientX) {
-        dragOverHorizontal = "left";
-      }
-      else if ((box.left + threeQuarterWidth) <= mouse.clientX && (box.left + threeQuarterWidth * 2) >= mouse.clientX) {
-        dragOverHorizontal = "center";
-      }
-      else if ((box.left + threeQuarterWidth * 2) <= mouse.clientX && (box.left + threeQuarterWidth * 3) >= mouse.clientX) {
-        dragOverHorizontal = "right";
-      }
-
-      if (this.xvar.dragger.dragOverVertical != dragOverVertical || this.xvar.dragger.dragOverHorizontal != dragOverHorizontal) {
-        this.xvar.dragger.dragOverVertical = dragOverVertical;
-        this.xvar.dragger.dragOverHorizontal = dragOverHorizontal;
-
-        var draggerProcessor = {
-          "left-top"($target) {
-            $target.attr("data-dropper", "left");
-          },
-          "right-top"($target) {
-            $target.attr("data-dropper", "right");
-          },
-          "center-top"($target) {
-            $target.attr("data-dropper", "top");
-          },
-          "left-middle"($target) {
-            $target.attr("data-dropper", "left");
-          },
-          "right-middle"($target) {
-            $target.attr("data-dropper", "right");
-          },
-          "center-middle"($target) {
-            $target.attr("data-dropper", "center");
-          },
-          "left-bottom"($target) {
-            $target.attr("data-dropper", "left");
-          },
-          "right-bottom"($target) {
-            $target.attr("data-dropper", "right");
-          },
-          "center-bottom"($target) {
-            $target.attr("data-dropper", "bottom");
-          },
-        };
-        if (this.xvar.dragger.dragOverHorizontal + "-" + this.xvar.dragger.dragOverVertical in draggerProcessor) {
-          draggerProcessor[this.xvar.dragger.dragOverHorizontal + "-" + this.xvar.dragger.dragOverVertical](this.xvar.dragger.target);
-        }
-      }
-
-      threeQuarterHeight = null;
-      threeQuarterWidth = null;
-    }
-  },
-  "off": (isDrop) => {
-    if (isDrop) {
-      let dragPanel  = getPanel(this.xvar.dragger.dragPanel.getAttribute("data-ax6ui-docker-path")),
-          appendType = [];
-
-      if (this.xvar.dragger.dragOverHorizontal) appendType.push(this.xvar.dragger.dragOverHorizontal);
-      if (this.xvar.dragger.dragOverVertical) appendType.push(this.xvar.dragger.dragOverVertical);
-
-      this.appendPanel(dragPanel, this.xvar.dragger.target.attr("data-ax6ui-docker-path"), appendType);
-
-      dragPanel = null;
-      appendType = null;
-    }
-
-    alignStackPane();
-
-    this.$target
-      .off("dragover.ax5docker-" + this.instanceId)
-      .off("drop.ax5docker-" + this.instanceId)
-      .off("dragend.ax5docker-" + this.instanceId);
-
-    this.xvar.dragger.target.removeAttr("data-dropper");
-  }
-};
-
-/**
- * repaintPanels이 작동할 때. 리사이저에 mousedown 이벤트를 연결합니다.
- * 발생된 이벤트가 panelResizerEvent.on 을 작동시켜 리사이저를 움직이게 합니다
- */
-const panelResizerEvent = {
-  "on": (_resizer) => {
-
-    jQuery(document.body)
-      .on("mousemove.ax5docker-" + this.instanceId, function (e) {
-        let mouseObj = getMousePosition(e),
-            da_grow;
-
-        if (self.xvar.resizerLived) {
-          if (self.xvar.resizerType == "row") {
-            self.xvar.__da = mouseObj.clientX - self.xvar.mousePosition.clientX;
-            da_grow = U.number(self.xvar.__da * 2 / self.xvar.resizerCanvasWidth, {round: 6});
-
-            self.xvar.resizer$dom.prev().css({"flex-grow": self.xvar.resizerPrevGrow + da_grow});
-            self.xvar.resizer$dom.next().css({"flex-grow": self.xvar.resizerNextGrow - da_grow});
-          } else {
-            self.xvar.__da = mouseObj.clientY - self.xvar.mousePosition.clientY;
-            da_grow = U.number(self.xvar.__da * 2 / self.xvar.resizerCanvasHeight, {round: 6});
-
-            self.xvar.resizer$dom.prev().css({"flex-grow": self.xvar.resizerPrevGrow + da_grow});
-            self.xvar.resizer$dom.next().css({"flex-grow": self.xvar.resizerNextGrow - da_grow});
-          }
-
-          fireEvent({
-            eventName: "resize",
-            target: self.xvar.resizer$dom
-          });
-        } else {
-          self.xvar.resizerLived = true;
-        }
-
-        mouseObj = null;
-        da_grow = null;
-      })
-      .on("mouseup.ax5docker-" + this.instanceId, function (e) {
-        panelResizerEvent.off();
-        U.stopEvent(e);
-      })
-      .on("mouseleave.ax5docker-" + this.instanceId, function (e) {
-        panelResizerEvent.off();
-        U.stopEvent(e);
-      });
-
-    jQuery(document.body)
-      .attr('unselectable', 'on')
-      .css('user-select', 'none')
-      .on('selectstart', false);
-  },
-  "off": () => {
-    self.xvar.resizerLived = false;
-
-    if (typeof this.xvar.__da === "undefined") {
-
-    }
-    else {
-      let $prevPanel = self.xvar.resizer$dom.prev(),
-          $nextPanel = self.xvar.resizer$dom.next(),
-          prevPane   = getPanel($prevPanel.attr("data-ax6ui-docker-path")),
-          nextPane   = getPanel($nextPanel.attr("data-ax6ui-docker-path"));
-
-      prevPane.flexGrow = U.number($prevPanel.css("flex-grow"));
-      nextPane.flexGrow = U.number($nextPanel.css("flex-grow"));
-
-      $prevPanel = null;
-      $nextPanel = null;
-      prevPane = null;
-      nextPane = null;
-    }
-
-    alignStackPane();
-
-    jQuery(document.body)
-      .off("mousemove.ax5docker-" + this.instanceId)
-      .off("mouseup.ax5docker-" + this.instanceId)
-      .off("mouseleave.ax5docker-" + this.instanceId);
-
-    jQuery(document.body)
-      .removeAttr('unselectable')
-      .css('user-select', 'auto')
-      .off('selectstart');
-  }
 };
 
 /**
@@ -1016,6 +761,266 @@ class AX6UIDocker extends AX6UICore {
      * @member {Object}
      */
     this.modules = {};
+
+    /**
+     * repaintPanels이 작동할 때. 패널탭에 dragStart 이벤트를 연결합니다.
+     * 발생된 이벤트가 panelTabDragEvent.on를 작동.
+     */
+    this.panelTabDragEvent = {
+      "on": (dragPanel) => {
+        if (this.panels[0] && this.panels[0].panels && this.panels[0].panels.length) {
+
+          this.xvar.dragger = {
+            dragPanel: dragPanel,
+            target: null,
+            dragOverVertical: null,
+            dragOverHorizontal: null,
+          };
+
+          this.$target
+            .on("dragover.ax5docker-" + this.instanceId, '[data-ax6ui-docker-id="' + this.instanceId + '"][data-ax6ui-docker-path]', function (e) {
+              // todo : dragover 구현
+              // console.log("dargover", getMousePosition(e));
+              // console.log(e.target);
+              panelTabDragEvent.dragover(this, e);
+              U.stopEvent(e);
+            })
+            .on("drop.ax5docker-" + this.instanceId, function (e) {
+              panelTabDragEvent.off("drop");
+              U.stopEvent(e);
+            })
+            .on("dragend.ax5docker-" + this.instanceId, function (e) {
+              panelTabDragEvent.off();
+              U.stopEvent(e);
+            });
+        }
+      },
+      "dragover": (dragoverDom, e) => {
+
+        let $dragoverDom = jQuery(dragoverDom),
+            box          = {},
+            mouse        = getMousePosition(e),
+            dragOverVertical,
+            dragOverHorizontal;
+
+        if (this.xvar.dragger.target == null || this.xvar.dragger.target.get(0) != $dragoverDom.get(0)) {
+          if (this.xvar.dragger.target) this.xvar.dragger.target.removeAttr("data-dropper");
+
+          this.xvar.dragger.target = $dragoverDom;
+          this.xvar.dragger.dragOverVertical = null;
+          this.xvar.dragger.dragOverHorizontal = null;
+        }
+
+        box = $dragoverDom.offset();
+        box.width = $dragoverDom.width();
+        box.height = $dragoverDom.height();
+
+        if ($dragoverDom.attr("data-ax6ui-docker-pane-tab")) {
+          let halfWidth = box.width / 2;
+          if (box.left <= mouse.clientX && (box.left + halfWidth) >= mouse.clientX) {
+            dragOverHorizontal = "left";
+          }
+          else if ((box.left + halfWidth) <= mouse.clientX && (box.left + halfWidth * 2) >= mouse.clientX) {
+            dragOverHorizontal = "right";
+          }
+          if (this.xvar.dragger.dragOverHorizontal != dragOverHorizontal && typeof dragOverHorizontal != "undefined") {
+            this.xvar.dragger.dragOverHorizontal = dragOverHorizontal;
+            const draggerProcessor = {
+              "left"($target) {
+                $target.attr("data-dropper", "left");
+              },
+              "right"($target) {
+                $target.attr("data-dropper", "right");
+              },
+            };
+            if (this.xvar.dragger.dragOverHorizontal in draggerProcessor) {
+              draggerProcessor[this.xvar.dragger.dragOverHorizontal](this.xvar.dragger.target);
+            }
+          }
+          halfWidth = null;
+        }
+        else if ($dragoverDom.attr("data-ax6ui-docker-pane-tabs")) {
+          //this.xvar.dragger.dragOverVertical = "center";
+          this.xvar.dragger.dragOverHorizontal = "last-child";
+          this.xvar.dragger.target.attr("data-dropper", "true");
+        }
+        else if ($dragoverDom.attr("data-ax6ui-docker-pane-item")) {
+          // panel dragover 포지션 구하기
+          let threeQuarterHeight = box.height / 3;
+          let threeQuarterWidth = box.width / 3;
+
+          if (box.top <= mouse.clientY && (box.top + threeQuarterHeight) >= mouse.clientY) {
+            dragOverVertical = "top";
+          }
+          else if ((box.top + threeQuarterHeight) <= mouse.clientY && (box.top + threeQuarterHeight * 2) >= mouse.clientY) {
+            dragOverVertical = "middle";
+          }
+          else if ((box.top + threeQuarterHeight * 2) <= mouse.clientY && (box.top + threeQuarterHeight * 3) >= mouse.clientY) {
+            dragOverVertical = "bottom";
+          }
+
+          if (box.left <= mouse.clientX && (box.left + threeQuarterWidth) >= mouse.clientX) {
+            dragOverHorizontal = "left";
+          }
+          else if ((box.left + threeQuarterWidth) <= mouse.clientX && (box.left + threeQuarterWidth * 2) >= mouse.clientX) {
+            dragOverHorizontal = "center";
+          }
+          else if ((box.left + threeQuarterWidth * 2) <= mouse.clientX && (box.left + threeQuarterWidth * 3) >= mouse.clientX) {
+            dragOverHorizontal = "right";
+          }
+
+          if (this.xvar.dragger.dragOverVertical != dragOverVertical || this.xvar.dragger.dragOverHorizontal != dragOverHorizontal) {
+            this.xvar.dragger.dragOverVertical = dragOverVertical;
+            this.xvar.dragger.dragOverHorizontal = dragOverHorizontal;
+
+            var draggerProcessor = {
+              "left-top"($target) {
+                $target.attr("data-dropper", "left");
+              },
+              "right-top"($target) {
+                $target.attr("data-dropper", "right");
+              },
+              "center-top"($target) {
+                $target.attr("data-dropper", "top");
+              },
+              "left-middle"($target) {
+                $target.attr("data-dropper", "left");
+              },
+              "right-middle"($target) {
+                $target.attr("data-dropper", "right");
+              },
+              "center-middle"($target) {
+                $target.attr("data-dropper", "center");
+              },
+              "left-bottom"($target) {
+                $target.attr("data-dropper", "left");
+              },
+              "right-bottom"($target) {
+                $target.attr("data-dropper", "right");
+              },
+              "center-bottom"($target) {
+                $target.attr("data-dropper", "bottom");
+              },
+            };
+            if (this.xvar.dragger.dragOverHorizontal + "-" + this.xvar.dragger.dragOverVertical in draggerProcessor) {
+              draggerProcessor[this.xvar.dragger.dragOverHorizontal + "-" + this.xvar.dragger.dragOverVertical](this.xvar.dragger.target);
+            }
+          }
+
+          threeQuarterHeight = null;
+          threeQuarterWidth = null;
+        }
+      },
+      "off": (isDrop) => {
+        if (isDrop) {
+          let dragPanel  = getPanel(this.xvar.dragger.dragPanel.getAttribute("data-ax6ui-docker-path")),
+              appendType = [];
+
+          if (this.xvar.dragger.dragOverHorizontal) appendType.push(this.xvar.dragger.dragOverHorizontal);
+          if (this.xvar.dragger.dragOverVertical) appendType.push(this.xvar.dragger.dragOverVertical);
+
+          this.appendPanel(dragPanel, this.xvar.dragger.target.attr("data-ax6ui-docker-path"), appendType);
+
+          dragPanel = null;
+          appendType = null;
+        }
+
+        alignStackPane();
+
+        this.$target
+          .off("dragover.ax5docker-" + this.instanceId)
+          .off("drop.ax5docker-" + this.instanceId)
+          .off("dragend.ax5docker-" + this.instanceId);
+
+        this.xvar.dragger.target.removeAttr("data-dropper");
+      }
+    };
+    /**
+     * repaintPanels이 작동할 때. 리사이저에 mousedown 이벤트를 연결합니다.
+     * 발생된 이벤트가 panelResizerEvent.on 을 작동시켜 리사이저를 움직이게 합니다
+     */
+    this.panelResizerEvent = {
+      "on": (_resizer) => {
+
+        jQuery(document.body)
+          .on("mousemove.ax5docker-" + this.instanceId, function (e) {
+            let mouseObj = getMousePosition(e),
+                da_grow;
+
+            if (self.xvar.resizerLived) {
+              if (self.xvar.resizerType == "row") {
+                self.xvar.__da = mouseObj.clientX - self.xvar.mousePosition.clientX;
+                da_grow = U.number(self.xvar.__da * 2 / self.xvar.resizerCanvasWidth, {round: 6});
+
+                self.xvar.resizer$dom.prev().css({"flex-grow": self.xvar.resizerPrevGrow + da_grow});
+                self.xvar.resizer$dom.next().css({"flex-grow": self.xvar.resizerNextGrow - da_grow});
+              } else {
+                self.xvar.__da = mouseObj.clientY - self.xvar.mousePosition.clientY;
+                da_grow = U.number(self.xvar.__da * 2 / self.xvar.resizerCanvasHeight, {round: 6});
+
+                self.xvar.resizer$dom.prev().css({"flex-grow": self.xvar.resizerPrevGrow + da_grow});
+                self.xvar.resizer$dom.next().css({"flex-grow": self.xvar.resizerNextGrow - da_grow});
+              }
+
+              fireEvent({
+                eventName: "resize",
+                target: self.xvar.resizer$dom
+              });
+            } else {
+              self.xvar.resizerLived = true;
+            }
+
+            mouseObj = null;
+            da_grow = null;
+          })
+          .on("mouseup.ax5docker-" + this.instanceId, function (e) {
+            panelResizerEvent.off();
+            U.stopEvent(e);
+          })
+          .on("mouseleave.ax5docker-" + this.instanceId, function (e) {
+            panelResizerEvent.off();
+            U.stopEvent(e);
+          });
+
+        jQuery(document.body)
+          .attr('unselectable', 'on')
+          .css('user-select', 'none')
+          .on('selectstart', false);
+      },
+      "off": () => {
+        self.xvar.resizerLived = false;
+
+        if (typeof this.xvar.__da === "undefined") {
+
+        }
+        else {
+          let $prevPanel = self.xvar.resizer$dom.prev(),
+              $nextPanel = self.xvar.resizer$dom.next(),
+              prevPane   = getPanel($prevPanel.attr("data-ax6ui-docker-path")),
+              nextPane   = getPanel($nextPanel.attr("data-ax6ui-docker-path"));
+
+          prevPane.flexGrow = U.number($prevPanel.css("flex-grow"));
+          nextPane.flexGrow = U.number($nextPanel.css("flex-grow"));
+
+          $prevPanel = null;
+          $nextPanel = null;
+          prevPane = null;
+          nextPane = null;
+        }
+
+        alignStackPane();
+
+        jQuery(document.body)
+          .off("mousemove.ax5docker-" + this.instanceId)
+          .off("mouseup.ax5docker-" + this.instanceId)
+          .off("mouseleave.ax5docker-" + this.instanceId);
+
+        jQuery(document.body)
+          .removeAttr('unselectable')
+          .css('user-select', 'auto')
+          .off('selectstart');
+      }
+    };
 
     if (typeof config !== "undefined") this.init();
   }
@@ -1660,7 +1665,7 @@ class AX6UIDocker extends AX6UICore {
     changeActiveStackPanel.call(this, parent, pane.panelIndex);
     return this;
   };
-  
+
 }
 
 export default AX6UIDocker;

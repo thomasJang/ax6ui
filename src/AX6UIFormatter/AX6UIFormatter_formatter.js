@@ -54,7 +54,7 @@ let pattern_money = {
     else {
       enterableKeyCodes['190'] = "."; // 소수점 입력 허용
     }
-    return jQuery.extend(enterableKeyCodes, ctrlKeys, numKeys);
+    return Object.assign(enterableKeyCodes, ctrlKeys, numKeys);
   },
   getPatternValue: function (_opts, optIdx, e, val, eType) {
     val = val.replace(/[^0-9^\.^\-]/g, "");
@@ -91,7 +91,7 @@ let pattern_number = {
       '110': '.'
 
     };
-    return jQuery.extend(enterableKeyCodes, ctrlKeys, numKeys);
+    return Object.assign(enterableKeyCodes, ctrlKeys, numKeys);
   },
   getPatternValue: function (_opts, optIdx, e, val, eType) {
     val = val.replace(/[^0-9^\.^\-]/g, "");
@@ -122,7 +122,7 @@ let pattern_date = {
     let enterableKeyCodes = {
       '189': '-', '191': '/'
     };
-    return jQuery.extend(enterableKeyCodes, ctrlKeys, numKeys);
+    return Object.assign(enterableKeyCodes, ctrlKeys, numKeys);
   },
   getPatternValue: function (_opts, optIdx, e, val, eType) {
     val = val.replace(/\D/g, "");
@@ -234,7 +234,7 @@ let pattern_time = {
     let enterableKeyCodes = {
       '186': ':'
     };
-    return jQuery.extend(enterableKeyCodes, ctrlKeys, numKeys);
+    return Object.assign(enterableKeyCodes, ctrlKeys, numKeys);
   },
   getPatternValue: function (_opts, optIdx, e, val, eType) {
     val = val.replace(/\D/g, "");
@@ -259,7 +259,7 @@ let pattern_bizno = {
     let enterableKeyCodes = {
       '189': '-'
     };
-    return jQuery.extend(enterableKeyCodes, ctrlKeys, numKeys);
+    return Object.assign(enterableKeyCodes, ctrlKeys, numKeys);
   },
   getPatternValue: function (_opts, optIdx, e, val, eType) {
     val = val.replace(/\D/g, "");
@@ -280,7 +280,7 @@ let pattern_phone = {
     let enterableKeyCodes = {
       '189': '-', '188': ','
     };
-    return jQuery.extend(enterableKeyCodes, ctrlKeys, numKeys);
+    return Object.assign(enterableKeyCodes, ctrlKeys, numKeys);
   },
   getPatternValue: function (_opts, optIdx, e, val, eType) {
     val = val.replace(/\D/g, "");
@@ -306,7 +306,7 @@ let pattern_credit = {
     let enterableKeyCodes = {
       '189': '-'
     };
-    return jQuery.extend(enterableKeyCodes, ctrlKeys, numKeys);
+    return Object.assign(enterableKeyCodes, ctrlKeys, numKeys);
   },
   getPatternValue: function (_opts, optIdx, e, val, eType) {
     val = val.replace(/\D/g, "").substring(0, 16);

@@ -1,14 +1,14 @@
-import $ from "jquery";
+import $ from "jqmin";
 import U from "../../src/AX6Util";
 import "./assets/sample.scss";
-
-//require("materialize-css/dist/js/materialize.js");
-window.jQuery = window.$ = $;
+import SideNav from "../../src/AX6UISideNav";
+import "../../src/AX6UISideNav/style.scss";
 
 let $slide_out;
 let $body;
 let module;
 let currentModule = '';
+let sideNav;
 
 function loadModule(moduleName) {
   if (module && module.fn) module.fn.moduleDestroy($body);
@@ -155,6 +155,17 @@ window.onpopstate = function (e) {
 };
 
 $(document).ready(function (e) {
+
+  sideNav = new SideNav({
+    menu: {
+      width: 300,
+      target: $('[data-ax6ui-sidenav="menu"]')
+    },
+    panel: {
+      target: $('[data-ax6ui-sidenav="panel"]')
+    }
+  });
+
   $slide_out = $('#slide-out');
   $body = $("#sample-body");
 

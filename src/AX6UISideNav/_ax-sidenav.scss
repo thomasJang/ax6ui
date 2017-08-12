@@ -1,0 +1,32 @@
+[data-ax6ui-sidenav="panel"] {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+  min-height: 100%;
+
+  &[data-ax6ui-sidenav-position="left"] {
+
+  }
+  &[data-ax6ui-sidenav-position="right"] {
+
+  }
+}
+
+[data-ax6ui-sidenav="menu"] {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 256px;
+  min-height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  z-index: 0;
+  display: none;
+
+  &[data-ax6ui-sidenav-position="left"] {
+    left: 0;
+  }
+  &[data-ax6ui-sidenav-position="right"] {
+    right: 0;
+  }
+}

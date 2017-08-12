@@ -19,23 +19,24 @@
     </head>
     <body>
 
-        <nav>
-            <div class="nav-wrapper">
-                <div class="container">
-                <ul class="left" data-nav-account="">
-                    <li><a href="#!" data-activates="slide-out" class="waves-effect waves-light"><i class="large material-icons">menu</i></a></li>
-                </ul>
-                <a href="#!" class="brand-logo" style="padding:0 20px;">AX6UI</a>
+        <main data-ax6ui-sidenav="panel">
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="container">
+                    <ul class="left" data-nav-account="">
+                        <li><a href="#!" data-activates="slide-out" class="waves-effect waves-light"><i class="large material-icons">menu</i></a></li>
+                    </ul>
+                    <a href="#!" class="brand-logo" style="padding:0 20px;">AX6UI</a>
+                    </div>
                 </div>
+            </nav>
+
+            <div data-ax6ui-sidenav="panel" class="container">
+                <div id="sample-body" style="padding-top: 1em;"></div>
             </div>
-        </nav>
+        </main>
 
-        <div class="container" style="padding-top: 1em;">
-            <div id="sample-body"></div>
-        </div>
-
-
-        <ul id="slide-out" class="side-nav">
+        <ul data-ax6ui-sidenav="menu">
             <% for (key in htmlWebpackPlugin.options.menu) { %>
             <li><a style="cursor:pointer;" data-href="<%= htmlWebpackPlugin.options.menu[key] %>"><%= htmlWebpackPlugin.options.menu[key] %></a></li>
             <% } %>

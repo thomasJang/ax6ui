@@ -77,7 +77,7 @@ let fn = {
           let enterableKeyCodes = {
             '189': '-' // eventKeyCode
           };
-          return jQuery.extend(
+          return Object.assign(
             enterableKeyCodes,
             Formatter.getCtrlKeys(),
             Formatter.getNumKeys()

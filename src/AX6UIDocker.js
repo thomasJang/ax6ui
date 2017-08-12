@@ -1,7 +1,6 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore.js";
-import U from "./AX6Util";
-import mustache from "./AX6Mustache";
+
 /* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 
@@ -56,15 +55,66 @@ class AX6UIDocker extends AX6UICore {
 
   }
 
-  repaint(){
+  repaint() {
 
-    this.panels = [
+    this.panels = [];
 
-    ];
-
-    let panel_tmpl = ``;
-
-
+    let panel_tmpl = `
+<ax6ui-docker>
+    <ax6ui-docker-pane-axis class="horizontal">
+        <ax6ui-docker-pane-axis class="vertical">
+            
+            <ax6ui-docker-pane class="active" style="flex-grow:1;">
+              <!-- pane -->
+                <ul class="item-tabs">
+                    <li class="">
+                        <title>untitle</title>
+                        <close></close>
+                    </li>
+                    <li class="active">
+                        <title>untitle</title>
+                        <close></close>
+                    </li>
+                </ul>
+                <div class="item-views">
+                    <ax6ui-docker-view class=""></ax6ui-docker-view>
+                    <ax6ui-docker-view class="is-focused"></ax6ui-docker-view>
+                </div>
+              <!-- pane -->
+            </ax6ui-docker-pane>
+            <ax6ui-docker-pane-resize-handle class="vertical"></ax6ui-docker-pane-resize-handle>
+            <ax6ui-docker-pane class="" style="flex-grow:1;">
+              <!-- pane -->
+                <ul class="item-tabs">
+                    <li class="">
+                        <title>untitle</title>
+                        <close></close>
+                    </li>
+                </ul>
+                <div class="item-views">
+                    <ax6ui-docker-view class=""></ax6ui-docker-view>
+                </div>
+              <!-- pane -->
+            </ax6ui-docker-pane>    
+            
+        </ax6ui-docker-pane-axis>
+        <ax6ui-docker-pane-resize-handle class="horizontal"></ax6ui-docker-pane-resize-handle>
+        <ax6ui-docker-pane class="" style="flex-grow:1;">
+            <!-- pane -->
+                <ul class="item-tabs">
+                    <li class="">
+                        <title>untitle</title>
+                        <close></close>
+                    </li>
+                </ul>
+                <div class="item-views">
+                    <ax6ui-docker-view class=""></ax6ui-docker-view>
+                </div>
+            <!-- pane -->
+        </ax6ui-docker-pane>
+    </ax6ui-docker-pane-axis>
+</ax6ui-docker>
+`;
 
 
   }

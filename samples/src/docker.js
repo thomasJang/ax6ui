@@ -5,25 +5,11 @@ import "../../src/AX6UIDocker/style.scss";
 
 
 let html = `
-<div data-ax6ui-docker="docker1" style="height: 500px;background: #eee;padding: 5px;"></div>
+<h1>공사중.</h1>
+<div id="docker1" style="height: 500px;background: #eee;padding: 5px;"></div>
 
 <div style="padding: 20px 0;">
-    <form class="form-inline" onsubmit="return false;">
-        <input type="text" name="addPath" class="form-control" value="0.0" placeholder="0.0"/>
-        <select name="addType" class="form-control">
-            <option value="stack">stack</option>
-            <option value="row-left">row-left</option>
-            <option value="row-right" selected="selected">row-right</option>
-            <option value="column-top">column-top</option>
-            <option value="column-bottom">column-bottom</option>
-        </select>
-        <button class="btn btn-default" data-docker-control="add-panel">add Panel</button>
-        <button class="btn btn-default" data-docker-control="set-panels">set Panels</button>
-        <button class="btn btn-default" data-docker-control="find-panel">find panel</button>
-        <button class="btn btn-default" data-docker-control="remove-panel">remove panel</button>
-
-        <button class="btn btn-default" data-docker-control="active-panel">active panel</button>
-    </form>
+    
 </div>
 `;
 let fn = {
@@ -96,7 +82,7 @@ let fn = {
     };
 
     let docker = new Docker({
-      target: $('[data-ax6ui-docker="docker1"]')
+      target: document.getElementById("docker1")
     });
 
     docker.repaint();

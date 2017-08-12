@@ -2,7 +2,6 @@ import $ from "jqmin";
 import Mask from "../../src/AX6UIMask";
 import "../../src/AX6UIMask/style.scss";
 
-
 const html = `
 <div id="making-div" style="height:500px;background: #ccc;">making div</div>
 <br/>

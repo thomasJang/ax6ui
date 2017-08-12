@@ -3,8 +3,8 @@ import axios from "axios";
 import Docker from "../../src/AX6UIDocker";
 import "../../src/AX6UIDocker/style.scss";
 
-const $body = $("#sample-body");
-let el = `
+
+let html = `
 <div data-ax6ui-docker="docker1" style="height: 500px;background: #eee;padding: 5px;"></div>
 
 <div style="padding: 20px 0;">
@@ -26,80 +26,87 @@ let el = `
     </form>
 </div>
 `;
-$body.append(el);
-
-
-/////~~~~~~~~~~~~~~~~~~
-
-let rowPanel = {
-  type: "row", // type : row, column, stack
-  panels: [
-    {
-      type: "column",
+let fn = {
+  moduleRun: function ($body) {
+    let rowPanel = {
+      type: "row", // type : row, column, stack
       panels: [
         {
-          type: "panel",
-          name: "my name 1",
-          color: "#ff3300",
-          borderColor: "#000000",
-          moduleName: "content",
-          moduleState: {
-            data1: "data1"
-          }
+          type: "column",
+          panels: [
+            {
+              type: "panel",
+              name: "my name 1",
+              color: "#ff3300",
+              borderColor: "#000000",
+              moduleName: "content",
+              moduleState: {
+                data1: "data1"
+              }
+            },
+            {
+              type: "panel",
+              name: "my name 2",
+              moduleName: "content",
+              moduleState: {
+                data1: "data2"
+              },
+              key: "T"
+            }
+          ]
         },
         {
-          type: "panel",
-          name: "my name 2",
-          moduleName: "content",
-          moduleState: {
-            data1: "data2"
-          },
-          key: "T"
+          type: "stack",
+          panels: [
+            {
+              type: "panel",
+              name: "my name 3",
+              moduleName: "content",
+              moduleState: {
+                data1: "data3"
+              },
+              key: "A"
+            }
+          ]
         }
       ]
-    },
-    {
+    };
+    let statckPanel = {
       type: "stack",
       panels: [
         {
           type: "panel",
           name: "my name 3",
+          key: "A",
           moduleName: "content",
           moduleState: {
             data1: "data3"
-          },
-          key: "A"
-        }
+          }
+        },
+        {
+          type: "panel",
+          name: "my name 4",
+          key: "A",
+          moduleName: "content",
+          moduleState: {
+            data1: "data3"
+          }
+        },
       ]
-    }
-  ]
-};
-let statckPanel = {
-  type: "stack",
-  panels: [
-    {
-      type: "panel",
-      name: "my name 3",
-      key: "A",
-      moduleName: "content",
-      moduleState: {
-        data1: "data3"
-      }
-    },
-    {
-      type: "panel",
-      name: "my name 4",
-      key: "A",
-      moduleName: "content",
-      moduleState: {
-        data1: "data3"
-      }
-    },
-  ]
+    };
+
+    let docker = new Docker({
+      target: $('[data-ax6ui-docker="docker1"]')
+    });
+
+    docker.repaint();
+  },
+  moduleDestroy: function ($body) {
+    $body.off("click");
+  }
 };
 
-let docker = new Docker({
-  target: $('[data-ax6ui-docker="docker1"]')
-});
-
-docker.repaint();
+export default {
+  html: html,
+  fn: fn
+}

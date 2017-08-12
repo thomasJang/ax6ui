@@ -1,8 +1,6 @@
-import $ from "jqmin";
 import "../../src/AX6UITooltip/style.scss";
 
-const $body = $("#sample-body");
-let el = `
+let html = `
 <br/>
 <br/>
 <button data-ax6ui-tooltip="나는 툴팁" class="btn">default</button>
@@ -11,7 +9,16 @@ let el = `
 <button data-ax6ui-tooltip="tooltip left" class="btn tooltip-left">left</button>
 <button data-ax6ui-tooltip="tooltip right" class="btn tooltip-right">right</button>
 `;
-$body.append(el);
+let fn = {
+  moduleRun: function ($body) {
 
+  },
+  moduleDestroy: function ($body) {
+    $body.off("click");
+  }
+};
 
-/////~~~~~~~~~~~~~~~~~~
+export default {
+  html: html,
+  fn: fn
+}

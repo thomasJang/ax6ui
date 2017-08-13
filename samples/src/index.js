@@ -149,20 +149,18 @@ function loadModule(moduleName) {
 
 window.onpopstate = function (e) {
   let param = U.param(document.location.search.replace("?", ""));
-  if (param.module != currentModule) {
+  if (typeof param.module !== 'undefined' && param.module != currentModule) {
     loadModule(param.module);
   }
 };
 
 $(document).ready(function (e) {
-
   sideNav = new SideNav({
     menu: {
-      width: 300,
-      target: $('[data-ax6ui-sidenav="menu"]')
+      target: document.querySelector('[data-ax6ui-sidenav-menu]')
     },
     panel: {
-      target: $('[data-ax6ui-sidenav="panel"]')
+      target: document.querySelector('[data-ax6ui-sidenav-panel]')
     }
   });
 
@@ -170,11 +168,11 @@ $(document).ready(function (e) {
   $body = $("#sample-body");
 
   $('[data-activates="slide-out"]').on('click', function () {
-    $slide_out.css({transform: "translateX(0px)"});
+    sideNav.open();
   });
 
   $('[data-href]').on("click", function (e) {
-    $slide_out.css({transform: "translateX(-100%)"});
+    sideNav.close();
 
     let moduleName = this.getAttribute("data-href");
     history.pushState(null, null, "?module=" + moduleName);
@@ -182,7 +180,11 @@ $(document).ready(function (e) {
   });
 
   let param = U.param(document.location.search.replace("?", ""));
-  if (param.module != currentModule) {
+
+  if(typeof param.module == 'undefined'){
+    loadModule("AX6Util");
+  }
+  else if (param.module != currentModule) {
     loadModule(param.module);
   }
 });

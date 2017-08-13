@@ -196,8 +196,8 @@ const alignAutocompleteOptionGroup = function (append) {
     height: item.$target.outerHeight()
   };
   pickerDim = {
-    winWidth: Math.max($(window).width(), jQuery(document.body).width()),
-    winHeight: Math.max($(window).height(), jQuery(document.body).height()),
+    winWidth: Math.max(jQuery(window).width(), jQuery(document.body).width()),
+    winHeight: Math.max(jQuery(window).height(), jQuery(document.body).height()),
     width: this.activeautocompleteOptionGroup.outerWidth(),
     height: this.activeautocompleteOptionGroup.outerHeight()
   };
@@ -1114,7 +1114,7 @@ class AX6UIAutocomplete extends AX6UICore {
     this.initialized = true;
 
     // throttledResize
-    $(window).on("resize.ax6ui-autocomplete-display-" + this.instanceId, U.throttle(function (e) {
+    jQuery(window).on("resize.ax6ui-autocomplete-display-" + this.instanceId, U.throttle(function (e) {
       alignAutocompleteDisplay.call(this, e || window.event);
       alignAutocompleteOptionGroup.call(this);
     }, 100).bind(this));
@@ -1267,9 +1267,9 @@ class AX6UIAutocomplete extends AX6UICore {
    * @return {AX6UIAutocomplete}
    * @example
    * ```js
-   * myAutocomplete.setValue($('[data-ax6ui-autocomplete="autocomplete1"]'), {value:"test", text:"test"});
-   * myAutocomplete.setValue($('[data-ax6ui-autocomplete="autocomplete1"]'), [{value:"test1", text:"test1"}, {value:"test2", text:"test2"}]);
-   * myAutocomplete.setValue($('[data-ax6ui-autocomplete="autocomplete1"]'), null);
+   * myAutocomplete.setValue(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), {value:"test", text:"test"});
+   * myAutocomplete.setValue(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), [{value:"test1", text:"test1"}, {value:"test2", text:"test2"}]);
+   * myAutocomplete.setValue(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), null);
    * ```
    */
   setValue(_boundID, _value) {
@@ -1306,8 +1306,8 @@ class AX6UIAutocomplete extends AX6UICore {
    * @return {AX6UIAutocomplete}
    * @example
    * ```js
-   * myAutocomplete.setText($('[data-ax6ui-autocomplete="autocomplete1"]'), "string");
-   * myAutocomplete.setText($('[data-ax6ui-autocomplete="autocomplete1"]'), ["substring", "search"]);
+   * myAutocomplete.setText(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), "string");
+   * myAutocomplete.setText(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), ["substring", "search"]);
    * ```
    */
   setText(_boundID, _text) {

@@ -5,22 +5,26 @@ import info from "./AX6Info";
  */
 
 const _toString = Object.prototype.toString;
-const reIsJson = /^(["'](\\.|[^"\\\n\r])*?["']|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/,
-  reMs = /^-ms-/,
-  reSnakeCase = /[\-_]([\da-z])/gi,
-  reCamelCase = /([A-Z])/g,
-  reDot = /\./,
-  reInt = /[-|+]?[\D]/gi,
-  reNotNum = /\D/gi,
-  reMoneySplit = new RegExp('([0-9])([0-9][0-9][0-9][,.])'),
-  reAmp = /&/g,
-  reEq = /=/,
-  reClassNameSplit = /[ ]+/g;
+const _hasOwnProperty = Object.prototype.hasOwnProperty;
+const _fnToString = Function.prototype.toString;
+const objectCtorString = _fnToString.call(Object);
+
+const reIsJson         = /^(["'](\\.|[^"\\\n\r])*?["']|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/,
+      reMs             = /^-ms-/,
+      reSnakeCase      = /[\-_]([\da-z])/gi,
+      reCamelCase      = /([A-Z])/g,
+      reDot            = /\./,
+      reInt            = /[-|+]?[\D]/gi,
+      reNotNum         = /\D/gi,
+      reMoneySplit     = new RegExp('([0-9])([0-9][0-9][0-9][,.])'),
+      reAmp            = /&/g,
+      reEq             = /=/,
+      reClassNameSplit = /[ ]+/g;
 
 function each(O, _fn) {
   if (isNothing(O)) return [];
   let key, i = 0, l = O.length,
-    isObj = l === undefined || typeof O === "function";
+      isObj         = l === undefined || typeof O === "function";
   if (isObj) {
     for (key in O) {
       if (typeof O[key] != "undefined")
@@ -240,7 +244,7 @@ function isDateFormat(O) {
     O = O.replace(/\D/g, '');
     if (O.length > 7) {
       let mm = O.substr(4, 2),
-        dd = O.substr(6, 2);
+          dd = O.substr(6, 2);
 
       O = date(O);
       if (O.getMonth() == (mm - 1) && O.getDate() == dd) {
@@ -249,6 +253,20 @@ function isDateFormat(O) {
     }
   }
   return result;
+}
+
+function isPlainObject(O) {
+  let proto, constructor;
+
+  if (!O || _toString.call(O) !== "[object Object]") return false;
+  proto = Object.getPrototypeOf(O);
+
+  if (!proto) {
+    return true;
+  }
+
+  constructor = _hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  return typeof constructor === "function" && _fnToString.call(constructor) === objectCtorString;
 }
 
 function first(O) {
@@ -497,10 +515,10 @@ function localDate(yy, mm, dd, hh, mi, ss) {
 
 function date(d, cond) {
   let yy, mm, dd, hh, mi,
-    aDateTime, aTimes, aTime, aDate,
-    va,
-    ISO_8601 = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i,
-    ISO_8601_FULL = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/i;
+      aDateTime, aTimes, aTime, aDate,
+      va,
+      ISO_8601      = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i,
+      ISO_8601_FULL = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/i;
 
   if (isString(d)) {
     if (d.length == 0) {
@@ -550,7 +568,7 @@ function date(d, cond) {
     if ("add" in cond) {
       d = (function (_d, opts) {
         let yy, mm, dd, mxdd,
-          DyMilli = ((1000 * 60) * 60) * 24;
+            DyMilli = ((1000 * 60) * 60) * 24;
 
         if (typeof opts["d"] !== "undefined") {
           _d.setTime(_d.getTime() + (opts["d"] * DyMilli));
@@ -578,20 +596,20 @@ function date(d, cond) {
     if ("set" in cond) {
       d = (function (_d, opts) {
         let yy, mm, dd,
-          processor = {
-            "firstDayOfMonth": function (date) {
-              yy = date.getFullYear();
-              mm = date.getMonth();
-              dd = 1;
-              return new Date(yy, mm, dd, 12);
-            },
-            "lastDayOfMonth": function (date) {
-              yy = date.getFullYear();
-              mm = date.getMonth();
-              dd = daysOfMonth(yy, mm);
-              return new Date(yy, mm, dd, 12);
-            }
-          };
+            processor = {
+              "firstDayOfMonth": function (date) {
+                yy = date.getFullYear();
+                mm = date.getMonth();
+                dd = 1;
+                return new Date(yy, mm, dd, 12);
+              },
+              "lastDayOfMonth": function (date) {
+                yy = date.getFullYear();
+                mm = date.getMonth();
+                dd = daysOfMonth(yy, mm);
+                return new Date(yy, mm, dd, 12);
+              }
+            };
         if (opts in processor) {
           return processor[opts](_d);
         } else {
@@ -603,7 +621,7 @@ function date(d, cond) {
       return (function () {
 
         let fStr = cond["return"], nY, nM, nD, nH, nMM, nS, nDW,
-          yre, regY, mre, regM, dre, regD, hre, regH, mire, regMI, sre, regS, dwre, regDW;
+            yre, regY, mre, regM, dre, regD, hre, regH, mire, regMI, sre, regS, dwre, regDW;
 
         nY = d.getUTCFullYear();
         nM = setDigit(d.getMonth() + 1, 2);
@@ -752,8 +770,8 @@ function findParentNode(_target, cond) {
           }
           else if (k === "clazz" || k === "class_name") {
             if ("className" in _target) {
-              let klasss = _target.className.split(reClassNameSplit),
-                hasClass = false;
+              let klasss   = _target.className.split(reClassNameSplit),
+                  hasClass = false;
 
               for (let a = 0; a < klasss.length; a++) {
                 if (klasss[a] == cond[k]) {
@@ -797,9 +815,9 @@ function findParentNode(_target, cond) {
 }
 
 function cssNumber(val) {
-  let re = /\D?(\d+)([a-zA-Z%]*)/i,
-    found = ('' + val).match(re),
-    unit = found[2] || "px";
+  let re    = /\D?(\d+)([a-zA-Z%]*)/i,
+      found = ('' + val).match(re),
+      unit  = found[2] || "px";
 
   return found[1] + unit;
 }
@@ -940,11 +958,11 @@ const selectRange = (function () {
 // https://github.com/lodash/lodash/blob/master/debounce.js
 const debounce = function (func, wait, options) {
   let lastArgs,
-    lastThis,
-    maxWait,
-    result,
-    timerId,
-    lastCallTime;
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime;
 
   let lastInvokeTime = 0;
   let leading = false;
@@ -1079,7 +1097,7 @@ const throttle = function (func, wait, options) {
     'maxWait': wait,
     'trailing': trailing
   });
-}
+};
 
 
 function deepCopy(obj) {
@@ -1097,6 +1115,76 @@ function deepCopy(obj) {
     }
   }
   return obj;
+}
+
+// jQuery extend
+function extend() {
+  let options, name, src, copy, copyIsArray, clone,
+      target = arguments[0] || {},
+      i      = 1,
+      length = arguments.length,
+      deep   = false;
+
+  // Handle a deep copy situation
+  if (typeof target === "boolean") {
+    deep = target;
+
+    // Skip the boolean and the target
+    target = arguments[i] || {};
+    i++;
+  }
+
+  // Handle case when target is a string or something (possible in deep copy)
+  if (typeof target !== "object" && !isFunction(target)) {
+    target = {};
+  }
+
+  // Extend jQuery itself if only one argument is passed
+  if (i === length) {
+    target = this;
+    i--;
+  }
+
+  for (; i < length; i++) {
+
+    // Only deal with non-null/undefined values
+    if (( options = arguments[i] ) != null) {
+
+      // Extend the base object
+      for (name in options) {
+        src = target[name];
+        copy = options[name];
+
+        // Prevent never-ending loop
+        if (target === copy) {
+          continue;
+        }
+
+        // Recurse if we're merging plain objects or arrays
+        if (deep && copy && ( isPlainObject(copy) ||
+            ( copyIsArray = isArray(copy) ) )) {
+
+          if (copyIsArray) {
+            copyIsArray = false;
+            clone = src && isArray(src) ? src : [];
+
+          } else {
+            clone = src && isPlainObject(src) ? src : {};
+          }
+
+          // Never move original objects, clone them
+          target[name] = extend(deep, clone, copy);
+
+          // Don't bring in undefined values
+        } else if (copy !== undefined) {
+          target[name] = copy;
+        }
+      }
+    }
+  }
+
+  // Return the modified object
+  return target;
 }
 
 function escapeHtml(s) {
@@ -1731,7 +1819,16 @@ export default {
    * 오브젝트가 날짜형 변수인지 판단합니다
    */
   isDateFormat: isDateFormat,
+  /**
+   * @param {*} object
+   * @return {Boolean}
+   */
   isNothing: isNothing,
+  /**
+   * @param {*} object
+   * @return {Boolean}
+   */
+  isPlainObject: isPlainObject,
   /**
    * 쿠키를 설정합니다.
    * @param {String} cname - 쿠키이름
@@ -2044,6 +2141,18 @@ export default {
    * ```
    */
   deepCopy: deepCopy,
+  /**
+   * @param {Boolean} [deep]
+   * @param {Object} src
+   * @param {Object} copy
+   * @return {Object}
+   * @example
+   * ```js
+   * AX6Util.extend({a:1}, {b:1});
+   * AX6Util.extend(true, {a:1, b:{name:'t'}, {b:{etc:true}});
+   * ```
+   */
+  extend: extend,
   /**
    * HTML 문자열을 escape 처리합니다.
    * "&lt;" represents the < sign.

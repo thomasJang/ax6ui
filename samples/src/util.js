@@ -334,6 +334,23 @@ let fn = {
       });
     });
 
+    describe('util.extend TEST', function () {
+      it('util.extend', function (done) {
+
+        var obj = {a: 1};
+        util.extend(obj, {b: 1});
+
+        done(obj.b === 1);
+      });
+      it('util.extend deep', function (done) {
+
+        var obj = {a: 1, b: {name: 'a'}};
+        util.extend(true, obj, {b: {etc: 'b'}});
+
+        done(obj.b.name === 'a' && obj.b.etc === 'b');
+      });
+    });
+
     $body.html($el);
   },
   moduleDestroy: function ($body) {

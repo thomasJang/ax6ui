@@ -14,7 +14,7 @@ var _jqmin = __webpack_require__(6);
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
-var _AX6Util = __webpack_require__(4);
+var _AX6Util = __webpack_require__(1);
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 
@@ -921,7 +921,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
+var update = __webpack_require__(3)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -966,7 +966,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jqmin = __webpack_require__(1);
+var _jqmin = __webpack_require__(2);
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
@@ -974,11 +974,11 @@ var _AX6UICore2 = __webpack_require__(5);
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Util = __webpack_require__(4);
+var _AX6Util = __webpack_require__(1);
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 
-var _AX6Info = __webpack_require__(3);
+var _AX6Info = __webpack_require__(4);
 
 var _AX6Info2 = _interopRequireDefault(_AX6Info);
 
@@ -1432,7 +1432,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AX6Util = __webpack_require__(4);
+var _AX6Util = __webpack_require__(1);
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 
@@ -1851,7 +1851,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jqmin = __webpack_require__(1);
+var _jqmin = __webpack_require__(2);
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
@@ -1859,11 +1859,11 @@ var _AX6UICore2 = __webpack_require__(5);
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Info = __webpack_require__(3);
+var _AX6Info = __webpack_require__(4);
 
 var _AX6Info2 = _interopRequireDefault(_AX6Info);
 
-var _AX6Util = __webpack_require__(4);
+var _AX6Util = __webpack_require__(1);
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 
@@ -2990,7 +2990,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jqmin = __webpack_require__(1);
+var _jqmin = __webpack_require__(2);
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
@@ -2998,11 +2998,11 @@ var _AX6UICore2 = __webpack_require__(5);
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Info = __webpack_require__(3);
+var _AX6Info = __webpack_require__(4);
 
 var _AX6Info2 = _interopRequireDefault(_AX6Info);
 
-var _AX6Util = __webpack_require__(4);
+var _AX6Util = __webpack_require__(1);
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 
@@ -3539,7 +3539,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
+var update = __webpack_require__(3)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -3586,7 +3586,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(2)(content, options);
+var update = __webpack_require__(3)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -3631,7 +3631,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jqmin = __webpack_require__(1);
+var _jqmin = __webpack_require__(2);
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
@@ -3639,11 +3639,11 @@ var _AX6UICore2 = __webpack_require__(5);
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
-var _AX6Info = __webpack_require__(3);
+var _AX6Info = __webpack_require__(4);
 
 var _AX6Info2 = _interopRequireDefault(_AX6Info);
 
-var _AX6Util = __webpack_require__(4);
+var _AX6Util = __webpack_require__(1);
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 

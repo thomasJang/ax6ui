@@ -1,4 +1,16 @@
-[data-ax6ui-sidenav="panel"] {
+html {
+  &[data-ax6ui-sidenav-open] {
+    overflow: hidden;
+    [data-ax6ui-sidenav-menu] {
+      display: block;
+    }
+    [data-ax6ui-sidenav-panel] {
+      overflow: hidden;
+    }
+  }
+}
+
+[data-ax6ui-sidenav-panel] {
   position: relative;
   z-index: 1;
   will-change: transform;
@@ -12,16 +24,18 @@
   }
 }
 
-[data-ax6ui-sidenav="menu"] {
+[data-ax6ui-sidenav-menu] {
   position: fixed;
   top: 0;
   bottom: 0;
   width: 256px;
-  min-height: 100vh;
+  height: 100%;
+  min-height: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   z-index: 0;
   display: none;
+  margin: 0;
 
   &[data-ax6ui-sidenav-position="left"] {
     left: 0;

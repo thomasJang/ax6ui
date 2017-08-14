@@ -1,6 +1,5 @@
 import jQuery from "jqmin";
 import AX6UICore from "./AX6UICore";
-import info from "./AX6Info";
 import U from "./AX6Util";
 /* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 

@@ -740,7 +740,7 @@ var _AX6Util = __webpack_require__(1);
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
 
-var _AX6UICore2 = __webpack_require__(5);
+var _AX6UICore2 = __webpack_require__(4);
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 

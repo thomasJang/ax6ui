@@ -93,8 +93,33 @@ nav {
 
 [data-ax6ui-sidenav-panel] {
   background: #fff;
-  box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 [data-ax6ui-sidenav-menu] {
+  background: #eee;
+  .sidenav{
+    padding: 10px 0;
+    ul{
+      margin: 0;
+      li{
+        a{
+          display: block;
+          padding: 7px 10px;
+          &:hover{
+            background: #ccc;
+          }
+        }
+      }
+    }
+  }
+}
 
+html {
+  &[data-ax6ui-sidenav-open] {
+    [data-ax6ui-sidenav-menu] {
+
+    }
+    [data-ax6ui-sidenav-panel] {
+      box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+  }
 }

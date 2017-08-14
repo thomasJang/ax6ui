@@ -36,11 +36,15 @@
             </div>
         </main>
 
-        <ul data-ax6ui-sidenav-menu="">
-            <% for (key in htmlWebpackPlugin.options.menu) { %>
-            <li><a style="cursor:pointer;" data-href="<%= htmlWebpackPlugin.options.menu[key] %>"><%= htmlWebpackPlugin.options.menu[key] %></a></li>
-            <% } %>
-        </ul>
+        <div data-ax6ui-sidenav-menu="">
+            <div class="sidenav">
+            <ul>
+                <% for (key in htmlWebpackPlugin.options.menu) { %>
+                <li><a style="cursor:pointer;" data-href="<%= htmlWebpackPlugin.options.menu[key] %>"><%= htmlWebpackPlugin.options.menu[key] %></a></li>
+                <% } %>
+            </ul>
+            </div>
+        </div>
 
     </body>
 </html>

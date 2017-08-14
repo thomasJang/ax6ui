@@ -16,7 +16,7 @@ var _jqmin = __webpack_require__(2);
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
-var _AX6UICore2 = __webpack_require__(5);
+var _AX6UICore2 = __webpack_require__(4);
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 

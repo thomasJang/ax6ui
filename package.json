@@ -4,8 +4,7 @@
   "description": "ES6 UI Component",
   "main": "",
   "dependencies": {
-    "jqmin": "^0.1.0",
-    "lodash": "^4.17.4"
+    "jqmin": "^0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

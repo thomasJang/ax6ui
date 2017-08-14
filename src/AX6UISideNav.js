@@ -108,7 +108,7 @@ class AX6UISideNav extends AX6UICore {
   close(){
     if(this.animating) return this;
 
-    jQuery('html').attr('data-ax6ui-sidenav-open', null);
+
     this.$targetPanel
       .css({
         'transform': 'translateX(0px)',
@@ -116,6 +116,7 @@ class AX6UISideNav extends AX6UICore {
       });
 
     setTimeout(() => {
+      jQuery('html').attr('data-ax6ui-sidenav-open', null);
       this.opened = false;
   }, this.config.transition.duration);
 

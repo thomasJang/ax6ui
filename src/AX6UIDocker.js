@@ -21,10 +21,7 @@ class AX6UIDocker extends AX6UICore {
      *
      */
     this.config = {
-      board: {
-        rowSize: 2,
-        colSize: 2
-      }
+
     };
     jQuery.extend(true, this.config, config);
 
@@ -41,6 +38,13 @@ class AX6UIDocker extends AX6UICore {
    */
   init() {
 
+    if (!this.config.target) {
+      console.error("can not find target");
+    }
+
+
+
+    this.$target = jQuery(this.config.target);
 
     // init 호출 여부
     this.initOnce();

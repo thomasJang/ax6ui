@@ -3,15 +3,6 @@ import axios from "axios";
 import Docker from "../../src/AX6UIDocker";
 import "../../src/AX6UIDocker/style.scss";
 
-
-let html = `
-<h1>공사중.</h1>
-<div id="docker1" style="height: 500px;background: #eee;padding: 5px;"></div>
-
-<div style="padding: 20px 0;">
-    
-</div>
-`;
 let fn = {
   moduleRun: function ($body) {
     let rowPanel = {
@@ -93,6 +84,13 @@ let fn = {
 };
 
 export default {
-  html: html,
+  html: `
+<h1>공사중.</h1>
+<div id="docker1" style="height: 500px;background: #eee;padding: 5px;"></div>
+
+<div style="padding: 20px 0;">
+    
+</div>
+`,
   fn: fn
 }

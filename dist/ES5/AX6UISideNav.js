@@ -10,17 +10,13 @@ var _jqmin = require("jqmin");
 
 var _jqmin2 = _interopRequireDefault(_jqmin);
 
-var _AX6UICore2 = require("./AX6UICore.js");
+var _AX6UICore2 = require("./AX6UICore");
 
 var _AX6UICore3 = _interopRequireDefault(_AX6UICore2);
 
 var _AX6Util = require("./AX6Util");
 
 var _AX6Util2 = _interopRequireDefault(_AX6Util);
-
-var _AX6Mustache = require("./AX6Mustache.js");
-
-var _AX6Mustache2 = _interopRequireDefault(_AX6Mustache);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30,9 +26,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class
@@ -50,25 +46,36 @@ var AX6UISideNav = function (_AX6UICore) {
     /**
      * @member {JSON}
      * @param config
-     * @param [config.theme]
-     * @param [config.target=document.body]
-     * @param [config.animateTime=250]
-     * @param [config.onStateChanged]
-     * @param [config.onClick]
-     * @param [config.content]
+     * @param config.menu
+     * @param [config.menu.width=256]
+     * @param [config.menu.position='left']
+     * @param config.menu.target
+     * @param config.panel
+     * @param config.panel.target
      *
      */
     var _this = _possibleConstructorReturn(this, (AX6UISideNav.__proto__ || Object.getPrototypeOf(AX6UISideNav)).call(this));
 
     _this.config = {
-      theme: '',
-      target: (0, _jqmin2.default)(document.body).get(0),
-      animateTime: 250
+      menu: {
+        width: 256,
+        position: "left"
+      },
+      panel: {},
+      transition: {
+        duration: 300,
+        easing: 'ease'
+      }
+
     };
-    _jqmin2.default.extend(true, _this.config, config);
+    _AX6Util2.default.extend(true, _this.config, config);
 
     // 멤버 변수 초기화
+    _this.$targetMenu = null;
+    _this.$targetPanel = null;
 
+    _this.animating = false;
+    _this.opened = false;
 
     if (typeof config !== "undefined") _this.init();
     return _this;
@@ -82,12 +89,19 @@ var AX6UISideNav = function (_AX6UICore) {
   _createClass(AX6UISideNav, [{
     key: "init",
     value: function init() {
-      this.onStateChanged = this.config.onStateChanged;
-      delete this.config.onStateChanged;
-      this.onClick = this.config.onClick;
-      delete this.config.onClick;
+      var _this2 = this;
 
-      setBody.call(this, this.config.content || "");
+      if (!this.config.menu.target || !this.config.panel.target) {
+        console.error('Can not found config.menu.target, config.panel.target');
+      }
+
+      this.$targetMenu = (0, _jqmin2.default)(this.config.menu.target);
+      this.$targetPanel = (0, _jqmin2.default)(this.config.panel.target);
+
+      this.$targetMenu.css({ width: this.config.menu.width }).attr("data-ax6ui-sidenav-position", this.config.menu.position);
+      this.$targetPanel.attr("data-ax6ui-sidenav-position", this.config.menu.position).on('click', function (e) {
+        if (_this2.opened) _this2.close();
+      });
 
       // init 호출 여부
       this.initOnce();
@@ -102,6 +116,45 @@ var AX6UISideNav = function (_AX6UICore) {
     value: function initOnce() {
       if (this.initialized) return this;
       this.initialized = true;
+    }
+  }, {
+    key: "open",
+    value: function open() {
+      var _this3 = this;
+
+      if (this.animating) return this;
+
+      (0, _jqmin2.default)('html').attr('data-ax6ui-sidenav-open', 'true');
+
+      this.$targetPanel.css({
+        'transform': 'translateX(' + this.config.menu.width + 'px)',
+        '-webkit-transition': 'transform ' + this.config.transition.duration + 'ms ' + this.config.transition.easing
+      });
+
+      setTimeout(function () {
+        _this3.opened = true;
+      }, this.config.transition.duration);
+
+      return this;
+    }
+  }, {
+    key: "close",
+    value: function close() {
+      var _this4 = this;
+
+      if (this.animating) return this;
+
+      this.$targetPanel.css({
+        'transform': 'translateX(0px)',
+        '-webkit-transition': 'transform ' + this.config.transition.duration + 'ms ' + this.config.transition.easing
+      });
+
+      setTimeout(function () {
+        (0, _jqmin2.default)('html').attr('data-ax6ui-sidenav-open', null);
+        _this4.opened = false;
+      }, this.config.transition.duration);
+
+      return this;
     }
   }]);
 

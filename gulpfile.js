@@ -103,14 +103,6 @@ gulp.task('npm publish minor', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], she
   'cd dist/ES6 && npm version minor -m "version minor" && npm publish'
 ]));
 
-gulp.task('samples npm start', shell.task([
-  'cd samples && npm start',
-]));
-
-gulp.task('samples deploy', shell.task([
-  './samples-deploy.sh',
-]));
-
 gulp.task('jsdoc build', function () {
   let options = {
     continueOnError: false, // default = false, true means don't emit error event

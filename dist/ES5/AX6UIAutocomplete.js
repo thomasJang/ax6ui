@@ -34,7 +34,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 var ctrlKeys = {
   "18": "KEY_ALT",
@@ -175,8 +175,8 @@ var alignAutocompleteOptionGroup = function alignAutocompleteOptionGroup(append)
     height: item.$target.outerHeight()
   };
   pickerDim = {
-    winWidth: Math.max($(window).width(), (0, _jqmin2.default)(document.body).width()),
-    winHeight: Math.max($(window).height(), (0, _jqmin2.default)(document.body).height()),
+    winWidth: Math.max((0, _jqmin2.default)(window).width(), (0, _jqmin2.default)(document.body).width()),
+    winHeight: Math.max((0, _jqmin2.default)(window).height(), (0, _jqmin2.default)(document.body).height()),
     width: this.activeautocompleteOptionGroup.outerWidth(),
     height: this.activeautocompleteOptionGroup.outerHeight()
   };
@@ -923,7 +923,7 @@ var setSelected = function setSelected(boundID, value, selected, _option) {
   return this;
 };
 
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class
@@ -1044,7 +1044,7 @@ var AX6UIAutocomplete = function (_AX6UICore) {
       this.initialized = true;
 
       // throttledResize
-      $(window).on("resize.ax6ui-autocomplete-display-" + this.instanceId, _AX6Util2.default.throttle(function (e) {
+      (0, _jqmin2.default)(window).on("resize.ax6ui-autocomplete-display-" + this.instanceId, _AX6Util2.default.throttle(function (e) {
         alignAutocompleteDisplay.call(this, e || window.event);
         alignAutocompleteOptionGroup.call(this);
       }, 100).bind(this));
@@ -1202,9 +1202,9 @@ var AX6UIAutocomplete = function (_AX6UICore) {
      * @return {AX6UIAutocomplete}
      * @example
      * ```js
-     * myAutocomplete.setValue($('[data-ax6ui-autocomplete="autocomplete1"]'), {value:"test", text:"test"});
-     * myAutocomplete.setValue($('[data-ax6ui-autocomplete="autocomplete1"]'), [{value:"test1", text:"test1"}, {value:"test2", text:"test2"}]);
-     * myAutocomplete.setValue($('[data-ax6ui-autocomplete="autocomplete1"]'), null);
+     * myAutocomplete.setValue(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), {value:"test", text:"test"});
+     * myAutocomplete.setValue(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), [{value:"test1", text:"test1"}, {value:"test2", text:"test2"}]);
+     * myAutocomplete.setValue(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), null);
      * ```
      */
 
@@ -1243,8 +1243,8 @@ var AX6UIAutocomplete = function (_AX6UICore) {
      * @return {AX6UIAutocomplete}
      * @example
      * ```js
-     * myAutocomplete.setText($('[data-ax6ui-autocomplete="autocomplete1"]'), "string");
-     * myAutocomplete.setText($('[data-ax6ui-autocomplete="autocomplete1"]'), ["substring", "search"]);
+     * myAutocomplete.setText(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), "string");
+     * myAutocomplete.setText(jQuery('[data-ax6ui-autocomplete="autocomplete1"]'), ["substring", "search"]);
      * ```
      */
 

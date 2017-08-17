@@ -34,7 +34,16 @@ var avg = function avg() {
   return _AX6Util2.default.number(value / (listLength || 1), { "round": 2 });
 };
 
+/**
+ * @module AX6UIGrid_collector
+ */
 exports.default = {
+  /**
+   *
+   */
   sum: sum,
+  /**
+   *
+   */
   avg: avg
 };

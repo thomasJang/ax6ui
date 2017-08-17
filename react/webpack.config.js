@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let entry = {
-  index: './index.jsx',
+  index: './index.js',
 };
 
 let plugins = [
@@ -38,8 +38,8 @@ for (let k in entry) {
     menu: menu,
     title: "AX6UI SAMPLE (" + k + ")",
     filename: k + '.html',
-    favicon: './src/assets/favicon.ico',
-    template: './src/assets/sample.ejs'
+    favicon: './assets/favicon.ico',
+    template: './assets/sample.ejs'
   };
   plugins.push(new HtmlWebpackPlugin(obj));
 }
@@ -80,7 +80,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.jsx$/,
+        test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
@@ -92,8 +92,8 @@ module.exports = {
     ]
   },
   resolve: {
-    alias: {
-      AX6UI_src: path.resolve(__dirname, '../src/'),
-    }
+    modules: [
+      path.resolve('./node_modules'),
+    ]
   }
 };

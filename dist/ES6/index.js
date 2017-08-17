@@ -15,6 +15,7 @@ import AX6UIToast from "./AX6UIToast";
 import AX6UIModal from "./AX6UIModal";
 import AX6UIUploader from "./AX6UIUploader";
 import AX6UIAutocomplete from "./AX6UIAutocomplete";
+import AX6UISideNav from "./AX6UISideNav";
 
 /**
  * @module AX6UI
@@ -189,7 +190,17 @@ AX6UIUploader,
  * import { AX6UIAutocomplete } from "ax6ui";
  * ```
  */
-AX6UIAutocomplete };
+AX6UIAutocomplete,
+/**
+ * AX6UI.AX6UISideNav
+ * @example
+ * ```js
+ * import AX6UISideNav from "ax6ui/AX6UISideNav";
+ * // or
+ * import { AX6UISideNav } from "ax6ui";
+ * ```
+ */
+AX6UISideNav };
 
 export default {
   AX6Info,
@@ -208,5 +219,6 @@ export default {
   AX6UIToast,
   AX6UIModal,
   AX6UIUploader,
-  AX6UIAutocomplete
+  AX6UIAutocomplete,
+  AX6UISideNav
 };

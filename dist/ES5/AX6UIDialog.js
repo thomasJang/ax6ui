@@ -34,7 +34,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 var dialogTmpl = function dialogTmpl(columnKeys) {
   return " \n<div id=\"{{dialogId}}\" data-dialog-els=\"root\" data-ax6ui-dialog=\"\" class=\"{{theme}}\">\n    <div class=\"ax-dialog-header\" data-dialog-els=\"header\">\n        {{{title}}}\n    </div>\n    <div class=\"ax-dialog-body\" data-dialog-els=\"body\">\n        <div class=\"ax-dialog-msg\">{{{msg}}}</div>\n        \n        {{#input}}\n        <div class=\"ax-dialog-prompt\">\n            {{#@each}}\n            <div class=\"form-group\">\n            {{#@value.label}}\n            <label>{{#_crlf}}{{{.}}}{{/_crlf}}</label>\n            {{/@value.label}}\n            <input type=\"{{@value.type}}\" placeholder=\"{{@value.placeholder}}\" class=\"form-control {{@value.theme}}\" data-dialog-prompt=\"{{@key}}\" style=\"width:100%;\" value=\"{{@value.value}}\" />\n            {{#@value.help}}\n            <p class=\"help-block\">{{#_crlf}}{{.}}{{/_crlf}}</p>\n            {{/@value.help}}\n            </div>\n            {{/@each}}\n        </div>\n        {{/input}}\n        \n        <div class=\"ax-dialog-buttons\" data-dialog-els=\"buttons\">\n            <div class=\"ax-button-wrap\">\n            {{#btns}}\n                {{#@each}}\n                <button type=\"button\" data-dialog-btn=\"{{@key}}\" class=\"btn btn-{{@value.theme}}\">{{@value.label}}</button>\n                {{/@each}}\n            {{/btns}}\n            </div>\n        </div>\n        \n        {{#additionalContent}}\n        <div data-dialog-els=\"additional-content\">{{{.}}}</div>\n        {{/additionalContent}}\n    </div>\n</div>  \n";
@@ -176,9 +176,10 @@ var btnOnClick = function btnOnClick(e, opts, callback, target, k) {
       btnTarget: target
     };
     if (opts.dialogType === "prompt") {
+      that.input = {};
       for (var oi in opts.input) {
-        that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
-        if (that[oi] == "" || that[oi] == null) {
+        that.input[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+        if (opts.input[oi].required && (that.input[oi] == "" || that.input[oi] == null)) {
           emptyKey = oi;
           break;
         }
@@ -225,10 +226,11 @@ var onKeyup = function onKeyup(e, opts, callback, target, k) {
         dialogId: opts.id,
         btnTarget: target
       };
+      that.input = {};
 
       for (var oi in opts.input) {
-        that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
-        if (that[oi] == "" || that[oi] == null) {
+        that.input[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+        if (opts.input[oi].required && (that.input[oi] == "" || that.input[oi] == null)) {
           emptyKey = oi;
           break;
         }
@@ -251,7 +253,7 @@ var onKeyup = function onKeyup(e, opts, callback, target, k) {
   k = null;
 };
 
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

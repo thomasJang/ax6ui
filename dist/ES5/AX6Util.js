@@ -17,6 +17,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 var _toString = Object.prototype.toString;
+var _hasOwnProperty = Object.prototype.hasOwnProperty;
+var _fnToString = Function.prototype.toString;
+var objectCtorString = _fnToString.call(Object);
+
 var reIsJson = /^(["'](\\.|[^"\\\n\r])*?["']|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/,
     reMs = /^-ms-/,
     reSnakeCase = /[\-_]([\da-z])/gi,
@@ -237,6 +241,21 @@ function isDateFormat(O) {
     }
   }
   return result;
+}
+
+function isPlainObject(O) {
+  var proto = void 0,
+      constructor = void 0;
+
+  if (!O || _toString.call(O) !== "[object Object]") return false;
+  proto = Object.getPrototypeOf(O);
+
+  if (!proto) {
+    return true;
+  }
+
+  constructor = _hasOwnProperty.call(proto, "constructor") && proto.constructor;
+  return typeof constructor === "function" && _fnToString.call(constructor) === objectCtorString;
 }
 
 function first(O) {
@@ -1077,6 +1096,79 @@ function deepCopy(obj) {
   return obj;
 }
 
+// jQuery extend
+function extend() {
+  var options = void 0,
+      name = void 0,
+      src = void 0,
+      copy = void 0,
+      copyIsArray = void 0,
+      clone = void 0,
+      target = arguments[0] || {},
+      i = 1,
+      length = arguments.length,
+      deep = false;
+
+  // Handle a deep copy situation
+  if (typeof target === "boolean") {
+    deep = target;
+
+    // Skip the boolean and the target
+    target = arguments[i] || {};
+    i++;
+  }
+
+  // Handle case when target is a string or something (possible in deep copy)
+  if ((typeof target === "undefined" ? "undefined" : _typeof(target)) !== "object" && !isFunction(target)) {
+    target = {};
+  }
+
+  // Extend jQuery itself if only one argument is passed
+  if (i === length) {
+    target = this;
+    i--;
+  }
+
+  for (; i < length; i++) {
+
+    // Only deal with non-null/undefined values
+    if ((options = arguments[i]) != null) {
+
+      // Extend the base object
+      for (name in options) {
+        src = target[name];
+        copy = options[name];
+
+        // Prevent never-ending loop
+        if (target === copy) {
+          continue;
+        }
+
+        // Recurse if we're merging plain objects or arrays
+        if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+
+          if (copyIsArray) {
+            copyIsArray = false;
+            clone = src && isArray(src) ? src : [];
+          } else {
+            clone = src && isPlainObject(src) ? src : {};
+          }
+
+          // Never move original objects, clone them
+          target[name] = extend(deep, clone, copy);
+
+          // Don't bring in undefined values
+        } else if (copy !== undefined) {
+          target[name] = copy;
+        }
+      }
+    }
+  }
+
+  // Return the modified object
+  return target;
+}
+
 function escapeHtml(s) {
   if (_toString.call(s) != "[object String]") return s;
   if (!s) return "";
@@ -1713,7 +1805,16 @@ exports.default = {
    * 오브젝트가 날짜형 변수인지 판단합니다
    */
   isDateFormat: isDateFormat,
+  /**
+   * @param {*} object
+   * @return {Boolean}
+   */
   isNothing: isNothing,
+  /**
+   * @param {*} object
+   * @return {Boolean}
+   */
+  isPlainObject: isPlainObject,
   /**
    * 쿠키를 설정합니다.
    * @param {String} cname - 쿠키이름
@@ -2026,6 +2127,18 @@ exports.default = {
    * ```
    */
   deepCopy: deepCopy,
+  /**
+   * @param {Boolean} [deep]
+   * @param {Object} src
+   * @param {Object} copy
+   * @return {Object}
+   * @example
+   * ```js
+   * AX6Util.extend({a:1}, {b:1});
+   * AX6Util.extend(true, {a:1, b:{name:'t'}, {b:{etc:true}});
+   * ```
+   */
+  extend: extend,
   /**
    * HTML 문자열을 escape 처리합니다.
    * "&lt;" represents the < sign.

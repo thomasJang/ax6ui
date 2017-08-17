@@ -4,7 +4,7 @@ import U from "./AX6Util.js";
 import info from "./AX6Info.js";
 import mustache from "./AX6Mustache.js";
 
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 const dialogTmpl = function (columnKeys) {
   return ` 
@@ -183,9 +183,10 @@ const btnOnClick = function (e, opts, callback, target, k) {
       btnTarget: target
     };
     if (opts.dialogType === "prompt") {
+      that.input = {};
       for (let oi in opts.input) {
-        that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
-        if (that[oi] == "" || that[oi] == null) {
+        that.input[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+        if (opts.input[oi].required && (that.input[oi] == "" || that.input[oi] == null)) {
           emptyKey = oi;
           break;
         }
@@ -232,10 +233,11 @@ const onKeyup = function (e, opts, callback, target, k) {
         dialogId: opts.id,
         btnTarget: target
       };
+      that.input = {};
 
       for (let oi in opts.input) {
-        that[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
-        if (that[oi] == "" || that[oi] == null) {
+        that.input[oi] = this.$activeDialog.find('[data-dialog-prompt=' + oi + ']').val();
+        if (opts.input[oi].required && (that.input[oi] == "" || that.input[oi] == null)) {
           emptyKey = oi;
           break;
         }
@@ -258,7 +260,7 @@ const onKeyup = function (e, opts, callback, target, k) {
   k = null;
 };
 
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

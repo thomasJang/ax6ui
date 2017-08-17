@@ -6,7 +6,7 @@ import mustache from "./AX6Mustache";
 import Formatter from "./AX6UIFormatter";
 import Calendar from "./AX6UICalendar";
 import Palette from "./AX6UIPalette";
-/** ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 let tmpl = {
   pickerTmpl(columnKeys) {
@@ -354,7 +354,7 @@ const getQueIdx = function (boundID) {
     return this.id == boundID;
   });
 };
-/** ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ **/
+/* ~~~~~~~~~~~~~~~~~~ end of private  ~~~~~~~~~~~~~~~~~~~~ */
 
 /**
  * @class

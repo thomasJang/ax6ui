@@ -24,7 +24,7 @@ var _AX6UIGrid_util2 = _interopRequireDefault(_AX6UIGrid_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var init = function init() {};
+/* ~~~~~~~~~~~~~~~~~~ end of import  ~~~~~~~~~~~~~~~~~~~~ */
 
 var clearGroupingData = function clearGroupingData(_list) {
   var i = 0,
@@ -238,22 +238,7 @@ var arrangeData4tree = function arrangeData4tree(_list) {
   return _list;
 };
 
-var getProxyList = function getProxyList(_list) {
-  var i = 0,
-      l = _list.length,
-      returnList = [];
-  for (; i < l; i++) {
-
-    if (_list[i] && !_list[i][this.config.tree.columnKeys.hidden]) {
-      _list[i].__origin_index__ = i;
-      returnList.push(_list[i]);
-    }
-  }
-  return returnList;
-};
-
 var set = function set(data) {
-
   var list = void 0;
   if (_AX6Util2.default.isArray(data)) {
     this.page = null;
@@ -285,7 +270,7 @@ var set = function set(data) {
   return this;
 };
 
-var get = function get(_type) {
+var get = function get() {
   return {
     list: this.list,
     page: this.page
@@ -321,6 +306,159 @@ var getList = function getList(_type) {
       returnList = clearGroupingData.call(this, list);
   }
   return returnList;
+};
+
+var getProxyList = function getProxyList(_list) {
+  var i = 0,
+      l = _list.length,
+      returnList = [];
+  for (; i < l; i++) {
+
+    if (_list[i] && !_list[i][this.config.tree.columnKeys.hidden]) {
+      _list[i].__origin_index__ = i;
+      returnList.push(_list[i]);
+    }
+  }
+  return returnList;
+};
+
+var setValue = function setValue(_dindex, _doindex, _key, _value) {
+  var originalValue = getValue.call(this, _dindex, _doindex, _key);
+  var list = this.list;
+  var listIndex = typeof _doindex === "undefined" ? _dindex : _doindex;
+  this.needToPaintSum = true;
+
+  if (originalValue !== _value) {
+    if (/[\.\[\]]/.test(_key)) {
+      try {
+        list[listIndex][this.config.columnKeys.modified] = true;
+        Function("val", "this" + _AX6UIGrid_util2.default.getRealPathForDataItem(_key) + " = val;").call(list[listIndex], _value);
+      } catch (e) {}
+    } else {
+      list[listIndex][this.config.columnKeys.modified] = true;
+      list[listIndex][_key] = _value;
+    }
+
+    if (this.onDataChanged) {
+      this.onDataChanged.call({
+        self: this,
+        list: this.list,
+        dindex: _dindex,
+        doindex: _doindex,
+        item: this.list[_dindex],
+        key: _key,
+        value: _value
+      });
+    }
+  }
+
+  return true;
+};
+
+var getValue = function getValue(_dindex, _doindex, _key, _value) {
+  var list = this.list;
+  var listIndex = typeof _doindex === "undefined" ? _dindex : _doindex;
+
+  if (/[\.\[\]]/.test(_key)) {
+    try {
+      _value = Function("", "return this" + _AX6UIGrid_util2.default.getRealPathForDataItem(_key) + ";").call(list[listIndex]);
+    } catch (e) {}
+  } else {
+    _value = list[listIndex][_key];
+  }
+  return _value;
+};
+
+var clearSelect = function clearSelect() {
+  this.selectedDataIndexs = [];
+};
+
+var select = function select(_dindex, _doindex, _selected, _options) {
+  var cfg = this.config;
+
+  if (typeof _doindex === "undefined") _doindex = _dindex;
+
+  if (!this.list[_doindex]) return false;
+  if (this.list[_doindex].__isGrouping) return false;
+  if (this.list[_doindex][cfg.columnKeys.disableSelection]) return false;
+
+  if (typeof _selected === "undefined") {
+    if (this.list[_doindex][cfg.columnKeys.selected] = !this.list[_doindex][cfg.columnKeys.selected]) {
+      this.selectedDataIndexs.push(_doindex);
+    } else {
+      this.selectedDataIndexs.splice(_AX6Util2.default.search(this.selectedDataIndexs, function () {
+        return this == _doindex;
+      }), 1);
+    }
+  } else {
+    if (this.list[_doindex][cfg.columnKeys.selected] = _selected) {
+      this.selectedDataIndexs.push(_doindex);
+    } else {
+      this.selectedDataIndexs.splice(_AX6Util2.default.search(this.selectedDataIndexs, function () {
+        return this == _doindex;
+      }), 1);
+    }
+  }
+
+  if (this.onDataChanged && _options && _options.internalCall) {
+    this.onDataChanged.call({
+      self: this,
+      list: this.list,
+      dindex: _dindex,
+      doindex: _doindex,
+      item: this.list[_doindex],
+      key: cfg.columnKeys.selected,
+      value: this.list[_doindex][cfg.columnKeys.selected]
+    });
+  }
+
+  return this.list[_doindex][cfg.columnKeys.selected];
+};
+
+var selectAll = function selectAll(_selected, _options) {
+  var cfg = this.config,
+      dindex = this.list.length;
+
+  this.selectedDataIndexs = [];
+
+  if (typeof _selected === "undefined") {
+    while (dindex--) {
+      if (this.list[dindex].__isGrouping) continue;
+      if (_options && _options.filter) {
+        if (_options.filter.call(this.list[dindex]) !== true) {
+          continue;
+        }
+      }
+      if (this.list[dindex][cfg.columnKeys.disableSelection]) continue;
+
+      if (this.list[dindex][cfg.columnKeys.selected] = !this.list[dindex][cfg.columnKeys.selected]) {
+        this.selectedDataIndexs.push(dindex);
+      }
+    }
+  } else {
+    while (dindex--) {
+      if (this.list[dindex].__isGrouping) continue;
+      if (_options && _options.filter) {
+        if (_options.filter.call(this.list[dindex]) !== true) {
+          continue;
+        }
+      }
+      if (this.list[dindex][cfg.columnKeys.disableSelection]) continue;
+
+      if (this.list[dindex][cfg.columnKeys.selected] = _selected) {
+        this.selectedDataIndexs.push(dindex);
+      }
+    }
+  }
+
+  if (this.onDataChanged && _options && _options.internalCall) {
+    this.onDataChanged.call({
+      self: this,
+      list: this.list
+    });
+  }
+
+  return this.list;
 };
 
 var add = function add(_row, _dindex, _options) {
@@ -376,10 +514,6 @@ var add = function add(_row, _dindex, _options) {
   return this;
 };
 
-/**
- * list에서 완전 제거 하는 경우 사용.
- * ax5grid.data.remove
- */
 var remove = function remove(_dindex) {
   var list = this.config.body.grouping ? clearGroupingData.call(this, this.list) : this.list;
   var processor = {
@@ -465,10 +599,6 @@ var remove = function remove(_dindex) {
   return this;
 };
 
-/**
- * list에서 deleted 처리 repaint
- * ax5grid.data.deleteRow
- */
 var deleteRow = function deleteRow(_dindex) {
   var list = this.config.body.grouping ? clearGroupingData.call(this, this.list) : this.list;
   var processor = {
@@ -644,145 +774,6 @@ var updateChild = function updateChild(_dindex, _updateData, _options) {
   }
 };
 
-var setValue = function setValue(_dindex, _doindex, _key, _value) {
-  var originalValue = getValue.call(this, _dindex, _doindex, _key);
-  var list = this.list;
-  var listIndex = typeof _doindex === "undefined" ? _dindex : _doindex;
-  this.needToPaintSum = true;
-
-  if (originalValue !== _value) {
-    if (/[\.\[\]]/.test(_key)) {
-      try {
-        list[listIndex][this.config.columnKeys.modified] = true;
-        Function("val", "this" + _AX6UIGrid_util2.default.getRealPathForDataItem(_key) + " = val;").call(list[listIndex], _value);
-      } catch (e) {}
-    } else {
-      list[listIndex][this.config.columnKeys.modified] = true;
-      list[listIndex][_key] = _value;
-    }
-
-    if (this.onDataChanged) {
-      this.onDataChanged.call({
-        self: this,
-        list: this.list,
-        dindex: _dindex,
-        doindex: _doindex,
-        item: this.list[_dindex],
-        key: _key,
-        value: _value
-      });
-    }
-  }
-
-  return true;
-};
-
-var getValue = function getValue(_dindex, _doindex, _key, _value) {
-  var list = this.list;
-  var listIndex = typeof _doindex === "undefined" ? _dindex : _doindex;
-
-  if (/[\.\[\]]/.test(_key)) {
-    try {
-      _value = Function("", "return this" + _AX6UIGrid_util2.default.getRealPathForDataItem(_key) + ";").call(list[listIndex]);
-    } catch (e) {}
-  } else {
-    _value = list[listIndex][_key];
-  }
-  return _value;
-};
-
-var clearSelect = function clearSelect() {
-  this.selectedDataIndexs = [];
-};
-
-var select = function select(_dindex, _doindex, _selected, _options) {
-  var cfg = this.config;
-
-  if (typeof _doindex === "undefined") _doindex = _dindex;
-
-  if (!this.list[_doindex]) return false;
-  if (this.list[_doindex].__isGrouping) return false;
-  if (this.list[_doindex][cfg.columnKeys.disableSelection]) return false;
-
-  if (typeof _selected === "undefined") {
-    if (this.list[_doindex][cfg.columnKeys.selected] = !this.list[_doindex][cfg.columnKeys.selected]) {
-      this.selectedDataIndexs.push(_doindex);
-    } else {
-      this.selectedDataIndexs.splice(_AX6Util2.default.search(this.selectedDataIndexs, function () {
-        return this == _doindex;
-      }), 1);
-    }
-  } else {
-    if (this.list[_doindex][cfg.columnKeys.selected] = _selected) {
-      this.selectedDataIndexs.push(_doindex);
-    } else {
-      this.selectedDataIndexs.splice(_AX6Util2.default.search(this.selectedDataIndexs, function () {
-        return this == _doindex;
-      }), 1);
-    }
-  }
-
-  if (this.onDataChanged && _options && _options.internalCall) {
-    this.onDataChanged.call({
-      self: this,
-      list: this.list,
-      dindex: _dindex,
-      doindex: _doindex,
-      item: this.list[_doindex],
-      key: cfg.columnKeys.selected,
-      value: this.list[_doindex][cfg.columnKeys.selected]
-    });
-  }
-
-  return this.list[_doindex][cfg.columnKeys.selected];
-};
-
-var selectAll = function selectAll(_selected, _options) {
-  var cfg = this.config,
-      dindex = this.list.length;
-
-  this.selectedDataIndexs = [];
-
-  if (typeof _selected === "undefined") {
-    while (dindex--) {
-      if (this.list[dindex].__isGrouping) continue;
-      if (_options && _options.filter) {
-        if (_options.filter.call(this.list[dindex]) !== true) {
-          continue;
-        }
-      }
-      if (this.list[dindex][cfg.columnKeys.disableSelection]) continue;
-
-      if (this.list[dindex][cfg.columnKeys.selected] = !this.list[dindex][cfg.columnKeys.selected]) {
-        this.selectedDataIndexs.push(dindex);
-      }
-    }
-  } else {
-    while (dindex--) {
-      if (this.list[dindex].__isGrouping) continue;
-      if (_options && _options.filter) {
-        if (_options.filter.call(this.list[dindex]) !== true) {
-          continue;
-        }
-      }
-      if (this.list[dindex][cfg.columnKeys.disableSelection]) continue;
-
-      if (this.list[dindex][cfg.columnKeys.selected] = _selected) {
-        this.selectedDataIndexs.push(dindex);
-      }
-    }
-  }
-
-  if (this.onDataChanged && _options && _options.internalCall) {
-    this.onDataChanged.call({
-      self: this,
-      list: this.list
-    });
-  }
-
-  return this.list;
-};
-
 var sort = function sort(_sortInfo, _list, _options) {
   var self = this,
       list = _list || this.list,
@@ -942,25 +933,134 @@ var toggleCollapse = function toggleCollapse(_dindex, _doindx, _collapse) {
   }
 };
 
+/**
+ * @module AX6UIGrid_data
+ */
 exports.default = {
-  init: init,
+  init: function init() {},
+  /**
+   * @param data
+   * @return {module:AX6UIGrid_data}
+   */
   set: set,
+  /**
+   * @return {*}
+   */
   get: get,
+  /**
+   * @param {String} _type - modified|selected|deleted
+   * @return {Array}
+   */
   getList: getList,
+  /**
+   * @param {Array}
+   * @return {Array}
+   */
   getProxyList: getProxyList,
+  /**
+   *
+   * @param _dindex
+   * @param _doindex
+   * @param _key
+   * @param _value
+   * @return {boolean}
+   */
   setValue: setValue,
+  /**
+   *
+   * @param _dindex
+   * @param _doindex
+   * @param _key
+   * @param _value
+   * @return {*}
+   */
   getValue: getValue,
+  /**
+   *
+   */
   clearSelect: clearSelect,
+  /**
+   *
+   * @param _dindex
+   * @param _doindex
+   * @param _selected
+   * @param _options
+   * @return {boolean}
+   */
   select: select,
+  /**
+   *
+   * @param _selected
+   * @param _options
+   */
   selectAll: selectAll,
+  /**
+   *
+   * @param _row
+   * @param _dindex
+   * @param _options
+   * @return {add}
+   */
   add: add,
+  /**
+   * list에서 완전 제거 하는 경우 사용.
+   * @param _dindex
+   * @return {remove}
+   */
   remove: remove,
+  /**
+   * list에서 deleted 처리 repaint
+   * @param _dindex
+   * @return {deleteRow}
+   */
   deleteRow: deleteRow,
+  /**
+   *
+   * @param _row
+   * @param _dindex
+   */
   update: update,
+  /**
+   *
+   * @param _dindex
+   * @param _updateData
+   * @param _options
+   * @return {boolean}
+   */
   updateChild: updateChild,
+  /**
+   *
+   * @param _sortInfo
+   * @param _list
+   * @param _options
+   * @return {*}
+   */
   sort: sort,
+  /**
+   *
+   * @param _list
+   * @return {Array}
+   */
   initData: initData,
+  /**
+   *
+   * @param _list
+   * @return {Array}
+   */
   clearGroupingData: clearGroupingData,
+  /**
+   *
+   * @param _list
+   * @param _callback
+   * @return {boolean}
+   */
   append: append,
+  /**
+   *
+   * @param _dindex
+   * @param _doindx
+   * @param _collapse
+   * @return {boolean}
+   */
   toggleCollapse: toggleCollapse
 };

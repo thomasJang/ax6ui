@@ -4,8 +4,6 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
-const changed = require('gulp-changed');
-const plumber = require('gulp-plumber');
 const notify = require("gulp-notify");
 const babel = require('gulp-babel');
 const shell = require('gulp-shell');
@@ -17,8 +15,9 @@ const exec = require('gulp-exec');
 const fnObj = {
   paths: {
     src: 'src/',
-    dist_es6: 'dist/ES6/',
+    dist_es: 'dist/ES/',
     dist_es5: 'dist/ES5/',
+    dist_js: 'dist/JS/',
     scss: 'scss/',
     css: 'css/'
   },
@@ -30,24 +29,30 @@ const fnObj = {
 };
 
 // 걸프 기본 타스크
-gulp.task('default', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], function () {
+gulp.task('default', ['js-ES', 'js-ES5', 'js-JS', 'scss-ES', 'scss-ES5', 'scss-JS'], function () {
   return true;
 });
 
-// task for ES6
-gulp.task('js-ES6', function () {
+// task of ES
+gulp.task('js-ES', function () {
   return gulp.src([fnObj.paths.src + '/**/*.js'])
-    //.pipe(plumber({errorHandler: fnObj.errorAlert}))
-    //.pipe(sourcemaps.init())
     .pipe(babel({
-      //presets: ['es2016'],
-      //plugins: ['transform-runtime']
+      presets: ['env']
     }))
-    .pipe(gulp.dest(fnObj.paths.dist_es6));
+    .pipe(gulp.dest(fnObj.paths.dist_es));
 });
 
 // task for ES5
 gulp.task('js-ES5', function () {
+  return gulp.src([fnObj.paths.src + '/**/*.js'])
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest(fnObj.paths.dist_es5));
+});
+
+// task for JS
+gulp.task('js-JS', function () {
   return gulp.src([fnObj.paths.src + '/**/*.js'])
     //.pipe(plumber({errorHandler: fnObj.errorAlert}))
     .pipe(sourcemaps.init())
@@ -56,13 +61,20 @@ gulp.task('js-ES5', function () {
       //"plugins": ["transform-es2015-modules-amd"]
       //plugins: ['transform-runtime']
     }))
-    .pipe(gulp.dest(fnObj.paths.dist_es5))
+    .pipe(gulp.dest(fnObj.paths.dist_js))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
     .pipe(rename({
       suffix: '.min'
     }))
-    .pipe(gulp.dest(fnObj.paths.dist_es5));
+    .pipe(gulp.dest(fnObj.paths.dist_js));
+});
+
+gulp.task('scss-ES', function () {
+  return gulp.src([
+      fnObj.paths.src + '/**/*.scss',
+    ], {base: fnObj.paths.src})
+    .pipe(gulp.dest(fnObj.paths.dist_es));
 });
 
 gulp.task('dist-scss-ES5', function () {
@@ -78,29 +90,29 @@ gulp.task('scss-ES5', ['dist-scss-ES5'], function () {
     .pipe(gulp.dest(fnObj.paths.dist_es5));
 });
 
-gulp.task('dist-scss-ES6', function () {
+gulp.task('dist-scss-JS', function () {
   return gulp.src([
       fnObj.paths.src + '/**/*.scss',
     ], {base: fnObj.paths.src})
-    .pipe(gulp.dest(fnObj.paths.dist_es6));
+    .pipe(gulp.dest(fnObj.paths.dist_js));
 });
 
-gulp.task('scss-ES6', ['dist-scss-ES6'], function () {
+gulp.task('scss-JS', ['dist-scss-JS'], function () {
   gulp.src(fnObj.paths.src + '/**/style.scss')
     .pipe(sass({outputStyle: 'compressed'}))
-    .pipe(gulp.dest(fnObj.paths.dist_es6));
+    .pipe(gulp.dest(fnObj.paths.dist_js));
 });
 
 /**
  * npm publish
  */
-gulp.task('npm publish patch', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], shell.task([
-  'cd dist/ES5 && npm version patch -m "version patch" && npm publish',
-  'cd dist/ES6 && npm version patch -m "version patch" && npm publish'
+gulp.task('npm publish patch', ['js-ES', 'js-ES5', 'js-JS', 'scss-ES', 'scss-ES5', 'scss-JS'], shell.task([
+  'cd dist/ES && npm version patch -m "version patch" && npm publish',
+  'cd dist/ES5 && npm version patch -m "version patch" && npm publish'
 ]));
-gulp.task('npm publish minor', ['js-ES5', 'js-ES6', 'scss-ES5', 'scss-ES6'], shell.task([
-  'cd dist/ES5 && npm version minor -m "version minor" && npm publish',
-  'cd dist/ES6 && npm version minor -m "version minor" && npm publish'
+gulp.task('npm publish minor', ['js-ES', 'js-ES5', 'js-JS', 'scss-ES', 'scss-ES5', 'scss-JS'], shell.task([
+  'cd dist/ES && npm version minor -m "version minor" && npm publish',
+  'cd dist/ES5 && npm version minor -m "version minor" && npm publish'
 ]));
 
 gulp.task('jsdoc build', function () {

@@ -82,7 +82,7 @@ const init = function () {
       //rowIndex = this.getAttribute("data-ax6grid-column-rowindex"),
       col = self.colGroup[colIndex];
 
-    if (key === "__checkbox_header__") {
+    if (key === "__checkbox_header__" && self.config.header.selector) {
       let selected = this.getAttribute("data-ax6grid-selected");
       selected = (U.isNothing(selected)) ? true : (selected !== "true");
 
@@ -175,7 +175,7 @@ const resetFrozenColumn = function () {
 
 const getFieldValue = function (_col) {
   return (_col.key === "__checkbox_header__")
-    ? `<div class="checkBox" style="max-height: ${_col.width - 10}px;min-height: ${_col.width - 10}px;"></div>`
+    ? ((this.config.header.selector) ? `<div class="checkBox" style="max-height: ${_col.width - 10}px;min-height: ${_col.width - 10}px;"></div>` : "&nbsp;")
     : (_col.label || "&nbsp;");
 };
 

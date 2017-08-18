@@ -1,0 +1,20 @@
+//============== ax5dialog
+
+$ax6ui-dialog-z-index: 2000 !default;
+$ax6ui-dialog-box-model: border-box !default;
+$ax6ui-dialog-bg: #fff !default;
+$ax6ui-dialog-box-shaodw: 0px 0px 3px 0px rgba(0, 0, 0, 0.175) !default;
+$ax6ui-dialog-body-padding: 15px !default;
+$ax6ui-dialog-header-padding: 10px 15px !default;
+$ax6ui-dialog-footer-padding: 10px 15px !default;
+$ax6ui-dialog-border-radius: 4px !default;
+$ax6ui-dialog-easing-time-open: 0.15s !default;
+$ax6ui-dialog-easing-time-close: 0.15s !default;
+
+//** Border color for elements within dialog
+$ax6ui-dialog-inner-border: 1px solid #ddd !default;
+$ax6ui-dialog-footer-bg: #f5f5f5 !default;
+
+$ax6ui-dialog-default-text: #333 !default;
+$ax6ui-dialog-default-border: 1px solid #ddd !default;
+$ax6ui-dialog-default-header-bg: #f5f5f5 !default;

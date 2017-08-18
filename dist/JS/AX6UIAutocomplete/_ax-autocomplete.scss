@@ -1,0 +1,467 @@
+
+// themes
+$base-colors: (
+    default: $ax6ui-autocomplete-default-base-color
+);
+$theme-colors: (
+    default: $ax6ui-autocomplete-default-theme-color
+);
+$hover-types: (
+    default: $ax6ui-autocomplete-default-hover-type
+);
+
+@include keyframes(ax-autocomplete-option-group) {
+  from {
+    @include transform(translateY(-10%));
+    opacity: 0;
+  }
+  to {
+    @include transform(translateY(0%));
+    opacity: 1;
+  }
+}
+
+@include keyframes(ax-autocomplete-option-group-destroy) {
+  from {
+    @include transform(translateY(0%) scaleY(1.0));
+    opacity: 1;
+  }
+  to {
+    @include transform(translateY(0%) scaleY(0.0));
+    opacity: 0;
+  }
+}
+
+@mixin ax6ui-autocomplete-display-theme($base-color, $back-color, $theme-color) {
+  a {
+    color: $base-color;
+  }
+
+  &:hover, &:active, &:focus, &[data-select-option-group-opened] {
+    &:not([disabled]) {
+      border-color: $theme-color;
+      color: $base-color;
+      background: $back-color;
+      text-decoration: none;
+
+      .ax6ui-autocomplete-display-table {
+        [data-ax5-select-display="label"] {
+
+        }
+        [data-ax5-select-display="addon"] {
+
+        }
+      }
+    }
+  }
+  [disabled] {
+    user-select: none;
+  }
+}
+
+@mixin ax6ui-autocomplete-option-group-theme($base-color, $back-color, $theme-color, $hover-type) {
+  border-color: $theme-color;
+  color: $base-color;
+
+  .ax-autocomplete-body {
+
+    .ax-autocomplete-option-group-content {
+      .ax-autocomplete-option-item {
+        &:hover, &.hover {
+          @if nth($hover-type, 1) == "lighten" {
+            background: lighten($theme-color, 15%) !important;
+            color: lighten($base-color, nth($hover-type, 2));
+          } @else if nth($hover-type, 1) == "darken" {
+            background: darken($theme-color, 15%) !important;
+            color: darken($base-color, nth($hover-type, 2));
+          }
+
+          .ax-autocomplete-option-item-holder {
+            .ax-autocomplete-option-item-cell {
+              &.ax-autocomplete-option-item-checkbox {
+                .item-checkbox-wrap {
+                  &.useCheckBox {
+                    &:after {
+                      box-sizing: border-box;
+                      @if nth($hover-type, 1) == "lighten" {
+                        border-color: lighten($base-color, nth($hover-type, 2)) !important;
+                      } @else if nth($hover-type, 1) == "darken" {
+                        border-color: darken($base-color, nth($hover-type, 2)) !important;
+                      }
+                    }
+                  }
+                }
+              }
+              &.ax-autocomplete-option-item-label {
+              }
+            }
+          }
+        }
+        &[data-option-selected="true"] {
+          @if nth($hover-type, 1) == "lighten" {
+            background: $theme-color;
+            color: lighten($base-color, nth($hover-type, 2));
+          } @else if nth($hover-type, 1) == "darken" {
+            background: $theme-color;
+            color: darken($base-color, nth($hover-type, 2));
+          }
+
+          .ax-autocomplete-option-item-holder {
+            .ax-autocomplete-option-item-cell {
+              &.ax-autocomplete-option-item-checkbox {
+                .item-checkbox-wrap {
+                  &.useCheckBox {
+                    &:after {
+                      box-sizing: border-box;
+                      @if nth($hover-type, 1) == "lighten" {
+                        border-color: lighten($base-color, nth($hover-type, 2)) !important;
+                      } @else if nth($hover-type, 1) == "darken" {
+                        border-color: darken($base-color, nth($hover-type, 2)) !important;
+                      }
+                    }
+                  }
+                }
+              }
+              &.ax-autocomplete-option-item-label {
+              }
+            }
+          }
+        }
+      }
+      .ax-autocomplete-option-group {
+
+        .ax-autocomplete-option-item-holder {
+
+          .ax-autocomplete-option-group-label {
+            background: #eee;
+          }
+        }
+      }
+    }
+
+    .ax-autocomplete-option-group-buttons {
+      border-top: 1px solid;
+      border-color: $theme-color;
+    }
+  }
+
+  &:hover {
+
+  }
+}
+
+@mixin ax6ui-autocomplete-option-group-size($padding, $font-size) {
+  .ax-autocomplete-body {
+    padding: $ax6ui-autocomplete-option-group-body-padding;
+    $ax6ui-autocomplete-option-item-height: $font-size + 5;
+    $ax6ui-autocomplete-option-item-checkbox-size: $font-size - 4;
+    .ax-autocomplete-option-group-content {
+      max-height: $ax6ui-autocomplete-option-item-height * 10;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      .ax-autocomplete-option-item {
+        padding: $padding;
+        text-align: left;
+        cursor: pointer;
+        font-size: $font-size;
+        position: relative;
+        box-sizing: border-box;
+        overflow: hidden;
+        //table-layout: fixed;
+
+        .ax-autocomplete-option-item-holder {
+          display: table;
+          position: relative;
+          border-collapse: separate;
+          overflow: hidden;
+          //table-layout: fixed;
+          width: 100%;
+          height: $ax6ui-autocomplete-option-item-height;
+
+          .ax-autocomplete-option-item-cell {
+            box-sizing: border-box;
+            display: table-cell;
+            vertical-align: middle;
+            white-space: nowrap;
+            font-size: $font-size;
+            line-height: $ax6ui-autocomplete-option-item-height;
+            padding: 0 0 0 0;
+            user-select: none;
+
+            &.ax-autocomplete-option-item-checkbox {
+              overflow: hidden;
+              width: $font-size;
+              text-align: center;
+              .item-checkbox-wrap {
+                position: relative;
+                display: block;
+                width: $font-size;
+                height: $ax6ui-autocomplete-option-item-height;
+
+                &.useCheckBox {
+                  &:after {
+                    box-sizing: border-box;
+                    content: '';
+                    width: $ax6ui-autocomplete-option-item-checkbox-size;
+                    height: $ax6ui-autocomplete-option-item-checkbox-size / 2;
+                    position: absolute;
+                    top: ($ax6ui-autocomplete-option-item-height) / 4;
+                    right: 0;
+                    border: 2px solid #000;
+                    border-top: none;
+                    border-right: none;
+                    background: transparent;
+                    opacity: 0.1;
+                    @include transform(rotate(-50deg));
+                  }
+                }
+              }
+            }
+            &.ax-autocomplete-option-item-label {
+              padding: $ax6ui-autocomplete-label-padding;
+              padding-right: $ax6ui-autocomplete-option-item-checkbox-size;
+            }
+          }
+        }
+
+        &[data-option-selected="true"] {
+          .ax-autocomplete-option-item-holder .ax-autocomplete-option-item-cell.ax-autocomplete-option-item-checkbox .item-checkbox-wrap.useCheckBox {
+            &:after {
+              opacity: 1;
+            }
+          }
+        }
+      }
+      .ax-autocomplete-option-group {
+
+        .ax-autocomplete-option-item-holder {
+          display: table;
+          position: relative;
+          border-collapse: separate;
+          overflow: hidden;
+          //table-layout: fixed;
+          width: 100%;
+          height: $ax6ui-autocomplete-option-item-height;
+
+          .ax-autocomplete-option-group-label {
+            box-sizing: border-box;
+            display: table-cell;
+            vertical-align: middle;
+            white-space: nowrap;
+            font-size: $font-size;
+            line-height: $ax6ui-autocomplete-option-item-height;
+
+            padding: 5px 10px; // todo : theme 정리 나중에
+            user-select: none;
+          }
+        }
+      }
+    }
+    .ax-autocomplete-option-group-buttons {
+      text-align: center;
+      padding: $padding;
+    }
+  }
+}
+
+// select group
+[data-ax6ui-autocomplete] {
+  position: relative;
+  overflow: visible;
+  display: block;
+  box-sizing: border-box;
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+}
+
+/// select-display
+.ax6ui-autocomplete-display {
+  position: relative;
+  z-index: 2;
+  padding: 0;
+
+  display: block;
+  height: $ax-input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  font-size: $ax-font-size-base;
+  border-radius: $ax-input-border-radius; // Note: This has no effect on <select>s in some browsers, due to the limited stylability of <select>s in CSS.
+
+  @include ax-background(top, $ax6ui-autocomplete-label-bg-colors);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  border: $ax6ui-autocomplete-label-border;
+  color: $ax6ui-autocomplete-label-color;
+
+  text-decoration: none;
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+
+  .ax6ui-autocomplete-display-table {
+    width: 100%;
+    height: 100%;
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+
+    [data-ax6ui-autocomplete-display="label-holder"] {
+      display: table-cell;
+      vertical-align: middle;
+      padding: 0 0;
+      input{
+        margin:0;
+        box-sizing: content-box;
+        background: transparent;
+        box-shadow: none;
+        &:focus, &:active, &:hover{
+          border: 0 none;
+          box-shadow: none;
+        }
+      }
+    }
+    [data-ax6ui-autocomplete-display="label"] {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: $ax6ui-autocomplete-label-padding;
+      text-decoration: none;
+
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+      &:after {
+        content: ' ';
+        display: block;
+        clear: both;
+      }
+
+      [data-ax6ui-autocomplete-selected-label] {
+        position: relative;
+        display: table;
+        float: left;
+        background: transparent;
+        margin: 1px 3px 1px 0;
+        color: $ax6ui-autocomplete-label-color;
+        box-sizing: border-box;
+        @include ax-background(top, $ax6ui-autocomplete-label-bg-colors);
+
+        border-collapse: separate;
+        border: 0 none;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        .label-cell{
+          display: table-cell;
+          padding: 0 5px;
+          vertical-align: middle;
+
+          border: 1px solid transparent;
+          border: $ax6ui-autocomplete-label-border;
+
+          &:first-child{
+            border-top-left-radius: $ax6ui-autocomplete-label-border-radius;
+            border-bottom-left-radius: $ax6ui-autocomplete-label-border-radius;
+            border-right: 0 none;
+          }
+          &:last-child{
+            border-top-right-radius: $ax6ui-autocomplete-label-border-radius;
+            border-bottom-right-radius: $ax6ui-autocomplete-label-border-radius;
+            border-left: 0 none;
+            padding-left:0;
+          }
+        }
+
+        [data-ax6ui-autocomplete-remove] {
+          cursor: pointer;
+          &:hover {
+            color: $ax6ui-autocomplete-label-hover-color;
+          }
+        }
+      }
+      [data-ax6ui-autocomplete-display="input"] {
+        float: left;
+        width: 100px;
+        &:focus {
+          outline: none;
+        }
+        &::-ms-clear {
+          display: none;
+        }
+      }
+    }
+    [data-ax6ui-autocomplete-display="addon"] {
+      display: table-cell;
+      vertical-align: middle;
+      width: $ax6ui-autocomplete-addon-icon-height * 2 + $ax6ui-autocomplete-addon-icon-padding-right;
+      text-align: center;
+
+      .addon-icon-reset {
+        display: none;
+      }
+    }
+  }
+
+  &[data-select-option-group-opened] {
+    @include box-shadow(inset 1px 1px 3px rgba(0, 0, 0, 0.2));
+    .ax6ui-autocomplete-display-table [data-ax6ui-autocomplete-display="addon"] {
+      .addon-icon-reset {
+        display: block;
+        position: absolute;
+        right: $ax6ui-autocomplete-addon-icon-height * 2 + $ax6ui-autocomplete-addon-icon-padding-right * 2;
+        top: 0;
+        height: 100%;
+      }
+    }
+  }
+
+  @each $theme in $base-colors {
+    &.#{nth($theme, 1)} {
+      @include ax6ui-autocomplete-display-theme(map_get($base-colors, nth($theme, 1)), $ax6ui-autocomplete-option-group-bg, map_get($theme-colors, nth($theme, 1)));
+    }
+  }
+}
+
+/// select-option-group
+.ax6ui-autocomplete-option-group {
+  box-sizing: border-box;
+  z-index: $ax6ui-autocomplete-option-group-z-index;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: $ax6ui-autocomplete-option-group-border-radius;
+  box-shadow: $ax6ui-autocomplete-option-group-box-shadow;
+  border: $ax6ui-autocomplete-option-group-inner-border;
+  overflow: hidden;
+
+  @include ax-background($ax6ui-autocomplete-option-group-bg);
+  @include animation(ax-autocomplete-option-group $ax6ui-autocomplete-option-group-easing-time-open ease-out);
+  @include transform(translateZ(0));
+  @include transform-origin(center top);
+
+  &.destroy {
+    @include animation(ax-autocomplete-option-group-destroy $ax6ui-autocomplete-option-group-easing-time-close $ease-in-back forwards);
+  }
+  &.direction-top {
+    @include transform-origin(center top);
+  }
+  &.direction-bottom {
+    @include transform-origin(center bottom);
+  }
+
+  @each $theme in $base-colors {
+    &.#{nth($theme, 1)} {
+      @include ax6ui-autocomplete-option-group-theme(map_get($base-colors, nth($theme, 1)), $ax6ui-autocomplete-option-group-bg, map_get($theme-colors, nth($theme, 1)), map_get($hover-types, nth($theme, 1)));
+    }
+  }
+
+  @include ax6ui-autocomplete-option-group-size($ax6ui-autocomplete-option-item-padding, $ax6ui-autocomplete-option-item-font-size);
+}

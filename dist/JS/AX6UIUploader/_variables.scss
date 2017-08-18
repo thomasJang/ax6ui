@@ -1,0 +1,62 @@
+$cursor-disabled:                not-allowed !default;
+
+//==============
+$ax6ui-uploader-box-model: border-box !default;
+$ax6ui-uploader-z-index: 1000 !default;
+$ax6ui-uploader-bg: #fff !default;
+$ax6ui-uploader-inner-border: 1px solid !default;
+$ax6ui-uploader-inner-border-color: #ddd !default;
+
+$ax6ui-uploader-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.175) !default;
+$ax6ui-uploader-border-radius: 5px !default;
+
+$ax6ui-uploader-body-padding: 10px !default;
+$ax6ui-uploader-heading-padding: 10px 15px !default;
+$ax6ui-uploader-buttons-padding: 5px 0px 0px 0px !default;
+$ax6ui-uploader-button-padding: 3px 7px !default;
+$ax6ui-uploader-button-font-size: 0.8em !default;
+
+$ax6ui-uploader-content-border: 0px solid !default;
+$ax6ui-uploader-content-border-color: none !default;
+$ax6ui-uploader-content-border-radius: 0px !default;
+$ax6ui-uploader-content-padding: 0px !default;
+
+$ax6ui-uploader-easing-time-open: 0.1s !default;
+$ax6ui-uploader-easing-time-close: 0.1s !default;
+$ax6ui-uploader-arrow-size: 6px !default;
+$ax6ui-uploader-arrow-border-width: 1px !default;
+
+$ax6ui-uploader-uploaded-box-bg: #f3f3f3 !default;
+$ax6ui-uploader-uploaded-box-border: 1px solid #ccc !default;
+$ax6ui-uploader-uploaded-box-border-radius: 5px !default;
+$ax6ui-uploader-uploaded-box-margin: 10px 0 !default;
+$ax6ui-uploader-uploaded-box-padding: 7px !default;
+$ax6ui-uploader-uploaded-box-min-height: 100px !default;
+
+$ax6ui-uploader-uploaded-item-bg: #fff !default;
+$ax6ui-uploader-uploaded-item-color: #5a5a5a !default;
+$ax6ui-uploader-uploaded-item-border: 1px solid #ddd !default;
+$ax6ui-uploader-uploaded-item-border-radius: 4px !default;
+$ax6ui-uploader-uploaded-item-padding: 0px 3px !default;
+$ax6ui-uploader-uploaded-item-margin: 3px !default;
+$ax6ui-uploader-uploaded-item-cell-padding: 0 3px !default;
+$ax6ui-uploader-uploaded-item-cell-hover-color: $ax-link-color !default;
+$ax6ui-uploader-uploaded-item-preview-width: 120px !default;
+$ax6ui-uploader-uploaded-item-preview-height: 120px !default;
+$ax6ui-uploader-uploaded-item-preview-cell-padding: 5px !default;
+
+$ax6ui-uploader-dropzone-bg: #f3f3f3 !default;
+$ax6ui-uploader-dropzone-border: 2px dashed #0087F7 !default;
+$ax6ui-uploader-dropzone-border-radius: 5px !default;
+$ax6ui-uploader-dropzone-margin: 10px 0 !default;
+$ax6ui-uploader-dropzone-padding: 7px !default;
+$ax6ui-uploader-dropzone-min-height: 100px !default;
+
+$ax6ui-uploader-dropzone-dragover-bg: #fff !default;
+$ax6ui-uploader-dropzone-dragover-border: 2px solid #0087F7 !default;
+
+
+//** Border color for elements within dialog
+$ax6ui-uploader-default-text: #333 !default;
+$ax6ui-uploader-default-border-color: #ddd !default;
+$ax6ui-uploader-default-heading-bg: #f5f5f5 !default;

@@ -1,0 +1,39 @@
+//============== ax5menu
+$ax6ui-menu-z-index: 2000 !default;
+$ax6ui-menu-bg: #eee !default;
+$ax6ui-menu-inner-border: 1px solid !default;
+$ax6ui-menu-inner-border-color: #aaa !default;
+
+$ax6ui-menu-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2) !default;
+$ax6ui-menu-border-radius: 5px !default;
+
+$ax6ui-menu-body-padding: 5px 0px !default;
+$ax6ui-menu-heading-padding: 10px 15px !default;
+$ax6ui-menu-buttons-padding: 10px 0px 5px 0px !default;
+
+$ax6ui-menu-content-border: 0px solid !default;
+$ax6ui-menu-content-border-color: none !default;
+$ax6ui-menu-content-border-radius: 0px !default;
+$ax6ui-menu-content-padding: 0px !default;
+
+$ax6ui-menu-easing-time-open: 0.3s !default;
+$ax6ui-menu-easing-time-close: 0.2s !default;
+$ax6ui-menu-arrow-size: 10px !default;
+$ax6ui-menu-arrow-border-width: 1px !default;
+
+$ax6ui-menu-item-padding: 4px 0px !default;
+$ax6ui-menu-item-html-padding: 0px 5px !default;
+$ax6ui-menu-item-font-size: 13px !default;
+$ax6ui-menu-item-checkbox-width: 18px !default;
+$ax6ui-menu-item-handle-width: 14px !default;
+
+$ax6menubar-item-padding: 0px 10px !default;
+
+//** Border color for elements within dialog
+$ax6ui-menu-default-text: #333 !default;
+$ax6ui-menu-default-border-color: $ax6ui-menu-inner-border-color !default;
+$ax6ui-menu-default-heading-bg: #f5f5f5 !default;
+$ax6ui-menu-default-item-bg: #eee !default;
+$ax6ui-menu-default-item-text: #444 !default;
+$ax6ui-menu-default-item-hover-bg: #999 !default;
+$ax6ui-menu-default-item-hover-text: #fff !default;

@@ -1,0 +1,38 @@
+//==============
+//== calendar
+$ax6ui-calendar-control-bg: #f5f5f5 !default; // color, (color1, color2), (pos, color1, color2) 모두 사용가능
+$ax6ui-calendar-control-border: 1px solid #ddd !default;
+$ax6ui-calendar-control-border-radius: 5px !default;
+$ax6ui-calendar-control-font-size: ceil(($ax-font-size-base * 1.25)) !default;
+$ax6ui-calendar-control-text-color: #333 !default;
+$ax6ui-calendar-control-hover-text-color: $ax-link-color !default;
+$ax6ui-calendar-control-padding: 0 !default;
+
+$ax6ui-calendar-header-bg: (#FFFFFF, #FFFFFF) !default;
+$ax6ui-calendar-header-border: 0px none !default;
+$ax6ui-calendar-header-padding: 0px 2px !default;
+$ax6ui-calendar-header-font-size: ceil(($ax-font-size-base * 0.8)) !default;
+
+$ax6ui-calendar-body-bg: (#FFFFFF, #FFFFFF) !default;
+$ax6ui-calendar-body-border: 0px none !default;
+$ax6ui-calendar-body-font-size: ceil(($ax-font-size-base * 1)) !default;
+$ax6ui-calendar-body-animation-in: ax6-ui-calendar-fadein !default;
+$ax6ui-calendar-body-animation-out: ax6-ui-calendar-fadeout !default;
+
+$ax6ui-calendar-sun-text-color: #C78B81 !default;
+$ax6ui-calendar-sat-text-color: #32B4DC !default;
+
+$ax6ui-calendar-date-bg: (#FFFFFF, #FFFFFF) !default;
+$ax6ui-calendar-date-text-color: #C3C4C6 !default;
+$ax6ui-calendar-live-bg: (#F0F0F0, #F0F0F0) !default;
+$ax6ui-calendar-live-text-color: #6D6E70 !default;
+$ax6ui-calendar-hover-bg: (#32B4DC, #32B4DC) !default;
+$ax6ui-calendar-hover-text-color: #fff !default;
+$ax6ui-calendar-focus-bg: (#E67241, #E67241) !default;
+$ax6ui-calendar-focus-text-color: #fff !default;
+$ax6ui-calendar-period-bg: (#82d3fa, #82d3fa) !default;
+$ax6ui-calendar-period-text-color: #fff !default;
+
+$ax6ui-calendar-item-day-radius: 5px !default;
+$ax6ui-calendar-item-month-radius: 5px !default;
+$ax6ui-calendar-item-year-radius: 5px !default;

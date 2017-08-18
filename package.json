@@ -28,6 +28,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
+    "lodash": "^4.17.4",
     "node-sass": "^4.5.3"
   },
   "scripts": {
@@ -35,14 +36,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chequer-io/ax6ui.git"
+    "url": "git+https://github.com/ax6ui/ax6ui.git"
   },
   "author": "tom@axisj.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chequer-io/ax6ui/issues"
+    "url": "https://github.com/ax6ui/ax6ui/issues"
   },
-  "homepage": "https://github.com/chequer-io/ax6ui#readme",
+  "homepage": "https://github.com/ax6ui/ax6ui#readme",
   "babelrc": false,
   "babel": {}
 }

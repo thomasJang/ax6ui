@@ -665,7 +665,8 @@ class AX6UIGrid extends AX6UICore {
         align: false,
         columnHeight: 26,
         columnPadding: 3,
-        columnBorderWidth: 1
+        columnBorderWidth: 1,
+        selector: true
       },
       body: {
         align: false,

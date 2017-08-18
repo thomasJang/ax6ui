@@ -1,0 +1,28 @@
+{
+  "name": "ax6ui-es",
+  "version": "0.7.15",
+  "description": "ES6 UI Component for ES6 pure",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ax6ui/ax6ui.git"
+  },
+  "keywords": [
+    "ax6ui"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ax6ui/ax6ui/issues"
+  },
+  "homepage": "ax6ui.com",
+  "dependencies": {
+    "jqmin": "^0.1.0"
+  }
+}

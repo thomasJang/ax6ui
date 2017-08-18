@@ -10,20 +10,17 @@ React, Vue 등의 프로젝트와 함께 사용할 수 있습니다.
 
 # Install
 
-### ES6 버전
 ```
 npm install ax6ui -S
 ```
 
-### ES5 버전
+### Pure ES6 버전
 ```
-npm install ax6ui-es5 -S
+npm install ax6ui-es -S
 ```
 
 
 # Usage
-
-
 
 ## Sample 폴더 사용법
 ```js

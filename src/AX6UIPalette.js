@@ -313,14 +313,14 @@ class AX6UIPalette extends AX6UICore {
    * @example
    * ```js
    * myPalette = new Palette({
-     *  target: $('[data-ax5palette="01"]'),
+     *  target: jQuery('[data-ax5palette="01"]'),
      *  onClick: function (hexColor) {
      *      alert(hexColor);
      *  }
      * });
    *
    * myPalette = new Palette({
-     *  target: $('[data-ax5palette="01"]'),
+     *  target: jQuery('[data-ax5palette="01"]'),
      *  colors: {
      *      list: [
      *          {label: "red", value: "#ff0000"},

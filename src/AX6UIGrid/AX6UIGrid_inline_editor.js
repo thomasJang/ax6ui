@@ -23,7 +23,7 @@ const edit_text = {
     return $el;
   },
   bindUI: function (_root, _columnKey, _$el, _editor, _$parent, _value) {
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -53,7 +53,7 @@ const edit_money = {
     _$el.ax5formatter($.extend(true, {
       pattern: "money"
     }, _editor.config));
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -83,7 +83,7 @@ const edit_number = {
     _$el.ax5formatter($.extend(true, {
       pattern: "number"
     }, _editor.config));
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -120,7 +120,7 @@ const edit_date = {
       }
     }, _editor.config));
 
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -172,7 +172,7 @@ const edit_select = {
     }, _editor.config));
     _$el.ax5select("open");
     _$el.ax5select("setValue", _value);
-    _$el.find("a").focus();
+    _$el.find("a").trigger("focus");
   }
 };
 
@@ -235,7 +235,7 @@ const edit_textarea = {
 
     // 새로운 엘리먼트를 document.body에 append
     jQuery(document.body).append($newDiv);
-    $newTextarea.focus().select();
+    $newTextarea.trigger("focus").trigger("select");
 
     $newTextarea.on("blur", function (e) {
       BODY.inlineEdit.deActive.call(_root, "RETURN", _columnKey, this.value);

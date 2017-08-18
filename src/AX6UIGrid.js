@@ -1195,7 +1195,7 @@ class AX6UIGrid extends AX6UICore {
     });
 
     $clipBoard.get(0).innerText = copyText;
-    $clipBoard.select();
+    $clipBoard.trigger("select");
 
     try {
       copysuccess = document.execCommand("copy");

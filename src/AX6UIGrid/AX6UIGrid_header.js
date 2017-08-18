@@ -7,7 +7,7 @@ import DATA from "./AX6UIGrid_data";
 const columnResizerEvent = {
   "on": function (_columnResizer, _colIndex) {
     var self = this;
-    var $columnResizer = $(_columnResizer);
+    var $columnResizer = jQuery(_columnResizer);
     var columnResizerPositionLeft = $columnResizer.offset().left;
     var gridTargetOffsetLeft = self.$["container"]["root"].offset().left;
     self.xvar.columnResizerIndex = _colIndex;
@@ -86,7 +86,7 @@ const init = function () {
       let selected = this.getAttribute("data-ax6grid-selected");
       selected = (U.isNothing(selected)) ? true : (selected !== "true");
 
-      $(this).attr("data-ax6grid-selected", selected);
+      jQuery(this).attr("data-ax6grid-selected", selected);
       self.selectAll({selected: selected});
 
       selected = null;

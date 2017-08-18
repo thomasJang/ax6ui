@@ -154,10 +154,8 @@ var arrangeData4tree = function arrangeData4tree(_list) {
   this.deletedList = [];
   var i = 0,
       seq = 0,
-      appendIndex = 0,
       dataRealRowCount = 0,
       lineNumber = 0;
-
   var li = _list.length;
   var keys = this.config.tree.columnKeys;
   var hashDigit = this.config.tree.hashDigit;

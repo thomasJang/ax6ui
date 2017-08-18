@@ -995,8 +995,8 @@ class AX6UIModal extends AX6UICore {
               idoc = (iframeObject.contentDocument) ? iframeObject.contentDocument : iframeObject.contentWindow.document;
 
             try {
-              $(idoc.body).children().each(function () {
-                $(this).remove();
+              jQuery(idoc.body).children().each(function () {
+                jQuery(this).remove();
               });
             }
             catch (e) {

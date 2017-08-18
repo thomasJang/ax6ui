@@ -528,7 +528,7 @@ var AX6UIPicker = function (_AX6UICore) {
      *
      * let picker = new Picker();
      * picker.bind({
-       *     target: $("#color-0"),
+       *     target: jQuery("#color-0"),
        *     direction: "auto",
        *     content: {
        *         width: 250,
@@ -846,7 +846,7 @@ var AX6UIPicker = function (_AX6UICore) {
 
             po.push('<div style="clear:both;"></div>');
 
-            $(el).html(po.join('')).on("click", '[data-secure-num-value]', function (e) {
+            (0, _jqmin2.default)(el).html(po.join('')).on("click", '[data-secure-num-value]', function (e) {
               var act = e.currentTarget.getAttribute("data-secure-num-value");
               var _input = item.$target.get(0).tagName.toUpperCase() == "INPUT" ? item.$target : (0, _jqmin2.default)(item.$target.find('input[type]').get(idx));
               var val = _input.val();
@@ -916,7 +916,7 @@ var AX6UIPicker = function (_AX6UICore) {
           // secure-num bind
           item.pickerContent.find('[data-keyboard-target]').each(function () {
             var idx = this.getAttribute("data-keyboard-target"),
-                $this = $(this),
+                $this = (0, _jqmin2.default)(this),
                 isShiftKey = false,
                 toggleShift = function toggleShift() {
               isShiftKey = !isShiftKey;
@@ -999,7 +999,7 @@ var AX6UIPicker = function (_AX6UICore) {
 
             po.push('<div style="clear:both;"></div>');
 
-            $(this).html(po.join('')).on("mousedown", '[data-numpad-value]', function () {
+            (0, _jqmin2.default)(this).html(po.join('')).on("mousedown", '[data-numpad-value]', function () {
               var act = this.getAttribute("data-numpad-value"),
                   _input = item.$target.get(0).tagName.toUpperCase() == "INPUT" ? item.$target : (0, _jqmin2.default)(item.$target.find('input[type]').get(idx)),
                   val = _input.val(),

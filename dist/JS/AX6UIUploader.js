@@ -584,7 +584,7 @@ var repaintUploadedBox = function repaintUploadedBox() {
   }));
   this.$uploadedBox.find("img").on("error", function () {
     //this.src = "";
-    $(this).parent().addClass("no-image");
+    (0, _jqmin2.default)(this).parent().addClass("no-image");
   });
 };
 var attachFileTag = function attachFileTag() {

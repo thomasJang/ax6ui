@@ -549,7 +549,7 @@ var inlineEdit = {
               newValue = editor.config.falseValue;
             }
           } else {
-            newValue = checked = _initValue == false || _initValue == "false" || _initValue < "1" ? "true" : "false";
+            newValue = checked = _initValue == false || _initValue == "false" || _initValue < "1";
           }
 
           _AX6UIGrid_data2.default.setValue.call(self, dindex, doindex, col.key, newValue);
@@ -713,7 +713,7 @@ var inlineEdit = {
                       checked = false;
                     }
                   } else {
-                    newValue = checked = value == false || value == "false" || value < "1" ? "true" : "false";
+                    newValue = checked = value == false || value == "false" || value < "1";
                   }
 
                   _AX6UIGrid_data2.default.setValue.call(this, dindex, doindex, column.key, newValue);
@@ -1547,19 +1547,20 @@ var repaintCell = function repaintCell(_panelName, _dindex, _doindex, _rowIndex,
 };
 
 var repaintRow = function repaintRow(_dindex) {
-  var self = this,
-      cfg = this.config,
+  var cfg = this.config,
       list = this.list;
   /// ~~~~~~
 
   var paintStartRowIndex = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
-      asideBodyRowData = this.asideBodyRowData,
-      leftBodyRowData = this.leftBodyRowData,
+
+  //asideBodyRowData      = this.asideBodyRowData,
+  leftBodyRowData = this.leftBodyRowData,
       bodyRowData = this.bodyRowData,
       leftFootSumData = this.leftFootSumData,
       footSumData = this.footSumData,
-      asideBodyGroupingData = this.asideBodyGroupingData,
-      leftBodyGroupingData = this.leftBodyGroupingData,
+
+  //asideBodyGroupingData = this.asideBodyGroupingData,
+  leftBodyGroupingData = this.leftBodyGroupingData,
       bodyGroupingData = this.bodyGroupingData,
       bodyAlign = cfg.body.align,
       paintRowCount = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
@@ -1886,8 +1887,7 @@ var updateRowState = function updateRowState(_states, _dindex, _doindex, _data) 
       }
     },
     "cellChecked": function cellChecked(_dindex, _doindex, _data) {
-      var key = _data.key,
-          rowIndex = _data.rowIndex,
+      var rowIndex = _data.rowIndex,
           colIndex = _data.colIndex;
 
       var panelName = function () {
@@ -1913,7 +1913,6 @@ var updateRowState = function updateRowState(_states, _dindex, _doindex, _data) 
 
 var updateRowStateAll = function updateRowStateAll(_states, _data) {
   var self = this,
-      cfg = this.config,
       processor = {
     "selected": function selected(_dindex) {
       repaint.call(this, true);
@@ -1934,7 +1933,6 @@ var toggleCollapse = function toggleCollapse(_dindex, _doindex, _collapse) {
 };
 
 var scrollTo = function scrollTo(css, opts) {
-  var self = this;
   if (typeof opts === "undefined") opts = { timeoutUnUse: false };
   if (this.isInlineEditing) {
     for (var key in this.inlineEditing) {
@@ -2090,9 +2088,9 @@ var moveFocus = function moveFocus(_position) {
     "LR": function LR(_dx) {
       var moveResult = true,
           focusedColumn = void 0,
-          originalColumn = void 0,
-          while_i = 0,
-          isScrollPanel = false,
+
+      //originalColumn,
+      isScrollPanel = false,
           containerPanelName = "",
           nPanelInfo = void 0;
 
@@ -2102,7 +2100,7 @@ var moveFocus = function moveFocus(_position) {
       }
       if (!focusedColumn) return false;
 
-      originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
+      //originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
 
       columnSelect.focusClear.call(this);
       columnSelect.clear.call(this);
@@ -2550,7 +2548,6 @@ exports.default = {
           doindex = void 0,
           rowIndex = void 0,
           colIndex = void 0,
-          disableSelection = void 0,
           targetClick = {
         "default": function _default(_column) {
           var column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],

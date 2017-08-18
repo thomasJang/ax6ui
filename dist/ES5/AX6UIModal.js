@@ -951,8 +951,8 @@ var AX6UIModal = function (_AX6UICore) {
                   idoc = iframeObject.contentDocument ? iframeObject.contentDocument : iframeObject.contentWindow.document;
 
               try {
-                $(idoc.body).children().each(function () {
-                  $(this).remove();
+                (0, _jqmin2.default)(idoc.body).children().each(function () {
+                  (0, _jqmin2.default)(this).remove();
                 });
               } catch (e) {}
               idoc.innerHTML = "";

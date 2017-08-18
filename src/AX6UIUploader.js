@@ -623,7 +623,7 @@ const repaintUploadedBox = function () {
   );
   this.$uploadedBox.find("img").on("error", function () {
     //this.src = "";
-    $(this).parent().addClass("no-image");
+    jQuery(this).parent().addClass("no-image");
   });
 
 };

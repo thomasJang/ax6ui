@@ -36,7 +36,7 @@ var edit_text = {
     return $el;
   },
   bindUI: function bindUI(_root, _columnKey, _$el, _editor, _$parent, _value) {
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -66,7 +66,7 @@ var edit_money = {
     _$el.ax5formatter($.extend(true, {
       pattern: "money"
     }, _editor.config));
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -96,7 +96,7 @@ var edit_number = {
     _$el.ax5formatter($.extend(true, {
       pattern: "number"
     }, _editor.config));
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -133,7 +133,7 @@ var edit_date = {
       }
     }, _editor.config));
 
-    _$el.focus().select();
+    _$el.trigger("focus").trigger("select");
   }
 };
 
@@ -185,7 +185,7 @@ var edit_select = {
     }, _editor.config));
     _$el.ax5select("open");
     _$el.ax5select("setValue", _value);
-    _$el.find("a").focus();
+    _$el.find("a").trigger("focus");
   }
 };
 
@@ -243,7 +243,7 @@ var edit_textarea = {
 
     // 새로운 엘리먼트를 document.body에 append
     (0, _jqmin2.default)(document.body).append($newDiv);
-    $newTextarea.focus().select();
+    $newTextarea.trigger("focus").trigger("select");
 
     $newTextarea.on("blur", function (e) {
       _AX6UIGrid_body2.default.inlineEdit.deActive.call(_root, "RETURN", _columnKey, this.value);

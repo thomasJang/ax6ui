@@ -29,7 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var columnResizerEvent = {
   "on": function on(_columnResizer, _colIndex) {
     var self = this;
-    var $columnResizer = $(_columnResizer);
+    var $columnResizer = (0, _jqmin2.default)(_columnResizer);
     var columnResizerPositionLeft = $columnResizer.offset().left;
     var gridTargetOffsetLeft = self.$["container"]["root"].offset().left;
     self.xvar.columnResizerIndex = _colIndex;
@@ -94,7 +94,7 @@ var init = function init() {
       var selected = this.getAttribute("data-ax6grid-selected");
       selected = _AX6Util2.default.isNothing(selected) ? true : selected !== "true";
 
-      $(this).attr("data-ax6grid-selected", selected);
+      (0, _jqmin2.default)(this).attr("data-ax6grid-selected", selected);
       self.selectAll({ selected: selected });
 
       selected = null;

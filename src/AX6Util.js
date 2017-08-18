@@ -2035,7 +2035,7 @@ export default {
    * // cond 함수로 처리하기
    * jQuery('#id').bind("click.app_expand", function(e){
 		 * 	var target = AX6Util.findParentNode(e.target, function(target){
-		 * 		if($(target).hasClass("aside")){
+		 * 		if(jQuery(target).hasClass("aside")){
 		 * 			return true;
 		 * 		}
 		 * 		else{
@@ -2089,11 +2089,11 @@ export default {
    * @param {Element} offset
    * @example
    * ```
-   * AX6Util.selectRange($("#select-test-0")); // selectAll
-   * AX6Util.selectRange($("#select-test-0"), "selectAll"); //selectAll
-   * AX6Util.selectRange($("#select-test-0"), "start"); // focus on start
-   * AX6Util.selectRange($("#select-test-0"), "end"); // focus on end
-   * AX6Util.selectRange($("#select-test-0"), [1, 5]); // select 1~5
+   * AX6Util.selectRange(jQuery("#select-test-0")); // selectAll
+   * AX6Util.selectRange(jQuery("#select-test-0"), "selectAll"); //selectAll
+   * AX6Util.selectRange(jQuery("#select-test-0"), "start"); // focus on start
+   * AX6Util.selectRange(jQuery("#select-test-0"), "end"); // focus on end
+   * AX6Util.selectRange(jQuery("#select-test-0"), [1, 5]); // select 1~5
    * ```
    */
   selectRange: selectRange,
@@ -2107,7 +2107,7 @@ export default {
    * ```js
    * // https://github.com/lodash/lodash/blob/master/debounce.js
    * var debounceFn = AX6Util.debounce(function( val ) { console.log(val); }, 300);
-   * $(document.body).click(function(){
+   * jQuery(document.body).click(function(){
          *  debounceFn(new Date());
          * });
    * ```
@@ -2122,7 +2122,7 @@ export default {
    * ```js
    * //https://github.com/lodash/lodash/blob/master/throttle.js
    * var throttleFn = AX6Util.throttle(function( val ) { console.log(val); }, 300);
-   * $(window).scroll(function(){
+   * jQuery(window).scroll(function(){
      *      throttleFn(new Date());
      * });
    * ```

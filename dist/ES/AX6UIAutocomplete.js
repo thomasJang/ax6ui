@@ -307,7 +307,7 @@ var focusLabel = function focusLabel(queIdx) {
   if (this.queue[queIdx].disabled) return this;
 
   this.queue[queIdx].$displayLabel.trigger("focus");
-  this.queue[queIdx].$displayLabelInput.focus();
+  this.queue[queIdx].$displayLabelInput.trigger("focus");
 };
 var clearLabel = function clearLabel(queIdx) {
   this.queue[queIdx].$displayLabelInput.val('');

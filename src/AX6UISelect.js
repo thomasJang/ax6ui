@@ -285,7 +285,7 @@ const onBodyClick = function (e, target) {
       }
     }, undefined, "internal");
     item.$select.trigger("change");
-    item.$display.focus();
+    item.$display.trigger("focus");
     if (!item.multiple) this.close();
   }
   else {

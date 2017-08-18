@@ -537,7 +537,7 @@ const inlineEdit = {
               newValue = editor.config.falseValue;
             }
           } else {
-            newValue = checked = (_initValue == false || _initValue == "false" || _initValue < "1") ? "true" : "false";
+            newValue = checked = (_initValue == false || _initValue == "false" || _initValue < "1");
           }
 
           DATA.setValue.call(self, dindex, doindex, col.key, newValue);
@@ -707,7 +707,7 @@ const inlineEdit = {
                       checked = false;
                     }
                   } else {
-                    newValue = checked = (value == false || value == "false" || value < "1") ? "true" : "false";
+                    newValue = checked = (value == false || value == "false" || value < "1");
                   }
 
                   DATA.setValue.call(this, dindex, doindex, column.key, newValue);
@@ -1595,23 +1595,22 @@ const repaintCell = function (_panelName, _dindex, _doindex, _rowIndex, _colInde
 };
 
 const repaintRow = function (_dindex) {
-  let self = this,
-      cfg  = this.config,
+  let cfg  = this.config,
       list = this.list;
   /// ~~~~~~
 
-  let paintStartRowIndex    = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
-      asideBodyRowData      = this.asideBodyRowData,
-      leftBodyRowData       = this.leftBodyRowData,
-      bodyRowData           = this.bodyRowData,
-      leftFootSumData       = this.leftFootSumData,
-      footSumData           = this.footSumData,
-      asideBodyGroupingData = this.asideBodyGroupingData,
-      leftBodyGroupingData  = this.leftBodyGroupingData,
-      bodyGroupingData      = this.bodyGroupingData,
-      bodyAlign             = cfg.body.align,
-      paintRowCount         = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
-      scrollConfig          = {
+  let paintStartRowIndex   = Math.floor(Math.abs(this.$.panel["body-scroll"].position().top) / this.xvar.bodyTrHeight) + this.xvar.frozenRowIndex,
+      //asideBodyRowData      = this.asideBodyRowData,
+      leftBodyRowData      = this.leftBodyRowData,
+      bodyRowData          = this.bodyRowData,
+      leftFootSumData      = this.leftFootSumData,
+      footSumData          = this.footSumData,
+      //asideBodyGroupingData = this.asideBodyGroupingData,
+      leftBodyGroupingData = this.leftBodyGroupingData,
+      bodyGroupingData     = this.bodyGroupingData,
+      bodyAlign            = cfg.body.align,
+      paintRowCount        = Math.ceil(this.$.panel["body"].height() / this.xvar.bodyTrHeight) + 1,
+      scrollConfig         = {
         paintStartRowIndex: paintStartRowIndex,
         paintRowCount: paintRowCount,
         bodyTrHeight: this.xvar.bodyTrHeight
@@ -1981,8 +1980,7 @@ const updateRowState = function (_states, _dindex, _doindex, _data) {
           }
         },
         "cellChecked": function (_dindex, _doindex, _data) {
-          let key      = _data.key,
-              rowIndex = _data.rowIndex,
+          let rowIndex = _data.rowIndex,
               colIndex = _data.colIndex;
 
           let panelName = (function () {
@@ -2012,7 +2010,6 @@ const updateRowState = function (_states, _dindex, _doindex, _data) {
 
 const updateRowStateAll = function (_states, _data) {
   let self      = this,
-      cfg       = this.config,
       processor = {
         "selected": function (_dindex) {
           repaint.call(this, true);
@@ -2033,10 +2030,9 @@ const toggleCollapse = function (_dindex, _doindex, _collapse) {
 };
 
 const scrollTo = function (css, opts) {
-  let self = this;
   if (typeof opts === "undefined") opts = {timeoutUnUse: false};
   if (this.isInlineEditing) {
-    for (var key in this.inlineEditing) {
+    for (let key in this.inlineEditing) {
       //if(this.inlineEditing[key].editor.type === "select") {}
       // 인라인 에디팅 인데 스크롤 이벤트가 발생하면 디액티브 처리
       inlineEdit.deActive.call(this, "ESC", key);
@@ -2192,17 +2188,20 @@ const moveFocus = function (_position) {
       return moveResult;
     },
     "LR": function (_dx) {
-      let moveResult                                             = true,
-          focusedColumn, originalColumn,
-          while_i = 0, isScrollPanel = false, containerPanelName = "", nPanelInfo;
+      let moveResult         = true,
+          focusedColumn,
+          //originalColumn,
+          isScrollPanel = false,
+          containerPanelName = "",
+          nPanelInfo;
 
-      for (var c in this.focusedColumn) {
+      for (let c in this.focusedColumn) {
         focusedColumn = jQuery.extend({}, this.focusedColumn[c], true);
         break;
       }
       if (!focusedColumn) return false;
 
-      originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
+      //originalColumn = this.bodyRowMap[focusedColumn.rowIndex + "_" + focusedColumn.colIndex];
 
       columnSelect.focusClear.call(this);
       columnSelect.clear.call(this);
@@ -2319,14 +2318,14 @@ const moveFocus = function (_position) {
 
       this.focusedColumn[focusedColumn.dindex + "_" + focusedColumn.colIndex + "_" + focusedColumn.rowIndex] = focusedColumn;
 
-      var $column = this.$.panel[focusedColumn.panelName]
+      let $column = this.$.panel[focusedColumn.panelName]
         .find('[data-ax6grid-tr-data-index="' + focusedColumn.dindex + '"]')
         .find('[data-ax6grid-column-rowindex="' + focusedColumn.rowIndex + '"][data-ax6grid-column-colindex="' + focusedColumn.colIndex + '"]')
         .attr('data-ax6grid-column-focused', "true");
 
       if (!isScrollTo && $column && isScrollPanel) {// 스크롤 패널 이라면~
         // todo : 컬럼이동할 때에도 scrollTo 체크
-        var newLeft = (function () {
+        let newLeft = (function () {
           if ($column.position().left + $column.outerWidth() > Math.abs(this.$.panel[focusedColumn.panelName].position().left) + this.$.panel[containerPanelName].width()) {
             return $column.position().left + $column.outerWidth() - this.$.panel[containerPanelName].width();
           } else if (Math.abs(this.$.panel[focusedColumn.panelName].position().left) > $column.position().left) {
@@ -2650,7 +2649,7 @@ export default {
 
     this.$["container"]["body"].on("click", '[data-ax6grid-column-attr]', function (e) {
       let panelName, attr,
-          row, col, dindex, doindex, rowIndex, colIndex, disableSelection,
+          row, col, dindex, doindex, rowIndex, colIndex,
           targetClick = {
             "default": function (_column) {
               let column = self.bodyRowMap[_column.rowIndex + "_" + _column.colIndex],

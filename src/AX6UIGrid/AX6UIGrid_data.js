@@ -22,11 +22,11 @@ const initData = function (_list) {
   // this.deletedList = [];
   // todo : deletedList 초기화 시점이 언제로 하는게 좋은가. set 메소드에서 초기화 하는 것으로 수정
 
-  let i = 0, l = _list.length,
-    returnList = [],
-    appendIndex = 0,
-    dataRealRowCount = 0,
-    lineNumber = 0;
+  let i                = 0, l = _list.length,
+      returnList       = [],
+      appendIndex      = 0,
+      dataRealRowCount = 0,
+      lineNumber       = 0;
 
   if (this.config.body.grouping) {
 
@@ -125,11 +125,7 @@ const initData = function (_list) {
 const arrangeData4tree = function (_list) {
   this.selectedDataIndexs = [];
   this.deletedList = [];
-  let i = 0, seq = 0,
-    appendIndex = 0,
-    dataRealRowCount = 0,
-    lineNumber = 0;
-
+  let i = 0, seq = 0, dataRealRowCount = 0, lineNumber = 0;
   let li = _list.length;
   let keys = this.config.tree.columnKeys;
   let hashDigit = this.config.tree.hashDigit;
@@ -394,7 +390,7 @@ const select = function (_dindex, _doindex, _selected, _options) {
 };
 
 const selectAll = function (_selected, _options) {
-  let cfg = this.config,
+  let cfg    = this.config,
       dindex = this.list.length;
 
   this.selectedDataIndexs = [];
@@ -630,8 +626,8 @@ const deleteRow = function (_dindex) {
       }
     },
     "tree": function (_dindex) {
-      let keys = this.config.columnKeys,
-        treeKeys = this.config.tree.columnKeys;
+      let keys     = this.config.columnKeys,
+          treeKeys = this.config.tree.columnKeys;
 
       if (_dindex === "selected") {
 

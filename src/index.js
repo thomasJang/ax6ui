@@ -21,6 +21,27 @@ import AX6UISideNav from "./AX6UISideNav";
  * @module AX6UI
  */
 export {
+  AX6Info,
+  AX6Util,
+  AX6UICore,
+  AX6Mustache,
+  AX6UIFormatter,
+  AX6UIMask,
+  AX6UIPalette,
+  AX6UIDialog,
+  AX6UIPicker,
+  AX6UICalendar,
+  AX6UISelect,
+  AX6UIGrid,
+  AX6UIMenu,
+  AX6UIToast,
+  AX6UIModal,
+  AX6UIUploader,
+  AX6UIAutocomplete,
+  AX6UISideNav,
+};
+
+export default {
   /**
    * AX6UI.AX6Info
    * @example
@@ -51,25 +72,25 @@ export {
    * ```
    */
   AX6UICore,
-/**
- * AX6UI.AX6Mustache
- * @example
- * ```js
- * import AX6Mustache from "ax6ui/AX6Mustache";
- * // or
- * import { AX6Mustache } from "ax6ui";
- * ```
- */
+  /**
+   * AX6UI.AX6Mustache
+   * @example
+   * ```js
+   * import AX6Mustache from "ax6ui/AX6Mustache";
+   * // or
+   * import { AX6Mustache } from "ax6ui";
+   * ```
+   */
   AX6Mustache,
-/**
- * AX6UI.AX6UIFormatter
- * @example
- * ```js
- * import AX6UIFormatter from "ax6ui/AX6UIFormatter";
- * // or
- * import { AX6UIFormatter } from "ax6ui";
- * ```
- */
+  /**
+   * AX6UI.AX6UIFormatter
+   * @example
+   * ```js
+   * import AX6UIFormatter from "ax6ui/AX6UIFormatter";
+   * // or
+   * import { AX6UIFormatter } from "ax6ui";
+   * ```
+   */
   AX6UIFormatter,
   /**
    * AX6UI.AX6UIMask
@@ -201,25 +222,4 @@ export {
    * ```
    */
   AX6UISideNav,
-};
-
-export default {
-  AX6Info,
-  AX6Util,
-  AX6UICore,
-  AX6Mustache,
-  AX6UIFormatter,
-  AX6UIMask,
-  AX6UIPalette,
-  AX6UIDialog,
-  AX6UIPicker,
-  AX6UICalendar,
-  AX6UISelect,
-  AX6UIGrid,
-  AX6UIMenu,
-  AX6UIToast,
-  AX6UIModal,
-  AX6UIUploader,
-  AX6UIAutocomplete,
-  AX6UISideNav
 };

@@ -46,7 +46,8 @@ gulp.task('js-ES', function () {
 gulp.task('js-ES5', function () {
   return gulp.src([fnObj.paths.src + '/**/*.js'])
     .pipe(babel({
-      presets: ['es2015']
+      presets: ['es2015'],
+      //plugins: ['transform-es2015-modules-umd']
     }))
     .pipe(gulp.dest(fnObj.paths.dist_es5));
 });
@@ -58,7 +59,7 @@ gulp.task('js-JS', function () {
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ["modern-browsers", "es2015"],
-      //"plugins": ["transform-es2015-modules-amd"]
+      //plugins: ['transform-es2015-modules-amd']
       //plugins: ['transform-runtime']
     }))
     .pipe(gulp.dest(fnObj.paths.dist_js))
@@ -130,3 +131,11 @@ gulp.task('jsdoc build', function () {
     .pipe(exec('./md.sh', options))
     .pipe(exec.reporter(reportOptions));
 });
+
+gulp.task('dev run!', shell.task([
+  'cd dev && webpack-dev-server --env=d',
+]));
+
+gulp.task('deploy to docs', shell.task([
+  'cd dev && webpack -p --env=p --progress --profile --colors',
+]));

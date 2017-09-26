@@ -111,7 +111,7 @@ const ENM = {
 };
 
 const makeHeaderTable = function (_columns) {
-  let columns = U.deepCopy(_columns),
+  let columns = _columns,
     cfg = this.config,
     table = {
       rows: []
@@ -122,7 +122,7 @@ const makeHeaderTable = function (_columns) {
       var i = 0, l = _columns.length;
 
       for (; i < l; i++) {
-        var field = _columns[i];
+        var field = jQuery.extend({}, _columns[i]);
         var colspan = 1;
 
         if (!field.hidden) {
@@ -180,7 +180,7 @@ const makeHeaderTable = function (_columns) {
 };
 
 const makeBodyRowTable = function (_columns) {
-  let columns = U.deepCopy(_columns),
+  let columns = _columns,
     table = {
       rows: []
     },
@@ -194,7 +194,7 @@ const makeBodyRowTable = function (_columns) {
       let selfMakeRow = function (__columns) {
         let i = 0, l = __columns.length;
         for (; i < l; i++) {
-          let field = __columns[i],
+          let field = jQuery.extend({}, __columns[i]),
             colspan = 1;
 
           if (!field.hidden) {
@@ -232,7 +232,7 @@ const makeBodyRowTable = function (_columns) {
       };
 
       for (; i < l; i++) {
-        let field = _columns[i];
+        let field = jQuery.extend({}, _columns[i]);
         colspan = 1;
 
         if (!field.hidden) {

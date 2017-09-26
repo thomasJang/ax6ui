@@ -125,7 +125,7 @@ var ENM = {
 };
 
 var makeHeaderTable = function makeHeaderTable(_columns) {
-  var columns = _AX6Util2.default.deepCopy(_columns),
+  var columns = _columns,
       cfg = this.config,
       table = {
     rows: []
@@ -137,7 +137,7 @@ var makeHeaderTable = function makeHeaderTable(_columns) {
         l = _columns.length;
 
     for (; i < l; i++) {
-      var field = _columns[i];
+      var field = _jqmin2.default.extend({}, _columns[i]);
       var colspan = 1;
 
       if (!field.hidden) {
@@ -191,7 +191,7 @@ var makeHeaderTable = function makeHeaderTable(_columns) {
 };
 
 var makeBodyRowTable = function makeBodyRowTable(_columns) {
-  var columns = _AX6Util2.default.deepCopy(_columns),
+  var columns = _columns,
       table = {
     rows: []
   },
@@ -206,7 +206,7 @@ var makeBodyRowTable = function makeBodyRowTable(_columns) {
       var i = 0,
           l = __columns.length;
       for (; i < l; i++) {
-        var field = __columns[i],
+        var field = _jqmin2.default.extend({}, __columns[i]),
             _colspan = 1;
 
         if (!field.hidden) {
@@ -240,7 +240,7 @@ var makeBodyRowTable = function makeBodyRowTable(_columns) {
     };
 
     for (; i < l; i++) {
-      var field = _columns[i];
+      var field = _jqmin2.default.extend({}, _columns[i]);
       colspan = 1;
 
       if (!field.hidden) {

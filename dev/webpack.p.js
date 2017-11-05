@@ -90,5 +90,10 @@ module.exports = {
         }
       }
     ]
+  },
+  resolve: {
+    alias: {
+      "@AX6UI": path.join(__dirname, '../src/')
+    }
   }
 };
